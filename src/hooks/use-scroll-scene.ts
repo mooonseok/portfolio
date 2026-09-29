@@ -89,7 +89,7 @@ export function useScrollScene(steps: boolean) {
     const first = sc.primary[0];
     el.style.setProperty('--active-index', String(first ? first.index : -1));
 
-    const active = sc.primary
+    const active = [...sc.primary, ...sc.secondary]
       .map((f) => f.steps[f.index]?.dataset.node)
       .filter(Boolean) as string[];
     const labels = active.join('\u0000');

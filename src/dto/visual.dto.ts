@@ -1,3 +1,4 @@
+import type { NodeState } from '@/constants/flow';
 import type { VisualId } from '@/constants/visual';
 
 export interface PinPoint {
@@ -7,6 +8,8 @@ export interface PinPoint {
 
 export interface Pin extends PinPoint {
   label: string;
+  link?: string;
+  state?: NodeState;
   tablet?: PinPoint;
   mobile?: PinPoint;
   hideOnMobile?: boolean;

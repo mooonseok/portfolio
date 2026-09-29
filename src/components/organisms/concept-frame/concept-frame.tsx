@@ -6,6 +6,7 @@ import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { ConceptArt } from '@/components/organisms/concept-art/concept-art';
 import type { MetaPair, Pin, Visual } from '@/dto/visual.dto';
+import { NODE_STATE } from '@/constants/flow';
 import { MEDIA } from '@/constants/breakpoint';
 import { PARALLAX_DEFAULT } from '@/constants/motion-layer';
 import { TAG } from '@/constants/tag';
@@ -111,6 +112,7 @@ export function ConceptFrame({
             key={p.label}
             className='group/pin pointer-events-none absolute top-(--y-m) left-(--x-m) flex items-center gap-2 tab:top-(--y-t) tab:left-(--x-t) lap:top-(--y) lap:left-(--x) mob:data-hide-mobile:hidden tab-only:data-hide-tablet:hidden'
             data-node={p.label}
+            data-link={p.link}
             data-hide-mobile={p.hideOnMobile || undefined}
             data-hide-tablet={p.hideOnTablet || undefined}
             style={pinPosition(p)}
@@ -118,7 +120,12 @@ export function ConceptFrame({
           >
             <Box
               as={TAG.SPAN}
-              className='size-[9px] rounded-[50%] border-[1.25px] border-ink bg-paper [transition:background-color_150ms_var(--ease),border-color_150ms_var(--ease)] group-data-active/pin:border-signal group-data-active/pin:bg-signal on-dark:border-paper on-dark:bg-dark'
+              className={cx(
+                'size-[9px] rounded-[50%] border-[1.25px] border-ink bg-paper [transition:background-color_150ms_var(--ease),border-color_150ms_var(--ease)] on-dark:border-paper on-dark:bg-dark',
+                p.state === NODE_STATE.EXPERIMENT
+                  ? 'group-data-active/pin:border-ink group-data-active/pin:bg-ink on-dark:group-data-active/pin:border-paper on-dark:group-data-active/pin:bg-paper'
+                  : 'group-data-active/pin:border-signal group-data-active/pin:bg-signal'
+              )}
             />
             <Text
               as={TAG.SPAN}
