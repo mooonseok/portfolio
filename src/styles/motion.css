@@ -1,0 +1,25 @@
+[data-reveal-item='title'] {
+  transition:
+    opacity 400ms var(--ease),
+    transform 400ms var(--ease);
+}
+[data-reveal-item='visual'] {
+  transition:
+    opacity 600ms var(--ease),
+    transform 600ms var(--ease);
+}
+[data-reveal-item='meta'] {
+  transition: opacity 250ms var(--ease) 150ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal]:not([data-inview='true']) [data-reveal-item] {
+    opacity: 0;
+  }
+  .js [data-reveal]:not([data-inview='true']) [data-reveal-item='title'] {
+    transform: translateY(8px);
+  }
+  .js [data-reveal]:not([data-inview='true']) [data-reveal-item='visual'] {
+    transform: translateY(12px);
+  }
+}

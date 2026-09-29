@@ -1,0 +1,192 @@
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import './tokens.css';
+@import './motion.css' layer(components);
+@import './components/status.css' layer(components);
+@import './components/frame-and-scope.css' layer(components);
+@import './components/tokens-and-surface.css' layer(components);
+@import './components/flow-diagram-base.css' layer(components);
+@import './components/flow-diagram-orient.css' layer(components);
+@import './components/flow-diagram-draw.css' layer(components);
+@import './components/chrome.css' layer(components);
+
+@theme static {
+  --breakpoint-*: initial;
+  --breakpoint-tab: 744px;
+  --breakpoint-lap: 1024px;
+  --breakpoint-wide: 1440px;
+
+  --spacing: 4px;
+
+  --color-*: initial;
+  --color-paper: #f3f2ed;
+  --color-ink: #161817;
+  --color-graphite: #868a86;
+  --color-hairline: #d6d5cf;
+  --color-dark: #111412;
+  --color-dark-2: #181b19;
+  --color-dark-line: #2a2e2b;
+  --color-dark-rule: #3a3e3b;
+  --color-dark-sub: #a9ada9;
+  --color-signal: #18b67a;
+  --color-placeholder: #e4e3dd;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans:
+    'General Sans', 'Pretendard Variable', Pretendard, Inter, system-ui,
+    -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:
+    var(--font-plex), 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo,
+    monospace;
+
+  --text-meta: 13px;
+  --text-meta--line-height: 1.5;
+  --text-meta--letter-spacing: 0.06em;
+
+  --ease-editorial: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@theme inline {
+  --text-hero: var(--fs-hero);
+  --text-apc: var(--fs-apc);
+  --text-smart: var(--fs-smart);
+  --text-farm: var(--fs-farm);
+  --text-ib: var(--fs-ib);
+  --text-emo: var(--fs-emo);
+  --text-h2: var(--fs-h2);
+  --text-h3: var(--fs-h3);
+  --text-case: var(--fs-case);
+  --text-case-apc: var(--fs-case-apc);
+  --text-d1: var(--fs-d1);
+  --text-d2: var(--fs-d2);
+  --text-d3: var(--fs-d3);
+  --text-d4: var(--fs-d4);
+  --text-lead: var(--fs-lead);
+  --text-body: var(--fs-body);
+  --text-small: var(--fs-small);
+}
+
+@custom-variant mob (@media (max-width: 743px));
+@custom-variant tab-only (@media (min-width: 744px) and (max-width: 1023px));
+@custom-variant short-land (@media (orientation: landscape) and (max-height: 500px));
+@custom-variant fine (@media (hover: hover) and (pointer: fine));
+@custom-variant coarse (@media (hover: none));
+@custom-variant on-dark (&:where(.surface-dark, .surface-dark *));
+@custom-variant js (&:where(.js *));
+@custom-variant inview (&:where([data-inview='true'] *));
+@custom-variant reveal-pending {
+  @media (prefers-reduced-motion: no-preference) {
+    &:where(.js [data-reveal]:not([data-inview='true']) *) {
+      @slot;
+    }
+  }
+}
+
+@utility container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-left: max(var(--margin), env(safe-area-inset-left));
+  padding-right: max(var(--margin), env(safe-area-inset-right));
+}
+
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+@utility surface-dark {
+  background: var(--dark);
+  color: var(--paper);
+}
+@utility mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+}
+@utility muted {
+  color: var(--graphite);
+}
+@utility nowrap {
+  white-space: nowrap;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body[data-scroll-locked] {
+    overflow: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+  }
+  ol,
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  figure {
+    margin: 0;
+  }
+  [id] {
+    scroll-margin-top: calc(56px + env(safe-area-inset-top));
+  }
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+  .surface-dark :focus-visible {
+    outline-color: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}

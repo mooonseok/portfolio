@@ -1,0 +1,101 @@
+:root {
+  --paper: #f3f2ed;
+  --ink: #161817;
+  --graphite: #868a86;
+  --hairline: #d6d5cf;
+  --dark: #111412;
+  --dark-2: #181b19;
+  --dark-line: #2a2e2b;
+  --dark-rule: #3a3e3b;
+  --dark-sub: #a9ada9;
+  --signal: #18b67a;
+  --placeholder: #e4e3dd;
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  --cols: 4;
+  --margin: 20px;
+  --gutter: 16px;
+  --section: 96px;
+  --rail-x: 10px;
+
+  --fs-hero: clamp(40px, 11.5vw, 72px);
+  --fs-apc: clamp(48px, 15vw, 96px);
+  --fs-smart: clamp(36px, 11vw, 76px);
+  --fs-farm: clamp(34px, 10vw, 68px);
+  --fs-ib: clamp(30px, 9vw, 52px);
+  --fs-emo: clamp(28px, 8vw, 44px);
+  --fs-h2: clamp(28px, 8vw, 44px);
+  --fs-h3: clamp(22px, 6vw, 26px);
+  --fs-case: clamp(48px, 16vw, 64px);
+  --fs-case-apc: clamp(56px, 18vw, 72px);
+  --fs-d1: 28px;
+  --fs-d2: 24px;
+  --fs-d3: 22px;
+  --fs-d4: 20px;
+  --fs-lead: clamp(18px, 5.2vw, 20px);
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-meta: 13px;
+}
+
+@media (min-width: 744px) {
+  :root {
+    --cols: 8;
+    --margin: 40px;
+    --gutter: 20px;
+    --section: 140px;
+    --rail-x: 20px;
+    --fs-hero: clamp(64px, 9.5vw, 96px);
+    --fs-apc: 96px;
+    --fs-smart: 76px;
+    --fs-farm: clamp(60px, 8vw, 68px);
+    --fs-ib: 52px;
+    --fs-emo: 44px;
+    --fs-h2: 44px;
+    --fs-h3: 26px;
+    --fs-case: clamp(80px, 9vw, 96px);
+    --fs-case-apc: clamp(96px, 11vw, 112px);
+    --fs-d1: 32px;
+    --fs-d2: 28px;
+    --fs-d3: 24px;
+    --fs-d4: 20px;
+    --fs-lead: 22px;
+    --fs-body: 17px;
+    --fs-small: 14.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --cols: 12;
+    --margin: 48px;
+    --gutter: 20px;
+    --section: 160px;
+    --rail-x: 24px;
+    --fs-hero: clamp(96px, 9.2vw, 132px);
+    --fs-apc: clamp(100px, 8.4vw, 120px);
+    --fs-smart: clamp(76px, 6.4vw, 92px);
+    --fs-farm: clamp(68px, 5.7vw, 82px);
+    --fs-ib: clamp(56px, 4.5vw, 64px);
+    --fs-emo: clamp(48px, 3.9vw, 56px);
+    --fs-h2: clamp(44px, 3.5vw, 50px);
+    --fs-h3: 28px;
+    --fs-case: clamp(96px, 7.8vw, 112px);
+    --fs-case-apc: clamp(112px, 9.7vw, 140px);
+    --fs-d1: clamp(36px, 2.8vw, 40px);
+    --fs-d2: clamp(30px, 2.2vw, 32px);
+    --fs-d3: 28px;
+    --fs-d4: 22px;
+    --fs-lead: clamp(24px, 1.8vw, 26px);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --margin: 64px;
+    --gutter: 24px;
+    --section: 200px;
+    --rail-x: 32px;
+  }
+}

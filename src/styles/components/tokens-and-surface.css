@@ -1,0 +1,29 @@
+.state-dot {
+  opacity: 0;
+}
+.state-tokens > li[data-default] .state-dot {
+  opacity: 1;
+}
+.state-tokens:has([data-active]) > li .state-dot {
+  opacity: 0;
+}
+.state-tokens:has([data-active]) > li[data-active] .state-dot {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .state-tokens[data-hover]:hover > li .state-dot {
+    opacity: 0;
+  }
+  .state-tokens[data-hover]:hover > li:hover .state-dot {
+    opacity: 1;
+  }
+}
+
+.surface-row:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: calc(var(--rh) / 2);
+  bottom: calc(var(--rh) / -2);
+  border-left: 1.25px solid var(--ink);
+}

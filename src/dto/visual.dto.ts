@@ -1,0 +1,27 @@
+import type { VisualId } from '@/constants/visual';
+
+export interface PinPoint {
+  x: number;
+  y: number;
+}
+
+export interface Pin extends PinPoint {
+  label: string;
+  tablet?: PinPoint;
+  mobile?: PinPoint;
+  hideOnMobile?: boolean;
+  hideOnTablet?: boolean;
+}
+
+export interface Visual {
+  id: VisualId;
+  alt: string;
+  brief: string;
+  src?: string;
+  srcMobile?: string;
+  pins?: Pin[];
+}
+
+export type Visuals = Record<string, Visual>;
+
+export type MetaPair = [string, string];

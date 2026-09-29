@@ -1,0 +1,49 @@
+.status-mark {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+}
+.status-label[data-tone='ink'] .status-mark {
+  background: currentColor;
+}
+.status-label[data-kind='experiment'] .status-mark {
+  border-radius: 0;
+  background: none;
+  border: 1.25px solid currentColor;
+  transform: rotate(45deg);
+}
+.status-mark[data-pulse] {
+  position: relative;
+}
+.status-mark[data-pulse]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.25px solid var(--signal);
+  opacity: 0;
+  pointer-events: none;
+}
+.status-label[data-tone='ink'] .status-mark[data-pulse]::after {
+  border-color: currentColor;
+}
+.status-label[data-kind='experiment'] .status-mark[data-pulse]::after {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-inview='true'] .status-mark[data-pulse]::after {
+    animation: status-pulse 900ms var(--ease) 1 both;
+  }
+}
+@keyframes status-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+}

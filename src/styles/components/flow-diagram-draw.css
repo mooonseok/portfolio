@@ -1,0 +1,48 @@
+.flow-line {
+  transition: transform var(--draw-dur) var(--ease)
+    calc(var(--i) * var(--draw-step) + var(--draw-step));
+}
+.flow-label {
+  transition: opacity 300ms var(--ease) calc(var(--i) * var(--draw-step));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js
+    [data-reveal]:not([data-inview='true'])
+    .flow-diagram[data-draw]
+    .flow-line {
+    transform: scaleX(0);
+  }
+  .js
+    [data-reveal]:not([data-inview='true'])
+    .flow-diagram[data-draw]
+    .flow-step:not(:last-child)::after {
+    transform: scaleY(0);
+  }
+  .js
+    [data-reveal]:not([data-inview='true'])
+    .flow-diagram[data-draw]
+    .flow-node,
+  .js
+    [data-reveal]:not([data-inview='true'])
+    .flow-diagram[data-draw]
+    .flow-label {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 744px) {
+  .js
+    [data-reveal]:not([data-inview='true'])
+    .flow-diagram[data-orient='sequence']
+    .flow-step:not(:last-child)::after {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 744px) and (max-width: 1023px) {
+  .js
+    [data-reveal]:not([data-inview='true'])
+    .flow-diagram[data-orient='sequence-tablet']
+    .flow-step:not(:last-child)::after {
+    transform: none;
+  }
+}

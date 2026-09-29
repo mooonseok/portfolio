@@ -1,0 +1,116 @@
+.flow-diagram {
+  --line: var(--ink);
+  --text: var(--ink);
+
+  --emph: var(--ink);
+  --gap: var(--flow-gap, 22px);
+  --row: var(--flow-row, 16px);
+  --lw: 1.25px;
+  --draw-dur: 400ms;
+  --draw-step: 60ms;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+.flow-diagram[data-tone='dark'] {
+  --line: var(--paper);
+  --text: var(--paper);
+  --emph: var(--paper);
+}
+.flow-diagram[data-tone='muted'] {
+  --line: var(--graphite);
+  --text: var(--ink);
+  --emph: var(--ink);
+}
+.flow-diagram[data-tone='dark-muted'] {
+  --line: var(--graphite);
+  --text: var(--dark-sub);
+  --emph: var(--paper);
+}
+.flow-diagram[data-size='sm'] {
+  --gap: var(--flow-gap, 12px);
+}
+@media (min-width: 1024px) {
+  .flow-diagram {
+    --draw-dur: 600ms;
+    --draw-step: 80ms;
+  }
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 9px minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: start;
+}
+.flow-node-row {
+  display: flex;
+  height: var(--row);
+}
+.flow-label {
+  min-height: var(--row);
+}
+.flow-name {
+  line-height: var(--row);
+}
+.flow-line {
+  display: none;
+}
+.flow-step:not(:last-child)::after {
+  content: '';
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: center;
+  width: 0;
+  height: var(--gap);
+  border-left: var(--lw) solid var(--line);
+  transform-origin: top;
+  transition: transform var(--draw-dur) var(--ease)
+    calc(var(--i) * var(--draw-step) + var(--draw-step));
+}
+.flow-step[data-next='dashed']::after {
+  border-left-style: dashed;
+}
+
+.flow-node {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: var(--lw) solid var(--line);
+  transition:
+    opacity 300ms var(--ease) calc(var(--i) * var(--draw-step)),
+    background-color 150ms var(--ease),
+    border-color 150ms var(--ease);
+}
+.flow-step[data-kind='experiment'] .flow-node {
+  width: 8px;
+  height: 8px;
+  margin-left: 0.5px;
+  border-radius: 0;
+  transform: rotate(45deg);
+}
+
+.flow-step[data-state='active'] .flow-node,
+.flow-diagram:not([data-flow='secondary'])
+  .flow-step[data-active]:not([data-kind='experiment'])
+  .flow-node {
+  border-color: var(--signal);
+  background: var(--signal);
+}
+.flow-step[data-kind='experiment'][data-active] .flow-node,
+.flow-diagram[data-flow='secondary'] .flow-step[data-active] .flow-node {
+  border-color: var(--emph);
+  background: var(--emph);
+}
+.flow-diagram[data-flow='secondary'] .flow-step[data-active] .flow-name {
+  color: var(--emph);
+}
+
+@media (max-width: 743px) {
+  .flow-step[data-hide-mobile] {
+    display: none;
+  }
+  .flow-step[data-mobile-last]::after {
+    display: none;
+  }
+}
