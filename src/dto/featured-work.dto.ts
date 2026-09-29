@@ -10,8 +10,10 @@ export interface FeaturedBlock {
 
 export interface IndianBobBlock extends FeaturedBlock {
   surfaces: SurfaceTile[];
+  relationLabel: string;
   rows: SurfaceRow[];
   hasSurfaces: boolean;
+  hasRelation: boolean;
 }
 
 export interface EmosaveBlock extends FeaturedBlock {

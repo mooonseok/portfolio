@@ -1,13 +1,16 @@
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import { site } from '@/content/site';
+import { LINK_AS } from '@/constants/tag';
 
-const plex = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
+const plex = localFont({
+  src: '../../public/fonts/ibm-plex-mono/IBMPlexMono-Regular-latin.woff2',
+  weight: '400',
+  style: 'normal',
   variable: '--font-plex',
   display: 'swap',
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 });
 
 export const metadata: Metadata = {
@@ -31,23 +34,11 @@ export default function RootLayout({
     <html lang='ko' className={plex.variable} suppressHydrationWarning>
       <head>
         <link
-          rel='preconnect'
-          href='https://api.fontshare.com'
-          crossOrigin=''
-        />
-        <link
-          rel='preconnect'
-          href='https://cdn.fontshare.com'
-          crossOrigin=''
-        />
-        <link rel='preconnect' href='https://cdn.jsdelivr.net' crossOrigin='' />
-        <link
-          rel='stylesheet'
-          href='https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap'
-        />
-        <link
-          rel='stylesheet'
-          href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css'
+          rel='preload'
+          href='/fonts/general-sans/GeneralSans-Medium.woff2'
+          as={LINK_AS.FONT}
+          type='font/woff2'
+          crossOrigin='anonymous'
         />
         <script
           dangerouslySetInnerHTML={{

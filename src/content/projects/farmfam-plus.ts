@@ -7,7 +7,6 @@ import { farmfamPlusCase } from './farmfam-plus-case';
 const mainVisual = {
   src: '/images/projects/farmfam/main.jpg',
   alt: '농산물 포장과 재고를 표현한 개념 이미지',
-  scale: 1,
 };
 
 export const farmfamPlus: Project = {
@@ -53,29 +52,6 @@ export const farmfamPlus: Project = {
         '(min-width: 1440px) 644px, (min-width: 1024px) calc(50vw - 58px), (min-width: 744px) calc(62.5vw - 57.5px), 100vw',
       id: VISUAL_ID.FARMFAM_HOME,
       brief: 'FARMFAM+ — commerce still life, 4:5',
-      pins: [
-        {
-          label: 'ORDER',
-          x: 14,
-          y: 22,
-          tablet: { x: 10, y: 20 },
-          mobile: { x: 8, y: 18 },
-        },
-        {
-          label: 'INVENTORY',
-          x: 46,
-          y: 54,
-          tablet: { x: 44, y: 54 },
-          mobile: { x: 40, y: 60 },
-        },
-        {
-          label: 'REWARD',
-          x: 22,
-          y: 78,
-          tablet: { x: 18, y: 80 },
-          hideOnMobile: true,
-        },
-      ],
     },
     hero: {
       ...mainVisual,

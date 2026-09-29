@@ -1,6 +1,5 @@
 import { Column } from '@/components/atoms/column';
 import { Grid } from '@/components/atoms/grid';
-import { ListItem } from '@/components/atoms/list';
 import { Text } from '@/components/atoms/text';
 import type { SurfaceTile } from '@/dto/surface.dto';
 import { TAG } from '@/constants/tag';

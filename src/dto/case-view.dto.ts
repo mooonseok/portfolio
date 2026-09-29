@@ -54,6 +54,7 @@ export interface SmartFarmCaseViewProps extends CaseViewModel {
 
 export interface IndianBobCaseViewProps extends CaseViewModel {
   showContext: boolean;
+  showRelation: boolean;
   showWork: boolean;
   showNoteFields: boolean;
   showCurrent: boolean;

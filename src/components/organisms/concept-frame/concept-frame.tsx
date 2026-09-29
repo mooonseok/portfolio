@@ -126,10 +126,10 @@ export function ConceptFrame({
             <Box
               as={TAG.SPAN}
               className={cx(
-                'size-[9px] rounded-[50%] border-[1.25px] border-ink bg-paper [transition:background-color_150ms_var(--ease),border-color_150ms_var(--ease)] on-dark:border-paper on-dark:bg-dark',
+                'flex-none border-[1.25px] border-ink bg-paper [transition:background-color_150ms_var(--ease),border-color_150ms_var(--ease)] on-dark:border-paper on-dark:bg-dark',
                 p.state === NODE_STATE.EXPERIMENT
-                  ? 'group-data-active/pin:border-ink group-data-active/pin:bg-ink on-dark:group-data-active/pin:border-paper on-dark:group-data-active/pin:bg-paper'
-                  : 'group-data-active/pin:border-signal group-data-active/pin:bg-signal'
+                  ? 'ml-[0.5px] size-[8px] rotate-45 group-data-active/pin:border-ink group-data-active/pin:bg-ink on-dark:group-data-active/pin:border-paper on-dark:group-data-active/pin:bg-paper'
+                  : 'size-[9px] rounded-[50%] group-data-active/pin:border-signal group-data-active/pin:bg-signal'
               )}
             />
             <Text

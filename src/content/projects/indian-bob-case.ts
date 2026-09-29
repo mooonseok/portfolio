@@ -25,6 +25,15 @@ export const indianBobCase: CaseContent = {
       { label: 'REWARD / SCORE', sub: '보상 및 활동 점수 처리' },
     ],
   },
+  surfaceRelation: {
+    label: 'USER → MOBILE APP → API → DATA, ADMIN connected to API',
+    rows: [
+      { label: 'USER' },
+      { label: 'APP', wide: 'MOBILE APP' },
+      { label: 'API', branch: { label: 'ADMIN' } },
+      { label: 'DATA' },
+    ],
+  },
   work: [
     {
       title: 'Community / Matching',

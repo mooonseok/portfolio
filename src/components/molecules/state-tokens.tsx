@@ -1,6 +1,5 @@
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
-import { List, ListItem } from '@/components/atoms/list';
 import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { FLOW_ROLE } from '@/constants/flow';

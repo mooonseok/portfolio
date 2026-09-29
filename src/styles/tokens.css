@@ -1,15 +1,15 @@
 :root {
-  --paper: #f3f2ed;
-  --ink: #161817;
-  --graphite: #868a86;
-  --hairline: #d6d5cf;
-  --dark: #111412;
-  --dark-2: #181b19;
-  --dark-line: #2a2e2b;
-  --dark-rule: #3a3e3b;
-  --dark-sub: #a9ada9;
-  --signal: #18b67a;
-  --placeholder: #e4e3dd;
+  --paper: var(--color-paper);
+  --ink: var(--color-ink);
+  --graphite: var(--color-graphite);
+  --hairline: var(--color-hairline);
+  --dark: var(--color-dark);
+  --dark-2: var(--color-dark-2);
+  --dark-line: var(--color-dark-line);
+  --dark-rule: var(--color-dark-rule);
+  --dark-sub: var(--color-dark-sub);
+  --signal: var(--color-signal);
+  --placeholder: var(--color-placeholder);
 
   --ease: cubic-bezier(0.2, 0, 0, 1);
 

@@ -19,8 +19,10 @@ export function IndianBobBlockView({
   href,
   meta,
   surfaces,
+  relationLabel,
   rows,
   hasSurfaces,
+  hasRelation,
 }: IndianBobBlock) {
   return (
     <ScrollScene
@@ -81,10 +83,9 @@ export function IndianBobBlockView({
           </Box>
         ) : null}
         <Box className='flex flex-col gap-5 tab:mt-4 lap:mt-16 lap:grid lap:grid-cols-2 lap:gap-6'>
-          <SurfaceRelation
-            label='USER → APP → API → DATA, ADMIN connected to API'
-            rows={rows}
-          />
+          {hasRelation ? (
+            <SurfaceRelation label={relationLabel} rows={rows} />
+          ) : null}
           <ScopeList
             list={p.home.scope}
             mobile={p.home.scopeMobile}

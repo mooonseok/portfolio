@@ -23,12 +23,14 @@ export function IndianBobCaseView({
   p,
   groups,
   showContext,
+  showRelation,
   showWork,
   showNoteFields,
   showCurrent,
 }: IndianBobCaseViewProps) {
   const c = p.case;
   const note = c.engineeringNote;
+  const relation = showRelation ? c.surfaceRelation : undefined;
   return (
     <CaseStudyTemplate
       project={p}
@@ -67,30 +69,28 @@ export function IndianBobCaseView({
           <ParagraphsView list={c.contextProblem} />
         </CaseSectionView>
       ) : null}
-      <CaseSectionView
-        group={groups.system}
-        depth={CASE_DEPTH.L2}
-        title='System / Flow'
-        layout={CASE_LAYOUT.WIDE}
-        loose
-      >
-        <Box className={sub}>
-          <Box className='tab:col-[1/-1] lap:col-[3/11]'>
-            <SurfaceRelation
-              label='USER → MOBILE APP → API → DATA, ADMIN connected to API'
-              showSubs={false}
-              rows={[
-                { label: 'USER' },
-                { label: 'APP', wide: 'MOBILE APP' },
-                { label: 'API', branch: { label: 'ADMIN' } },
-                { label: 'DATA' },
-              ]}
-            />
+      {relation ? (
+        <CaseSectionView
+          group={groups.system}
+          depth={CASE_DEPTH.L2}
+          title='System / Flow'
+          layout={CASE_LAYOUT.WIDE}
+          loose
+        >
+          <Box className={sub}>
+            <Box className='tab:col-[1/-1] lap:col-[3/11]'>
+              <SurfaceRelation
+                label={relation.label}
+                showSubs={false}
+                rows={relation.rows}
+              />
+            </Box>
           </Box>
-        </Box>
-      </CaseSectionView>
+        </CaseSectionView>
+      ) : null}
       {c.featureFlow ? (
         <CaseSectionView
+          group={relation ? undefined : groups.system}
           depth={CASE_DEPTH.L2}
           title='Feature Flow'
           id='feature-flow'
