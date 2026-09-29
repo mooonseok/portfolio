@@ -7,7 +7,6 @@ import { indianBobCase } from './indian-bob-case';
 const mainVisual = {
   src: '/images/projects/indian-bob/main.jpg',
   alt: '모바일과 관리자 기기의 연결을 표현한 개념 이미지',
-  scale: 1.1,
 };
 
 export const indianBob: Project = {
@@ -49,20 +48,8 @@ export const indianBob: Project = {
       id: VISUAL_ID.INDIANBOB_HOME,
       brief: 'INDIAN BOB — mobile + admin surfaces, 4:3',
       pins: [
-        {
-          label: 'APP',
-          x: 12,
-          y: 28,
-          tablet: { x: 10, y: 26 },
-          hideOnMobile: true,
-        },
-        {
-          label: 'ADMIN',
-          x: 58,
-          y: 62,
-          tablet: { x: 56, y: 62 },
-          hideOnMobile: true,
-        },
+        { label: 'APP', x: 9, y: 41, hideOnMobile: true },
+        { label: 'ADMIN', x: 70, y: 29, hideOnMobile: true },
       ],
     },
     app: {

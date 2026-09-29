@@ -8,7 +8,6 @@ import { smartFarmCase } from './smart-farm-case';
 const mainVisual = {
   src: '/images/projects/smart-farm/main.jpg',
   alt: '온실과 재배 환경을 표현한 개념 이미지',
-  scale: 1.06,
 };
 
 export const smartFarm: Project = {
@@ -72,7 +71,6 @@ export const smartFarm: Project = {
     sensor: {
       src: '/images/projects/smart-farm/sensor.jpg',
       sizes: '(min-width: 1440px) 310px, (min-width: 1024px) 25vw, 50vw',
-      scale: 1.08,
       id: VISUAL_ID.SMART_SENSOR,
       alt: '온실에 설치된 센서 장치를 표현한 개념 이미지',
       brief: 'sensor enclosure, 1:1',
@@ -80,8 +78,6 @@ export const smartFarm: Project = {
     equipment: {
       src: '/images/projects/smart-farm/equipment.jpg',
       sizes: '(min-width: 1440px) 310px, (min-width: 1024px) 25vw, 50vw',
-      scale: 1.3,
-      origin: '0% 60%',
       id: VISUAL_ID.SMART_EQUIPMENT,
       alt: '온실 환기팬을 표현한 개념 이미지',
       brief: 'fan / valve / vent, 1:1 · 4:5',

@@ -7,7 +7,6 @@ import { emosaveCase } from './emosave-case';
 const mainVisual = {
   src: '/images/projects/emosave/main.jpg',
   alt: '모듈형 마을 커스터마이징을 표현한 개념 이미지',
-  scale: 1.1,
 };
 
 export const emosave: Project = {

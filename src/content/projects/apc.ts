@@ -7,8 +7,6 @@ import { apcCase } from './apc-case';
 const mainVisual = {
   src: '/images/projects/apc/main.jpg',
   alt: '농산물 처리 및 물류 환경을 표현한 개념 이미지',
-  scale: 1.28,
-  origin: '8% 50%',
 };
 
 export const apc: Project = {
