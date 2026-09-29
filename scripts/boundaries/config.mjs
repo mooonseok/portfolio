@@ -133,4 +133,6 @@ export const LITERAL_EXEMPT = [['constants']];
 
 export const MAX_LINES = 200;
 
-export const LINE_ALLOW = new Set([]);
+// fonts.css is a generated @font-face manifest: 3 General Sans faces plus the
+// 92 Pretendard dynamic subsets, each with its upstream unicode-range.
+export const LINE_ALLOW = new Set(['src/styles/fonts.css']);

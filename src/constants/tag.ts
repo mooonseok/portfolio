@@ -87,3 +87,9 @@ export const BUTTON_TYPE = {
 } as const;
 
 export type ButtonType = (typeof BUTTON_TYPE)[keyof typeof BUTTON_TYPE];
+
+export const LINK_AS = {
+  FONT: 'font',
+} as const;
+
+export type LinkAs = (typeof LINK_AS)[keyof typeof LINK_AS];
