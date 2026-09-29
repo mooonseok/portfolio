@@ -1,3 +1,4 @@
+import type { WorkAreasProps } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
 import type { Project } from '@/dto/project.dto';
 import type { MetaPair } from '@/dto/visual.dto';
@@ -18,6 +19,11 @@ export interface WorkBlock {
   meta: MetaPair;
 }
 
+export interface FarmFamWorkBlock extends WorkBlock {
+  areas: WorkAreasProps;
+  hasAreas: boolean;
+}
+
 export interface ApcWorkBlock extends WorkBlock {
   material: Flow;
   secondary: Flow[];
@@ -31,7 +37,7 @@ export interface SmartFarmWorkBlock extends WorkBlock {
 
 export interface SelectedWorkViewProps {
   index: WorkIndexEntry[];
-  farmfam: WorkBlock;
+  farmfam: FarmFamWorkBlock;
   apc: ApcWorkBlock;
   smartFarm: SmartFarmWorkBlock;
 }

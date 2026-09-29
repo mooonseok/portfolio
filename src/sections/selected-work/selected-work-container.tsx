@@ -1,8 +1,10 @@
 import { SelectedWorkView } from './selected-work-view';
 import { requireProject } from '@/lib/content';
+import { has } from '@/lib/has';
 import type { Project } from '@/dto/project.dto';
 import type {
   ApcWorkBlock,
+  FarmFamWorkBlock,
   SmartFarmWorkBlock,
   WorkBlock,
   WorkIndexEntry,
@@ -28,6 +30,28 @@ const toEntry = (p: Project): WorkIndexEntry => ({
   title: p.title,
 });
 
+const toFarmFam = (p: Project): FarmFamWorkBlock => {
+  const areas = p.home.areas ?? [];
+  const base = `${p.slug}-area`;
+  return {
+    ...toBlock(p),
+    areas: {
+      labelId: `${base}s-label`,
+      items: areas.map((a, i) => ({
+        ...a,
+        num: String(i + 1).padStart(2, '0'),
+        relatedText: a.related.join(' · '),
+        hasRelated: has(a.related),
+        tabId: `${base}-${a.id}-tab`,
+        panelId: `${base}-${a.id}-panel`,
+        toggleId: `${base}-${a.id}-toggle`,
+        regionId: `${base}-${a.id}-region`,
+      })),
+    },
+    hasAreas: has(areas),
+  };
+};
+
 const toApc = (p: Project): ApcWorkBlock => {
   const [material, ...secondary] = p.home.flows;
   return { ...toBlock(p), material, secondary };
@@ -48,7 +72,7 @@ export function SelectedWorkContainer() {
   return (
     <SelectedWorkView
       index={[farmfam, apc, smartFarm].map(toEntry)}
-      farmfam={toBlock(farmfam)}
+      farmfam={toFarmFam(farmfam)}
       apc={toApc(apc)}
       smartFarm={toSmartFarm(smartFarm)}
     />

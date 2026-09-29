@@ -1,16 +1,15 @@
+import { WorkAreas } from './work-areas';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Cta } from '@/components/atoms/cta';
 import { NavLink } from '@/components/atoms/nav-link';
 import { Text } from '@/components/atoms/text';
-import { FlowDiagram } from '@/components/molecules/flow-diagram';
 import { ProjectHeader } from '@/components/molecules/project-header';
 import { ScopeList } from '@/components/molecules/scope-list';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import { ScrollScene } from '@/components/organisms/scroll-scene';
-import type { WorkBlock } from '@/dto/selected-work.dto';
+import type { FarmFamWorkBlock } from '@/dto/selected-work.dto';
 import { BREAKPOINT } from '@/constants/breakpoint';
-import { FLOW_ORIENT } from '@/constants/flow';
 import { TITLE_FS } from '@/constants/project-header';
 import { TAG } from '@/constants/tag';
 
@@ -18,14 +17,16 @@ export function FarmFamBlockView({
   project: p,
   href,
   caseLabel,
-  flowLabel,
   surfaces,
   meta,
-}: WorkBlock) {
+  areas,
+  hasAreas,
+}: FarmFamWorkBlock) {
   return (
     <ScrollScene
       as={TAG.SECTION}
       id={p.slug}
+      steps={false}
       className='container pt-12 [--title-lh:0.98] [--title-ls:-0.016em] tab:pb-40 lap:pt-20 lap:pb-(--section)'
     >
       <ProjectHeader project={p} fs={TITLE_FS.FARM} reveal />
@@ -64,21 +65,20 @@ export function FarmFamBlockView({
           </Box>
         </Column>
       </Box>
-      <Box className='mt-5 grid-page gap-y-5 border-t border-t-hairline pt-[18px] tab:mt-20 tab:pt-5 lap:mt-30 lap:pt-6'>
-        <Text
-          as={TAG.SPAN}
-          className='hidden mono muted tab:col-[1/-1] tab:block lap:col-[1/3]'
-        >
-          FLOW
-        </Text>
-        <Box className='col-[1/-1] lap:col-[3/13] lap:[--flow-label-gap:16px]'>
-          <FlowDiagram
-            nodes={p.home.flows[0].nodes}
-            orient={FLOW_ORIENT.AUTO}
-            label={flowLabel}
-          />
+      {hasAreas ? (
+        <Box className='mt-5 grid-page gap-y-5 border-t border-t-hairline pt-[18px] tab:mt-20 tab:gap-y-7 tab:pt-5 lap:mt-30 lap:pt-6'>
+          <Text
+            as={TAG.SPAN}
+            id={areas.labelId}
+            className='col-[1/-1] mono muted lap:col-[1/3]'
+          >
+            WORK AREAS
+          </Text>
+          <Box className='col-[1/-1] lap:col-[3/13]'>
+            <WorkAreas {...areas} />
+          </Box>
         </Box>
-      </Box>
+      ) : null}
       <Box className='mt-5 tab:hidden'>
         <Cta href={href} label={p.home.cta} />
       </Box>
