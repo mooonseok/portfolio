@@ -57,7 +57,7 @@ export function ConceptFrame({
   const range = motion ? parallax : 0;
   const shift = motion && pointer;
   const media = visual.src ? (
-    <Box as={TAG.PICTURE}>
+    <Box as={TAG.PICTURE} className='absolute inset-0'>
       {visual.srcMobile ? (
         <Box as={TAG.SOURCE} media={MEDIA.MOBILE} srcSet={visual.srcMobile} />
       ) : null}
