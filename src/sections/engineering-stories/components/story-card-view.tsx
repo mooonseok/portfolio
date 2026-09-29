@@ -7,12 +7,17 @@ import { Text } from '@/components/atoms/text';
 import { FlowDiagram } from '@/components/molecules/flow-diagram';
 import { cx } from '@/lib/cx';
 import type { StoryCard } from '@/dto/profile.dto';
-import { FLOW_ORIENT, FLOW_ROLE } from '@/constants/flow';
+import { FLOW_ROLE } from '@/constants/flow';
 import { STATUS_KIND } from '@/constants/status';
 import { HEADING, TAG } from '@/constants/tag';
 import { TONE } from '@/constants/tone';
 
-export function StoryCardView({ story: st, experiment, flowTone }: StoryCard) {
+export function StoryCardView({
+  story: st,
+  experiment,
+  flowTone,
+  flowOrient,
+}: StoryCard) {
   return (
     <Column
       as={TAG.ARTICLE}
@@ -44,7 +49,7 @@ export function StoryCardView({ story: st, experiment, flowTone }: StoryCard) {
       </Heading>
       <FlowDiagram
         nodes={st.flow}
-        orient={FLOW_ORIENT.VERTICAL}
+        orient={flowOrient}
         tone={flowTone}
         role={FLOW_ROLE.STATIC}
         label={st.title}
