@@ -53,7 +53,7 @@ export function SurfaceRelation({
         <Grid
           as={TAG.LI}
           key={r.label}
-          className='surface-row group/row relative auto-rows-auto grid-cols-[9px_var(--lw)_var(--bl)_9px_auto] items-center [justify-content:start] gap-x-3.5 pb-(--seg) last:pb-0 tab:grid-cols-[9px_var(--lw)_72px_var(--bl)_9px_auto_auto] lap:grid-cols-[9px_var(--lw)_var(--bl)_9px_auto]'
+          className='surface-row group/row relative auto-rows-auto grid-cols-[9px_var(--lw)_var(--bl)_9px_auto] items-center [justify-content:start] gap-x-3.5 pb-(--seg) last:pb-0 tab:grid-cols-[9px_var(--lw)_72px_var(--bl)_9px_auto_auto] lap:grid-cols-[9px_var(--lw)_minmax(0,var(--bl))_9px_auto]'
           data-step={i}
           data-node={r.label}
         >
