@@ -5,12 +5,21 @@ design source of truth is the Phase 1–4 **LOCKED** canvases.
 
 ```bash
 pnpm install
-pnpm dev                # http://localhost:3000
+pnpm dev                # http://localhost:3000 (.claude/launch.json uses 3100)
+pnpm lint               # ESLint 9 flat config (eslint.config.mjs), 0 warnings allowed
 pnpm typecheck
 pnpm check:boundaries   # architecture rules (see §2)
 pnpm format             # Prettier + Tailwind class sorting
+pnpm format:check
 pnpm build
 ```
+
+`pnpm lint` runs the ESLint CLI (`eslint . --max-warnings=0`) against
+`eslint.config.mjs`, which pulls in `next/core-web-vitals` and `next/typescript`
+through `FlatCompat`. `next lint` is deprecated in Next 15 and removed in 16, so
+it is no longer used. `next.config.ts` pins `outputFileTracingRoot` to this
+directory so a lockfile in a parent folder cannot be inferred as the workspace
+root.
 
 Claude Code runs Prettier automatically after every file edit
 (`.claude/settings.json`, PostToolUse hook).
@@ -74,7 +83,13 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{scope, scopeMobile, flows, cta}, visuals{}, case{…}`
 
 `case`:
-`role, rolePhases?, roleSurfaces?, roleTracks?, contextProblem, systemFlows, reverseFlow?, monitoringFlow?, featureFlow?, controlExperiment?, work[], workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus?, stateFlow?, stateFlowNote?`
+`role, rolePhases?, roleSurfaces?, roleTracks?, contextProblem, systemFlows, reverseFlow?, monitoringFlow?, featureFlow?, surfaceRelation?, controlExperiment?, work[], workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus?, stateFlow?, stateFlowNote?`
+
+`surfaceRelation` (`{ label, rows }`) is the single definition of IndianBob's
+USER → MOBILE APP → API → DATA relation with the ADMIN branch. The homepage
+Featured block and the case study `System / Flow` section both read it; the
+homepage container only adds the per-row `sub` captions from `roleSurfaces`, and
+the case study renders the same rows with `showSubs={false}`.
 
 Flow nodes carry no `active` state (the active node follows scroll); only
 `FLOW_ROLE.STATIC` diagrams such as Stories S01 read `state` from data. Pins
@@ -109,6 +124,8 @@ Rules:
 | `techNotes`                                                          | —                                                       | Engineering group, flexible fields, no STACK block                           |
 | `engineeringNote`                                                    | —                                                       | IndianBob Apple Sign-in dark card                                            |
 | `experiment`                                                         | S03 story (homepage uses `site.stories`)                | APC OCR: flow ends at DECISION, NOT SHIPPED appears once in the DECISION row |
+| `stories[].description`                                              | Story card body, under title and flow                   | —                                                                            |
+| `surfaceRelation`                                                    | IndianBob Featured relation (with `roleSurfaces` subs)  | IndianBob System / Flow (labels only)                                        |
 | `currentState` · `currentStateTracks`                                | —                                                       | Current State (Smart Farm: 2 columns, stated once)                           |
 | `interactionFocus` · `stateFlow` · `workParagraphs` · `currentState` | Emosave state tokens                                    | Emosave Interaction / Work / Current State                                   |
 
@@ -160,21 +177,36 @@ written as CSS variables / attributes.
 
 ## 7. Before launch
 
-1. **Images:** Drop conceptual images into `public/visuals/…` and set `src` (and
-   `srcMobile` for mobile crops) on the matching entry in `visuals` in
-   `content/projects/<slug>.ts`. Without `src`, the project's conceptual
-   fallback (`organisms/concept-art`) renders; the brief text only shows in
-   development.
+1. **Images:** Conceptual images live in `public/images/projects/<project>/` and
+   are referenced by `src` (and optionally `srcMobile` for a mobile crop) on the
+   matching entry in `visuals` in `content/projects/<slug>.ts`. All entries
+   carry an image except **Smart Farm `monitor`** and **Emosave `store`**, which
+   render the drawn SVG concept illustrations in `organisms/concept-art` — those
+   two are finished illustrations, not empty placeholders. The `brief` string is
+   a development-only caption and never renders in a production build.
 2. **Pin positions:** Adjust `pins[].x/y` in `content/projects/<slug>.ts` for
    each image.
 3. **Contact:** Fill in `site.contact.email` / `github`. The CONTACT nav item
    and the footer contact block then appear automatically.
 4. **ABOUT nav:** It currently points to `#about`, which is the Tools / Scope
    section. Change it if you add a separate About section.
-5. **Fonts:** No font files ship with the repo. General Sans (Fontshare) and
-   Pretendard (jsDelivr) load from CDNs, IBM Plex Mono via `next/font`. Fallback
-   stacks are in the `@theme` block of `styles/globals.css`. To self-host, add
-   the files and switch to `next/font/local`.
+5. **Fonts:** All three families are self-hosted from `public/fonts/`; see
+   `public/fonts/README.md` for sources and licenses. Nothing is fetched from a
+   third-party CDN at runtime and `pnpm build` needs no network access for
+   fonts.
+   - **General Sans** 400/500/600 — `@font-face` in `styles/fonts.css`;
+     `GeneralSans-Medium.woff2` is preloaded from the document head because the
+     hero and every project title use it.
+   - **Pretendard Variable** — the upstream 92-file dynamic subset, also
+     declared in `styles/fonts.css`, so a page downloads only the Korean subsets
+     it renders (about 10 files on the homepage). The full family is never
+     preloaded.
+   - **IBM Plex Mono** 400 (latin subset) — `next/font/local` in
+     `app/layout.tsx`. Weight 500 is not shipped: no `.mono` element resolves to
+     a heavier weight on any page.
+
+   Fallback stacks stay in the `@theme` block of `styles/globals.css`
+   (`--font-sans`, `--font-mono`); every face uses `font-display: swap`.
 
 ## 8. QA (same checklist as Phase 4 LOCKED)
 
