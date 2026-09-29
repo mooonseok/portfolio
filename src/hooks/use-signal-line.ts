@@ -157,6 +157,7 @@ export function useSignalLine() {
     document.fonts?.ready.then(queueMeasure).catch(() => {});
     reducedMq.addEventListener('change', onScroll);
     branchMq.addEventListener('change', onScroll);
+    const state = geo.current;
     return () => {
       cancelAnimationFrame(raf);
       cancelAnimationFrame(mraf);
@@ -165,7 +166,7 @@ export function useSignalLine() {
       window.removeEventListener('load', queueMeasure);
       reducedMq.removeEventListener('change', onScroll);
       branchMq.removeEventListener('change', onScroll);
-      for (const b of geo.current.branches) b.el.removeAttribute('data-passed');
+      for (const b of state.branches) b.el.removeAttribute('data-passed');
     };
   }, []);
 
