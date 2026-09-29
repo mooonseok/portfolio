@@ -7,7 +7,7 @@ import type {
 import type { TechNote } from '@/dto/field.dto';
 import type { Flow } from '@/dto/flow.dto';
 import type { Track } from '@/dto/status.dto';
-import type { SurfaceTile } from '@/dto/surface.dto';
+import type { SurfaceRelationContent, SurfaceTile } from '@/dto/surface.dto';
 import type { Decision, WorkItem } from '@/dto/work.dto';
 
 export interface RolePhase {
@@ -37,6 +37,7 @@ export interface CaseContent {
   reverseFlow?: Flow;
   monitoringFlow?: Flow;
   featureFlow?: Flow;
+  surfaceRelation?: SurfaceRelationContent;
   work: WorkItem[];
   workParagraphs?: string[];
   decisions: Decision[];

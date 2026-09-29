@@ -20,22 +20,20 @@ function toBlock(project: Project): FeaturedBlock {
 
 function toIndianBob(project: Project): IndianBobBlock {
   const surfaces = project.case.roleSurfaces ?? [];
+  const relation = project.case.surfaceRelation;
   const sub = (label: string) => surfaces.find((x) => x.label === label)?.sub;
-  const rows: SurfaceRow[] = [
-    { label: 'USER' },
-    { label: 'APP', wide: 'MOBILE APP', sub: sub('APP') },
-    {
-      label: 'API',
-      sub: sub('API'),
-      branch: { label: 'ADMIN', sub: sub('ADMIN') },
-    },
-    { label: 'DATA' },
-  ];
+  const rows: SurfaceRow[] = (relation?.rows ?? []).map((r) => ({
+    ...r,
+    sub: sub(r.label),
+    branch: r.branch ? { ...r.branch, sub: sub(r.branch.label) } : undefined,
+  }));
   return {
     ...toBlock(project),
     surfaces,
+    relationLabel: relation?.label ?? '',
     rows,
-    hasSurfaces: surfaces.length > 0,
+    hasSurfaces: has(surfaces),
+    hasRelation: has(rows),
   };
 }
 

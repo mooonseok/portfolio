@@ -10,6 +10,7 @@ export function IndianBobCase({ p }: { p: Project }) {
       p={p}
       groups={caseGroupTags(p)}
       showContext={has(c.contextProblem)}
+      showRelation={has(c.surfaceRelation?.rows ?? [])}
       showWork={has(c.work)}
       showNoteFields={!!c.engineeringNote && has(c.engineeringNote.fields)}
       showCurrent={has(c.currentState)}
