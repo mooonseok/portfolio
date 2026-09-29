@@ -51,6 +51,7 @@ export function EmosaveBlockView({
           visual={p.visuals.home}
           className='[--ratio:4/5]'
           radius={20}
+          parallax={6}
           meta={meta}
         />
       </NavLink>

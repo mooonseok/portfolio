@@ -35,7 +35,7 @@ export function ConceptFrame({
   parallax = PARALLAX_DEFAULT,
   pointer = true,
   fallback,
-  sizes = IMAGE_SIZES.HALF_DESKTOP,
+  sizes = visual.sizes ?? IMAGE_SIZES.HALF_DESKTOP,
   priority,
   motion = true,
   children,
@@ -57,7 +57,7 @@ export function ConceptFrame({
   const range = motion ? parallax : 0;
   const shift = motion && pointer;
   const media = visual.src ? (
-    <Box as={TAG.PICTURE}>
+    <Box as={TAG.PICTURE} className='absolute inset-0'>
       {visual.srcMobile ? (
         <Box as={TAG.SOURCE} media={MEDIA.MOBILE} srcSet={visual.srcMobile} />
       ) : null}
@@ -68,6 +68,11 @@ export function ConceptFrame({
         sizes={sizes}
         priority={priority}
         className='object-cover'
+        style={{
+          objectPosition: visual.position,
+          transform: visual.scale ? `scale(${visual.scale})` : undefined,
+          transformOrigin: visual.origin,
+        }}
       />
     </Box>
   ) : (

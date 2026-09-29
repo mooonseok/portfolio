@@ -4,6 +4,13 @@ import { VISUAL_ID } from '@/constants/visual';
 import type { Project } from '@/dto/project.dto';
 import { apcCase } from './apc-case';
 
+const mainVisual = {
+  src: '/images/projects/apc/main.jpg',
+  alt: '농산물 처리 및 물류 환경을 표현한 개념 이미지',
+  scale: 1.28,
+  origin: '8% 50%',
+};
+
 export const apc: Project = {
   slug: PROJECT_SLUG.APC,
   num: '02',
@@ -61,8 +68,9 @@ export const apc: Project = {
   },
   visuals: {
     home: {
+      ...mainVisual,
+      sizes: '100vw',
       id: VISUAL_ID.APC_HOME,
-      alt: '크레이트, 팔레트, QR 라벨, 태블릿이 있는 가공 현장 — 개념 이미지',
       brief: 'APC — processing floor, 21:9 / 16:9 / 4:5',
       pins: [
         {
@@ -89,8 +97,10 @@ export const apc: Project = {
       ],
     },
     hero: {
+      ...mainVisual,
+      sizes: '100vw',
+      position: '45% 55%',
       id: VISUAL_ID.APC_HERO,
-      alt: '가공 현장 풀블리드 — 개념 이미지',
       brief: 'APC — full-bleed floor, 21:9',
     },
   },

@@ -39,7 +39,7 @@ export const VISUAL_SLOT = {
 export type VisualSlot = (typeof VISUAL_SLOT)[keyof typeof VISUAL_SLOT];
 
 export const IMAGE_SIZES = {
-  FULL: '100vw',
+  FULL: '(min-width: 1440px) 1440px, 100vw',
   HALF_DESKTOP: '(min-width: 1024px) 50vw, 100vw',
 } as const;
 
