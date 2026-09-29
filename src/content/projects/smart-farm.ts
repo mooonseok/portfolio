@@ -43,6 +43,8 @@ export const smartFarm: Project = {
       pins: [
         {
           label: 'VENT',
+          link: 'EQUIPMENT',
+          state: NODE_STATE.EXPERIMENT,
           x: 10,
           y: 18,
           tablet: { x: 8, y: 16 },
@@ -50,6 +52,8 @@ export const smartFarm: Project = {
         },
         {
           label: 'FAN',
+          link: 'EQUIPMENT',
+          state: NODE_STATE.EXPERIMENT,
           x: 18,
           y: 70,
           tablet: { x: 16, y: 72 },
