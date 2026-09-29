@@ -54,6 +54,11 @@ export function StoryCardView({
         role={FLOW_ROLE.STATIC}
         label={st.title}
       />
+      {st.description ? (
+        <Text className='text-small leading-[1.6] text-pretty'>
+          {st.description}
+        </Text>
+      ) : null}
       {st.keywords ? (
         <List className='hidden lap:flex lap:flex-col lap:gap-1 lap:text-small lap:leading-[1.5] lap:text-graphite'>
           {st.keywords.map((k) => (
