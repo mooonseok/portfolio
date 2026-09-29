@@ -66,6 +66,40 @@ export const farmfamPlusCase: CaseContent = {
     },
   ],
   decisions: [],
+  relationMap: {
+    id: 'order-cancellation',
+    label: 'ORDER CANCELLATION',
+    title: '주문을 취소하면, 무엇이 달라질까?',
+    note: '설명용 관계 도식 · 선은 연결 관계만 나타냅니다',
+    origin: {
+      id: 'order',
+      label: '주문 취소',
+      sub: '취소 서비스',
+      title: '주문 상태 변경으로 끝나지 않습니다.',
+      body: [
+        '주문이 취소될 때 주문 상태만 변경하면 공동구매 진행 상태와 실제 재고가 기존 주문 상태를 계속 반영할 수 있습니다.',
+        '주문 취소 서비스에서 공동구매 정정과 재고 복원을 같은 취소 경로에 연결했습니다.',
+      ],
+    },
+    targets: [
+      {
+        id: 'group-purchase',
+        label: '공동구매',
+        sub: '진행 상태 정정',
+        title: '취소된 주문의 영향을 바로잡습니다.',
+        body: ['주문 취소 처리에 공동구매 진행 상태 정정을 연결했습니다.'],
+      },
+      {
+        id: 'inventory',
+        label: '재고',
+        sub: '재고 복원',
+        title: '취소 경로에서 재고를 복원합니다.',
+        body: [
+          '재고 복원을 주문 취소 경로에 연결하고, 관련 회귀 테스트도 함께 변경했습니다.',
+        ],
+      },
+    ],
+  },
   techNotes: [
     {
       id: 'transaction-boundaries',
@@ -81,24 +115,6 @@ export const farmfamPlusCase: CaseContent = {
           label: 'Implementation',
           body: [
             '활성 공동구매와 수량 진행 상태를 같은 트랜잭션 범위에서 처리하는 구현을 사용했습니다.',
-          ],
-        },
-      ],
-    },
-    {
-      id: 'order-cancellation',
-      title: 'Order cancellation / inventory restoration',
-      fields: [
-        {
-          label: 'Edge case',
-          body: [
-            '주문이 취소될 때 주문 상태만 변경하면 공동구매 진행 상태와 실제 재고가 기존 주문 상태를 계속 반영할 수 있습니다.',
-          ],
-        },
-        {
-          label: 'Handling',
-          body: [
-            '주문 취소 서비스에서 공동구매 정정과 재고 복원을 같은 취소 경로에 연결했고, 관련 회귀 테스트도 함께 변경했습니다.',
           ],
         },
       ],

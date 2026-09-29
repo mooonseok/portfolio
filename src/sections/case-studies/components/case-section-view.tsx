@@ -47,6 +47,7 @@ interface CaseSectionViewProps {
   id?: string;
   depth: CaseDepth;
   title?: string;
+  titleId?: string;
   bareMobile?: boolean;
   intro?: React.ReactNode;
   layout?: CaseLayout;
@@ -64,6 +65,7 @@ export function CaseSectionView({
   id,
   depth,
   title,
+  titleId,
   bareMobile,
   intro,
   layout = CASE_LAYOUT.SPLIT,
@@ -132,6 +134,7 @@ export function CaseSectionView({
         {title && layout !== CASE_LAYOUT.FREE ? (
           <Heading
             level={HEADING.H2}
+            id={titleId}
             className={cx(
               'col-[1/-1] font-medium tab:col-[3/-1]',
               layout === CASE_LAYOUT.WIDE && !intro

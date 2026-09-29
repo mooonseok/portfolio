@@ -5,6 +5,7 @@ import type {
   Experiment,
 } from '@/dto/experiment.dto';
 import type { TechNote } from '@/dto/field.dto';
+import type { RelationMap } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
 import type { Track } from '@/dto/status.dto';
 import type { SurfaceRelationContent, SurfaceTile } from '@/dto/surface.dto';
@@ -43,6 +44,7 @@ export interface CaseContent {
   decisions: Decision[];
   techIntro?: string;
   techNotes: TechNote[];
+  relationMap?: RelationMap;
   engineeringNote?: EngineeringNote;
   experiment?: Experiment;
   controlExperiment?: ControlExperiment;
