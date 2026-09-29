@@ -4,6 +4,12 @@ import { VISUAL_ID } from '@/constants/visual';
 import type { Project } from '@/dto/project.dto';
 import { emosaveCase } from './emosave-case';
 
+const mainVisual = {
+  src: '/images/projects/emosave/main.jpg',
+  alt: '모듈형 마을 커스터마이징을 표현한 개념 이미지',
+  scale: 1.1,
+};
+
 export const emosave: Project = {
   slug: PROJECT_SLUG.EMOSAVE,
   num: '05',
@@ -23,23 +29,32 @@ export const emosave: Project = {
   },
   visuals: {
     home: {
+      ...mainVisual,
+      sizes:
+        '(min-width: 1440px) 422px, (min-width: 1024px) calc(33.333vw - 45.333px), (min-width: 744px) calc(37.5vw - 42.5px), calc(100vw - 40px)',
       id: VISUAL_ID.EMOSAVE_HOME,
-      alt: '둥근 모듈형 오브젝트와 캐릭터 토큰 — 개념 이미지',
       brief: 'EMOSAVE — modular objects, 4:5 r20',
     },
     main: {
+      ...mainVisual,
+      sizes:
+        '(min-width: 1440px) 756px, (min-width: 1024px) 58.33vw, (min-width: 744px) 62.5vw, 100vw',
+      position: '50% 65%',
       id: VISUAL_ID.EMOSAVE_MAIN,
-      alt: '모듈형 오브젝트와 캐릭터 토큰 — 개념 이미지',
       brief: 'modular objects, 4:5 r24',
     },
     custom: {
+      ...mainVisual,
+      sizes: '(min-width: 744px) 33vw, 100vw',
+      position: '50% 75%',
       id: VISUAL_ID.EMOSAVE_CUSTOM,
-      alt: '꾸미기 오브젝트 배치 — 개념 이미지',
       brief: 'customization, 1:1',
     },
     village: {
+      ...mainVisual,
+      sizes: '(min-width: 744px) 33vw, 100vw',
+      position: '50% 40%',
       id: VISUAL_ID.EMOSAVE_VILLAGE,
-      alt: '캐릭터와 마을 그리드 — 개념 이미지',
       brief: 'character / village, 1:1',
     },
     store: {

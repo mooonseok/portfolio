@@ -22,6 +22,10 @@ export interface Visual {
   brief: string;
   src?: string;
   srcMobile?: string;
+  sizes?: string;
+  position?: string;
+  scale?: number;
+  origin?: string;
   pins?: Pin[];
 }
 

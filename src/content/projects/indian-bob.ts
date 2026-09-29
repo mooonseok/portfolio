@@ -4,6 +4,12 @@ import { VISUAL_ID } from '@/constants/visual';
 import type { Project } from '@/dto/project.dto';
 import { indianBobCase } from './indian-bob-case';
 
+const mainVisual = {
+  src: '/images/projects/indian-bob/main.jpg',
+  alt: '모바일과 관리자 기기의 연결을 표현한 개념 이미지',
+  scale: 1.1,
+};
+
 export const indianBob: Project = {
   slug: PROJECT_SLUG.INDIAN_BOB,
   num: '04',
@@ -37,8 +43,10 @@ export const indianBob: Project = {
   },
   visuals: {
     home: {
+      ...mainVisual,
+      sizes:
+        '(min-width: 1440px) 644px, (min-width: 1024px) calc(50vw - 58px), (min-width: 744px) calc(75vw - 65px), calc(100vw - 40px)',
       id: VISUAL_ID.INDIANBOB_HOME,
-      alt: '모바일 화면과 관리자 화면이 겹쳐 놓인 추상 구성 — 개념 이미지',
       brief: 'INDIAN BOB — mobile + admin surfaces, 4:3',
       pins: [
         {
@@ -58,13 +66,19 @@ export const indianBob: Project = {
       ],
     },
     app: {
+      ...mainVisual,
+      sizes:
+        '(min-width: 1440px) 422px, (min-width: 1024px) 33vw, (min-width: 744px) 37.5vw, 50vw',
+      position: '0% 60%',
       id: VISUAL_ID.INDIANBOB_APP,
-      alt: '모바일 서피스 추상 — 개념 이미지',
       brief: 'mobile surface, 3:4',
     },
     admin: {
+      ...mainVisual,
+      sizes:
+        '(min-width: 1440px) 756px, (min-width: 1024px) 58.33vw, (min-width: 744px) 62.5vw, 50vw',
+      position: '100% 60%',
       id: VISUAL_ID.INDIANBOB_ADMIN,
-      alt: '관리자 서피스 추상 — 개념 이미지',
       brief: 'admin surface, 4:3',
     },
   },

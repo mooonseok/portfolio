@@ -4,6 +4,12 @@ import { VISUAL_ID } from '@/constants/visual';
 import type { Project } from '@/dto/project.dto';
 import { farmfamPlusCase } from './farmfam-plus-case';
 
+const mainVisual = {
+  src: '/images/projects/farmfam/main.jpg',
+  alt: '농산물 포장과 재고를 표현한 개념 이미지',
+  scale: 1,
+};
+
 export const farmfamPlus: Project = {
   slug: PROJECT_SLUG.FARMFAM_PLUS,
   num: '01',
@@ -42,8 +48,10 @@ export const farmfamPlus: Project = {
   },
   visuals: {
     home: {
+      ...mainVisual,
+      sizes:
+        '(min-width: 1440px) 644px, (min-width: 1024px) calc(50vw - 58px), (min-width: 744px) calc(62.5vw - 57.5px), 100vw',
       id: VISUAL_ID.FARMFAM_HOME,
-      alt: '상자와 라벨, 재고 태그가 놓인 커머스 정물 — 개념 이미지',
       brief: 'FARMFAM+ — commerce still life, 4:5',
       pins: [
         {
@@ -70,13 +78,17 @@ export const farmfamPlus: Project = {
       ],
     },
     hero: {
+      ...mainVisual,
+      sizes: '100vw',
+      position: '50% 65%',
       id: VISUAL_ID.FARMFAM_HERO,
-      alt: '커머스 정물 와이드 — 개념 이미지',
       brief: 'FARMFAM+ — wide still life, 3:2',
     },
     detail: {
+      ...mainVisual,
+      sizes: '(min-width: 1024px) 40vw, (min-width: 744px) 50vw, 100vw',
+      position: '50% 70%',
       id: VISUAL_ID.FARMFAM_DETAIL,
-      alt: '라벨과 재고 태그 클로즈업 — 개념 이미지',
       brief: 'FARMFAM+ — label close-up, 4:5',
     },
   },

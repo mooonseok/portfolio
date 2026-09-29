@@ -53,6 +53,7 @@ export function IndianBobBlockView({
           <ConceptFrame
             visual={p.visuals.home}
             className='[--ratio:4/3]'
+            parallax={6}
             meta={meta}
           />
         </NavLink>

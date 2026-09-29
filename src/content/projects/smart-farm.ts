@@ -5,6 +5,12 @@ import { VISUAL_ID } from '@/constants/visual';
 import type { Project } from '@/dto/project.dto';
 import { smartFarmCase } from './smart-farm-case';
 
+const mainVisual = {
+  src: '/images/projects/smart-farm/main.jpg',
+  alt: '온실과 재배 환경을 표현한 개념 이미지',
+  scale: 1.06,
+};
+
 export const smartFarm: Project = {
   slug: PROJECT_SLUG.SMART_FARM,
   num: '03',
@@ -37,8 +43,10 @@ export const smartFarm: Project = {
   },
   visuals: {
     home: {
+      ...mainVisual,
+      sizes:
+        '(min-width: 1440px) 644px, (min-width: 1024px) calc(50vw - 58px), (min-width: 744px) calc(100vw - 80px), 100vw',
       id: VISUAL_ID.SMART_HOME,
-      alt: '재배 베드와 환기 구조가 보이는 온실 내부 — 개념 이미지',
       brief: 'SMART FARM — greenhouse, 4:3 / 4:5',
       pins: [
         {
@@ -62,18 +70,27 @@ export const smartFarm: Project = {
       ],
     },
     sensor: {
+      src: '/images/projects/smart-farm/sensor.jpg',
+      sizes: '(min-width: 1440px) 310px, (min-width: 1024px) 25vw, 50vw',
+      scale: 1.08,
       id: VISUAL_ID.SMART_SENSOR,
-      alt: '센서 인클로저 디테일 — 개념 이미지',
+      alt: '온실에 설치된 센서 장치를 표현한 개념 이미지',
       brief: 'sensor enclosure, 1:1',
     },
     equipment: {
+      src: '/images/projects/smart-farm/equipment.jpg',
+      sizes: '(min-width: 1440px) 310px, (min-width: 1024px) 25vw, 50vw',
+      scale: 1.3,
+      origin: '0% 60%',
       id: VISUAL_ID.SMART_EQUIPMENT,
-      alt: '환기팬과 관수 밸브 — 개념 이미지',
+      alt: '온실 환기팬을 표현한 개념 이미지',
       brief: 'fan / valve / vent, 1:1 · 4:5',
     },
     hero: {
+      ...mainVisual,
+      sizes: '100vw',
+      position: '50% 60%',
       id: VISUAL_ID.SMART_HERO,
-      alt: '온실 통로 와이드 — 개념 이미지',
       brief: 'SMART FARM — greenhouse aisle, 21:9',
     },
     monitor: {
