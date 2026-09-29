@@ -1,4 +1,5 @@
 import type { InteractionFocus } from '@/dto/case.dto';
+import type { RelationSection } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
 import type { GroupTag } from '@/dto/navigation.dto';
 import type { Project } from '@/dto/project.dto';
@@ -18,6 +19,7 @@ export interface CaseViewModel {
 }
 
 export interface FarmFamPlusCaseViewProps extends CaseViewModel {
+  relation?: RelationSection;
   showScope: boolean;
   showContext: boolean;
   showFlows: boolean;

@@ -3,6 +3,7 @@ import { CaseSectionView } from './components/case-section-view';
 import { ParagraphsView } from './components/paragraphs-view';
 import { WorkRowsView } from './components/work-rows-view';
 import { TilesView } from './components/tiles-view';
+import { RelationMap } from './components/relation-map';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Grid } from '@/components/atoms/grid';
@@ -29,6 +30,7 @@ import { IMAGE_SIZES } from '@/constants/visual';
 export function FarmFamPlusCaseView({
   p,
   groups,
+  relation,
   showScope,
   showContext,
   showFlows,
@@ -143,12 +145,26 @@ export function FarmFamPlusCaseView({
           <WorkRowsView items={c.work} />
         </CaseSectionView>
       ) : null}
-      {showTech ? (
+      {relation ? (
         <CaseSectionView
           group={groups.engineering}
+          depth={CASE_DEPTH.L2}
+          title={relation.title}
+          titleId={relation.map.titleId}
+          railLabel={relation.label}
+          layout={CASE_LAYOUT.WIDE}
+          space={CASE_SPACE.LG}
+          loose
+        >
+          <RelationMap {...relation.map} />
+        </CaseSectionView>
+      ) : null}
+      {showTech ? (
+        <CaseSectionView
+          group={relation ? undefined : groups.engineering}
           depth={CASE_DEPTH.L4}
           title='Technical Details'
-          space={CASE_SPACE.LG}
+          space={relation ? CASE_SPACE.MD : CASE_SPACE.LG}
           loose
           rule={RULE.HAIRLINE}
         >

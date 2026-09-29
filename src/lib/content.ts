@@ -52,7 +52,11 @@ export function groupsFor(p: Project): ContentsGroup[] {
     !!c.featureFlow ||
     !!c.controlExperiment ||
     has(c.surfaceRelation?.rows ?? []);
-  const engineering = has(c.techNotes) || !!c.experiment || !!c.engineeringNote;
+  const engineering =
+    has(c.techNotes) ||
+    !!c.relationMap ||
+    !!c.experiment ||
+    !!c.engineeringNote;
   const current = has(c.currentState) || !!c.currentStateTracks;
   return present([
     group(GROUP_ID.OVERVIEW),

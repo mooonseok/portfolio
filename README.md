@@ -27,6 +27,7 @@ pnpm start              # serve the production build
 
 pnpm lint               # ESLint 9 flat config, fails on any warning
 pnpm typecheck          # tsc --noEmit
+pnpm test               # node:test for the selection helpers
 pnpm check:boundaries   # architecture rules (scripts/check-boundaries.mjs)
 pnpm format             # Prettier + Tailwind class sorting
 pnpm format:check
