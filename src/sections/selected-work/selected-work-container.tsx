@@ -70,11 +70,14 @@ const toApc = (p: Project): ApcWorkBlock => {
 
 const toSmartFarm = (p: Project): SmartFarmWorkBlock => {
   const [first, ...rest] = p.title.split(' ');
+  const zones = p.home.zones ?? [];
   return {
     ...toBlock(p),
     titleFirst: first,
     titleRest: rest.join(' '),
     hasTitleRest: rest.length > 0,
+    zones,
+    hasZones: has(zones),
   };
 };
 

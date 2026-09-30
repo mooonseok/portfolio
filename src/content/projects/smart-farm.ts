@@ -27,15 +27,31 @@ export const smartFarm: Project = {
     '농장·온실의 센서와 생육 데이터를 관리하는 운영 화면을 개발하고, 별도의 PoC에서 MQTT와 ESP32 기반 장비 제어 흐름을 검증했습니다.',
   home: {
     scope: [],
-    flows: [
+    flows: [],
+    zones: [
       {
-        id: 'monitor-control',
-        nodes: [
-          { label: 'SENSOR' },
-          { label: 'MONITORING' },
-          { label: 'CONTROL', state: NODE_STATE.EXPERIMENT },
-          { label: 'EQUIPMENT', state: NODE_STATE.EXPERIMENT },
+        kind: STATUS_KIND.PRODUCT,
+        label: 'MONITORING',
+        note: 'PRODUCT WORK',
+        caption: '운영 서비스에서 작업한 범위',
+        steps: [
+          {
+            label: '센서 위치 · 환경 데이터',
+            sub: '농장·온실·구역별 센서 배치와 환경 데이터 조회',
+          },
+          {
+            label: '조회 · 운영 UI',
+            sub: '배치도·센서 지도, 생육·수확·관수, 알림 이력',
+          },
         ],
+      },
+      {
+        kind: STATUS_KIND.EXPERIMENT,
+        label: 'CONTROL',
+        note: 'EXPERIMENT',
+        caption: '별도 PoC에서 검증한 범위',
+        steps: [{ label: '명령' }, { label: '제어기' }, { label: '장비' }],
+        footnote: '운영 적용 여부는 확정되지 않았습니다.',
       },
     ],
     cta: 'CASE STUDY',
@@ -50,20 +66,10 @@ export const smartFarm: Project = {
       pins: [
         {
           label: 'VENT',
-          link: 'EQUIPMENT',
           state: NODE_STATE.EXPERIMENT,
           x: 10,
           y: 18,
           tablet: { x: 8, y: 16 },
-          hideOnMobile: true,
-        },
-        {
-          label: 'FAN',
-          link: 'EQUIPMENT',
-          state: NODE_STATE.EXPERIMENT,
-          x: 18,
-          y: 70,
-          tablet: { x: 16, y: 72 },
           hideOnMobile: true,
         },
       ],

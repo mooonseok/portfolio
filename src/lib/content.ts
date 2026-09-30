@@ -51,11 +51,11 @@ export function groupsFor(p: Project): ContentsGroup[] {
     has(c.domains ?? []) ||
     !!c.monitoringFlow ||
     !!c.featureFlow ||
-    !!c.controlExperiment ||
     !!c.relationMap ||
     has(c.surfaceRelation?.rows ?? []);
   const engineering =
     has(c.techNotes) ||
+    !!c.controlExperiment ||
     !!c.experiment ||
     !!c.engineeringNote;
   const current = has(c.currentState) || !!c.currentStateTracks;

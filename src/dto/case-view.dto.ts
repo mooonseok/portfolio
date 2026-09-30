@@ -46,7 +46,6 @@ export interface SmartFarmCaseViewProps extends CaseViewModel {
   showWork: boolean;
   showMonitoringWork: boolean;
   showControlWork: boolean;
-  showTech: boolean;
   showCurrent: boolean;
   showCurrentMonitoring: boolean;
   showCurrentControl: boolean;

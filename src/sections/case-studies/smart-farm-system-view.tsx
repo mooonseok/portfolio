@@ -1,24 +1,16 @@
 import { CaseSectionView } from './components/case-section-view';
-import {
-  ControlMarkView,
-  headTitle,
-  MonitoringMarkView,
-} from './smart-farm-marks-view';
-import { Box } from '@/components/atoms/box';
+import { headTitle, MonitoringMarkView } from './smart-farm-marks-view';
 import { Column } from '@/components/atoms/column';
 import { Grid } from '@/components/atoms/grid';
 import { Heading } from '@/components/atoms/heading';
 import { StatusLabel } from '@/components/atoms/status-label';
-import { FieldRows } from '@/components/molecules/field-rows';
 import { FlowDiagram } from '@/components/molecules/flow-diagram';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import type { CaseViewModel } from '@/dto/case-view.dto';
 import { CASE_DEPTH, CASE_LAYOUT, CASE_SPACE } from '@/constants/case';
-import { FLOW_ORIENT } from '@/constants/flow';
-import { RULE } from '@/constants/rule';
+import { FLOW_ORIENT, FLOW_ROLE } from '@/constants/flow';
 import { STATUS_KIND } from '@/constants/status';
 import { HEADING } from '@/constants/tag';
-import { TONE } from '@/constants/tone';
 
 export function SmartFarmSystemView({ p, groups }: CaseViewModel) {
   const c = p.case;
@@ -48,7 +40,8 @@ export function SmartFarmSystemView({ p, groups }: CaseViewModel) {
               </Column>
               <FlowDiagram
                 nodes={c.monitoringFlow.nodes}
-                orient={FLOW_ORIENT.AUTO}
+                orient={FLOW_ORIENT.VERTICAL}
+                role={FLOW_ROLE.STATIC}
                 label='Monitoring flow'
               />
             </Column>
@@ -71,49 +64,6 @@ export function SmartFarmSystemView({ p, groups }: CaseViewModel) {
                 />
               ) : null}
             </Grid>
-          </Grid>
-        </CaseSectionView>
-      ) : null}
-      {c.controlExperiment ? (
-        <CaseSectionView
-          id='control'
-          depth={CASE_DEPTH.L2}
-          layout={CASE_LAYOUT.FREE}
-          rule={RULE.NONE}
-          mark={<ControlMarkView />}
-        >
-          <Grid className='grid-cols-[1fr] gap-y-8 px-5 py-6 [border:1px_dashed_var(--ink)] tab:p-10 lap:grid-cols-10 lap:[align-items:start] lap:gap-x-(--gutter) lap:px-10 lap:pt-12 lap:pb-14'>
-            <Column className='min-w-0 gap-8 lap:col-[1/6] lap:gap-10 mob:[--flow-gap:20px]'>
-              <Column className='items-start gap-3.5'>
-                <StatusLabel
-                  kind={STATUS_KIND.EXPERIMENT}
-                  label='EXPERIMENT'
-                  tone={TONE.INK}
-                />
-                <Heading
-                  level={HEADING.H2}
-                  className={headTitle}
-                  data-reveal-item='title'
-                >
-                  Control Experiment
-                </Heading>
-              </Column>
-              <FlowDiagram
-                nodes={c.controlExperiment.flow}
-                orient={FLOW_ORIENT.AUTO}
-                label='Control experiment flow'
-              />
-              <FieldRows rows={c.controlExperiment.rows} />
-            </Column>
-            {p.visuals.equipment ? (
-              <Box className='lap:col-[7/11]' data-reveal-item='visual'>
-                <ConceptFrame
-                  visual={p.visuals.equipment}
-                  className='[--ratio:4/5]'
-                  parallax={0}
-                />
-              </Box>
-            ) : null}
           </Grid>
         </CaseSectionView>
       ) : null}

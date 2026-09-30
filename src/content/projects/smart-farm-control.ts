@@ -1,21 +1,12 @@
-import type { TechNote } from '@/dto/field.dto';
+import { CONTROL_ZONE } from '@/constants/control';
+import type { ControlCondition } from '@/dto/experiment.dto';
 
-export const smartFarmTechNotes: TechNote[] = [
-  {
-    id: 'mqtt',
-    title: 'MQTT',
-    fields: [
-      {
-        label: 'Role in the system',
-        body: [
-          '서버/edge와 제어기 사이에서 센서 데이터와 장비 제어 명령을 전달하는 통신 경로로 사용했습니다.',
-        ],
-      },
-    ],
-  },
+export const smartFarmConditions: ControlCondition[] = [
   {
     id: 'command-expiry',
-    title: 'Command expiry',
+    label: '명령 만료',
+    zone: CONTROL_ZONE.RECEIVE,
+    location: '제어기 안전 로직 · 명령 수신 관련',
     fields: [
       {
         label: 'Edge case',
@@ -33,7 +24,9 @@ export const smartFarmTechNotes: TechNote[] = [
   },
   {
     id: 'duplicate-command',
-    title: 'Duplicate command handling',
+    label: '중복 명령 방지',
+    zone: CONTROL_ZONE.RECEIVE,
+    location: '제어기 안전 로직 · 명령 수신 관련',
     fields: [
       {
         label: 'Edge case',
@@ -51,7 +44,9 @@ export const smartFarmTechNotes: TechNote[] = [
   },
   {
     id: 'fail-safe',
-    title: 'Fail-safe',
+    label: 'Fail-safe',
+    zone: CONTROL_ZONE.ACTUATE,
+    location: '제어기 안전 로직 · 장비 동작 관련',
     fields: [
       {
         label: 'Risk',
@@ -69,7 +64,9 @@ export const smartFarmTechNotes: TechNote[] = [
   },
   {
     id: 'duty-limit',
-    title: 'Duty limit',
+    label: 'Duty 제한',
+    zone: CONTROL_ZONE.ACTUATE,
+    location: '제어기 안전 로직 · 장비 동작 관련',
     fields: [
       {
         label: 'Why it mattered',
@@ -87,7 +84,9 @@ export const smartFarmTechNotes: TechNote[] = [
   },
   {
     id: 'device-identity',
-    title: 'Device identity / bootId',
+    label: '장치 식별 · bootId',
+    zone: CONTROL_ZONE.CONTROLLER,
+    location: '제어기 전체 · 장치 상태 식별',
     fields: [
       {
         label: 'Implementation',
