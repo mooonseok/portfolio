@@ -7,7 +7,10 @@ backend — every string, flow diagram and image reference lives in `src/content
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · pnpm.
 
 Design and content decisions, the data model and the QA checklist are in
-[HANDOFF.md](HANDOFF.md).
+[HANDOFF.md](HANDOFF.md). Branch, commit, verification and background-process
+rules for anyone (or any agent) working in this repo are in
+[AGENTS.md](AGENTS.md); `CLAUDE.md` imports it so Claude Code loads the same
+rules.
 
 ## Requirements
 
