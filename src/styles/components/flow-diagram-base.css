@@ -109,3 +109,13 @@
     display: none;
   }
 }
+.flow-diagram[data-subs] .flow-step:not(:last-child) {
+  grid-template-rows: auto var(--gap);
+}
+.flow-diagram[data-subs] .flow-step:not(:last-child)::after {
+  grid-row: 1 / span 2;
+  align-self: stretch;
+  height: auto;
+  margin-top: calc(var(--row) / 2 + 4.5px);
+  margin-bottom: calc(4.5px - var(--row) / 2);
+}

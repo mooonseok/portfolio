@@ -50,6 +50,7 @@ export function FlowDiagram({
       data-tone={tone}
       data-size={orient === FLOW_ORIENT.SEQUENCE ? SIZE.SM : size}
       data-draw=''
+      data-subs={nodes.some((n) => n.sub) || undefined}
       aria-label={label}
       style={
         gap != null

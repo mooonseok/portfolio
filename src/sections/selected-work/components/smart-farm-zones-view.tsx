@@ -55,10 +55,10 @@ export function SmartFarmZonesView({ zones }: { zones: Zone[] }) {
                       as={TAG.SPAN}
                       aria-hidden='true'
                       className={cx(
-                        'absolute top-[18px] bottom-0 left-[4px] border-l-ink',
+                        'absolute left-[4px] border-l-ink',
                         experiment
-                          ? '[border-left:1px_dashed_var(--ink)]'
-                          : 'border-l-[1.25px]'
+                          ? 'top-[17px] bottom-[-5px] [border-left:1px_dashed_var(--ink)]'
+                          : 'top-4 bottom-[-7px] border-l-[1.25px]'
                       )}
                     />
                   ) : null}
