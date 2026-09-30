@@ -33,8 +33,12 @@ function toIndianBob(project: Project): IndianBobBlock {
 }
 
 function toEmosave(project: Project): EmosaveBlock {
-  const states = project.case.stateFlow ?? [];
-  return { ...toBlock(project), states, hasStates: has(states) };
+  const example = project.case.stateExample;
+  return {
+    ...toBlock(project),
+    example,
+    hasStates: has(example?.states ?? []),
+  };
 }
 
 export function FeaturedWorkContainer() {

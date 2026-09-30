@@ -9,6 +9,5 @@ export type Size = (typeof SIZE)[keyof typeof SIZE];
 
 export type FlowSize = typeof SIZE.MD | typeof SIZE.SM;
 
-export type TokenSize = typeof SIZE.MD | typeof SIZE.LG;
 
 export type CaseTitleSize = Size;

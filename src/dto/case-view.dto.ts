@@ -68,6 +68,7 @@ export interface EmosaveCaseViewProps extends CaseViewModel {
   showInteraction: boolean;
   showWork: boolean;
   showCurrent: boolean;
-  interactionFocus: InteractionFocus[];
+  lead?: InteractionFocus;
+  rest: InteractionFocus[];
   workParagraphs: string[];
 }

@@ -34,7 +34,7 @@ function shortGroups(p: Project): ContentsGroup[] {
   const c = p.case;
   return present([
     group(GROUP_ID.OVERVIEW),
-    has(c.interactionFocus ?? []) || has(c.stateFlow ?? [])
+    has(c.interactionFocus ?? []) || has(c.stateExample?.states ?? [])
       ? group(GROUP_ID.INTERACTION)
       : null,
     has(c.workParagraphs ?? []) || has(c.work) ? group(GROUP_ID.WORK) : null,

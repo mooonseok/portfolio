@@ -5,6 +5,7 @@ import type { Project } from '@/dto/project.dto';
 
 export function EmosaveCase({ p }: { p: Project }) {
   const c = p.case;
+  const focus = c.interactionFocus ?? [];
   return (
     <EmosaveCaseView
       p={p}
@@ -12,7 +13,8 @@ export function EmosaveCase({ p }: { p: Project }) {
       showInteraction={!!c.interactionFocus && has(c.interactionFocus)}
       showWork={!!c.workParagraphs && has(c.workParagraphs)}
       showCurrent={has(c.currentState)}
-      interactionFocus={c.interactionFocus ?? []}
+      lead={focus.find((f) => f.withStates)}
+      rest={focus.filter((f) => !f.withStates)}
       workParagraphs={c.workParagraphs ?? []}
     />
   );
