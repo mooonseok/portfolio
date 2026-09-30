@@ -4,12 +4,8 @@ import { apcDomains } from './apc-domains';
 
 export const apcCase: CaseContent = {
   role: [
-    '기존 APC 백엔드의 처리·재고·정산 영역부터 APC Core의 Flutter 현장 앱, Next.js 운영 웹, NestJS API, PostgreSQL/Flyway DB까지 여러 영역을 작업했습니다.',
+    'APC 백엔드의 처리·재고·정산 영역부터 Flutter 현장 앱, Next.js 운영 웹, NestJS API, PostgreSQL/Flyway DB까지 여러 영역을 작업했습니다.',
     'QR 근태, 입고 보드, LOT/Batch 이력, 전자결재 및 알림 같은 현장 기능이 포함됩니다.',
-  ],
-  rolePhases: [
-    { year: '2024', title: 'APC', scope: 'Backend / Operations' },
-    { year: '2026', title: 'APC CORE', scope: 'Field / Web / API / DB' },
   ],
   contextProblem: [
     'APC 업무는 입고된 농산물이 가공되고 LOT와 Batch를 거쳐 재고로 이어지는 물리적 흐름과 시스템의 데이터 흐름이 함께 움직여야 합니다.',

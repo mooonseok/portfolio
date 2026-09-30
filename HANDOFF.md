@@ -93,7 +93,7 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
 
 `case`:
-`role, rolePhases?, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
+`role, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
 
 `surfaceRelation` (`{ label, rows }`) is the single definition of IndianBob's
 USER → MOBILE APP → API → DATA relation with the ADMIN branch. The homepage
@@ -165,28 +165,28 @@ Rules:
 
 ## 4. Content → UI mapping
 
-| Data                                                       | Homepage                                               | Case study                                                              |
-| ---------------------------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------- |
-| `summary`                                                  | Project description                                    | Overview lead                                                           |
-| `period` · `status` · `surfaces`                           | Meta rail, hover meta bar                              | Header rail, meta list                                                  |
-| `home.scope` (+`scopeMobile` list)                         | SCOPE keywords (explicit shorter list on mobile)       | FarmFam+ Role/Scope keyword row                                         |
-| `home.areas`                                               | FarmFam+ WORK AREAS (tabs ≥744, accordion <744)        | —                                                                       |
-| `home.zones`                                               | Smart Farm MONITORING / CONTROL areas                  | —                                                                       |
-| `domains`                                                  | APC FIELD WORK tabs                                    | APC System (same data + impl, aside, checks, note link)                 |
-| `stateScope` · `relationMap`                               | —                                                      | FarmFam+ Role / Scope list · 02 System relation map                     |
-| `case.role` · `roleSurfaces` · `rolePhases` · `roleTracks` | —                                                      | Role / Scope (Smart Farm: Status / Scope in 2 columns)                  |
-| `case.contextProblem`                                      | —                                                      | Context / Problem                                                       |
-| `systemFlows` · `monitoringFlow`                           | —                                                      | System group                                                            |
-| `controlExperiment` (rows + `conditions`)                  | —                                                      | Smart Farm Control Experiment (Engineering), dashed, condition selector |
-| `feature`                                                  | —                                                      | IndianBob 02 System HABIT explorer                                      |
-| `work` (`track`)                                           | —                                                      | What I Worked On (Smart Farm grouped ● / ◇)                             |
-| `techNotes`                                                | —                                                      | Engineering group, flexible fields, no STACK block                      |
-| `engineeringNote`                                          | —                                                      | IndianBob Apple Sign-in dark card                                       |
-| `experiment`                                               | S03 story (homepage uses `site.stories`)               | APC OCR: static flow, NOT SHIPPED + `conclusion` once, under the title  |
-| `stories[].description`                                    | Story card body, under title and flow                  | —                                                                       |
-| `surfaceRelation`                                          | IndianBob Featured relation (with `roleSurfaces` subs) | IndianBob Role / Scope overview (with subs)                             |
-| `currentState` · `currentStateTracks`                      | —                                                      | Current State (Smart Farm: 2 columns, stated once)                      |
-| `interactionFocus` · `stateExample` · `workParagraphs`     | Emosave static state comparison                        | Emosave Interaction (state tabs beside Customization) / Work            |
+| Data                                                   | Homepage                                               | Case study                                                              |
+| ------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------------------- |
+| `summary`                                              | Project description                                    | Overview lead                                                           |
+| `period` · `status` · `surfaces`                       | Meta rail, hover meta bar                              | Header rail, meta list                                                  |
+| `home.scope` (+`scopeMobile` list)                     | SCOPE keywords (explicit shorter list on mobile)       | FarmFam+ Role/Scope keyword row                                         |
+| `home.areas`                                           | FarmFam+ WORK AREAS (tabs ≥744, accordion <744)        | —                                                                       |
+| `home.zones`                                           | Smart Farm MONITORING / CONTROL areas                  | —                                                                       |
+| `domains`                                              | APC FIELD WORK tabs                                    | APC System (same data + impl, aside, checks, note link)                 |
+| `stateScope` · `relationMap`                           | —                                                      | FarmFam+ Role / Scope list · 02 System relation map                     |
+| `case.role` · `roleSurfaces` · `roleTracks`            | —                                                      | Role / Scope (Smart Farm: Status / Scope in 2 columns)                  |
+| `case.contextProblem`                                  | —                                                      | Context / Problem                                                       |
+| `systemFlows` · `monitoringFlow`                       | —                                                      | System group                                                            |
+| `controlExperiment` (rows + `conditions`)              | —                                                      | Smart Farm Control Experiment (Engineering), dashed, condition selector |
+| `feature`                                              | —                                                      | IndianBob 02 System HABIT explorer                                      |
+| `work` (`track`)                                       | —                                                      | What I Worked On (Smart Farm grouped ● / ◇)                             |
+| `techNotes`                                            | —                                                      | Engineering group, flexible fields, no STACK block                      |
+| `engineeringNote`                                      | —                                                      | IndianBob Apple Sign-in dark card                                       |
+| `experiment`                                           | S03 story (homepage uses `site.stories`)               | APC OCR: static flow, NOT SHIPPED + `conclusion` once, under the title  |
+| `stories[].description`                                | Story card body, under title and flow                  | —                                                                       |
+| `surfaceRelation`                                      | IndianBob Featured relation (with `roleSurfaces` subs) | IndianBob Role / Scope overview (with subs)                             |
+| `currentState` · `currentStateTracks`                  | —                                                      | Current State (Smart Farm: 2 columns, stated once)                      |
+| `interactionFocus` · `stateExample` · `workParagraphs` | Emosave static state comparison                        | Emosave Interaction (state tabs beside Customization) / Work            |
 
 Items from the content brief that were **not shown in the UI** because they are
 instructions to the writer, not visitor-facing text:
