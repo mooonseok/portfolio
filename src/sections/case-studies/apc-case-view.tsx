@@ -4,9 +4,9 @@ import { ParagraphsView } from './components/paragraphs-view';
 import { WorkRowsView } from './components/work-rows-view';
 import { TilesView } from './components/tiles-view';
 import { ApcRolePhasesView } from './apc-role-phases-view';
-import { ApcFlowsView } from './apc-flows-view';
 import { Box } from '@/components/atoms/box';
 import { Text } from '@/components/atoms/text';
+import { DomainExplorer } from '@/components/organisms/domain-explorer/domain-explorer';
 import { ExperimentBlock } from '@/components/organisms/experiment-block';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
@@ -20,9 +20,9 @@ import { IMAGE_SIZES } from '@/constants/visual';
 export function ApcCaseView({
   p,
   groups,
-  flows,
+  domains,
   showContext,
-  showFlows,
+  showDomains,
   showWork,
   showTech,
   showCurrent,
@@ -59,15 +59,17 @@ export function ApcCaseView({
           <ParagraphsView list={c.contextProblem} />
         </CaseSectionView>
       ) : null}
-      {showFlows ? (
+      {showDomains ? (
         <CaseSectionView
           group={groups.system}
           depth={CASE_DEPTH.L2}
-          title='System / Flow'
+          title={c.domainsTitle}
           layout={CASE_LAYOUT.WIDE}
           loose
         >
-          <ApcFlowsView flows={flows} />
+          <Box className='-mx-(--margin) px-5 pt-2 pb-8 surface-dark tab:mx-0 tab:px-8 tab:pb-10 lap:px-10 lap:pt-4 lap:pb-12'>
+            <DomainExplorer {...domains} />
+          </Box>
         </CaseSectionView>
       ) : null}
       {showWork ? (

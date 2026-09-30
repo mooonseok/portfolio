@@ -48,6 +48,7 @@ export function groupsFor(p: Project): ContentsGroup[] {
   const system =
     has(c.systemFlows) ||
     has(p.home.flows) ||
+    has(c.domains ?? []) ||
     !!c.monitoringFlow ||
     !!c.featureFlow ||
     !!c.controlExperiment ||

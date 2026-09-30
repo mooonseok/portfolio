@@ -1,6 +1,6 @@
 import type { InteractionFocus } from '@/dto/case.dto';
 import type { RelationSection } from '@/dto/explorer.dto';
-import type { Flow } from '@/dto/flow.dto';
+import type { DomainExplorerProps } from '@/dto/domain.dto';
 import type { GroupTag } from '@/dto/navigation.dto';
 import type { Project } from '@/dto/project.dto';
 import type { WorkItem } from '@/dto/work.dto';
@@ -29,9 +29,9 @@ export interface FarmFamPlusCaseViewProps extends CaseViewModel {
 }
 
 export interface ApcCaseViewProps extends CaseViewModel {
-  flows: Flow[];
+  domains: DomainExplorerProps;
   showContext: boolean;
-  showFlows: boolean;
+  showDomains: boolean;
   showWork: boolean;
   showTech: boolean;
   showCurrent: boolean;

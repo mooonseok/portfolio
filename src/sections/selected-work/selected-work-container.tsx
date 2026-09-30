@@ -1,5 +1,6 @@
 import { SelectedWorkView } from './selected-work-view';
 import { requireProject } from '@/lib/content';
+import { toDomainItems } from '@/lib/domains';
 import { has } from '@/lib/has';
 import type { Project } from '@/dto/project.dto';
 import type {
@@ -9,6 +10,7 @@ import type {
   WorkBlock,
   WorkIndexEntry,
 } from '@/dto/selected-work.dto';
+import { EXPLORER_MODE } from '@/constants/explorer';
 import { SELECTED_SLUGS } from '@/constants/selected-work';
 
 const toBlock = (p: Project): WorkBlock => {
@@ -53,8 +55,17 @@ const toFarmFam = (p: Project): FarmFamWorkBlock => {
 };
 
 const toApc = (p: Project): ApcWorkBlock => {
-  const [material, ...secondary] = p.home.flows;
-  return { ...toBlock(p), material, secondary };
+  const domains = p.case.domains ?? [];
+  return {
+    ...toBlock(p),
+    domains: {
+      label: `${p.title} 현장 업무`,
+      items: toDomainItems(p.slug, domains, EXPLORER_MODE.HOME),
+      mode: EXPLORER_MODE.HOME,
+    },
+    domainsLabelId: `${p.slug}-domains-label`,
+    hasDomains: has(domains),
+  };
 };
 
 const toSmartFarm = (p: Project): SmartFarmWorkBlock => {

@@ -1,5 +1,5 @@
 import type { WorkAreasProps } from '@/dto/explorer.dto';
-import type { Flow } from '@/dto/flow.dto';
+import type { DomainExplorerProps } from '@/dto/domain.dto';
 import type { Project } from '@/dto/project.dto';
 import type { MetaPair } from '@/dto/visual.dto';
 
@@ -25,8 +25,9 @@ export interface FarmFamWorkBlock extends WorkBlock {
 }
 
 export interface ApcWorkBlock extends WorkBlock {
-  material: Flow;
-  secondary: Flow[];
+  domains: DomainExplorerProps;
+  domainsLabelId: string;
+  hasDomains: boolean;
 }
 
 export interface SmartFarmWorkBlock extends WorkBlock {

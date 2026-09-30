@@ -6,9 +6,12 @@ export interface ControlExperiment {
   rows: Field[];
 }
 
-export interface Experiment extends ControlExperiment {
+export interface Experiment {
   title: string;
   notShipped: boolean;
+  conclusion: string;
+  flow: FlowNode[];
+  rows: Field[];
 }
 
 export interface EngineeringNote {

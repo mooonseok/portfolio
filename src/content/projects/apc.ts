@@ -30,38 +30,7 @@ export const apc: Project = {
       'Attendance',
       'Approval',
     ],
-    flows: [
-      {
-        id: 'material',
-        label: 'A — MATERIAL',
-        nodes: [
-          { label: 'RECEIVING' },
-          { label: 'PROCESSING' },
-          { label: 'LOT' },
-          { label: 'BATCH' },
-          { label: 'INVENTORY' },
-        ],
-      },
-      {
-        id: 'attendance',
-        label: 'B — ATTENDANCE',
-        nodes: [
-          { label: 'WORKER' },
-          { label: 'QR' },
-          { label: 'DEVICE' },
-          { label: 'ATTENDANCE' },
-        ],
-      },
-      {
-        id: 'approval',
-        label: 'C — APPROVAL',
-        nodes: [
-          { label: 'DOCUMENT' },
-          { label: 'APPROVAL' },
-          { label: 'NOTIFICATION' },
-        ],
-      },
-    ],
+    flows: [],
     cta: 'CASE STUDY',
   },
   visuals: {
