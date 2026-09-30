@@ -40,11 +40,6 @@ export default function RootLayout({
           type='font/woff2'
           crossOrigin='anonymous'
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
-          }}
-        />
       </head>
       <body>{children}</body>
     </html>

@@ -81,6 +81,7 @@ export function CaseSectionView({
   const bareRule = bareMobile && rule !== RULE.NONE;
   return (
     <ScrollScene
+      steps={false}
       as={TAG.SECTION}
       id={group?.id ?? id}
       className={cx(

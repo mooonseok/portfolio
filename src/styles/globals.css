@@ -82,7 +82,7 @@
 @custom-variant inview (&:where([data-inview='true'] *));
 @custom-variant reveal-pending {
   @media (prefers-reduced-motion: no-preference) {
-    &:where(.js [data-reveal]:not([data-inview='true']) *) {
+    &:where([data-reveal][data-ready]:not([data-inview='true']) *) {
       @slot;
     }
   }
