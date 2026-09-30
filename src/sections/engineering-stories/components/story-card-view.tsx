@@ -60,7 +60,7 @@ export function StoryCardView({
         </Text>
       ) : null}
       {st.keywords ? (
-        <List className='hidden lap:flex lap:flex-col lap:gap-1 lap:text-small lap:leading-[1.5] lap:text-graphite'>
+        <List className='hidden lap:flex lap:flex-col lap:gap-1 lap:text-small lap:leading-[1.5] lap:text-subtle'>
           {st.keywords.map((k) => (
             <ListItem key={k}>{k}</ListItem>
           ))}

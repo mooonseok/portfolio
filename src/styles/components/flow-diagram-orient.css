@@ -65,7 +65,7 @@
     border: 0;
     width: auto;
     height: auto;
-    color: var(--graphite);
+    color: var(--subtle);
     font-family: var(--font-mono);
     font-size: var(--fs-meta);
     transform: none;

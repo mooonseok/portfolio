@@ -32,7 +32,7 @@ export function HeroView({ name, role, disciplines, range }: HeroViewProps) {
           </Text>
           <Text
             as={TAG.SPAN}
-            className='text-graphite tab:col-[5/-1] tab:row-[1/span_2] tab:text-right tab:text-inherit lap:col-[9/13] lap:row-1'
+            className='text-subtle tab:col-[5/-1] tab:row-[1/span_2] tab:text-right tab:text-inherit lap:col-[9/13] lap:row-1'
           >
             {range.label}
             <LineBreak />

@@ -22,7 +22,7 @@ export function EngineeringStoriesView({ cards }: EngineeringStoriesViewProps) {
         rule={false}
         railFrom={BREAKPOINT.DESKTOP}
       />
-      <Grid className='mt-10 grid-cols-[minmax(0,1fr)] gap-10 tab:grid-cols-3 tab:[align-items:start] tab:gap-(--gutter) lap:mt-16 lap:ml-[calc((100%_-_11_*_var(--gutter))_/_6_+_2_*_var(--gutter))]'>
+      <Grid className='mt-10 grid-cols-[minmax(0,1fr)] gap-10 tab:grid-cols-2 tab:[align-items:start] tab:gap-(--gutter) lap:mt-16 lap:ml-[calc((100%_-_11_*_var(--gutter))_/_6_+_2_*_var(--gutter))] wide:grid-cols-3'>
         {cards.map((card) => (
           <StoryCardView key={card.story.id} {...card} />
         ))}

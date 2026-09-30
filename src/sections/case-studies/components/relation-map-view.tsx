@@ -32,7 +32,7 @@ export function RelationMapView(props: RelationMapViewProps) {
         </Column>
         <RelationPanelView panelId={props.panelId} node={current} />
       </Grid>
-      <Text as={TAG.SPAN} id={noteId} className='text-small text-graphite'>
+      <Text as={TAG.SPAN} id={noteId} className='text-small text-subtle'>
         {note}
       </Text>
     </Box>

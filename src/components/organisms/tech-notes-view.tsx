@@ -22,7 +22,7 @@ export function TechNotesView({
         'flex flex-col border-b border-b-(color:--rule) tab:grid tab:grid-cols-2 tab:gap-x-(--gutter) tab:gap-y-12 tab:[border-bottom:0]',
         tone === TONE.DARK
           ? '[--rule:var(--dark-rule)] [--sub:var(--dark-sub)]'
-          : '[--rule:var(--hairline)] [--sub:var(--graphite)]',
+          : '[--rule:var(--hairline)] [--sub:var(--subtle)]',
         cols === TECH_COLS.THREE && 'lap:grid-cols-3'
       )}
       data-cols={cols}
