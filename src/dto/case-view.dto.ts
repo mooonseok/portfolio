@@ -21,8 +21,8 @@ export interface CaseViewModel {
 export interface FarmFamPlusCaseViewProps extends CaseViewModel {
   relation?: RelationSection;
   showScope: boolean;
+  showStateScope: boolean;
   showContext: boolean;
-  showFlows: boolean;
   showWork: boolean;
   showTech: boolean;
   showCurrent: boolean;

@@ -4,6 +4,7 @@ import { ParagraphsView } from './components/paragraphs-view';
 import { WorkRowsView } from './components/work-rows-view';
 import { TilesView } from './components/tiles-view';
 import { RelationMap } from './components/relation-map';
+import { StateScopeView } from './components/state-scope-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Grid } from '@/components/atoms/grid';
@@ -13,7 +14,6 @@ import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
-import { FlowDiagram } from '@/components/molecules/flow-diagram';
 import type { FarmFamPlusCaseViewProps } from '@/dto/case-view.dto';
 import {
   CASE_DEPTH,
@@ -21,10 +21,8 @@ import {
   CASE_SPACE,
   TECH_COLS,
 } from '@/constants/case';
-import { FLOW_ORIENT, FLOW_ROLE } from '@/constants/flow';
 import { RULE } from '@/constants/rule';
 import { HEADING, TAG } from '@/constants/tag';
-import { TONE } from '@/constants/tone';
 import { IMAGE_SIZES } from '@/constants/visual';
 
 export function FarmFamPlusCaseView({
@@ -32,8 +30,8 @@ export function FarmFamPlusCaseView({
   groups,
   relation,
   showScope,
+  showStateScope,
   showContext,
-  showFlows,
   showWork,
   showTech,
   showCurrent,
@@ -57,6 +55,9 @@ export function FarmFamPlusCaseView({
       <CaseSectionView depth={CASE_DEPTH.L1} title='Role / Scope' id='role'>
         <ParagraphsView list={c.role} />
         {c.roleSurfaces ? <TilesView list={c.roleSurfaces} /> : null}
+        {showStateScope && c.stateScope ? (
+          <StateScopeView scope={c.stateScope} />
+        ) : null}
         {showScope ? (
           <Row className='flex-wrap items-baseline gap-x-6 gap-y-2 text-[15px]'>
             <Text as={TAG.SPAN} className='mono muted'>
@@ -102,52 +103,9 @@ export function FarmFamPlusCaseView({
           </Grid>
         </CaseSectionView>
       ) : null}
-      {showFlows ? (
-        <CaseSectionView
-          group={groups.system}
-          depth={CASE_DEPTH.L2}
-          title='System / Flow'
-          layout={CASE_LAYOUT.WIDE}
-          loose
-        >
-          {c.systemFlows.map((f) => (
-            <FlowDiagram
-              key={f.id}
-              nodes={f.nodes}
-              orient={FLOW_ORIENT.AUTO}
-              label='Commerce state flow'
-            />
-          ))}
-          {c.reverseFlow ? (
-            <Box className='mt-4 flex flex-col gap-4 border-t border-t-hairline pt-5 tab:grid tab:grid-cols-6 tab:[align-items:start] tab:gap-x-(--gutter) tab:pt-6 lap:mt-4 lap:grid-cols-10'>
-              <Text as={TAG.SPAN} className='mono muted tab:col-[1/3]'>
-                {c.reverseFlow.label}
-              </Text>
-              <Box className='tab:col-[3/7] lap:col-[3/8]'>
-                <FlowDiagram
-                  nodes={c.reverseFlow.nodes}
-                  orient={FLOW_ORIENT.AUTO}
-                  tone={TONE.MUTED}
-                  role={FLOW_ROLE.SECONDARY}
-                  label={c.reverseFlow.label}
-                />
-              </Box>
-            </Box>
-          ) : null}
-        </CaseSectionView>
-      ) : null}
-      {showWork ? (
-        <CaseSectionView
-          group={groups.work}
-          depth={CASE_DEPTH.L3}
-          title='What I Worked On'
-        >
-          <WorkRowsView items={c.work} />
-        </CaseSectionView>
-      ) : null}
       {relation ? (
         <CaseSectionView
-          group={groups.engineering}
+          group={groups.system}
           depth={CASE_DEPTH.L2}
           title={relation.title}
           titleId={relation.map.titleId}
@@ -159,12 +117,21 @@ export function FarmFamPlusCaseView({
           <RelationMap {...relation.map} />
         </CaseSectionView>
       ) : null}
+      {showWork ? (
+        <CaseSectionView
+          group={groups.work}
+          depth={CASE_DEPTH.L3}
+          title='What I Worked On'
+        >
+          <WorkRowsView items={c.work} />
+        </CaseSectionView>
+      ) : null}
       {showTech ? (
         <CaseSectionView
-          group={relation ? undefined : groups.engineering}
+          group={groups.engineering}
           depth={CASE_DEPTH.L4}
           title='Technical Details'
-          space={relation ? CASE_SPACE.MD : CASE_SPACE.LG}
+          space={CASE_SPACE.LG}
           loose
           rule={RULE.HAIRLINE}
         >

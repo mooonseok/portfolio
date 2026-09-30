@@ -40,8 +40,8 @@ const toFarmFam = (p: Project): FarmFamWorkBlock => {
       items: areas.map((a, i) => ({
         ...a,
         num: String(i + 1).padStart(2, '0'),
-        relatedText: a.related.join(' · '),
         hasRelated: has(a.related),
+        href: `/work/${p.slug}#${a.to.target}`,
         tabId: `${base}-${a.id}-tab`,
         panelId: `${base}-${a.id}-panel`,
         toggleId: `${base}-${a.id}-toggle`,
