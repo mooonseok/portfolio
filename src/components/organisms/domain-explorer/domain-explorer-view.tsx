@@ -41,7 +41,7 @@ export function DomainExplorerView({
               id={x.tabId}
               role='tab'
               aria-selected={on}
-              aria-controls={x.panelId}
+              aria-controls={items[0].panelId}
               tabIndex={on ? 0 : -1}
               data-selected={on || undefined}
               onClick={() => onSelect(x.id)}
@@ -64,7 +64,8 @@ export function DomainExplorerView({
       </Grid>
       <Grid
         key={d.id}
-        id={d.panelId}
+        id={items[0].panelId}
+        tabIndex={0}
         role='tabpanel'
         aria-labelledby={d.tabId}
         className='grid-cols-[minmax(0,1fr)] gap-y-7 pt-6 motion-safe:animate-[fade-in_150ms_var(--ease)] tab:pt-8 lap:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lap:grid-rows-[auto_1fr] lap:gap-x-12'
