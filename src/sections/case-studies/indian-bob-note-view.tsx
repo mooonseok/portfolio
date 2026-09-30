@@ -28,7 +28,7 @@ export function IndianBobNoteView({
           {note.title}
         </Heading>
       </Column>
-      <Column className='gap-3 lap:col-[1/-1] lap:min-w-0'>
+      <Column className='@container gap-3 lap:col-[1/-1] lap:min-w-0'>
         <SequenceView nodes={note.flow} links={note.links} label={note.title} />
         <Text className='text-small leading-[1.6] text-dark-sub'>
           {note.footnote}
