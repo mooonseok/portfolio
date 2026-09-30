@@ -1,51 +1,75 @@
 'use client';
 
 import { useEffect } from 'react';
-import { isSameDocumentHash, shouldCopyState } from '@/lib/history';
+import {
+  pendingFrom,
+  popDecision,
+  settleClick,
+  shouldCopyState,
+  type PendingHash,
+} from '@/lib/history';
 
 export function useHistoryScroll() {
   useEffect(() => {
     const root = document.documentElement;
-    let frame = 0;
-    let saved: { hash: string; state: unknown } | null = null;
+    let pending: PendingHash | null = null;
+    const resume = () => {
+      if (!('smoothScroll' in root.dataset)) root.dataset.smoothScroll = '';
+    };
     const pause = () => {
       delete root.dataset.smoothScroll;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        frame = requestAnimationFrame(() => {
-          root.dataset.smoothScroll = '';
-        });
-      });
     };
     const onClick = (e: MouseEvent) => {
       const link =
         e.target instanceof Element ? e.target.closest('a[href]') : null;
-      saved =
-        link instanceof HTMLAnchorElement &&
-        isSameDocumentHash(link.href, location.href)
-          ? { hash: link.hash, state: history.state }
+      pending =
+        link instanceof HTMLAnchorElement
+          ? pendingFrom(
+              {
+                href: link.href,
+                button: e.button,
+                modified: e.metaKey || e.ctrlKey || e.shiftKey || e.altKey,
+                target: link.target,
+                download: link.hasAttribute('download'),
+              },
+              location.href,
+              history.state
+            )
           : null;
     };
+    const onClickEnd = (e: MouseEvent) => {
+      pending = settleClick(pending, e.defaultPrevented);
+      const same = pending?.same ? pending : null;
+      if (same)
+        requestAnimationFrame(() => {
+          if (pending === same) pending = null;
+        });
+    };
     const onPop = () => {
-      if (saved?.hash !== location.hash) pause();
+      const next = popDecision(pending, location.hash);
+      pending = next.pending;
+      if (next.pause) pause();
     };
     const onHash = () => {
-      if (saved && shouldCopyState(saved, history.state, location.hash))
-        history.replaceState(saved.state, '', location.href);
-      saved = null;
+      if (pending && shouldCopyState(pending, history.state, location.hash))
+        history.replaceState(pending.state, '', location.href);
+      pending = null;
     };
-    if (document.readyState === 'complete') pause();
-    else window.addEventListener('load', pause, { once: true });
+    const input = { capture: true, passive: true };
+    window.addEventListener('pointerdown', resume, input);
+    window.addEventListener('keydown', resume, input);
     window.addEventListener('popstate', onPop);
     window.addEventListener('hashchange', onHash);
+    window.addEventListener('click', onClickEnd);
     document.addEventListener('click', onClick, true);
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('load', pause);
+      window.removeEventListener('pointerdown', resume, input);
+      window.removeEventListener('keydown', resume, input);
       window.removeEventListener('popstate', onPop);
       window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('click', onClickEnd);
       document.removeEventListener('click', onClick, true);
-      delete root.dataset.smoothScroll;
+      pause();
     };
   }, []);
 }

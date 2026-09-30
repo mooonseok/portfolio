@@ -209,8 +209,10 @@ live in component state (no storage) and survive scrolling and breakpoint
 changes. Emphasis (background, border, connector 1px → 2px) changes in 150ms;
 the new panel text fades in over 150ms (`fade-in` keyframes, `motion-safe`
 only). Smooth scrolling is only for in-page links: `HistoryScroll` sets
-`html[data-smooth-scroll]` after load, so landing on a URL hash and back/forward
-restoration jump straight to their position. The OCR flow and the Smart Farm
+`html[data-smooth-scroll]` on the first pointer or key input and removes it on
+back/forward, so landing on a URL hash and history restoration jump straight to
+their position. Hash-link clicks that open elsewhere (modifier keys, `target`,
+`download`) or are cancelled are not remembered. The OCR flow and the Smart Farm
 monitoring flow are `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories
 S01–S03 keep their original flows.
 
