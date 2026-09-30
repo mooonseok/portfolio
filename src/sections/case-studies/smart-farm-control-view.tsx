@@ -43,7 +43,7 @@ export function SmartFarmControlView({ p, groups }: CaseViewModel) {
                 className={headTitle}
                 data-reveal-item='title'
               >
-                {c.title}
+                {c.title}{' '}
                 <Text
                   as={TAG.SPAN}
                   className='block text-[length:clamp(17px,4.6vw,20px)] leading-[1.4] text-subtle'

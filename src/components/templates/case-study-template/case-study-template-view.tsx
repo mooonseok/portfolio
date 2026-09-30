@@ -17,6 +17,7 @@ export function CaseStudyTemplateView({
   groups,
   next,
   visualsNote,
+  visualsNoteKo,
   ...header
 }: CaseStudyTemplateViewProps) {
   return (
@@ -27,20 +28,25 @@ export function CaseStudyTemplateView({
           className='hidden tab:pointer-events-none tab:absolute tab:top-[300px] tab:bottom-[260px] tab:left-[max(var(--rail-x),calc((100%_-_1440px)_/_2_+_var(--rail-x)))] tab:z-2 tab:block tab:border-l tab:border-l-graphite'
           aria-hidden='true'
         />
-        <Box className={cx('pb-0', header.darkHeader && 'surface-dark')}>
+        <Box className={cx(header.darkHeader && 'surface-dark')}>
           <SiteHeader dark={header.darkHeader} back current={NAV_ID.WORK} />
-          <ScrollScene>
-            <CaseHeaderView {...header} />
-            <Box
-              className='mt-10 tab:mt-18 lap:mt-24'
-              data-reveal-item='visual'
-            >
-              {hero}
-            </Box>
-          </ScrollScene>
         </Box>
-        <CaseContents groups={groups} />
-        <Box as={TAG.MAIN} className='relative'>
+        <Box as={TAG.MAIN} id='main-content' tabIndex={-1} className='relative'>
+          <Box className={cx('pb-0', header.darkHeader && 'surface-dark')}>
+            <ScrollScene>
+              <CaseHeaderView {...header} />
+              <Box
+                className='mt-10 tab:mt-18 lap:mt-24'
+                data-reveal-item='visual'
+              >
+                {hero}
+                <Text className='container mt-4 text-small text-subtle on-dark:text-dark-sub'>
+                  {visualsNoteKo}
+                </Text>
+              </Box>
+            </ScrollScene>
+          </Box>
+          <CaseContents groups={groups} />
           {children}
         </Box>
         <CaseNextView next={next} visualsNote={visualsNote} />
