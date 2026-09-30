@@ -8,7 +8,7 @@ pnpm install
 pnpm dev                # http://localhost:3000 (.claude/launch.json uses 3100)
 pnpm lint               # ESLint 9 flat config (eslint.config.mjs), 0 warnings allowed
 pnpm typecheck
-pnpm test               # node:test for src/lib/selection.ts (no test framework)
+pnpm test               # node:test for src/lib/selection.ts (selection, closing, arrow-key moves)
 pnpm check:boundaries   # architecture rules (see §2)
 pnpm format             # Prettier + Tailwind class sorting
 pnpm format:check
@@ -39,11 +39,13 @@ src/
     case-studies/                 <project>-case.tsx (container) + <project>-case-view.tsx
   components/     UI reused by 2+ sections/pages (Atomic Design)
     atoms/        layout primitives (Box Column Row Grid Text Heading List ListItem
-                  Anchor NavLink Button LineBreak) + Cta, StatusLabel, NotShipped
-    molecules/    FlowDiagram, ProjectHeader, SectionHeading, ScopeList, StateTokens,
+                  Anchor NavLink Button LineBreak) + Cta, JumpLink, ChoiceDot,
+                  StatusLabel, NotShipped
+    molecules/    FlowDiagram, ProjectHeader, SectionHeading, ScopeList, StateSketch,
                   SurfaceRelation, FieldRows (presentational only)
     organisms/    ScrollScene, SignalLine, ConceptFrame, ConceptArt, SiteHeader,
-                  MobileMenu, SiteFooter, TechNotes, ExperimentBlock
+                  MobileMenu, SiteFooter, TechNotes, ExperimentBlock,
+                  DomainExplorer (APC home + case study)
     templates/    CaseStudyTemplate (frame, nav, meta, contents, next, footer only)
   hooks/          use-<name>.ts client logic called by containers
   dto/            *.dto.ts object shapes (interfaces / types only)
@@ -73,8 +75,9 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
   `src/styles/fonts.css`.
 - **Server components by default.** `'use client'` only on containers that own
   browser state (MobileMenu, SiteHeaderNav, TechNotes, CaseContents,
-  ScrollScene, SignalLine, MotionLayer, and the FarmFam+ `WorkAreas` /
-  `RelationMap` section components).
+  ScrollScene, SignalLine, MotionLayer, DomainExplorer and the explorer section
+  components: FarmFam+ `WorkAreas` / `RelationMap`, Smart Farm
+  `ControlConditions`, IndianBob `HabitExplorer`, Emosave `StateExample`).
 - **Styling.** Utilities in className; Preflight is off (the editorial base in
   `globals.css` replaces it); custom variants
   `mob tab-only short-land fine coarse on-dark js inview reveal-pending`;
@@ -83,10 +86,10 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 ## 3. Data model (summary)
 
 `Project` →
-`slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{scope, scopeMobile, flows, areas?, cta}, visuals{}, case{…}`
+`slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
 
 `case`:
-`role, rolePhases?, roleSurfaces?, roleTracks?, contextProblem, systemFlows, reverseFlow?, monitoringFlow?, featureFlow?, surfaceRelation?, controlExperiment?, work[], workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus?, stateFlow?, stateFlowNote?`
+`role, rolePhases?, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
 
 `surfaceRelation` (`{ label, rows }`) is the single definition of IndianBob's
 USER → MOBILE APP → API → DATA relation with the ADMIN branch. The homepage
@@ -94,22 +97,50 @@ Featured block and the case study `System / Flow` section both read it; the
 homepage container only adds the per-row `sub` captions from `roleSurfaces`, and
 the case study renders the same rows with `showSubs={false}`.
 
-FarmFam+ uses two user-selected explorers instead of a scroll-driven flow
-(`src/dto/explorer.dto.ts`):
+Every project diagram is now either static or changed only by the visitor
+(click, tap, keyboard). Nothing is selected by scrolling. The explorer data:
 
-- `home.areas` (`{ id, label, sub, title, body, related[] }`) — the homepage
-  WORK AREAS block. Three representative areas (ORDER, GROUP PURCHASE,
-  INVENTORY); the full scope stays in `home.scope` and `case.work`. FarmFam+
-  `home.flows` is now `[]`.
-- `case.relationMap` (`{ id, label, title, note, origin, targets[] }`) — the
-  Engineering section "주문을 취소하면, 무엇이 달라질까?". Its `id`
-  (`order-cancellation`) is the heading id, so the old `#order-cancellation`
-  link still works. The former `order-cancellation` tech note was folded into it
-  (edge case → origin body, handling → origin/target bodies) and removed from
-  `techNotes`, so the text appears once.
+- FarmFam+ `home.areas` (`{ id, label, sub, title, body, related[], to }`) —
+  WORK AREAS: one focus per area (entry point / group-purchase consistency /
+  restore + regression), each linking to its case-study anchor (`to.target`:
+  `context`, `transaction-boundaries`, `regression-protection`). `home.flows` is
+  `[]`.
+- FarmFam+ `case.stateScope` — the static "주문이 영향을 주는 상태 · 처리 순서
+  아님" list in Role / Scope that replaced the old 5-step sequence and reverse
+  path.
+- FarmFam+ `case.relationMap`
+  (`{ id, label, title, hint, hintMobile, note, origin, targets[], check }`) —
+  02 SYSTEM, right after Context / Problem. Each node carries `why` (관계의
+  의미), `work` (실제 작업), optional `scope` (the only confirmed transaction
+  range: active group purchase + quantity progress) and optional `note`. `check`
+  is the separate "이 관계를 검증한 방법" block (regression tests), not a node.
+  The map `id` (`order-cancellation`) stays the heading id, so the old
+  `#order-cancellation` link still works; no tech note reuses it.
+- APC `case.domains` (`content/projects/apc-domains.ts`) — A 물류·재고 / B QR
+  근태 / C 전자결재, each with static `steps`, `impl`, optional `aside`
+  (fingerprint fallback) / `checks` (approval server checks) and a `note`
+  target. The same data feeds the home (`EXPLORER_MODE.HOME`: title, lead,
+  steps, link) and the case study (`EXPLORER_MODE.DETAIL`: adds impl list,
+  aside, checks, note link). `home.flows` is `[]`.
+- Smart Farm `home.zones` — MONITORING · PRODUCT WORK and CONTROL · EXPERIMENT
+  as two unconnected static areas. `case.controlExperiment.conditions`
+  (`content/projects/smart-farm-control.ts`) — the five safety conditions that
+  used to be tech notes. Each condition keeps its old note id as the button id,
+  so `#command-expiry`, `#fail-safe`, … still land on the section and select
+  that condition; `#mqtt` is the MQTT caption. `zone` marks what the logic
+  relates to (command receive / equipment operation / whole controller); the
+  location text only claims "제어기 안전 로직", not a firmware module.
+- IndianBob `case.feature` (`content/projects/indian-bob-feature.ts`) — HABIT
+  areas with the related `systems` and `edges` to emphasise. Edges mean
+  "connected", not call order.
+- IndianBob `engineeringNote.links` / `footnote` — labels on the Apple Sign-in
+  arrows; code exchange is a footnote because its location is unconfirmed.
+- Emosave `case.stateExample` — DEFAULT / SELECTED / PLACED copy for the drawn
+  `StateSketch` model (home: static comparison, case: state tabs next to
+  Customization).
 
-Lines in the relation map show connection only, not execution order, parallelism
-or transaction scope; the copy says so in `note`. Neither explorer claims a
+Lines in these diagrams show connection only, not execution order, parallelism
+or transaction scope; each `note` / `caption` says so. No explorer claims a
 sequence the content does not state.
 
 Flow nodes carry no `active` state (the active node follows scroll); only
@@ -131,26 +162,28 @@ Rules:
 
 ## 4. Content → UI mapping
 
-| Data                                                                 | Homepage                                               | Case study                                                                   |
-| -------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------- |
-| `summary`                                                            | Project description                                    | Overview lead                                                                |
-| `period` · `status` · `surfaces`                                     | Meta rail, hover meta bar                              | Header rail, meta list                                                       |
-| `home.scope` (+`scopeMobile` list)                                   | SCOPE keywords (explicit shorter list on mobile)       | FarmFam+ Role/Scope keyword row                                              |
-| `home.flows`                                                         | APC A·B·C / Smart Farm (FarmFam+ is `[]`)              | APC System reuses the same data                                              |
-| `home.areas`                                                         | FarmFam+ WORK AREAS (tabs ≥744, accordion <744)        | —                                                                            |
-| `relationMap`                                                        | —                                                      | FarmFam+ Engineering, first section of the group                             |
-| `case.role` · `roleSurfaces` · `rolePhases` · `roleTracks`           | —                                                      | Role / Scope (Smart Farm: Status / Scope in 2 columns)                       |
-| `case.contextProblem`                                                | —                                                      | Context / Problem                                                            |
-| `systemFlows` · `reverseFlow` · `monitoringFlow` · `featureFlow`     | —                                                      | System group                                                                 |
-| `controlExperiment` (WHY · PROTOTYPE · FINDING)                      | —                                                      | Smart Farm Control Experiment, dashed                                        |
-| `work` (`track`)                                                     | —                                                      | What I Worked On (Smart Farm grouped ● / ◇)                                  |
-| `techNotes`                                                          | —                                                      | Engineering group, flexible fields, no STACK block                           |
-| `engineeringNote`                                                    | —                                                      | IndianBob Apple Sign-in dark card                                            |
-| `experiment`                                                         | S03 story (homepage uses `site.stories`)               | APC OCR: flow ends at DECISION, NOT SHIPPED appears once in the DECISION row |
-| `stories[].description`                                              | Story card body, under title and flow                  | —                                                                            |
-| `surfaceRelation`                                                    | IndianBob Featured relation (with `roleSurfaces` subs) | IndianBob System / Flow (labels only)                                        |
-| `currentState` · `currentStateTracks`                                | —                                                      | Current State (Smart Farm: 2 columns, stated once)                           |
-| `interactionFocus` · `stateFlow` · `workParagraphs` · `currentState` | Emosave state tokens                                   | Emosave Interaction / Work / Current State                                   |
+| Data                                                       | Homepage                                               | Case study                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------- |
+| `summary`                                                  | Project description                                    | Overview lead                                                           |
+| `period` · `status` · `surfaces`                           | Meta rail, hover meta bar                              | Header rail, meta list                                                  |
+| `home.scope` (+`scopeMobile` list)                         | SCOPE keywords (explicit shorter list on mobile)       | FarmFam+ Role/Scope keyword row                                         |
+| `home.areas`                                               | FarmFam+ WORK AREAS (tabs ≥744, accordion <744)        | —                                                                       |
+| `home.zones`                                               | Smart Farm MONITORING / CONTROL areas                  | —                                                                       |
+| `domains`                                                  | APC FIELD WORK tabs                                    | APC System (same data + impl, aside, checks, note link)                 |
+| `stateScope` · `relationMap`                               | —                                                      | FarmFam+ Role / Scope list · 02 System relation map                     |
+| `case.role` · `roleSurfaces` · `rolePhases` · `roleTracks` | —                                                      | Role / Scope (Smart Farm: Status / Scope in 2 columns)                  |
+| `case.contextProblem`                                      | —                                                      | Context / Problem                                                       |
+| `systemFlows` · `monitoringFlow`                           | —                                                      | System group                                                            |
+| `controlExperiment` (rows + `conditions`)                  | —                                                      | Smart Farm Control Experiment (Engineering), dashed, condition selector |
+| `feature`                                                  | —                                                      | IndianBob 02 System HABIT explorer                                      |
+| `work` (`track`)                                           | —                                                      | What I Worked On (Smart Farm grouped ● / ◇)                             |
+| `techNotes`                                                | —                                                      | Engineering group, flexible fields, no STACK block                      |
+| `engineeringNote`                                          | —                                                      | IndianBob Apple Sign-in dark card                                       |
+| `experiment`                                               | S03 story (homepage uses `site.stories`)               | APC OCR: static flow, NOT SHIPPED + `conclusion` once, under the title  |
+| `stories[].description`                                    | Story card body, under title and flow                  | —                                                                       |
+| `surfaceRelation`                                          | IndianBob Featured relation (with `roleSurfaces` subs) | IndianBob Role / Scope overview (with subs)                             |
+| `currentState` · `currentStateTracks`                      | —                                                      | Current State (Smart Farm: 2 columns, stated once)                      |
+| `interactionFocus` · `stateExample` · `workParagraphs`     | Emosave static state comparison                        | Emosave Interaction (state tabs beside Customization) / Work            |
 
 Items from the content brief that were **not shown in the UI** because they are
 instructions to the writer, not visitor-facing text:
@@ -165,14 +198,14 @@ Smart Farm Control's current state "실제 제품 운영 적용 여부는 확정
 
 ## 5. Motion (scroll-driven, CSS-variable based)
 
-FarmFam+ is the exception: its home block renders `ScrollScene steps={false}`
-and has no `[data-flow]`, `[data-step]`, `[data-node]` or `[data-link]`, so
-scrolling never changes the WORK AREAS or relation-map selection. Selection
-changes only on click, tap or keyboard, lives in component state (no storage),
-and survives scrolling and the 743/744 switch. Colour, underline and connector
-emphasis change in 150ms; the new description fades in over 150ms and the old
-one disappears immediately, so rapid clicks always end on the last choice. APC,
-Smart Farm, IndianBob and Emosave keep their scroll-driven flows.
+The five project blocks render `ScrollScene steps={false}` and none of the new
+diagrams carry `[data-flow]`, so scrolling never changes a selection or lights a
+node. Selections change only on click, tap or keyboard, live in component state
+(no storage) and survive scrolling and breakpoint changes. Emphasis (background,
+border, connector 1px → 2px) changes in 150ms; the new panel text fades in over
+150ms (`fade-in` keyframes, `motion-safe` only). The OCR flow and the Smart Farm
+monitoring flow are `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories
+S01–S03 keep their original flows.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
@@ -207,17 +240,26 @@ written as CSS variables / attributes.
     Home/End and automatic activation. Panels are stacked in one grid cell, so
     the block does not change height between areas.
   - <744: `h4 > button[aria-expanded][aria-controls]` + `role="region"`. One
-    item is always open; the open item's button is `aria-disabled`. The tapped
-    title keeps its screen position when the item above collapses.
-  - Both structures share one selection. The hidden one is `display: none`, so
-    screen readers see one copy; if focus was inside the widget when the
-    breakpoint flips, it moves to the matching control in the visible one.
-- FarmFam+ relation map: plain `button[aria-pressed][aria-controls]` inside a
-  `role="group"` labelled by the section heading and described by `note`;
-  connector lines are `aria-hidden`. Hover only shows an underline; the text
-  changes on activation only. No `aria-live`.
+    item at most is open; tapping the open item closes it. The tapped title
+    keeps its screen position when the item above collapses.
+  - Both structures share one choice (`useChoiceGroup`): when every item is
+    closed the tabs show the last valid choice (order if none). The hidden copy
+    is `display: none`; if focus was inside when the breakpoint flips, it moves
+    to the matching visible control without scrolling.
+- FarmFam+ relation map: ≥744 bordered `button[aria-pressed][aria-controls]`
+  nodes in a `role="group"` plus one panel; <744 a tree of
+  `button[aria-expanded]` with the explanation directly under the tapped node.
+  Connectors are `aria-hidden`; the panel text carries the same relation.
+- APC domains, IndianBob HABIT, Emosave states: `tablist` / `tab` / `tabpanel`
+  (`useTabKeys`). APC and Emosave are horizontal (←/→). IndianBob is vertical at
+  ≥1024 (`aria-orientation="vertical"`, ↑/↓) and a 2×2 grid below (←/→ move in
+  reading order, ↑/↓ move by row). Home/End everywhere.
+- Smart Farm conditions: `button[aria-pressed]` chips; the drawing is
+  `aria-hidden` and the panel states "▲ 설명 위치 · …" in text.
+- No panel is `aria-live`; the tab / pressed relationship announces changes.
 - Touch targets are at least 44×44px (MENU, CLOSE, CTA, menu links 64px,
-  accordion 52px, Contents links, WORK AREAS rows 69px, relation nodes 64px).
+  accordion 52px, Contents links, WORK AREAS rows 60px, relation nodes 60px+,
+  tabs and condition chips 44px+).
 - Safe areas are handled with `env(safe-area-inset-*)` and `svh`. There is no
   `100vh`.
 
