@@ -8,7 +8,7 @@ import { List, ListItem } from '@/components/atoms/list';
 import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { cx } from '@/lib/cx';
-import { treeSegments } from '@/lib/relation-path';
+import { type TreeSegments, treeSegments } from '@/lib/relation-path';
 import type { RelationItem, RelationMapViewProps } from '@/dto/explorer.dto';
 import { TAG } from '@/constants/tag';
 
@@ -20,45 +20,71 @@ function TreeNode({
   open,
   onToggle,
   toggleRef,
+  seg,
 }: {
   node: RelationItem;
   open: boolean;
   onToggle: (id: string) => void;
   toggleRef: RelationMapViewProps['toggleRef'];
+  seg?: TreeSegments;
 }) {
   return (
     <>
-      <Button
-        ref={toggleRef(node.id)}
-        aria-expanded={open}
-        aria-controls={node.regionId}
-        data-selected={open || undefined}
-        onClick={() => onToggle(node.id)}
-        className={cx(
-          nodeBox,
-          'flex min-h-15 items-center justify-between gap-3 px-3.5 py-2.5'
-        )}
-      >
-        <Column as={TAG.SPAN} className='min-w-0 gap-1'>
-          <Row as={TAG.SPAN} className='items-center gap-2 mono'>
-            <ChoiceDot on={open} />
-            <Text as={TAG.SPAN}>{node.rel}</Text>
-          </Row>
+      <Box className='relative flex flex-col'>
+        {seg ? (
+          <>
+            <Box
+              as={TAG.SPAN}
+              aria-hidden='true'
+              className={cx(
+                line,
+                '-top-2 bottom-1/2 -left-4 z-1 border-l data-on:border-l-2'
+              )}
+              data-on={seg.upper || undefined}
+            />
+            <Box
+              as={TAG.SPAN}
+              aria-hidden='true'
+              className={cx(
+                line,
+                'top-1/2 -left-4 w-4 border-t data-on:border-t-2'
+              )}
+              data-on={seg.branch || undefined}
+            />
+          </>
+        ) : null}
+        <Button
+          ref={toggleRef(node.id)}
+          aria-expanded={open}
+          aria-controls={node.regionId}
+          data-selected={open || undefined}
+          onClick={() => onToggle(node.id)}
+          className={cx(
+            nodeBox,
+            'flex min-h-15 items-center justify-between gap-3 px-3.5 py-2.5'
+          )}
+        >
+          <Column as={TAG.SPAN} className='min-w-0 gap-1'>
+            <Row as={TAG.SPAN} className='items-center gap-2 mono'>
+              <ChoiceDot on={open} />
+              <Text as={TAG.SPAN}>{node.rel}</Text>
+            </Row>
+            <Text
+              as={TAG.SPAN}
+              className={cx('text-[17px] leading-[1.3] font-medium', nodeName)}
+            >
+              {node.label}
+            </Text>
+          </Column>
           <Text
             as={TAG.SPAN}
-            className={cx('text-[17px] leading-[1.3] font-medium', nodeName)}
+            aria-hidden='true'
+            className='w-5 flex-none text-center text-[20px] leading-none'
           >
-            {node.label}
+            {open ? '−' : '+'}
           </Text>
-        </Column>
-        <Text
-          as={TAG.SPAN}
-          aria-hidden='true'
-          className='w-5 flex-none text-center text-[20px] leading-none'
-        >
-          {open ? '−' : '+'}
-        </Text>
-      </Button>
+        </Button>
+      </Box>
       <Column
         id={node.regionId}
         role='region'
@@ -100,40 +126,23 @@ export function RelationTreeView({
         const seg = segs[i];
         return (
           <ListItem key={t.id} className='relative mt-2 flex flex-col pl-6'>
-            <Box
-              as={TAG.SPAN}
-              aria-hidden='true'
-              className={cx(
-                line,
-                'top-[-8px] left-2 h-[38px] border-l data-on:border-l-2'
-              )}
-              data-on={seg.upper || undefined}
-            />
             {i < targets.length - 1 ? (
               <Box
                 as={TAG.SPAN}
                 aria-hidden='true'
                 className={cx(
                   line,
-                  'top-[30px] bottom-0 left-2 border-l data-on:border-l-2'
+                  'inset-y-0 left-2 border-l data-on:border-l-2'
                 )}
                 data-on={seg.lower || undefined}
               />
             ) : null}
-            <Box
-              as={TAG.SPAN}
-              aria-hidden='true'
-              className={cx(
-                line,
-                'top-[30px] left-2 w-4 border-t data-on:border-t-2'
-              )}
-              data-on={seg.branch || undefined}
-            />
             <TreeNode
               node={t}
               open={t.id === open}
               onToggle={onToggle}
               toggleRef={toggleRef}
+              seg={seg}
             />
           </ListItem>
         );

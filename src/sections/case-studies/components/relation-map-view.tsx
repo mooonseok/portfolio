@@ -12,8 +12,10 @@ import { TAG } from '@/constants/tag';
 export function RelationMapView(props: RelationMapViewProps) {
   const { rootRef, noteId, note, hint, hintMobile, origin, targets, check } =
     props;
-  const current =
-    [origin, ...targets].find((n) => n.id === props.selected) ?? origin;
+  const nodes = [origin, ...targets];
+  const selected = nodes.some((n) => n.id === props.selected)
+    ? props.selected
+    : origin.id;
   return (
     <Box ref={rootRef} className='flex flex-col gap-5 tab:gap-6'>
       <Text as={TAG.SPAN} className='mono text-subtle'>
@@ -24,13 +26,22 @@ export function RelationMapView(props: RelationMapViewProps) {
           {hintMobile}
         </Text>
       </Text>
-      <Grid className='grid-cols-[minmax(0,1fr)] gap-y-10 lap:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lap:[align-items:start] lap:gap-x-14'>
-        <Column className='gap-4 tab:gap-5'>
+      <Grid className='grid-cols-[minmax(0,1fr)] gap-y-5 tab:gap-y-6 lap:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lap:[align-items:start] lap:gap-x-14 lap:gap-y-5'>
+        <Column className='lap:col-[1] lap:row-[1]'>
           <RelationGraphView {...props} />
           <RelationTreeView {...props} />
-          {check ? <RelationCheckView check={check} /> : null}
         </Column>
-        <RelationPanelView panelId={props.panelId} node={current} />
+        <RelationPanelView
+          panelId={props.panelId}
+          nodes={nodes}
+          selected={selected}
+          className='lap:col-[2] lap:row-[1/3]'
+        />
+        {check ? (
+          <Column className='lap:col-[1] lap:row-[2]'>
+            <RelationCheckView check={check} />
+          </Column>
+        ) : null}
       </Grid>
       <Text as={TAG.SPAN} id={noteId} className='text-small text-subtle'>
         {note}
