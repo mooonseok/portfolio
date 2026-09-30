@@ -13,6 +13,7 @@ export type LabelFrom = typeof BREAKPOINT.ALL | typeof BREAKPOINT.DESKTOP;
 export const MEDIA = {
   MOBILE: '(max-width: 743px)',
   TABLET_UP: '(min-width: 744px)',
+  DESKTOP_UP: '(min-width: 1024px)',
   REDUCED_MOTION: '(prefers-reduced-motion: reduce)',
   FINE_MOTION:
     '(hover: hover) and (pointer: fine) and (min-width: 1024px) and (prefers-reduced-motion: no-preference)',

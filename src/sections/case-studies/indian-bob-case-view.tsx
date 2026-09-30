@@ -2,35 +2,31 @@ import { CaseStudyTemplate } from '@/components/templates/case-study-template/ca
 import { CaseSectionView } from './components/case-section-view';
 import { ParagraphsView } from './components/paragraphs-view';
 import { WorkRowsView } from './components/work-rows-view';
-import { TilesView } from './components/tiles-view';
+import { HabitExplorer } from './components/habit-explorer';
 import { IndianBobNoteView } from './indian-bob-note-view';
 import { Box } from '@/components/atoms/box';
-import { Text } from '@/components/atoms/text';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
-import { FlowDiagram } from '@/components/molecules/flow-diagram';
 import { SurfaceRelation } from '@/components/molecules/surface-relation';
 import type { IndianBobCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH, CASE_LAYOUT, CASE_SPACE } from '@/constants/case';
-import { FLOW_ORIENT } from '@/constants/flow';
 import { RULE } from '@/constants/rule';
 import { SIZE } from '@/constants/size';
-import { TAG } from '@/constants/tag';
 
-const sub =
-  'flex flex-col gap-4 tab:grid tab:grid-cols-6 tab:[align-items:start] tab:gap-x-(--gutter) lap:grid-cols-10';
+const HABIT_TITLE_ID = 'habit';
 
 export function IndianBobCaseView({
   p,
   groups,
   showContext,
   showRelation,
+  relationLabel,
+  rows,
   showWork,
   showNoteFields,
   showCurrent,
 }: IndianBobCaseViewProps) {
   const c = p.case;
   const note = c.engineeringNote;
-  const relation = showRelation ? c.surfaceRelation : undefined;
   return (
     <CaseStudyTemplate
       project={p}
@@ -58,7 +54,11 @@ export function IndianBobCaseView({
     >
       <CaseSectionView depth={CASE_DEPTH.L1} title='Role / Scope' id='role'>
         <ParagraphsView list={c.role} />
-        {c.roleSurfaces ? <TilesView list={c.roleSurfaces} /> : null}
+        {showRelation ? (
+          <Box className='max-w-[560px] pt-2'>
+            <SurfaceRelation label={relationLabel} rows={rows} />
+          </Box>
+        ) : null}
       </CaseSectionView>
       {showContext ? (
         <CaseSectionView
@@ -69,45 +69,16 @@ export function IndianBobCaseView({
           <ParagraphsView list={c.contextProblem} />
         </CaseSectionView>
       ) : null}
-      {relation ? (
+      {c.feature ? (
         <CaseSectionView
           group={groups.system}
           depth={CASE_DEPTH.L2}
-          title='System / Flow'
+          title={c.feature.title}
+          titleId={HABIT_TITLE_ID}
           layout={CASE_LAYOUT.WIDE}
           loose
         >
-          <Box className={sub}>
-            <Box className='tab:col-[1/-1] lap:col-[3/11]'>
-              <SurfaceRelation
-                label={relation.label}
-                showSubs={false}
-                rows={relation.rows}
-              />
-            </Box>
-          </Box>
-        </CaseSectionView>
-      ) : null}
-      {c.featureFlow ? (
-        <CaseSectionView
-          group={relation ? undefined : groups.system}
-          depth={CASE_DEPTH.L2}
-          title='Feature Flow'
-          id='feature-flow'
-          layout={CASE_LAYOUT.WIDE}
-        >
-          <Box className={sub}>
-            <Text as={TAG.SPAN} className='mono muted tab:col-[1/3]'>
-              {c.featureFlow.label}
-            </Text>
-            <Box className='tab:col-[3/7] tab:min-w-0 lap:col-[3/11]'>
-              <FlowDiagram
-                nodes={c.featureFlow.nodes}
-                orient={FLOW_ORIENT.AUTO}
-                label='Habit feature flow'
-              />
-            </Box>
-          </Box>
+          <HabitExplorer feature={c.feature} labelId={HABIT_TITLE_ID} />
         </CaseSectionView>
       ) : null}
       {showWork ? (

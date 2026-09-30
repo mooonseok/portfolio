@@ -27,6 +27,7 @@ export function IndianBobBlockView({
   return (
     <ScrollScene
       as={TAG.ARTICLE}
+      steps={false}
       className='col-span-full flex flex-col gap-5 tab:grid tab:grid-cols-subgrid tab:[align-items:start] lap:col-[1/9]'
     >
       <FeaturedMetaView

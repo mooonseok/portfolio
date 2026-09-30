@@ -5,6 +5,7 @@ import type {
   Experiment,
 } from '@/dto/experiment.dto';
 import type { Domain } from '@/dto/domain.dto';
+import type { Feature } from '@/dto/feature.dto';
 import type { TechNote } from '@/dto/field.dto';
 import type { RelationMap, StateScope } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
@@ -40,7 +41,7 @@ export interface CaseContent {
   domainsTitle?: string;
   domains?: Domain[];
   monitoringFlow?: Flow;
-  featureFlow?: Flow;
+  feature?: Feature;
   surfaceRelation?: SurfaceRelationContent;
   work: WorkItem[];
   workParagraphs?: string[];

@@ -3,6 +3,7 @@ import type { RelationSection } from '@/dto/explorer.dto';
 import type { DomainExplorerProps } from '@/dto/domain.dto';
 import type { GroupTag } from '@/dto/navigation.dto';
 import type { Project } from '@/dto/project.dto';
+import type { SurfaceRow } from '@/dto/surface.dto';
 import type { WorkItem } from '@/dto/work.dto';
 
 export interface CaseGroupTags {
@@ -56,6 +57,8 @@ export interface SmartFarmCaseViewProps extends CaseViewModel {
 export interface IndianBobCaseViewProps extends CaseViewModel {
   showContext: boolean;
   showRelation: boolean;
+  relationLabel: string;
+  rows: SurfaceRow[];
   showWork: boolean;
   showNoteFields: boolean;
   showCurrent: boolean;

@@ -50,7 +50,7 @@ export function groupsFor(p: Project): ContentsGroup[] {
     has(p.home.flows) ||
     has(c.domains ?? []) ||
     !!c.monitoringFlow ||
-    !!c.featureFlow ||
+    !!c.feature ||
     !!c.relationMap ||
     has(c.surfaceRelation?.rows ?? []);
   const engineering =

@@ -40,5 +40,7 @@ export interface Experiment {
 export interface EngineeringNote {
   title: string;
   flow: FlowNode[];
+  links: string[];
+  footnote: string;
   fields: Field[];
 }
