@@ -97,9 +97,8 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 
 `surfaceRelation` (`{ label, rows }`) is the single definition of IndianBob's
 USER → MOBILE APP → API → DATA relation with the ADMIN branch. The homepage
-Featured block and the case study `System / Flow` section both read it; the
-homepage container only adds the per-row `sub` captions from `roleSurfaces`, and
-the case study renders the same rows with `showSubs={false}`.
+Featured block and the case study Role / Scope overview both read it through
+`surfaceRows`, which adds the per-row `sub` captions from `roleSurfaces`.
 
 Every project diagram is now either static or changed only by the visitor
 (click, tap, keyboard). Nothing is selected by scrolling. The explorer data:

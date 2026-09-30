@@ -14,7 +14,8 @@ rules.
 
 ## Requirements
 
-- Node.js 20 or newer
+- Node.js 22.18 or newer (verified on 24). `pnpm test` imports `.ts` files
+  directly, which needs Node's built-in type stripping.
 - pnpm (the repo pins `packageManager: pnpm@10.27.0`; use `corepack enable`)
 - Network access for `pnpm install`. `pnpm build` needs none: General Sans,
   Pretendard and IBM Plex Mono are all self-hosted from `public/fonts` (see
