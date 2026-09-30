@@ -74,6 +74,7 @@ export function StateExampleView({
         key={current.id}
         id={PANEL_ID}
         role='tabpanel'
+        tabIndex={0}
         aria-labelledby={tabId(current.id)}
         className='gap-1.5 border-t border-t-ink pt-3.5 motion-safe:animate-[fade-in_150ms_var(--ease)]'
       >
