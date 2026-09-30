@@ -19,7 +19,6 @@ const toBlock = (p: Project): WorkBlock => {
     project: p,
     href: `/work/${p.slug}`,
     caseLabel: `${p.title} case study`,
-    flowLabel: `${p.title} flow`,
     surfaces,
     meta: [p.period, surfaces],
   };

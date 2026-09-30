@@ -49,7 +49,10 @@ export const farmfamPlus: Project = {
         title: '진행 수량과 상태 일관성',
         body: '공동구매 주문은 주문 상태와 함께 진행 수량과 관련 상태를 바꿉니다. 일부 상태만 반영되지 않도록 활성 공동구매와 수량 진행 상태를 같은 트랜잭션 범위에서 처리했습니다.',
         related: ['주문', '진행 수량', '다단계 보상'],
-        to: { label: 'Transaction boundaries', target: 'transaction-boundaries' },
+        to: {
+          label: 'Transaction boundaries',
+          target: 'transaction-boundaries',
+        },
       },
       {
         id: 'inventory',

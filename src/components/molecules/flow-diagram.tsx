@@ -48,12 +48,7 @@ export function FlowDiagram({
       data-flow={role}
       data-orient={orient}
       data-tone={tone}
-      data-size={
-        orient === FLOW_ORIENT.SEQUENCE ||
-        orient === FLOW_ORIENT.SEQUENCE_TABLET
-          ? SIZE.SM
-          : size
-      }
+      data-size={orient === FLOW_ORIENT.SEQUENCE ? SIZE.SM : size}
       data-draw=''
       aria-label={label}
       style={

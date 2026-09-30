@@ -1,9 +1,7 @@
 export const FLOW_ORIENT = {
   VERTICAL: 'vertical',
   AUTO: 'auto',
-  TABLET: 'tablet',
   SEQUENCE: 'sequence',
-  SEQUENCE_TABLET: 'sequence-tablet',
 } as const;
 
 export type FlowOrient = (typeof FLOW_ORIENT)[keyof typeof FLOW_ORIENT];

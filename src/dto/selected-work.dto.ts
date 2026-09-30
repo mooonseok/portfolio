@@ -15,7 +15,6 @@ export interface WorkBlock {
   project: Project;
   href: string;
   caseLabel: string;
-  flowLabel: string;
   surfaces: string;
   meta: MetaPair;
 }

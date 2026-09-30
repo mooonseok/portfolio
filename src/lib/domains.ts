@@ -13,9 +13,7 @@ export const toDomainItems = (
       ...d,
       tabId: `${base}-tab`,
       panelId: `${base}-panel`,
-      noteHref: home
-        ? `/work/${slug}#${d.note.target}`
-        : `#${d.note.target}`,
+      noteHref: home ? `/work/${slug}#${d.note.target}` : `#${d.note.target}`,
       linkLabel: `${home ? '케이스스터디' : '기술 노트'} · ${d.note.label}`,
     };
   });
