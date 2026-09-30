@@ -1,18 +1,14 @@
-import { DomainDetailView } from './domain-detail-view';
-import { DomainStepsView } from './domain-steps-view';
+import { DomainDetailPanelView } from './domain-detail-panel-view';
+import { DomainHomePanelsView } from './domain-home-panels-view';
 import { Box } from '@/components/atoms/box';
 import { Button } from '@/components/atoms/button';
 import { ChoiceDot } from '@/components/atoms/choice-dot';
-import { Column } from '@/components/atoms/column';
-import { Cta } from '@/components/atoms/cta';
 import { Grid } from '@/components/atoms/grid';
-import { Heading } from '@/components/atoms/heading';
-import { JumpLink } from '@/components/atoms/jump-link';
 import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import type { DomainExplorerViewProps } from '@/dto/domain.dto';
 import { EXPLORER_MODE } from '@/constants/explorer';
-import { HEADING, TAG } from '@/constants/tag';
+import { TAG } from '@/constants/tag';
 
 export function DomainExplorerView({
   label,
@@ -26,7 +22,7 @@ export function DomainExplorerView({
   const detail = mode === EXPLORER_MODE.DETAIL;
   const d = items.find((x) => x.id === selected) ?? items[0];
   return (
-    <Column>
+    <Box>
       <Grid
         role='tablist'
         aria-label={label}
@@ -41,7 +37,7 @@ export function DomainExplorerView({
               id={x.tabId}
               role='tab'
               aria-selected={on}
-              aria-controls={items[0].panelId}
+              aria-controls={detail ? items[0].panelId : x.panelId}
               tabIndex={on ? 0 : -1}
               data-selected={on || undefined}
               onClick={() => onSelect(x.id)}
@@ -62,36 +58,11 @@ export function DomainExplorerView({
           );
         })}
       </Grid>
-      <Grid
-        key={d.id}
-        id={items[0].panelId}
-        tabIndex={0}
-        role='tabpanel'
-        aria-labelledby={d.tabId}
-        className='grid-cols-[minmax(0,1fr)] gap-y-7 pt-6 motion-safe:animate-[fade-in_150ms_var(--ease)] tab:pt-8 lap:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lap:grid-rows-[auto_1fr] lap:gap-x-12'
-      >
-        <Column className='gap-3.5 lap:col-[1] lap:row-[1]'>
-          <Heading
-            level={detail ? HEADING.H3 : HEADING.H4}
-            className='text-[22px] leading-[1.25] font-medium tracking-[-0.012em] tab:text-d3'
-          >
-            {d.title}
-          </Heading>
-          <Text className='text-[15.5px] leading-[1.65] text-dark-sub tab:text-body'>
-            {d.lead}
-          </Text>
-        </Column>
-        <Column className='gap-6 lap:col-[2] lap:row-[1/3]'>
-          <DomainStepsView steps={d.steps} label={d.title} />
-          {detail ? <DomainDetailView domain={d} /> : null}
-          {detail ? <JumpLink href={d.noteHref} label={d.linkLabel} /> : null}
-        </Column>
-        {detail ? null : (
-          <Box className='lap:col-[1] lap:row-[2]'>
-            <Cta href={d.noteHref} label={d.linkLabel} />
-          </Box>
-        )}
-      </Grid>
-    </Column>
+      {detail ? (
+        <DomainDetailPanelView items={items} current={d} />
+      ) : (
+        <DomainHomePanelsView items={items} selected={d.id} />
+      )}
+    </Box>
   );
 }
