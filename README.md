@@ -30,7 +30,7 @@ pnpm start              # serve the production build
 
 pnpm lint               # ESLint 9 flat config, fails on any warning
 pnpm typecheck          # tsc --noEmit
-pnpm test               # selection, scroll position and scanner regression tests
+pnpm test               # selection, scroll position, history and scanner regression tests
 pnpm check:anchors      # rendered IDs and content links; run after pnpm build
 pnpm check:boundaries   # architecture rules (scripts/check-boundaries.mjs)
 pnpm format             # Prettier + Tailwind class sorting
