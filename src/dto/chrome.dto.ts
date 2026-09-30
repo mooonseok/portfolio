@@ -1,4 +1,4 @@
-import type { ReactNode, RefObject } from 'react';
+import type { MouseEvent, ReactNode, RefObject } from 'react';
 import type { AriaCurrent } from '@/constants/aria';
 import type { NavId } from '@/constants/navigation';
 import type { NavItem } from '@/dto/navigation.dto';
@@ -42,6 +42,7 @@ export interface MobileMenuState {
   panelId: string;
   openMenu: () => void;
   close: () => void;
+  navigate: (event: MouseEvent<HTMLAnchorElement>) => void;
   btnRef: RefObject<HTMLButtonElement | null>;
   closeRef: RefObject<HTMLButtonElement | null>;
   panelRef: RefObject<HTMLDivElement | null>;
