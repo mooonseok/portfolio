@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import { site } from '@/content/site';
 import { Anchor } from '@/components/atoms/anchor';
+import { HistoryScroll } from '@/components/organisms/history-scroll';
 import { LINK_AS } from '@/constants/tag';
 
 const plex = localFont({
@@ -50,6 +51,7 @@ export default function RootLayout({
           본문으로 건너뛰기
         </Anchor>
         {children}
+        <HistoryScroll />
       </body>
     </html>
   );

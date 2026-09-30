@@ -8,7 +8,7 @@ pnpm install
 pnpm dev --port 3100    # stop the development server before pnpm build
 pnpm lint               # ESLint 9 flat config (eslint.config.mjs), 0 warnings allowed
 pnpm typecheck
-pnpm test               # selection, scroll position and scanner regression tests
+pnpm test               # selection, scroll position, history and scanner regression tests
 pnpm check:anchors      # production HTML links and group IDs, after pnpm build
 pnpm check:boundaries   # architecture rules (see §2)
 pnpm format             # Prettier + Tailwind class sorting
@@ -79,8 +79,8 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
   only the generated `src/styles/fonts.css`.
 - **Server components by default.** `'use client'` only on containers that own
   browser state (MobileMenu, SiteHeaderNav, TechNotes, CaseContents,
-  ScrollScene, SignalLine, MotionLayer, DomainExplorer and the explorer section
-  components: FarmFam+ `WorkAreas` / `RelationMap`, Smart Farm
+  ScrollScene, SignalLine, MotionLayer, HistoryScroll, DomainExplorer and the
+  explorer section components: FarmFam+ `WorkAreas` / `RelationMap`, Smart Farm
   `ControlConditions`, IndianBob `HabitExplorer`, Emosave `StateExample`).
 - **Styling.** Utilities in className; Preflight is off (the editorial base in
   `globals.css` replaces it); custom variants
@@ -97,9 +97,8 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 
 `surfaceRelation` (`{ label, rows }`) is the single definition of IndianBob's
 USER → MOBILE APP → API → DATA relation with the ADMIN branch. The homepage
-Featured block and the case study `System / Flow` section both read it; the
-homepage container only adds the per-row `sub` captions from `roleSurfaces`, and
-the case study renders the same rows with `showSubs={false}`.
+Featured block and the case study Role / Scope overview both read it through
+`surfaceRows`, which adds the per-row `sub` captions from `roleSurfaces`.
 
 Every project diagram is now either static or changed only by the visitor
 (click, tap, keyboard). Nothing is selected by scrolling. The explorer data:
@@ -208,8 +207,13 @@ selection or lights a node. Selections change only on click, tap or keyboard,
 live in component state (no storage) and survive scrolling and breakpoint
 changes. Emphasis (background, border, connector 1px → 2px) changes in 150ms;
 the new panel text fades in over 150ms (`fade-in` keyframes, `motion-safe`
-only). The OCR flow and the Smart Farm monitoring flow are `FLOW_ROLE.STATIC`
-(first-reveal line draw only). Stories S01–S03 keep their original flows.
+only). Smooth scrolling is only for in-page links: `HistoryScroll` sets
+`html[data-smooth-scroll]` on the first pointer or key input and removes it on
+back/forward, so landing on a URL hash and history restoration jump straight to
+their position. Hash-link clicks that open elsewhere (modifier keys, `target`,
+`download`) or are cancelled are not remembered. The OCR flow and the Smart Farm
+monitoring flow are `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories
+S01–S03 keep their original flows.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
@@ -269,8 +273,12 @@ written as CSS variables / attributes.
 - Contents derives its current group from document positions on scroll, resize,
   hash changes and history restoration. The mobile disclosure closes on outside
   pointer input, Escape, or when its static list returns into view.
+- Same-page hash links (Contents, note links, skip link) get the router's
+  history state copied onto their new entry, so Back from another page returns
+  to the right page instead of keeping the previous one.
 - Reveal hiding is enabled per mounted scene, so failed hydration keeps server
-  content visible; print always shows reveal items and diagram lines.
+  content visible; print always shows reveal items, diagram lines and every tech
+  note.
 - The Korean conceptual-visual notice appears below every case hero.
 - No panel is `aria-live`; the tab / pressed relationship announces changes.
 - Touch targets are at least 44×44px (MENU, CLOSE, CTA, menu links 64px,

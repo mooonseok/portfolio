@@ -14,7 +14,8 @@ rules.
 
 ## Requirements
 
-- Node.js 20 or newer
+- Node.js 22.18 or newer (verified on 24). `pnpm test` imports `.ts` files
+  directly, which needs Node's built-in type stripping.
 - pnpm (the repo pins `packageManager: pnpm@10.27.0`; use `corepack enable`)
 - Network access for `pnpm install`. `pnpm build` needs none: General Sans,
   Pretendard and IBM Plex Mono are all self-hosted from `public/fonts` (see
@@ -30,7 +31,7 @@ pnpm start              # serve the production build
 
 pnpm lint               # ESLint 9 flat config, fails on any warning
 pnpm typecheck          # tsc --noEmit
-pnpm test               # selection, scroll position and scanner regression tests
+pnpm test               # selection, scroll position, history and scanner regression tests
 pnpm check:anchors      # rendered IDs and content links; run after pnpm build
 pnpm check:boundaries   # architecture rules (scripts/check-boundaries.mjs)
 pnpm format             # Prettier + Tailwind class sorting
