@@ -8,6 +8,7 @@ import { List, ListItem } from '@/components/atoms/list';
 import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { cx } from '@/lib/cx';
+import { treeSegments } from '@/lib/relation-path';
 import type { RelationItem, RelationMapViewProps } from '@/dto/explorer.dto';
 import { TAG } from '@/constants/tag';
 
@@ -80,6 +81,11 @@ export function RelationTreeView({
   toggleRef,
 }: RelationMapViewProps) {
   const all = open === origin.id;
+  const segs = treeSegments(
+    targets.map((t) => t.id),
+    origin.id,
+    open
+  );
   return (
     <List aria-labelledby={titleId} className='flex flex-col tab:hidden'>
       <ListItem className='flex flex-col'>
@@ -91,7 +97,7 @@ export function RelationTreeView({
         />
       </ListItem>
       {targets.map((t, i) => {
-        const on = all || t.id === open || undefined;
+        const seg = segs[i];
         return (
           <ListItem key={t.id} className='relative mt-2 flex flex-col pl-6'>
             <Box
@@ -99,11 +105,21 @@ export function RelationTreeView({
               aria-hidden='true'
               className={cx(
                 line,
-                'top-[-8px] left-2 border-l data-on:border-l-2',
-                i === targets.length - 1 ? 'h-[38px]' : 'bottom-0'
+                'top-[-8px] left-2 h-[38px] border-l data-on:border-l-2'
               )}
-              data-on={on}
+              data-on={seg.upper || undefined}
             />
+            {i < targets.length - 1 ? (
+              <Box
+                as={TAG.SPAN}
+                aria-hidden='true'
+                className={cx(
+                  line,
+                  'top-[30px] bottom-0 left-2 border-l data-on:border-l-2'
+                )}
+                data-on={seg.lower || undefined}
+              />
+            ) : null}
             <Box
               as={TAG.SPAN}
               aria-hidden='true'
@@ -111,7 +127,7 @@ export function RelationTreeView({
                 line,
                 'top-[30px] left-2 w-4 border-t data-on:border-t-2'
               )}
-              data-on={on}
+              data-on={seg.branch || undefined}
             />
             <TreeNode
               node={t}
