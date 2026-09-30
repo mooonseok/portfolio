@@ -1,5 +1,9 @@
 import { GROUP_ID, GROUP_LABEL, type GroupId } from '@/constants/case';
-import { CASE_LENGTH, type ProjectSlug } from '@/constants/project';
+import {
+  CASE_LENGTH,
+  PROJECT_SLUG,
+  type ProjectSlug,
+} from '@/constants/project';
 import { projects } from '@/content/projects';
 import { site } from '@/content/site';
 import type { ContentsGroup, GroupTag } from '@/dto/navigation.dto';
@@ -34,10 +38,8 @@ function shortGroups(p: Project): ContentsGroup[] {
   const c = p.case;
   return present([
     group(GROUP_ID.OVERVIEW),
-    has(c.interactionFocus ?? []) || has(c.stateExample?.states ?? [])
-      ? group(GROUP_ID.INTERACTION)
-      : null,
-    has(c.workParagraphs ?? []) || has(c.work) ? group(GROUP_ID.WORK) : null,
+    has(c.interactionFocus ?? []) ? group(GROUP_ID.INTERACTION) : null,
+    has(c.workParagraphs ?? []) ? group(GROUP_ID.WORK) : null,
     has(c.currentState) ? group(GROUP_ID.CURRENT_STATE) : null,
   ]);
 }
@@ -46,19 +48,26 @@ export function groupsFor(p: Project): ContentsGroup[] {
   if (p.caseLength === CASE_LENGTH.SHORT) return shortGroups(p);
   const c = p.case;
   const system =
-    has(c.systemFlows) ||
-    has(p.home.flows) ||
-    has(c.domains ?? []) ||
-    !!c.monitoringFlow ||
-    !!c.feature ||
-    !!c.relationMap ||
-    has(c.surfaceRelation?.rows ?? []);
+    p.slug === PROJECT_SLUG.INDIAN_BOB
+      ? !!c.feature
+      : p.slug === PROJECT_SLUG.FARMFAM_PLUS
+        ? !!c.relationMap
+        : p.slug === PROJECT_SLUG.APC
+          ? has(c.domains ?? [])
+          : !!c.monitoringFlow;
   const engineering =
-    has(c.techNotes) ||
-    !!c.controlExperiment ||
-    !!c.experiment ||
-    !!c.engineeringNote;
-  const current = has(c.currentState) || !!c.currentStateTracks;
+    p.slug === PROJECT_SLUG.INDIAN_BOB
+      ? !!c.engineeringNote
+      : p.slug === PROJECT_SLUG.SMART_FARM
+        ? !!c.controlExperiment
+        : p.slug === PROJECT_SLUG.APC
+          ? has(c.techNotes) || !!c.experiment
+          : has(c.techNotes);
+  const current =
+    p.slug === PROJECT_SLUG.SMART_FARM
+      ? has(c.currentStateTracks?.monitoring ?? []) ||
+        has(c.currentStateTracks?.control ?? [])
+      : has(c.currentState);
   return present([
     group(GROUP_ID.OVERVIEW),
     system ? group(GROUP_ID.SYSTEM) : null,

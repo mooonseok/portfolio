@@ -7,7 +7,7 @@ export function useSiteHeaderNav(spy: boolean, current?: NavId) {
   const [active, setActive] = useState<NavId | undefined>(current);
 
   useEffect(() => {
-    if (!spy || !('IntersectionObserver' in window)) return;
+    if (!spy) return;
     const targets = NAV_SPY.map((id) => document.getElementById(id)).filter(
       (el): el is HTMLElement => !!el
     );
@@ -19,12 +19,26 @@ export function useSiteHeaderNav(spy: boolean, current?: NavId) {
         if (el.getBoundingClientRect().top <= line) next = el.id as NavId;
       setActive(next);
     };
-    const io = new IntersectionObserver(pick, {
-      rootMargin: '-45% 0px -54% 0px',
-    });
-    targets.forEach((el) => io.observe(el));
+    let frame = 0;
+    const schedule = () => {
+      if (!frame)
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          pick();
+        });
+    };
+    const events = ['scroll', 'resize', 'hashchange', 'pageshow', 'load'];
+    events.forEach((event) =>
+      window.addEventListener(event, schedule, { passive: true })
+    );
+    const ro = new ResizeObserver(schedule);
+    ro.observe(document.body);
     pick();
-    return () => io.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+      events.forEach((event) => window.removeEventListener(event, schedule));
+    };
   }, [spy]);
 
   return active;

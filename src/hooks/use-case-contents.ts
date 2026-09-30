@@ -2,41 +2,62 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { ContentsGroup } from '@/dto/navigation.dto';
+import { lastPassed } from '@/lib/scroll-position';
 
 export function useCaseContents(groups: ContentsGroup[]) {
   const [current, setCurrent] = useState(0);
   const [stuck, setStuck] = useState(false);
   const listRef = useRef<HTMLElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
+  const close = () => detailsRef.current?.removeAttribute('open');
 
   useEffect(() => {
-    const els = groups
-      .map((g) => document.getElementById(g.id))
-      .filter(Boolean) as HTMLElement[];
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const i = els.indexOf(e.target as HTMLElement);
-            if (i >= 0) setCurrent(i);
-          }
-        });
-      },
-      { rootMargin: '-40% 0px -55% 0px' }
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const positions = groups.map(
+        (g) =>
+          document.getElementById(g.id)?.getBoundingClientRect().top ?? Infinity
+      );
+      const bottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 2;
+      setCurrent(lastPassed(positions, bottom ? window.innerHeight : 80));
+      const passed =
+        (listRef.current?.getBoundingClientRect().bottom ?? Infinity) <= 0;
+      setStuck(passed);
+      if (!passed) close();
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    const outside = (e: PointerEvent) => {
+      if (e.target instanceof Node && !detailsRef.current?.contains(e.target))
+        close();
+    };
+    const escape = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || !detailsRef.current?.open) return;
+      const inside = detailsRef.current.contains(document.activeElement);
+      close();
+      if (inside) detailsRef.current.querySelector('summary')?.focus();
+    };
+    const events = ['scroll', 'resize', 'hashchange', 'pageshow', 'load'];
+    events.forEach((event) =>
+      window.addEventListener(event, schedule, { passive: true })
     );
-    els.forEach((el) => io.observe(el));
-    const list = listRef.current;
-    const io2 = new IntersectionObserver(([e]) =>
-      setStuck(!e.isIntersecting && e.boundingClientRect.top < 0)
-    );
-    if (list) io2.observe(list);
+    document.addEventListener('pointerdown', outside);
+    document.addEventListener('keydown', escape);
+    const observer = new ResizeObserver(schedule);
+    observer.observe(document.body);
+    update();
     return () => {
-      io.disconnect();
-      io2.disconnect();
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      events.forEach((event) => window.removeEventListener(event, schedule));
+      document.removeEventListener('pointerdown', outside);
+      document.removeEventListener('keydown', escape);
     };
   }, [groups]);
-
-  const close = () => detailsRef.current?.removeAttribute('open');
 
   return { current, stuck, listRef, detailsRef, close };
 }
