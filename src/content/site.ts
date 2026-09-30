@@ -99,6 +99,6 @@ export const thisWebsite: LabelValue[] = [
     label: 'DESIGN SYSTEM',
     value: '12-column grid / 3 typefaces / 1 signal color',
   },
-  { label: 'INTERACTION', value: 'Signal line / scroll-activated diagrams' },
+  { label: 'INTERACTION', value: 'Signal line / interactive diagrams' },
   { label: 'STACK', value: 'Next.js / TypeScript' },
 ];

@@ -26,7 +26,7 @@ export const farmfamPlusCase: CaseContent = {
     {
       title: 'Order',
       body: [
-        '주문 취소 흐름에서 공동구매 상태 정정과 재고 복원이 함께 처리되도록 관련 로직을 작업했습니다.',
+        '주문 취소 경로에 공동구매 상태 정정과 재고 복원 로직을 연결했습니다.',
       ],
     },
     {
@@ -79,7 +79,7 @@ export const farmfamPlusCase: CaseContent = {
         why: '취소된 주문이 공동구매 진행 상태에 남아 있으면 진행 상태가 실제 주문과 달라집니다.',
         work: '주문 취소 처리에 공동구매 진행 상태 정정을 연결했습니다.',
         scope:
-          '같은 트랜잭션 범위로 확인된 것은 활성 공동구매와 수량 진행 상태 처리입니다.',
+          '트랜잭션 설명은 활성 공동구매와 수량 진행 상태 처리에 한정됩니다. 이 취소 관계의 정정·복원 전체가 같은 트랜잭션이라는 의미는 아닙니다.',
         note: {
           label: 'Transaction boundaries',
           target: 'transaction-boundaries',
@@ -91,13 +91,13 @@ export const farmfamPlusCase: CaseContent = {
         label: '재고 복원',
         rel: '취소 → 재고',
         why: '주문 상태만 바뀌면 실제 재고는 취소된 주문을 계속 반영합니다.',
-        work: '같은 취소 경로에서 재고 복원이 함께 처리되도록 연결했습니다.',
+        work: '주문 취소 경로에 재고 복원 로직을 연결했습니다.',
       },
     ],
     check: {
-      label: '이 관계를 검증한 방법',
+      label: '관련 변경과 테스트',
       title: '회귀 테스트',
-      body: '취소 경로를 바꾼 변경에는 관련 회귀 테스트를 함께 변경했습니다.',
+      body: '주문 취소 경로 변경과 관련된 회귀 테스트를 작업했습니다.',
       note: { label: 'Regression protection', target: 'regression-protection' },
     },
   },
@@ -139,7 +139,7 @@ export const farmfamPlusCase: CaseContent = {
         {
           label: 'Protection',
           body: [
-            '주문 취소와 이미지 처리 등 변경 영역에 단위·통합·회귀 성격의 테스트를 추가했습니다.',
+            '주문 취소와 이미지 처리 등 변경 영역에 단위·통합·회귀 성격의 테스트를 작업했습니다.',
           ],
         },
       ],
