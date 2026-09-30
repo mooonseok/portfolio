@@ -45,7 +45,7 @@ export function TechNotesView({
               <Text
                 as={TAG.SPAN}
                 aria-hidden='true'
-                className='text-[18px] leading-none'
+                className='text-[18px] leading-none print:hidden'
               >
                 {n.open ? '−' : '+'}
               </Text>
@@ -60,7 +60,7 @@ export function TechNotesView({
           <Box
             id={n.panelId}
             ref={panelRef(n.id)}
-            className='flex flex-col gap-3.5 overflow-hidden pb-5 tab:overflow-visible tab:pb-0 [&[hidden]]:hidden tab:[&[hidden]]:flex'
+            className='flex flex-col gap-3.5 overflow-hidden pb-5 tab:overflow-visible tab:pb-0 [&[hidden]]:hidden tab:[&[hidden]]:flex print:[&[hidden]]:flex'
             hidden={!n.open}
           >
             {n.fields.map((f) => (
