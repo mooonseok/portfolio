@@ -1,20 +1,10 @@
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
-import { NotShipped } from '@/components/atoms/not-shipped';
-import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { TAG } from '@/constants/tag';
 import type { Field } from '@/dto/field.dto';
 
-export function FieldRows({
-  rows,
-  notShippedLabel = 'DECISION',
-  notShipped,
-}: {
-  rows: Field[];
-  notShippedLabel?: string;
-  notShipped?: boolean;
-}) {
+export function FieldRows({ rows }: { rows: Field[] }) {
   return (
     <Column as={TAG.DL} className='m-0 max-w-[820px] gap-4'>
       {rows.map((r) => (
@@ -26,11 +16,6 @@ export function FieldRows({
             {r.label}
           </Text>
           <Column as={TAG.DD} className='m-0 gap-1.5 text-body leading-[1.65]'>
-            {notShipped && r.label === notShippedLabel ? (
-              <Row as={TAG.SPAN} className='mb-1'>
-                <NotShipped />
-              </Row>
-            ) : null}
             {r.body.map((b) => (
               <Text key={b}>{b}</Text>
             ))}

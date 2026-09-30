@@ -1,21 +1,38 @@
 import { FarmFamPlusCaseView } from './farmfam-plus-case-view';
 import { caseGroupTags } from './case-group-tags';
 import { has } from '@/lib/has';
-import type { RelationMap, RelationSection } from '@/dto/explorer.dto';
+import type {
+  RelationMap,
+  RelationNode,
+  RelationSection,
+} from '@/dto/explorer.dto';
+import type { NoteRef } from '@/dto/link.dto';
 import type { Project } from '@/dto/project.dto';
 
+const noteHref = (n?: NoteRef) => (n ? `#${n.target}` : undefined);
+
 function toRelation(map: RelationMap): RelationSection {
-  const descId = (id: string) => `${map.id}-${id}-desc`;
+  const item = (n: RelationNode) => ({
+    ...n,
+    buttonId: `${map.id}-${n.id}-node`,
+    regionId: `${map.id}-${n.id}-region`,
+    noteHref: noteHref(n.note),
+  });
   return {
     title: map.title,
     label: map.label,
     map: {
       titleId: map.id,
       noteId: `${map.id}-note`,
+      panelId: `${map.id}-panel`,
+      hint: map.hint,
+      hintMobile: map.hintMobile,
       note: map.note,
-      hasNote: has(map.note),
-      origin: { ...map.origin, descId: descId(map.origin.id) },
-      targets: map.targets.map((t) => ({ ...t, descId: descId(t.id) })),
+      origin: item(map.origin),
+      targets: map.targets.map(item),
+      check: map.check
+        ? { ...map.check, noteHref: noteHref(map.check.note) }
+        : undefined,
     },
   };
 }
@@ -28,8 +45,8 @@ export function FarmFamPlusCase({ p }: { p: Project }) {
       groups={caseGroupTags(p)}
       relation={c.relationMap ? toRelation(c.relationMap) : undefined}
       showScope={has(p.home.scope)}
+      showStateScope={has(c.stateScope?.items ?? [])}
       showContext={has(c.contextProblem)}
-      showFlows={has(c.systemFlows)}
       showWork={has(c.work)}
       showTech={has(c.techNotes)}
       showCurrent={has(c.currentState)}

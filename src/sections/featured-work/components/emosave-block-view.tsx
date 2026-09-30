@@ -1,3 +1,4 @@
+import { EmosaveStatesView } from './emosave-states-view';
 import { FeaturedMetaView } from './featured-meta-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
@@ -7,7 +8,6 @@ import { NavLink } from '@/components/atoms/nav-link';
 import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { ScopeList } from '@/components/molecules/scope-list';
-import { StateTokens } from '@/components/molecules/state-tokens';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import { ScrollScene } from '@/components/organisms/scroll-scene';
 import type { EmosaveBlock } from '@/dto/featured-work.dto';
@@ -17,13 +17,14 @@ export function EmosaveBlockView({
   project: p,
   href,
   meta,
-  states,
+  example,
   hasStates,
 }: EmosaveBlock) {
   return (
     <ScrollScene
       as={TAG.ARTICLE}
-      className='col-span-full flex flex-col gap-5 border-t border-t-hairline pt-5 lap:col-[9/13] lap:mt-30 lap:gap-0 lap:pt-0 lap:[border-top:0] tab-only:grid tab-only:grid-cols-subgrid tab-only:grid-rows-[auto_auto_auto_1fr] tab-only:[align-items:start] tab-only:gap-x-(--gutter) tab-only:gap-y-[18px]'
+      steps={false}
+      className='col-span-full flex flex-col gap-5 border-t border-t-hairline pt-5 lap:col-[9/13] lap:mt-30 lap:gap-0 lap:pt-0 lap:[border-top:0] tab-only:grid tab-only:grid-cols-subgrid tab-only:grid-rows-[auto_auto_auto_auto_1fr] tab-only:[align-items:start] tab-only:gap-x-(--gutter) tab-only:gap-y-[18px]'
     >
       <FeaturedMetaView
         project={p}
@@ -55,12 +56,12 @@ export function EmosaveBlockView({
           meta={meta}
         />
       </NavLink>
-      {hasStates ? (
-        <Box className='flex flex-col gap-4 lap:mt-7 tab-only:hidden'>
-          <Text as={TAG.SPAN} className='hidden mono muted lap:block'>
+      {hasStates && example ? (
+        <Box className='flex flex-col gap-3 lap:mt-7 tab-only:col-[6/9] tab-only:row-[4]'>
+          <Text as={TAG.SPAN} className='mono muted'>
             STATE
           </Text>
-          <StateTokens states={states} hover />
+          <EmosaveStatesView example={example} />
         </Box>
       ) : null}
       <Text className='text-body leading-[1.65] lap:mt-8 tab-only:col-[6/9] tab-only:row-[2] tab-only:text-[16px]'>

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test": "node --test scripts/tests/selection.test.mjs",
+    "test": "node --test scripts/tests/*.test.mjs",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

@@ -10,6 +10,9 @@
   --dark-sub: var(--color-dark-sub);
   --signal: var(--color-signal);
   --placeholder: var(--color-placeholder);
+  --tint: var(--color-tint);
+  --dark-tint: var(--color-dark-tint);
+  --subtle: var(--color-subtle);
 
   --ease: cubic-bezier(0.2, 0, 0, 1);
 

@@ -8,22 +8,15 @@ import {
   trackCol,
   tracksClass,
 } from './smart-farm-marks-view';
+import { SmartFarmControlView } from './smart-farm-control-view';
 import { SmartFarmSystemView } from './smart-farm-system-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
-import { Row } from '@/components/atoms/row';
 import { StatusLabel } from '@/components/atoms/status-label';
 import { Text } from '@/components/atoms/text';
-import { TechNotes } from '@/components/organisms/tech-notes';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import type { SmartFarmCaseViewProps } from '@/dto/case-view.dto';
-import {
-  CASE_DEPTH,
-  CASE_LAYOUT,
-  CASE_SPACE,
-  TECH_COLS,
-} from '@/constants/case';
-import { RULE } from '@/constants/rule';
+import { CASE_DEPTH } from '@/constants/case';
 import { STATUS_KIND } from '@/constants/status';
 import { TAG } from '@/constants/tag';
 import { TONE } from '@/constants/tone';
@@ -38,7 +31,6 @@ export function SmartFarmCaseView({
   showWork,
   showMonitoringWork,
   showControlWork,
-  showTech,
   showCurrent,
   showCurrentMonitoring,
   showCurrentControl,
@@ -120,31 +112,7 @@ export function SmartFarmCaseView({
           </Column>
         </CaseSectionView>
       ) : null}
-      {showTech ? (
-        <CaseSectionView
-          group={groups.engineering}
-          depth={CASE_DEPTH.L4}
-          title='Technical Details'
-          layout={CASE_LAYOUT.WIDE}
-          space={CASE_SPACE.LG}
-          loose
-          rule={RULE.DASHED}
-          mark={<ControlMarkView />}
-        >
-          <Row
-            as={TAG.P}
-            className='flex-wrap items-center gap-x-3 gap-y-2 text-[15px]'
-          >
-            <ControlMarkView />
-            {c.techIntro ? (
-              <Text as={TAG.SPAN} className='muted'>
-                {c.techIntro}
-              </Text>
-            ) : null}
-          </Row>
-          <TechNotes notes={c.techNotes} cols={TECH_COLS.THREE} />
-        </CaseSectionView>
-      ) : null}
+      <SmartFarmControlView p={p} groups={groups} />
       {showCurrent ? (
         <CaseSectionView
           group={groups.currentState}

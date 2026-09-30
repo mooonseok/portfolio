@@ -1,4 +1,5 @@
 import type { Project } from '@/dto/project.dto';
+import type { StateExample } from '@/dto/state-example.dto';
 import type { SurfaceRow, SurfaceTile } from '@/dto/surface.dto';
 import type { MetaPair } from '@/dto/visual.dto';
 
@@ -17,7 +18,7 @@ export interface IndianBobBlock extends FeaturedBlock {
 }
 
 export interface EmosaveBlock extends FeaturedBlock {
-  states: string[];
+  example?: StateExample;
   hasStates: boolean;
 }
 

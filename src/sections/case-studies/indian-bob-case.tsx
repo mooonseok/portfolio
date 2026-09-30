@@ -1,6 +1,7 @@
 import { IndianBobCaseView } from './indian-bob-case-view';
 import { caseGroupTags } from './case-group-tags';
 import { has } from '@/lib/has';
+import { surfaceRows } from '@/lib/surfaces';
 import type { Project } from '@/dto/project.dto';
 
 export function IndianBobCase({ p }: { p: Project }) {
@@ -11,6 +12,8 @@ export function IndianBobCase({ p }: { p: Project }) {
       groups={caseGroupTags(p)}
       showContext={has(c.contextProblem)}
       showRelation={has(c.surfaceRelation?.rows ?? [])}
+      relationLabel={c.surfaceRelation?.label ?? ''}
+      rows={surfaceRows(p)}
       showWork={has(c.work)}
       showNoteFields={!!c.engineeringNote && has(c.engineeringNote.fields)}
       showCurrent={has(c.currentState)}

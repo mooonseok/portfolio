@@ -22,11 +22,6 @@
   --text: var(--ink);
   --emph: var(--ink);
 }
-.flow-diagram[data-tone='dark-muted'] {
-  --line: var(--graphite);
-  --text: var(--dark-sub);
-  --emph: var(--paper);
-}
 .flow-diagram[data-size='sm'] {
   --gap: var(--flow-gap, 12px);
 }

@@ -1,8 +1,8 @@
-import { NODE_STATE } from '@/constants/flow';
+import { CONTROL_ZONE } from '@/constants/control';
 import { WORK_TRACK } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import type { CaseContent } from '@/dto/case.dto';
-import { smartFarmTechNotes } from './smart-farm-tech-notes';
+import { smartFarmConditions } from './smart-farm-control';
 
 export const smartFarmCase: CaseContent = {
   role: [],
@@ -31,14 +31,35 @@ export const smartFarmCase: CaseContent = {
   systemFlows: [],
   monitoringFlow: {
     id: 'monitoring',
-    nodes: [{ label: 'SENSOR' }, { label: 'DATA' }, { label: 'MONITORING' }],
+    nodes: [
+      { label: 'SENSOR', sub: '센서 위치 · 농장·온실·구역별 배치' },
+      { label: 'DATA', sub: '환경 데이터 · 조회, 시뮬레이션 값과 실측값 구분' },
+      {
+        label: 'MONITORING',
+        sub: '운영 UI · 배치도·센서 지도, 생육·수확·관수, 알림',
+      },
+    ],
   },
   controlExperiment: {
-    flow: [
-      { label: 'COMMAND', state: NODE_STATE.EXPERIMENT },
-      { label: 'DEVICE', state: NODE_STATE.EXPERIMENT },
-      { label: 'EQUIPMENT', state: NODE_STATE.EXPERIMENT },
-    ],
+    title: 'Control Experiment',
+    subtitle: '어디서 무엇을 막는가',
+    hint: '안전 조건을 선택하면 설명 위치가 표시됩니다',
+    command: { code: 'COMMAND', sub: '서버 / edge' },
+    controller: { code: 'CONTROLLER', sub: 'ESP32-S3' },
+    equipment: { code: 'EQUIPMENT', sub: '액추에이터' },
+    zones: {
+      [CONTROL_ZONE.RECEIVE]: '명령 수신 관련',
+      [CONTROL_ZONE.ACTUATE]: '장비 동작 관련',
+      [CONTROL_ZONE.CONTROLLER]: '제어기 전체',
+    },
+    link: {
+      id: 'mqtt',
+      label: 'MQTT',
+      body: '서버/edge와 제어기 사이에서 센서 데이터와 장비 제어 명령을 전달하는 통신 경로로 사용했습니다.',
+    },
+    caption:
+      '설명용 도식 · 제어기 안의 구분은 안전 로직이 무엇과 관련되는지 나타내며, 펌웨어의 실제 모듈 구조를 뜻하지 않습니다.',
+    conditions: smartFarmConditions,
     rows: [
       {
         label: 'WHY',
@@ -100,8 +121,7 @@ export const smartFarmCase: CaseContent = {
     },
   ],
   decisions: [],
-  techIntro: '제어 프로토타입을 어떻게 구현했는지.',
-  techNotes: smartFarmTechNotes,
+  techNotes: [],
   currentState: [],
   currentStateTracks: {
     monitoring: [

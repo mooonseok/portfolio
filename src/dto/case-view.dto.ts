@@ -1,8 +1,9 @@
 import type { InteractionFocus } from '@/dto/case.dto';
 import type { RelationSection } from '@/dto/explorer.dto';
-import type { Flow } from '@/dto/flow.dto';
+import type { DomainExplorerProps } from '@/dto/domain.dto';
 import type { GroupTag } from '@/dto/navigation.dto';
 import type { Project } from '@/dto/project.dto';
+import type { SurfaceRow } from '@/dto/surface.dto';
 import type { WorkItem } from '@/dto/work.dto';
 
 export interface CaseGroupTags {
@@ -21,17 +22,17 @@ export interface CaseViewModel {
 export interface FarmFamPlusCaseViewProps extends CaseViewModel {
   relation?: RelationSection;
   showScope: boolean;
+  showStateScope: boolean;
   showContext: boolean;
-  showFlows: boolean;
   showWork: boolean;
   showTech: boolean;
   showCurrent: boolean;
 }
 
 export interface ApcCaseViewProps extends CaseViewModel {
-  flows: Flow[];
+  domains: DomainExplorerProps;
   showContext: boolean;
-  showFlows: boolean;
+  showDomains: boolean;
   showWork: boolean;
   showTech: boolean;
   showCurrent: boolean;
@@ -46,7 +47,6 @@ export interface SmartFarmCaseViewProps extends CaseViewModel {
   showWork: boolean;
   showMonitoringWork: boolean;
   showControlWork: boolean;
-  showTech: boolean;
   showCurrent: boolean;
   showCurrentMonitoring: boolean;
   showCurrentControl: boolean;
@@ -57,6 +57,8 @@ export interface SmartFarmCaseViewProps extends CaseViewModel {
 export interface IndianBobCaseViewProps extends CaseViewModel {
   showContext: boolean;
   showRelation: boolean;
+  relationLabel: string;
+  rows: SurfaceRow[];
   showWork: boolean;
   showNoteFields: boolean;
   showCurrent: boolean;
@@ -66,6 +68,7 @@ export interface EmosaveCaseViewProps extends CaseViewModel {
   showInteraction: boolean;
   showWork: boolean;
   showCurrent: boolean;
-  interactionFocus: InteractionFocus[];
+  lead?: InteractionFocus;
+  rest: InteractionFocus[];
   workParagraphs: string[];
 }

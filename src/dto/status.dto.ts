@@ -12,3 +12,17 @@ export interface Track {
   note: string;
   body: string[];
 }
+
+export interface ZoneStep {
+  label: string;
+  sub?: string;
+}
+
+export interface Zone {
+  kind: StatusKind;
+  label: string;
+  note: string;
+  caption: string;
+  steps: ZoneStep[];
+  footnote?: string;
+}

@@ -34,7 +34,7 @@ function shortGroups(p: Project): ContentsGroup[] {
   const c = p.case;
   return present([
     group(GROUP_ID.OVERVIEW),
-    has(c.interactionFocus ?? []) || has(c.stateFlow ?? [])
+    has(c.interactionFocus ?? []) || has(c.stateExample?.states ?? [])
       ? group(GROUP_ID.INTERACTION)
       : null,
     has(c.workParagraphs ?? []) || has(c.work) ? group(GROUP_ID.WORK) : null,
@@ -48,13 +48,14 @@ export function groupsFor(p: Project): ContentsGroup[] {
   const system =
     has(c.systemFlows) ||
     has(p.home.flows) ||
+    has(c.domains ?? []) ||
     !!c.monitoringFlow ||
-    !!c.featureFlow ||
-    !!c.controlExperiment ||
+    !!c.feature ||
+    !!c.relationMap ||
     has(c.surfaceRelation?.rows ?? []);
   const engineering =
     has(c.techNotes) ||
-    !!c.relationMap ||
+    !!c.controlExperiment ||
     !!c.experiment ||
     !!c.engineeringNote;
   const current = has(c.currentState) || !!c.currentStateTracks;

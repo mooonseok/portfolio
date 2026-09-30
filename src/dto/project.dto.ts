@@ -2,7 +2,7 @@ import type { CaseLength, ProjectSlug, ProjectTier } from '@/constants/project';
 import type { CaseContent } from '@/dto/case.dto';
 import type { WorkArea } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
-import type { StatusItem } from '@/dto/status.dto';
+import type { StatusItem, Zone } from '@/dto/status.dto';
 import type { Visuals } from '@/dto/visual.dto';
 
 export interface ProjectHome {
@@ -10,6 +10,7 @@ export interface ProjectHome {
   scopeMobile?: string[];
   flows: Flow[];
   areas?: WorkArea[];
+  zones?: Zone[];
   cta: string;
 }
 

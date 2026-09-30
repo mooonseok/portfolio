@@ -4,8 +4,11 @@ import type {
   ControlExperiment,
   Experiment,
 } from '@/dto/experiment.dto';
+import type { Domain } from '@/dto/domain.dto';
+import type { Feature } from '@/dto/feature.dto';
+import type { StateExample } from '@/dto/state-example.dto';
 import type { TechNote } from '@/dto/field.dto';
-import type { RelationMap } from '@/dto/explorer.dto';
+import type { RelationMap, StateScope } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
 import type { Track } from '@/dto/status.dto';
 import type { SurfaceRelationContent, SurfaceTile } from '@/dto/surface.dto';
@@ -21,6 +24,7 @@ export interface InteractionFocus {
   title: string;
   body: string[];
   visual: VisualSlot;
+  withStates?: boolean;
 }
 
 export interface CurrentStateTracks {
@@ -33,11 +37,13 @@ export interface CaseContent {
   rolePhases?: RolePhase[];
   roleSurfaces?: SurfaceTile[];
   roleTracks?: Track[];
+  stateScope?: StateScope;
   contextProblem: string[];
   systemFlows: Flow[];
-  reverseFlow?: Flow;
+  domainsTitle?: string;
+  domains?: Domain[];
   monitoringFlow?: Flow;
-  featureFlow?: Flow;
+  feature?: Feature;
   surfaceRelation?: SurfaceRelationContent;
   work: WorkItem[];
   workParagraphs?: string[];
@@ -51,6 +57,5 @@ export interface CaseContent {
   currentState: string[];
   currentStateTracks?: CurrentStateTracks;
   interactionFocus?: InteractionFocus[];
-  stateFlow?: string[];
-  stateFlowNote?: string;
+  stateExample?: StateExample;
 }

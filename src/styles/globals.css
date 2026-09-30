@@ -32,6 +32,9 @@
   --color-dark-sub: #a9ada9;
   --color-signal: #18b67a;
   --color-placeholder: #e4e3dd;
+  --color-tint: #e9e8e2;
+  --color-dark-tint: #1f2320;
+  --color-subtle: #5f635f;
   --color-transparent: transparent;
   --color-current: currentColor;
 

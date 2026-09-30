@@ -1,13 +1,11 @@
+import { SequenceView } from './components/sequence-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Grid } from '@/components/atoms/grid';
 import { Heading } from '@/components/atoms/heading';
 import { Text } from '@/components/atoms/text';
-import { FlowDiagram } from '@/components/molecules/flow-diagram';
 import type { EngineeringNote } from '@/dto/experiment.dto';
-import { FLOW_ORIENT } from '@/constants/flow';
 import { HEADING, TAG } from '@/constants/tag';
-import { TONE } from '@/constants/tone';
 
 export function IndianBobNoteView({
   note,
@@ -30,14 +28,12 @@ export function IndianBobNoteView({
           {note.title}
         </Heading>
       </Column>
-      <Box className='lap:col-[5/11] lap:min-w-0 lap:pt-1.5'>
-        <FlowDiagram
-          nodes={note.flow}
-          orient={FLOW_ORIENT.AUTO}
-          tone={TONE.DARK}
-          label={note.title}
-        />
-      </Box>
+      <Column className='gap-3 lap:col-[1/-1] lap:min-w-0'>
+        <SequenceView nodes={note.flow} links={note.links} label={note.title} />
+        <Text className='text-small leading-[1.6] text-dark-sub'>
+          {note.footnote}
+        </Text>
+      </Column>
       {showFields ? (
         <Box
           as={TAG.DL}

@@ -1,6 +1,7 @@
 import type { WorkAreasProps } from '@/dto/explorer.dto';
-import type { Flow } from '@/dto/flow.dto';
+import type { DomainExplorerProps } from '@/dto/domain.dto';
 import type { Project } from '@/dto/project.dto';
+import type { Zone } from '@/dto/status.dto';
 import type { MetaPair } from '@/dto/visual.dto';
 
 export interface WorkIndexEntry {
@@ -14,7 +15,6 @@ export interface WorkBlock {
   project: Project;
   href: string;
   caseLabel: string;
-  flowLabel: string;
   surfaces: string;
   meta: MetaPair;
 }
@@ -25,14 +25,17 @@ export interface FarmFamWorkBlock extends WorkBlock {
 }
 
 export interface ApcWorkBlock extends WorkBlock {
-  material: Flow;
-  secondary: Flow[];
+  domains: DomainExplorerProps;
+  domainsLabelId: string;
+  hasDomains: boolean;
 }
 
 export interface SmartFarmWorkBlock extends WorkBlock {
   titleFirst: string;
   titleRest: string;
   hasTitleRest: boolean;
+  zones: Zone[];
+  hasZones: boolean;
 }
 
 export interface SelectedWorkViewProps {

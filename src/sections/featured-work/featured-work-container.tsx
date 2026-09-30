@@ -1,13 +1,13 @@
 import { FeaturedWorkView } from './featured-work-view';
 import { requireProject } from '@/lib/content';
 import { has } from '@/lib/has';
+import { surfaceRows } from '@/lib/surfaces';
 import type {
   EmosaveBlock,
   FeaturedBlock,
   IndianBobBlock,
 } from '@/dto/featured-work.dto';
 import type { Project } from '@/dto/project.dto';
-import type { SurfaceRow } from '@/dto/surface.dto';
 import { PROJECT_SLUG } from '@/constants/project';
 
 function toBlock(project: Project): FeaturedBlock {
@@ -21,12 +21,7 @@ function toBlock(project: Project): FeaturedBlock {
 function toIndianBob(project: Project): IndianBobBlock {
   const surfaces = project.case.roleSurfaces ?? [];
   const relation = project.case.surfaceRelation;
-  const sub = (label: string) => surfaces.find((x) => x.label === label)?.sub;
-  const rows: SurfaceRow[] = (relation?.rows ?? []).map((r) => ({
-    ...r,
-    sub: sub(r.label),
-    branch: r.branch ? { ...r.branch, sub: sub(r.branch.label) } : undefined,
-  }));
+  const rows = surfaceRows(project);
   return {
     ...toBlock(project),
     surfaces,
@@ -38,8 +33,12 @@ function toIndianBob(project: Project): IndianBobBlock {
 }
 
 function toEmosave(project: Project): EmosaveBlock {
-  const states = project.case.stateFlow ?? [];
-  return { ...toBlock(project), states, hasStates: has(states) };
+  const example = project.case.stateExample;
+  return {
+    ...toBlock(project),
+    example,
+    hasStates: has(example?.states ?? []),
+  };
 }
 
 export function FeaturedWorkContainer() {

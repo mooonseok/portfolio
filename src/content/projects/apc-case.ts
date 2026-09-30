@@ -1,5 +1,6 @@
 import { NODE_STATE } from '@/constants/flow';
 import type { CaseContent } from '@/dto/case.dto';
+import { apcDomains } from './apc-domains';
 
 export const apcCase: CaseContent = {
   role: [
@@ -15,6 +16,8 @@ export const apcCase: CaseContent = {
     '여기에 작업자 근태와 전자결재처럼 성격이 다른 운영 업무도 같은 시스템 안에서 앱·웹·서버·DB로 연결되어 있었습니다.',
   ],
   systemFlows: [],
+  domainsTitle: '세 현장 업무와 추적할 수 있는 이력',
+  domains: apcDomains,
   work: [
     {
       title: 'Receiving',
@@ -89,7 +92,6 @@ export const apcCase: CaseContent = {
           label: 'Handling',
           body: [
             '회사 코드와 기기 fingerprint를 이용한 기기 기반 직원 조회 흐름을 사용했습니다.',
-            '브라우저 fingerprint를 얻지 못할 경우 localStorage UUID를 사용하는 fallback도 구현되어 있습니다.',
           ],
         },
       ],
@@ -111,6 +113,7 @@ export const apcCase: CaseContent = {
   experiment: {
     title: 'Handwritten document OCR',
     notShipped: true,
+    conclusion: '신뢰성 검토 결과, 운영 기능으로 채택하지 않았습니다.',
     flow: [
       { label: 'DOCUMENT', state: NODE_STATE.EXPERIMENT },
       { label: 'OCR PROTOTYPE', state: NODE_STATE.EXPERIMENT },

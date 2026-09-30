@@ -1,5 +1,6 @@
 import { SelectedWorkView } from './selected-work-view';
 import { requireProject } from '@/lib/content';
+import { toDomainItems } from '@/lib/domains';
 import { has } from '@/lib/has';
 import type { Project } from '@/dto/project.dto';
 import type {
@@ -9,6 +10,7 @@ import type {
   WorkBlock,
   WorkIndexEntry,
 } from '@/dto/selected-work.dto';
+import { EXPLORER_MODE } from '@/constants/explorer';
 import { SELECTED_SLUGS } from '@/constants/selected-work';
 
 const toBlock = (p: Project): WorkBlock => {
@@ -17,7 +19,6 @@ const toBlock = (p: Project): WorkBlock => {
     project: p,
     href: `/work/${p.slug}`,
     caseLabel: `${p.title} case study`,
-    flowLabel: `${p.title} flow`,
     surfaces,
     meta: [p.period, surfaces],
   };
@@ -40,8 +41,8 @@ const toFarmFam = (p: Project): FarmFamWorkBlock => {
       items: areas.map((a, i) => ({
         ...a,
         num: String(i + 1).padStart(2, '0'),
-        relatedText: a.related.join(' · '),
         hasRelated: has(a.related),
+        href: `/work/${p.slug}#${a.to.target}`,
         tabId: `${base}-${a.id}-tab`,
         panelId: `${base}-${a.id}-panel`,
         toggleId: `${base}-${a.id}-toggle`,
@@ -53,17 +54,29 @@ const toFarmFam = (p: Project): FarmFamWorkBlock => {
 };
 
 const toApc = (p: Project): ApcWorkBlock => {
-  const [material, ...secondary] = p.home.flows;
-  return { ...toBlock(p), material, secondary };
+  const domains = p.case.domains ?? [];
+  return {
+    ...toBlock(p),
+    domains: {
+      label: `${p.title} 현장 업무`,
+      items: toDomainItems(p.slug, domains, EXPLORER_MODE.HOME),
+      mode: EXPLORER_MODE.HOME,
+    },
+    domainsLabelId: `${p.slug}-domains-label`,
+    hasDomains: has(domains),
+  };
 };
 
 const toSmartFarm = (p: Project): SmartFarmWorkBlock => {
   const [first, ...rest] = p.title.split(' ');
+  const zones = p.home.zones ?? [];
   return {
     ...toBlock(p),
     titleFirst: first,
     titleRest: rest.join(' '),
     hasTitleRest: rest.length > 0,
+    zones,
+    hasZones: has(zones),
   };
 };
 

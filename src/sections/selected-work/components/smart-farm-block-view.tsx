@@ -1,4 +1,4 @@
-import { SmartFarmMonitorView } from './smart-farm-monitor-view';
+import { SmartFarmZonesView } from './smart-farm-zones-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Cta } from '@/components/atoms/cta';
@@ -7,22 +7,19 @@ import { Heading } from '@/components/atoms/heading';
 import { LineBreak } from '@/components/atoms/line-break';
 import { NavLink } from '@/components/atoms/nav-link';
 import { Row } from '@/components/atoms/row';
-import { StatusLabel } from '@/components/atoms/status-label';
 import { Text } from '@/components/atoms/text';
-import { FlowDiagram } from '@/components/molecules/flow-diagram';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import { ScrollScene } from '@/components/organisms/scroll-scene';
 import type { SmartFarmWorkBlock } from '@/dto/selected-work.dto';
-import { FLOW_ORIENT } from '@/constants/flow';
 import { HEADING, TAG } from '@/constants/tag';
-import { STATUS_KIND } from '@/constants/status';
 
 export function SmartFarmBlockView({
   project: p,
   href,
   caseLabel,
-  flowLabel,
   meta,
+  zones,
+  hasZones,
   titleFirst,
   titleRest,
   hasTitleRest,
@@ -31,9 +28,10 @@ export function SmartFarmBlockView({
     <ScrollScene
       as={TAG.SECTION}
       id={p.slug}
+      steps={false}
       className='container pt-24 tab:pt-40 lap:pt-(--section)'
     >
-      <Box className='grid-page gap-y-5 tab:gap-y-0 lap:grid-rows-[auto_auto_auto_1fr]'>
+      <Box className='grid-page gap-y-5 tab:gap-y-0 lap:grid-rows-[auto_auto_1fr]'>
         <Row
           className='col-[1/-1] flex-wrap gap-x-4 gap-y-1.5 mono tab:col-[1/3] tab:flex-col tab:flex-nowrap tab:gap-2 tab:pt-2 lap:row-1 lap:pt-3'
           data-reveal-item='meta'
@@ -58,25 +56,13 @@ export function SmartFarmBlockView({
           <Text as={TAG.SPAN} className='mono'>
             {p.category}
           </Text>
-          <Box className='mt-2.5 grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-x-4 gap-y-3 border-t border-t-hairline pt-3.5 tab:mt-0 tab:flex tab:flex-wrap tab:gap-x-10 tab:gap-y-4 lap:mt-9 lap:grid lap:grid-cols-2 lap:gap-6 lap:pt-4'>
-            {p.status.map((st) => (
-              <Column key={st.label} className='gap-1.5'>
-                <StatusLabel
-                  kind={st.kind}
-                  label={st.label}
-                  pulse={st.kind === STATUS_KIND.PRODUCT}
-                />
-                <Text
-                  as={TAG.SPAN}
-                  className='text-small text-graphite lap:text-[15px]'
-                >
-                  {st.note}
-                </Text>
-              </Column>
-            ))}
-          </Box>
+          {hasZones ? (
+            <Box className='mt-2.5 tab:mt-4 lap:mt-9'>
+              <SmartFarmZonesView zones={zones} />
+            </Box>
+          ) : null}
         </Column>
-        <Column className='col-[1/-1] mt-2 gap-4 tab:mt-14 tab:gap-5 lap:col-[7/13] lap:row-[1/5] lap:mt-0 lap:gap-6'>
+        <Column className='col-[1/-1] mt-2 gap-4 tab:mt-14 tab:gap-5 lap:col-[7/13] lap:row-[1/4] lap:mt-0 lap:gap-6'>
           <NavLink
             href={href}
             className='-mx-(--margin) block tab:mx-0'
@@ -88,9 +74,7 @@ export function SmartFarmBlockView({
               className='[--ratio:4_/_5] tab:[--ratio:4_/_3]'
               meta={meta}
               parallax={10}
-            >
-              <SmartFarmMonitorView />
-            </ConceptFrame>
+            />
           </NavLink>
           <Grid className='grid-cols-2 gap-4 tab:gap-5 lap:gap-6'>
             <Column as={TAG.FIGURE} className='gap-3'>
@@ -131,20 +115,7 @@ export function SmartFarmBlockView({
             </Column>
           </Grid>
         </Column>
-        <Box className='col-[1/-1] border-t border-t-hairline pt-[18px] tab:mt-16 tab:flex tab:flex-col tab:gap-5 tab:pt-5 lap:col-[3/7] lap:row-2 lap:mt-20 lap:pt-0 lap:[--flow-gap:36px] lap:[border-top:0]'>
-          <Text
-            as={TAG.SPAN}
-            className='hidden mono muted tab:block lap:hidden'
-          >
-            FLOW
-          </Text>
-          <FlowDiagram
-            nodes={p.home.flows[0].nodes}
-            orient={FLOW_ORIENT.TABLET}
-            label={flowLabel}
-          />
-        </Box>
-        <Box className='col-[1/-1] tab:mt-10 lap:col-[3/7] lap:row-3 lap:mt-20'>
+        <Box className='col-[1/-1] tab:mt-10 lap:col-[3/7] lap:row-2 lap:mt-14'>
           <Cta href={href} label={p.home.cta} />
         </Box>
       </Box>

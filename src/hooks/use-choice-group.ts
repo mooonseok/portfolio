@@ -1,16 +1,9 @@
 'use client';
 
-import {
-  type KeyboardEvent,
-  type RefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react';
-import { SELECT_KEY } from '@/constants/aria';
+import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react';
 import { MEDIA } from '@/constants/breakpoint';
-import { useSelection } from '@/hooks/use-selection';
-import { shiftSelection } from '@/lib/selection';
+import { useChoice } from '@/hooks/use-choice';
+import { useTabKeys } from '@/hooks/use-tabs';
 
 const hiddenFocus = (root: HTMLElement) => {
   const a = document.activeElement;
@@ -18,18 +11,18 @@ const hiddenFocus = (root: HTMLElement) => {
   return root.contains(a) && a.getClientRects().length === 0;
 };
 
-export function useWorkAreas(ids: readonly string[]) {
-  const { selected, select } = useSelection(ids);
+export function useChoiceGroup(ids: readonly string[], cols?: number) {
+  const { shown, open, pick, toggle } = useChoice(ids);
+  const { onKeyDown, tabRef, refs: tabs } = useTabKeys(ids, shown, pick, cols);
   const rootRef = useRef<HTMLDivElement>(null);
-  const tabs = useRef(new Map<string, HTMLButtonElement>());
   const toggles = useRef(new Map<string, HTMLButtonElement>());
-  const current = useRef(selected);
+  const current = useRef(shown);
   const within = useRef(false);
   const anchor = useRef<{ id: string; top: number } | null>(null);
 
   useEffect(() => {
-    current.current = selected;
-  }, [selected]);
+    current.current = shown;
+  }, [shown]);
 
   useLayoutEffect(() => {
     const a = anchor.current;
@@ -38,12 +31,12 @@ export function useWorkAreas(ids: readonly string[]) {
     if (!a || !el) return;
     const d = el.getBoundingClientRect().top - a.top;
     if (d) window.scrollBy({ top: d, behavior: 'instant' });
-  }, [selected]);
+  }, [open]);
 
   const onToggle = (id: string) => {
     const el = toggles.current.get(id);
     anchor.current = el ? { id, top: el.getBoundingClientRect().top } : null;
-    select(id);
+    toggle(id);
   };
 
   useEffect(() => {
@@ -76,26 +69,9 @@ export function useWorkAreas(ids: readonly string[]) {
       document.removeEventListener('pointerdown', onDown);
       mq.removeEventListener('change', onChange);
     };
-  }, []);
+  }, [tabs]);
 
-  const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-    const next =
-      e.key === SELECT_KEY.NEXT
-        ? shiftSelection(ids, selected, 1)
-        : e.key === SELECT_KEY.PREV
-          ? shiftSelection(ids, selected, -1)
-          : e.key === SELECT_KEY.FIRST
-            ? ids[0]
-            : e.key === SELECT_KEY.LAST
-              ? ids[ids.length - 1]
-              : undefined;
-    if (!next) return;
-    e.preventDefault();
-    select(next);
-    tabs.current.get(next)?.focus();
-  };
-
-  const refIn =
+  const toggleRef =
     (map: RefObject<Map<string, HTMLButtonElement>>) =>
     (id: string) =>
     (el: HTMLButtonElement | null) => {
@@ -104,12 +80,13 @@ export function useWorkAreas(ids: readonly string[]) {
     };
 
   return {
-    selected,
-    onSelect: select,
+    selected: shown,
+    open,
+    onSelect: pick,
     onToggle,
-    onTabKeyDown,
-    tabRef: refIn(tabs),
-    toggleRef: refIn(toggles),
+    onTabKeyDown: onKeyDown,
+    tabRef,
+    toggleRef: toggleRef(toggles),
     rootRef,
   };
 }

@@ -104,6 +104,7 @@ export const ENUM_PROPS = new Set([
   'current',
   'state',
   'track',
+  'mode',
 ]);
 
 export const PROP_OWNER = {
@@ -114,7 +115,7 @@ export const PROP_OWNER = {
 export const NUMERIC_ENUM_PROPS = new Set(['depth', 'space', 'cols']);
 
 export const ENUM_KEYS =
-  'kind|state|track|tier|caseLength|variant|orient|tone|size|layout|rule|slug|labelFrom|railFrom';
+  'kind|state|track|tier|caseLength|variant|orient|tone|size|layout|rule|slug|labelFrom|railFrom|mode';
 
 export const COMPARE = new RegExp(
   `(?:\\.|\\b)(?:${ENUM_KEYS})\\s*[!=]==?\\s*['"\`]`,

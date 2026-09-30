@@ -23,7 +23,6 @@ export function SmartFarmCase({ p }: { p: Project }) {
       showWork={has(c.work)}
       showMonitoringWork={has(monitoringWork)}
       showControlWork={has(controlWork)}
-      showTech={has(c.techNotes)}
       showCurrent={showCurrentMonitoring || showCurrentControl}
       showCurrentMonitoring={showCurrentMonitoring}
       showCurrentControl={showCurrentControl}

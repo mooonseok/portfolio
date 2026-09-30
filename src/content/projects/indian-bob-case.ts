@@ -1,4 +1,5 @@
 import type { CaseContent } from '@/dto/case.dto';
+import { indianBobFeature } from './indian-bob-feature';
 
 export const indianBobCase: CaseContent = {
   role: [
@@ -15,16 +16,7 @@ export const indianBobCase: CaseContent = {
     '따라서 하나의 기능을 구현할 때 사용자 앱, 서버의 데이터·비즈니스 로직, 관리자에서 설정하고 관리하는 흐름을 함께 다루는 경우가 있었습니다.',
   ],
   systemFlows: [],
-  featureFlow: {
-    id: 'habit',
-    label: 'HABIT',
-    nodes: [
-      { label: 'ADMIN', sub: 'Habit 설정' },
-      { label: 'API', sub: '해빗 / 이벤트 데이터 및 관련 로직' },
-      { label: 'MOBILE', sub: '사용자 참여' },
-      { label: 'REWARD / SCORE', sub: '보상 및 활동 점수 처리' },
-    ],
-  },
+  feature: indianBobFeature,
   surfaceRelation: {
     label: 'USER → MOBILE APP → API → DATA, ADMIN connected to API',
     rows: [
@@ -75,11 +67,14 @@ export const indianBobCase: CaseContent = {
   engineeringNote: {
     title: 'Apple Sign-in — Android integration',
     flow: [
-      { label: 'APPLE CALLBACK' },
-      { label: 'SERVER' },
-      { label: 'ANDROID INTENT' },
+      { label: 'APPLE CALLBACK', sub: '로그인 callback 결과' },
+      { label: '보조 서버', sub: 'Node.js / Express' },
+      { label: 'ANDROID INTENT', sub: '앱으로 결과 전달' },
       { label: 'APP' },
     ],
+    links: ['callback 수신', 'Android intent deep link', ''],
+    footnote:
+      '이 흐름에는 code exchange 처리도 포함되며, 처리 위치는 도식에 표시하지 않았습니다.',
     fields: [
       {
         label: 'Context',
