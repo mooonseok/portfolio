@@ -5,10 +5,11 @@ design source of truth is the Phase 1–4 **LOCKED** canvases.
 
 ```bash
 pnpm install
-pnpm dev                # http://localhost:3000 (.claude/launch.json uses 3100)
+pnpm dev --port 3100    # stop the development server before pnpm build
 pnpm lint               # ESLint 9 flat config (eslint.config.mjs), 0 warnings allowed
 pnpm typecheck
-pnpm test               # node:test for src/lib/selection.ts (selection, closing, arrow-key moves)
+pnpm test               # selection, scroll position and scanner regression tests
+pnpm check:anchors      # production HTML links and group IDs, after pnpm build
 pnpm check:boundaries   # architecture rules (see §2)
 pnpm format             # Prettier + Tailwind class sorting
 pnpm format:check
@@ -70,9 +71,12 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 - **Dependency direction.**
   `app → sections → templates → organisms → molecules → atoms → hooks/lib → content → dto/constants`.
   A section never imports another section.
-- **Raw tags, literals, comments, length.** Checked per file; exceptions go in
-  `scripts/boundaries/config.mjs` (`LINE_ALLOW`), currently only the generated
-  `src/styles/fonts.css`.
+- **Raw tags, literals, comments, length.** JS/JSX and TS/TSX are checked; regex
+  literals are recognized through the installed TypeScript parser, as are React
+  createElement calls, imported hook aliases and reversed enum comparisons.
+  Content imports are limited to content/dto/constants. Checked per file;
+  exceptions go in `scripts/boundaries/config.mjs` (`LINE_ALLOW`), currently
+  only the generated `src/styles/fonts.css`.
 - **Server components by default.** `'use client'` only on containers that own
   browser state (MobileMenu, SiteHeaderNav, TechNotes, CaseContents,
   ScrollScene, SignalLine, MotionLayer, DomainExplorer and the explorer section
@@ -113,9 +117,9 @@ Every project diagram is now either static or changed only by the visitor
   02 SYSTEM, right after Context / Problem. Each node carries `why` (관계의
   의미), `work` (실제 작업), optional `scope` (the only confirmed transaction
   range: active group purchase + quantity progress) and optional `note`. `check`
-  is the separate "이 관계를 검증한 방법" block (regression tests), not a node.
-  The map `id` (`order-cancellation`) stays the heading id, so the old
-  `#order-cancellation` link still works; no tech note reuses it.
+  is the separate "관련 변경과 테스트" block, not a node. The map `id`
+  (`order-cancellation`) stays the heading id, so the old `#order-cancellation`
+  link still works; no tech note reuses it.
 - APC `case.domains` (`content/projects/apc-domains.ts`) — A 물류·재고 / B QR
   근태 / C 전자결재, each with static `steps`, `impl`, optional `aside`
   (fingerprint fallback) / `checks` (approval server checks) and a `note`
@@ -143,10 +147,10 @@ Lines in these diagrams show connection only, not execution order, parallelism
 or transaction scope; each `note` / `caption` says so. No explorer claims a
 sequence the content does not state.
 
-Flow nodes carry no `active` state (the active node follows scroll); only
-`FLOW_ROLE.STATIC` diagrams such as Stories S01 read `state` from data. Pins
-carry per-breakpoint coordinates (`x/y`, `tablet`, `mobile`, `hideOnMobile`,
-`hideOnTablet`) because each range crops the image differently.
+Project flows and Stories use `FLOW_ROLE.STATIC` and read `state` from data;
+scrolling does not change their selected node. Pins carry per-breakpoint
+coordinates (`x/y`, `tablet`, `mobile`, `hideOnMobile`, `hideOnTablet`) because
+each range crops the image differently.
 
 Rules:
 
@@ -198,38 +202,44 @@ Smart Farm Control's current state "실제 제품 운영 적용 여부는 확정
 
 ## 5. Motion (scroll-driven, CSS-variable based)
 
-The five project blocks render `ScrollScene steps={false}` and none of the new
-diagrams carry `[data-flow]`, so scrolling never changes a selection or lights a
-node. Selections change only on click, tap or keyboard, live in component state
-(no storage) and survive scrolling and breakpoint changes. Emphasis (background,
-border, connector 1px → 2px) changes in 150ms; the new panel text fades in over
-150ms (`fade-in` keyframes, `motion-safe` only). The OCR flow and the Smart Farm
-monitoring flow are `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories
-S01–S03 keep their original flows.
+The five project blocks and case sections render `ScrollScene steps={false}` and
+none of the new diagrams carry `[data-flow]`, so scrolling never changes a
+selection or lights a node. Selections change only on click, tap or keyboard,
+live in component state (no storage) and survive scrolling and breakpoint
+changes. Emphasis (background, border, connector 1px → 2px) changes in 150ms;
+the new panel text fades in over 150ms (`fade-in` keyframes, `motion-safe`
+only). The OCR flow and the Smart Farm monitoring flow are `FLOW_ROLE.STATIC`
+(first-reveal line draw only). Stories S01–S03 keep their original flows.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
 written as CSS variables / attributes.
 
-| Element            | Behavior                                                                                                                                                                                                                                                                          | Reduced motion                    |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `ScrollScene`      | `data-inview` once (30% of min(height, viewport)), `--progress`, `--active-index`; moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only; pins `[data-node]` and `[data-link]` light with the node of the same label | first node active, no stepping    |
-| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                                                                         | complete immediately              |
-| Signal line        | 1px graphite; passed part ink (paper over dark); one 9px marker per `[data-signal-anchor]` — current = signal, inside dark = ON DARK, else open; Tools branches `[data-passed]` (≥744); ends at the footer's `● 200 OK` (`[data-signal-end]`)                                     | fully drawn, markers still switch |
-| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                                                                       | visible, no transform             |
-| Parallax / pointer | `ConceptFrame parallax` FarmFam 10 · APC 20 · Smart Farm 10 · others 12; pointer shift ≤6px / 300ms; only fine pointer ≥1024                                                                                                                                                      | none                              |
-| Hover meta         | period · surfaces bar, 200ms, fine pointer only                                                                                                                                                                                                                                   | same                              |
-| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                                                                              | none                              |
-| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                                                                           | color only                        |
+| Element            | Behavior                                                                                                                                                                                                                                                                                           | Reduced motion                    |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only; pins `[data-node]` and `[data-link]` light with the node of the same label | first node active, no stepping    |
+| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                                                                                          | complete immediately              |
+| Signal line        | 1px graphite; passed part ink (paper over dark); one 9px marker per `[data-signal-anchor]` — current = signal, inside dark = ON DARK, else open; Tools branches `[data-passed]` (≥744); ends at the footer's `● 200 OK` (`[data-signal-end]`)                                                      | fully drawn, markers still switch |
+| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                                                                                        | visible, no transform             |
+| Parallax / pointer | `ConceptFrame parallax` FarmFam 10 · APC 20 · Smart Farm 10 · others 12; pointer shift ≤6px / 300ms; only fine pointer ≥1024                                                                                                                                                                       | none                              |
+| Hover meta         | period · surfaces bar, 200ms, fine pointer only                                                                                                                                                                                                                                                    | same                              |
+| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                                                                                               | none                              |
+| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                                                                                            | color only                        |
 
 ## 6. Accessibility
 
+- One site banner per page, main includes h1 and Overview, and a keyboard skip
+  link targets main. Desktop Experience items include their year for screen
+  readers.
 - Semantic headings: the hero or project name is h1; sections are h2.
 - Status is never color-only: symbol plus text, and screen readers also read
   "(experiment)" / "(current)".
 - Mobile menu:
   - `role="dialog"`, `aria-modal`, `aria-expanded` / `aria-controls`.
-  - Focus trap, ESC to close, body scroll lock that preserves scroll position.
+  - Background siblings are inert while open; Tab/Shift+Tab stay in the dialog.
+  - ESC/close restore the menu button, same-page links focus their section, and
+    resizing focuses a visible primary navigation link. Scroll unlock is
+    instant.
   - Closes when a link is selected, and closes automatically at ≥744px.
 - Accordion (<744):
   - `h3 > button[aria-expanded][aria-controls]`, rows are 52px.
@@ -256,6 +266,12 @@ written as CSS variables / attributes.
   reading order, ↑/↓ move by row). Home/End everywhere.
 - Smart Farm conditions: `button[aria-pressed]` chips; the drawing is
   `aria-hidden` and the panel states "▲ 설명 위치 · …" in text.
+- Contents derives its current group from document positions on scroll, resize,
+  hash changes and history restoration. The mobile disclosure closes on outside
+  pointer input, Escape, or when its static list returns into view.
+- Reveal hiding is enabled per mounted scene, so failed hydration keeps server
+  content visible; print always shows reveal items and diagram lines.
+- The Korean conceptual-visual notice appears below every case hero.
 - No panel is `aria-live`; the tab / pressed relationship announces changes.
 - Touch targets are at least 44×44px (MENU, CLOSE, CTA, menu links 64px,
   accordion 52px, Contents links, WORK AREAS rows 60px, relation nodes 60px+,
