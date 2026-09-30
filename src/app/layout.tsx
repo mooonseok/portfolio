@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import { site } from '@/content/site';
+import { Anchor } from '@/components/atoms/anchor';
 import { LINK_AS } from '@/constants/tag';
 
 const plex = localFont({
@@ -40,13 +41,16 @@ export default function RootLayout({
           type='font/woff2'
           crossOrigin='anonymous'
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
-          }}
-        />
       </head>
-      <body>{children}</body>
+      <body>
+        <Anchor
+          href='#main-content'
+          className='sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-paper focus:p-3 focus:text-ink'
+        >
+          본문으로 건너뛰기
+        </Anchor>
+        {children}
+      </body>
     </html>
   );
 }

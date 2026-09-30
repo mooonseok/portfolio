@@ -24,13 +24,14 @@ rules.
 
 ```bash
 pnpm install
-pnpm dev                # dev server on http://localhost:3000
+pnpm dev --port 3100    # development server (stop before pnpm build)
 pnpm build              # production build
 pnpm start              # serve the production build
 
 pnpm lint               # ESLint 9 flat config, fails on any warning
 pnpm typecheck          # tsc --noEmit
-pnpm test               # node:test for the selection helpers
+pnpm test               # selection, scroll position and scanner regression tests
+pnpm check:anchors      # rendered IDs and content links; run after pnpm build
 pnpm check:boundaries   # architecture rules (scripts/check-boundaries.mjs)
 pnpm format             # Prettier + Tailwind class sorting
 pnpm format:check

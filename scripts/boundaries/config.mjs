@@ -7,6 +7,7 @@ export const UI = ['components', 'sections', 'app'];
 export const ONLY_FROM = {
   constants: ['constants'],
   dto: ['dto', 'constants'],
+  content: ['content', 'dto', 'constants'],
 };
 
 export const PRESENTATIONAL_DIRS = [
@@ -14,7 +15,7 @@ export const PRESENTATIONAL_DIRS = [
   ['components', 'molecules'],
 ];
 
-export const PRESENTATIONAL_FILE = /-view\.tsx$/;
+export const PRESENTATIONAL_FILE = /-view\.[jt]sx$/;
 
 export const DATA_IMPORTS = [
   /^content(\/|$)/,
@@ -134,6 +135,4 @@ export const LITERAL_EXEMPT = [['constants']];
 
 export const MAX_LINES = 200;
 
-// fonts.css is a generated @font-face manifest: 3 General Sans faces plus the
-// 92 Pretendard dynamic subsets, each with its upstream unicode-range.
 export const LINE_ALLOW = new Set(['src/styles/fonts.css']);

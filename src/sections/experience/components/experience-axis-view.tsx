@@ -19,7 +19,7 @@ export function ExperienceAxisView({ years }: { years: ExperienceYear[] }) {
               className='tab:flex tab:h-full tab:flex-col tab:justify-end tab:gap-[18px] tab:pr-3.5 lap:gap-6 lap:pr-6'
             >
               {y.items.map((it) => (
-                <ExperienceItemView key={it.name} {...it} />
+                <ExperienceItemView key={it.name} {...it} year={y.year} />
               ))}
             </Box>
           ))}

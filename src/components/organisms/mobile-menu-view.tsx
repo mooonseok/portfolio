@@ -14,6 +14,7 @@ export function MobileMenuView({
   panelId,
   openMenu,
   close,
+  navigate,
   btnRef,
   closeRef,
   panelRef,
@@ -80,7 +81,7 @@ export function MobileMenuView({
                 key={e.item.id}
                 href={e.item.href}
                 className='flex min-h-16 items-center justify-between border-t border-t-hairline last:border-b last:border-b-hairline short-land:min-h-[52px]'
-                onClick={close}
+                onClick={navigate}
                 aria-current={e.current ? ARIA_CURRENT.TRUE : undefined}
               >
                 <Text
@@ -91,7 +92,7 @@ export function MobileMenuView({
                 </Text>
                 <Text
                   as={TAG.SPAN}
-                  className='inline-flex items-center gap-2 mono text-graphite'
+                  className='inline-flex items-center gap-2 mono text-subtle'
                 >
                   {e.current ? (
                     <Text

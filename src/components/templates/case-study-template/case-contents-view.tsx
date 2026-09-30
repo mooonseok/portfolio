@@ -63,6 +63,7 @@ export function CaseContentsView({
         )}
         data-visible={stuck || undefined}
         aria-hidden={!stuck || undefined}
+        inert={!stuck || undefined}
       >
         <Box
           as={TAG.SUMMARY}

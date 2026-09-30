@@ -6,20 +6,13 @@ import { Text } from '@/components/atoms/text';
 import type { HeroViewProps } from '@/dto/hero.dto';
 import { HEADING, TAG } from '@/constants/tag';
 
-export function HeroView({
-  header,
-  name,
-  role,
-  disciplines,
-  range,
-}: HeroViewProps) {
+export function HeroView({ name, role, disciplines, range }: HeroViewProps) {
   return (
     <Column
       as={TAG.SECTION}
-      className='min-h-[max(520px,min(100svh,760px))] justify-between pb-8 tab:min-h-[max(640px,min(100svh,880px))] tab:pb-12 lap:min-h-[min(100svh,900px)] lap:pb-16 short-land:min-h-[auto] short-land:pb-5'
+      className='min-h-[calc(max(520px,min(100svh,760px))_-_56px)] justify-end pb-8 tab:min-h-[calc(max(640px,min(100svh,880px))_-_72px)] tab:pb-12 lap:min-h-[calc(min(100svh,900px)_-_72px)] lap:pb-16 short-land:min-h-[auto] short-land:pb-5'
       aria-label='Intro'
     >
-      {header}
       <Column className='container mt-30 gap-7 tab:gap-10 lap:gap-14 short-land:mt-12 short-land:gap-5'>
         <Heading
           level={HEADING.H1}
@@ -39,7 +32,7 @@ export function HeroView({
           </Text>
           <Text
             as={TAG.SPAN}
-            className='text-graphite tab:col-[5/-1] tab:row-[1/span_2] tab:text-right tab:text-inherit lap:col-[9/13] lap:row-1'
+            className='text-subtle tab:col-[5/-1] tab:row-[1/span_2] tab:text-right tab:text-inherit lap:col-[9/13] lap:row-1'
           >
             {range.label}
             <LineBreak />

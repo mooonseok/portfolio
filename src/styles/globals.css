@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import './fonts.css';
 @import './tokens.css';
+@import './base.css' layer(base);
 @import './motion.css' layer(components);
 @import './components/status.css' layer(components);
 @import './components/frame-and-scope.css' layer(components);
@@ -82,7 +83,7 @@
 @custom-variant inview (&:where([data-inview='true'] *));
 @custom-variant reveal-pending {
   @media (prefers-reduced-motion: no-preference) {
-    &:where(.js [data-reveal]:not([data-inview='true']) *) {
+    &:where([data-reveal][data-ready]:not([data-inview='true']) *) {
       @slot;
     }
   }
@@ -112,85 +113,11 @@
   line-height: 1.5;
 }
 @utility muted {
-  color: var(--graphite);
+  color: var(--subtle);
+  &:where(.surface-dark *) {
+    color: var(--graphite);
+  }
 }
 @utility nowrap {
   white-space: nowrap;
-}
-
-@layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-  html {
-    -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
-  }
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--font-sans);
-    font-size: var(--fs-body);
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-  body[data-scroll-locked] {
-    overflow: hidden;
-  }
-  h1,
-  h2,
-  h3,
-  h4 {
-    margin: 0;
-    font-weight: 500;
-    text-wrap: balance;
-  }
-  p {
-    margin: 0;
-    text-wrap: pretty;
-  }
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-  button {
-    font: inherit;
-    color: inherit;
-  }
-  ol,
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  figure {
-    margin: 0;
-  }
-  [id] {
-    scroll-margin-top: calc(56px + env(safe-area-inset-top));
-  }
-  :focus-visible {
-    outline: 2px solid var(--ink);
-    outline-offset: 4px;
-  }
-  .surface-dark :focus-visible {
-    outline-color: var(--paper);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
-    }
-  }
 }

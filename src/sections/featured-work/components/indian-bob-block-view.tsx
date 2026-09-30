@@ -75,7 +75,7 @@ export function IndianBobBlockView({
                 </Text>
                 <Text
                   as={TAG.DD}
-                  className='lap:m-0 lap:text-[15px] lap:leading-[1.5] lap:text-graphite'
+                  className='lap:m-0 lap:text-[15px] lap:leading-[1.5] lap:text-subtle'
                 >
                   {x.sub}
                 </Text>

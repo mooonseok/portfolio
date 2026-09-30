@@ -49,8 +49,10 @@ export function SmartFarmBlockView({
             className='text-smart leading-[0.98] font-medium tracking-[-0.016em] text-balance tab:leading-[0.96] tab:tracking-[-0.02em]'
             data-reveal-item='title'
           >
-            {titleFirst}{' '}
-            {hasTitleRest ? <LineBreak className='hidden lap:inline' /> : null}
+            {titleFirst}
+            {hasTitleRest ? (
+              <LineBreak className='hidden lap:inline' />
+            ) : null}{' '}
             {titleRest}
           </Heading>
           <Text as={TAG.SPAN} className='mono'>

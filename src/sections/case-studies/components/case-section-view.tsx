@@ -81,6 +81,7 @@ export function CaseSectionView({
   const bareRule = bareMobile && rule !== RULE.NONE;
   return (
     <ScrollScene
+      steps={false}
       as={TAG.SECTION}
       id={group?.id ?? id}
       className={cx(
@@ -139,7 +140,7 @@ export function CaseSectionView({
               'col-[1/-1] font-medium tab:col-[3/-1]',
               layout === CASE_LAYOUT.WIDE && !intro
                 ? 'lap:col-[3/10]'
-                : 'lap:col-[3/6]',
+                : 'lap:col-[3/6] lap:text-[clamp(20px,1.7vw,24px)]',
               titleSize[depth],
               bareMobile &&
                 'mob:absolute mob:-m-px mob:h-px mob:w-px mob:overflow-hidden mob:whitespace-nowrap mob:[clip:rect(0_0_0_0)]'

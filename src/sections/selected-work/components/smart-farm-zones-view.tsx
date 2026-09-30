@@ -57,7 +57,7 @@ export function SmartFarmZonesView({ zones }: { zones: Zone[] }) {
                       className={cx(
                         'absolute top-[18px] bottom-0 left-[4px] border-l-ink',
                         experiment
-                          ? 'border-l border-dashed'
+                          ? '[border-left:1px_dashed_var(--ink)]'
                           : 'border-l-[1.25px]'
                       )}
                     />

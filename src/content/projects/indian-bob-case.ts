@@ -85,7 +85,7 @@ export const indianBobCase: CaseContent = {
       {
         label: 'Handling',
         body: [
-          'Node.js/Express 기반 보조 서버에서 Apple callback을 받은 뒤 Android intent deep link로 앱에 전달하고 code exchange를 처리하는 흐름을 작업했습니다.',
+          'Node.js/Express 기반 보조 서버의 Apple callback 수신과 Android intent deep link를 통한 앱 전달 흐름을 작업했습니다. code exchange 처리도 포함되지만, 여기서는 그 처리 위치와 순서를 특정하지 않습니다.',
         ],
       },
       { label: 'Scope', body: ['이 구현은 예제 기반 보조 서버입니다.'] },

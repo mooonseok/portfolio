@@ -1,3 +1,5 @@
+import { regexRanges } from './syntax.mjs';
+
 const blank = (s) => s.replace(/[^\n]/g, ' ');
 
 const lineAt = (text, index) => text.slice(0, index).split('\n').length;
@@ -12,7 +14,7 @@ function readString(text, start, quote) {
   return text.length;
 }
 
-function readTemplate(text, start) {
+function readTemplate(text, start, regex) {
   let i = start + 1;
   while (i < text.length) {
     const ch = text[i];
@@ -23,12 +25,16 @@ function readTemplate(text, start) {
       i += 2;
       while (i < text.length && depth > 0) {
         const c = text[i];
+        if (regex.has(i)) {
+          i = regex.get(i);
+          continue;
+        }
         if (c === '{') depth++;
         else if (c === '}') depth--;
         else if (c === "'" || c === '"') {
           const end = readString(text, i, c);
           if (end > 0) i = end - 1;
-        } else if (c === '`') i = readTemplate(text, i) - 1;
+        } else if (c === '`') i = readTemplate(text, i, regex) - 1;
         i++;
       }
     } else i++;
@@ -37,6 +43,7 @@ function readTemplate(text, start) {
 }
 
 export function scanScript(text) {
+  const regex = regexRanges(text);
   let code = '';
   let bare = '';
   const comments = [];
@@ -44,6 +51,13 @@ export function scanScript(text) {
   while (i < text.length) {
     const ch = text[i];
     const next = text[i + 1];
+    if (regex.has(i)) {
+      const end = regex.get(i);
+      code += blank(text.slice(i, end));
+      bare += blank(text.slice(i, end));
+      i = end;
+      continue;
+    }
     if (ch === '/' && (next === '/' || next === '*')) {
       const end =
         next === '/'
@@ -61,7 +75,8 @@ export function scanScript(text) {
       continue;
     }
     if (ch === "'" || ch === '"' || ch === '`') {
-      const end = ch === '`' ? readTemplate(text, i) : readString(text, i, ch);
+      const end =
+        ch === '`' ? readTemplate(text, i, regex) : readString(text, i, ch);
       if (end > 0) {
         const chunk = text.slice(i, end);
         code += chunk;

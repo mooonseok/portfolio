@@ -33,7 +33,7 @@ export function DomainStepsView({
               <Box
                 as={TAG.SPAN}
                 aria-hidden='true'
-                className='absolute top-[18px] bottom-0 left-[5px] border-l-[1.25px] border-l-paper tab:top-[5px] tab:right-0 tab:bottom-auto tab:left-[11px] tab:border-t-[1.25px] tab:border-l-0 tab:border-t-paper'
+                className='absolute top-[17px] bottom-[-6px] left-[5px] border-l-[1.25px] border-l-paper tab:top-[5px] tab:right-0 tab:bottom-auto tab:left-[11px] tab:border-t-[1.25px] tab:border-l-0 tab:border-t-paper'
               />
             )}
             <Box className='flex min-w-0 flex-col gap-0.5'>

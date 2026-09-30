@@ -97,7 +97,7 @@ export function FlowDiagram({
               {n.sub ? (
                 <Text
                   as={TAG.SPAN}
-                  className='text-[14px] leading-[1.45] text-graphite'
+                  className='text-[14px] leading-[1.45] text-subtle'
                 >
                   {n.sub}
                 </Text>

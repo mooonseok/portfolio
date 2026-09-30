@@ -85,7 +85,7 @@ export function ConceptFrame({
       {isDev ? (
         <Text
           as={TAG.SPAN}
-          className='relative font-mono text-[12px] tracking-[0.06em] text-graphite'
+          className='relative font-mono text-[12px] tracking-[0.06em] text-subtle'
           data-dev-brief=''
         >
           {visual.brief}

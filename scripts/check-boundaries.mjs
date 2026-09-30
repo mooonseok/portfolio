@@ -1,5 +1,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
+import { syntaxRules } from './boundaries/syntax.mjs';
+import { isPresentational } from './boundaries/rules.mjs';
 import { scanScript, scanStyle, lineAt } from './boundaries/scan.mjs';
 import {
   comments,
@@ -27,7 +29,7 @@ function walk(dir) {
   return readdirSync(dir).flatMap((name) => {
     const p = join(dir, name);
     if (statSync(p).isDirectory()) return walk(p);
-    return /\.(tsx?|mjs|css)$/.test(name) ? [p] : [];
+    return /\.([jt]sx?|mjs|css)$/.test(name) ? [p] : [];
   });
 }
 
@@ -82,7 +84,17 @@ for (const file of [...walk(src), ...walk(scripts)]) {
       .filter(Boolean)
   );
   add(file, 'presentational', presentational(from, imports, scan));
-  if (file.endsWith('.tsx')) add(file, 'raw-tag', rawTags(from, imports, scan));
+  add(file, 'raw-tag', rawTags(from, imports, scan));
+  add(
+    file,
+    'literal',
+    syntaxRules(
+      text,
+      isPresentational(from),
+      from[0] === 'components' && from[1] === 'atoms',
+      from[0] === 'constants'
+    )
+  );
   add(file, 'literal', literalProps(from, scan));
 }
 

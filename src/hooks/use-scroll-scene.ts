@@ -62,10 +62,6 @@ export function useScrollScene(steps: boolean) {
   const frame = (el: HTMLElement) => {
     const r = el.getBoundingClientRect();
     const vh = window.innerHeight;
-    el.style.setProperty(
-      '--progress',
-      clamp01((vh - r.top) / (vh + r.height)).toFixed(3)
-    );
 
     if (
       !el.dataset.inview &&
@@ -86,9 +82,6 @@ export function useScrollScene(steps: boolean) {
     for (const f of sc.secondary)
       setIndex(f, ts < 0 ? -1 : stepAt(ts, f.steps.length));
 
-    const first = sc.primary[0];
-    el.style.setProperty('--active-index', String(first ? first.index : -1));
-
     const active = [...sc.primary, ...sc.secondary]
       .map((f) => f.steps[f.index]?.dataset.node)
       .filter(Boolean) as string[];
@@ -104,10 +97,12 @@ export function useScrollScene(steps: boolean) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (!steps) {
-      frame(el);
-      return;
-    }
+    frame(el);
+    el.dataset.ready = '';
+    if (!steps)
+      return () => {
+        delete el.dataset.ready;
+      };
     const refresh = () => {
       scene.current = collect(el, scene.current);
       frame(el);
@@ -122,6 +117,7 @@ export function useScrollScene(steps: boolean) {
     });
     ro.observe(el);
     return () => {
+      delete el.dataset.ready;
       ro.disconnect();
       scene.current = null;
     };

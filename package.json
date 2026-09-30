@@ -11,7 +11,8 @@
     "test": "node --test scripts/tests/*.test.mjs",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check:anchors": "node --test scripts/verification/anchors.test.mjs"
   },
   "dependencies": {
     "next": "^15.1.0",

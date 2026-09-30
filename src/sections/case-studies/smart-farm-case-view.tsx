@@ -17,6 +17,7 @@ import { Text } from '@/components/atoms/text';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import type { SmartFarmCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH } from '@/constants/case';
+import { SIZE } from '@/constants/size';
 import { STATUS_KIND } from '@/constants/status';
 import { TAG } from '@/constants/tag';
 import { TONE } from '@/constants/tone';
@@ -41,6 +42,7 @@ export function SmartFarmCaseView({
   return (
     <CaseStudyTemplate
       project={p}
+      titleSize={SIZE.MD}
       hero={
         <Box className='container'>
           <ConceptFrame

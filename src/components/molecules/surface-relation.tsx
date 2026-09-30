@@ -11,7 +11,7 @@ const nodeCls =
 const labelCls =
   'row-[1] flex min-h-(--rh) items-center leading-[1.2] whitespace-nowrap';
 const subCls =
-  'row-[2] mt-0.5 font-sans text-[13px] leading-[1.4] tracking-[0] whitespace-nowrap text-graphite tab:row-[1] tab:mt-0 lap:hidden';
+  'row-[2] mt-0.5 font-sans text-[13px] leading-[1.4] tracking-[0] whitespace-nowrap text-subtle tab:row-[1] tab:mt-0 lap:hidden';
 
 const Label = ({ label, wide }: { label: string; wide?: string }) =>
   wide ? (

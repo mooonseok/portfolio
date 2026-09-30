@@ -48,7 +48,7 @@ export function ThisWebsiteView({ rows, note }: ThisWebsiteViewProps) {
               </Box>
             ))}
           </Box>
-          <Text className='text-small leading-[1.6] text-graphite tab:max-w-[30em] tab:text-balance'>
+          <Text className='text-small leading-[1.6] text-subtle tab:max-w-[30em] tab:text-balance'>
             {note}
           </Text>
         </Column>

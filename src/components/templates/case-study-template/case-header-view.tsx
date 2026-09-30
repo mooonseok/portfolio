@@ -11,7 +11,7 @@ import { HEADING, TAG } from '@/constants/tag';
 
 const titleScale: Record<CaseTitleSize, string> = {
   xl: '[--fs-case-title:clamp(48px,16vw,64px)] tab:[--fs-case-title:clamp(96px,11vw,112px)] lap:[--fs-case-title:clamp(112px,9.7vw,140px)]',
-  lg: '[--fs-case-title:clamp(48px,16vw,64px)] tab:[--fs-case-title:clamp(80px,9vw,96px)] lap:[--fs-case-title:clamp(96px,7.8vw,112px)]',
+  lg: '[--fs-case-title:clamp(48px,16vw,64px)] tab:[--fs-case-title:clamp(58px,7.8vw,96px)] lap:[--fs-case-title:clamp(96px,7.8vw,112px)]',
   md: '[--fs-case-title:clamp(40px,13vw,56px)] tab:[--fs-case-title:clamp(64px,7.4vw,80px)] lap:[--fs-case-title:clamp(80px,6.4vw,92px)]',
   sm: '[--fs-case-title:clamp(36px,11.5vw,48px)] tab:[--fs-case-title:clamp(56px,6.4vw,68px)] lap:[--fs-case-title:clamp(68px,5.56vw,80px)]',
 };
@@ -29,7 +29,7 @@ export function CaseHeaderView({
     <Box
       as={TAG.HEADER}
       className={cx(
-        'container pt-12 tab:pt-30 lap:pt-40 short-land:pt-8',
+        'container pt-12 tab:pt-30 lap:pt-40 short-land:pt-8 [&_h1]:whitespace-nowrap',
         titleScale[titleSize]
       )}
       data-title={titleSize}

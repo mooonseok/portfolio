@@ -96,7 +96,7 @@ export function HabitExplorerView({
               {current.body}
             </Text>
           </Column>
-          <Text as={TAG.SPAN} className='text-small text-graphite'>
+          <Text as={TAG.SPAN} className='text-small text-subtle'>
             {feature.note}
           </Text>
         </Column>

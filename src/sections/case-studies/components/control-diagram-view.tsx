@@ -28,7 +28,7 @@ function Wire({ label }: { label?: string }) {
     <Row className='relative min-h-9 flex-none items-center'>
       <Box
         as={TAG.SPAN}
-        className='absolute inset-y-0 left-6 border-l border-dashed border-l-ink'
+        className='absolute inset-y-0 left-6 border-l-ink [border-left:1px_dashed_var(--ink)]'
       />
       {label ? (
         <Text as={TAG.SPAN} className='relative ml-9 mono'>
