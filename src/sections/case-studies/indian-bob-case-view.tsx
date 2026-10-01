@@ -86,6 +86,7 @@ export function IndianBobCaseView({
           group={groups.work}
           depth={CASE_DEPTH.L3}
           title='What I Worked On'
+          space={CASE_SPACE.SM}
         >
           <WorkRowsView items={c.work} />
         </CaseSectionView>
@@ -106,8 +107,8 @@ export function IndianBobCaseView({
         <CaseSectionView
           group={groups.currentState}
           depth={CASE_DEPTH.L3}
-          title='Current State'
-          loose
+          title='배운 점'
+          space={CASE_SPACE.SM}
         >
           <ParagraphsView list={c.currentState} />
         </CaseSectionView>

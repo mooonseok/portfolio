@@ -13,6 +13,7 @@ export interface Site {
   role: string;
   disciplines: string;
   headline: string;
+  primaryAction: { href: string; label: string };
   introduction: string;
   about: string;
   range: YearRange;

@@ -14,7 +14,6 @@ function toBlock(project: Project): FeaturedBlock {
   return {
     project,
     href: `/work/${project.slug}`,
-    meta: [project.period, project.surfaces.toUpperCase()],
   };
 }
 

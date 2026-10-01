@@ -5,7 +5,7 @@ import type { Project } from '@/dto/project.dto';
 import { indianBobCase } from './indian-bob-case';
 
 const mainVisual = {
-  src: '/images/projects/indian-bob/main.jpg',
+  src: '/images/projects/indian-bob/main-restored.png',
   alt: '모바일과 관리자 기기의 연결을 표현한 개념 이미지',
 };
 
@@ -29,15 +29,12 @@ export const indianBob: Project = {
   },
   visuals: {
     home: {
+      caption: '앱과 관리자 웹의 연결을 표현한 개념 이미지',
       ...mainVisual,
       sizes:
         '(min-width: 1440px) 644px, (min-width: 1024px) calc(50vw - 58px), (min-width: 744px) calc(75vw - 65px), calc(100vw - 40px)',
       id: VISUAL_ID.INDIANBOB_HOME,
       brief: 'INDIAN BOB — mobile + admin surfaces, 4:3',
-      pins: [
-        { label: 'APP', x: 9, y: 41, hideOnMobile: true },
-        { label: 'ADMIN', x: 70, y: 29, hideOnMobile: true },
-      ],
     },
     app: {
       ...mainVisual,

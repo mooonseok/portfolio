@@ -39,12 +39,6 @@ export const indianBobCase: CaseContent = {
       title: 'Server API',
       body: ['앱과 관리자 웹에 필요한 해빗 API와 데이터 처리를 개발했습니다.'],
     },
-    {
-      title: 'Collaboration',
-      body: [
-        '요구사항과 DB 설계 변경을 팀원들과 조율하고 각 영역에 반영했습니다.',
-      ],
-    },
   ],
   decisions: [],
   techNotes: [],

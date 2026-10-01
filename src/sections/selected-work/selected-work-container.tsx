@@ -20,7 +20,6 @@ const toBlock = (p: Project): WorkBlock => {
     href: `/work/${p.slug}`,
     caseLabel: `${p.title} case study`,
     surfaces,
-    meta: [p.period, surfaces],
   };
 };
 

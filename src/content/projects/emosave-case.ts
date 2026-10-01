@@ -66,7 +66,7 @@ export const emosaveCase: CaseContent = {
   work: [],
   workParagraphs: [
     '감정 탭과 편집 기능을 구현하면서 BlocBuilder의 배치와 화면 갱신 범위를 고민했습니다.',
-    '상태가 바뀔 때 화면이 어떻게 반응하는지 살피고, 클린 코드와 디자인 패턴을 공부하며 구현 방식을 검토했습니다.',
+    '클린 코드와 디자인 패턴을 공부하며 상태 관리 구현 방식을 검토했습니다.',
   ],
   decisions: [],
   techNotes: [],

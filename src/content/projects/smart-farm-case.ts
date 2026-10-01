@@ -20,7 +20,7 @@ export const smartFarmCase: CaseContent = {
       label: 'CONTROL',
       note: 'Separate Experiment',
       body: [
-        '기존 LED 출력 제어 실험은 센서 측정·관측 모듈과 별도 범위로 소개합니다.',
+        '센서 측정 모듈과 별도로, 시험용 LED 출력 1채널을 사용하는 제어 실험입니다.',
       ],
     },
   ],
@@ -72,9 +72,8 @@ export const smartFarmCase: CaseContent = {
       {
         label: 'FINDING',
         body: [
-          '코드와 테스트 기준으로 명령 전달 및 안전 로직 구현은 확인됩니다.',
           '검증에 사용한 출력은 시험용 LED 1채널입니다.',
-          '실제 현장 장비에서 장기간 운영한 결과나 제어 안정성 수치는 주장하지 않습니다.',
+          '실제 농장 적용 전 단계입니다.',
         ],
       },
     ],
@@ -90,7 +89,9 @@ export const smartFarmCase: CaseContent = {
     {
       track: WORK_TRACK.MONITORING,
       title: 'MQTT / Dashboard',
-      body: ['측정값을 MQTT로 전달하고 대시보드에서 관측하도록 연결했습니다.'],
+      body: [
+        '측정값을 MQTT로 전달하고 대시보드에서 확인할 수 있도록 연결했습니다.',
+      ],
     },
     {
       track: WORK_TRACK.MONITORING,
@@ -105,6 +106,6 @@ export const smartFarmCase: CaseContent = {
     monitoring: [
       '사무실 시험 환경에서 개발·테스트를 진행했습니다. 실제 농장 적용 전 단계입니다.',
     ],
-    control: ['별도 출력 제어 실험은 시험용 LED 1채널을 기준으로 소개합니다.'],
+    control: ['제어 실험의 출력 대상은 시험용 LED 1채널입니다.'],
   },
 };

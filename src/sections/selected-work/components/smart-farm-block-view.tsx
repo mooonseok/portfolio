@@ -17,7 +17,6 @@ export function SmartFarmBlockView({
   project: p,
   href,
   caseLabel,
-  meta,
   zones,
   hasZones,
   titleFirst,
@@ -76,8 +75,7 @@ export function SmartFarmBlockView({
           >
             <ConceptFrame
               visual={p.visuals.home}
-              className='[--ratio:4_/_5] tab:[--ratio:4_/_3]'
-              meta={meta}
+              className='[--ratio:4_/_5] tab:[--ratio:4_/_3] mob:[&_.concept-caption]:mx-(--margin)'
               parallax={10}
             />
           </NavLink>
@@ -90,14 +88,14 @@ export function SmartFarmBlockView({
               />
               <Box
                 as={TAG.FIGCAPTION}
-                className='hidden items-center gap-2 mono lap:flex'
+                className='flex items-center gap-2 text-[12px] text-subtle'
               >
                 <Box
                   as={TAG.SPAN}
                   className='h-[9px] w-[9px] rounded-[50%] border-[1.25px] border-ink'
                   aria-hidden='true'
                 />
-                SENSOR
+                센서 개념 이미지
               </Box>
             </Column>
             <Column as={TAG.FIGURE} className='gap-3 lap:mt-20'>
@@ -108,14 +106,14 @@ export function SmartFarmBlockView({
               />
               <Box
                 as={TAG.FIGCAPTION}
-                className='hidden items-center gap-2 mono lap:flex'
+                className='flex items-center gap-2 text-[12px] text-subtle'
               >
                 <Box
                   as={TAG.SPAN}
                   className='h-2 w-2 [transform:rotate(45deg)] border-[1.25px] border-ink'
                   aria-hidden='true'
                 />
-                EQUIPMENT
+                환기 설비 개념 이미지
               </Box>
             </Column>
           </Grid>

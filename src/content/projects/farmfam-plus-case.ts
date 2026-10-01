@@ -2,13 +2,11 @@ import type { CaseContent } from '@/dto/case.dto';
 
 export const farmfamPlusCase: CaseContent = {
   role: [
-    '4인 팀에서 공동구매 수량·상태 정정, 재고 복원, Redis 잠금과 관련 테스트를 수정했습니다.',
-    '기획 요구사항에 따른 다단계 공동구매 기능도 구현했습니다.',
+    '4인 팀에서 주문 취소 처리 보완과 다단계 공동구매 기능 개발을 맡았습니다.',
   ],
   roleSurfaces: [{ label: 'WEB' }, { label: 'API' }, { label: 'DB' }],
   contextProblem: [
     '운영 요청과 QA 과정에서 취소 이후의 공동구매 수량과 재고 처리를 점검하고 관련 흐름을 보완했습니다.',
-    '취소 정책과 재고 처리 기준은 담당자와 확인하며 운영 조건에 맞춰 구현을 조정했습니다.',
   ],
   stateScope: {
     label: '주문이 영향을 주는 상태',
@@ -30,12 +28,6 @@ export const farmfamPlusCase: CaseContent = {
     {
       title: 'Redis / Tests',
       body: ['취소 처리에 사용하는 Redis 잠금과 관련 테스트를 수정했습니다.'],
-    },
-    {
-      title: 'Collaboration',
-      body: [
-        '담당자와 취소 정책·재고 기준을 확인하고 운영 조건에 맞춰 구현을 조정했습니다.',
-      ],
     },
   ],
   decisions: [],
@@ -109,7 +101,5 @@ export const farmfamPlusCase: CaseContent = {
       ],
     },
   ],
-  currentState: [
-    '변경 사항을 로컬·QA·운영 환경에 반영하고, 테스트 결제를 통해 취소 동작을 확인했습니다.',
-  ],
+  currentState: [],
 };

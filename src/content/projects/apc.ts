@@ -5,7 +5,7 @@ import type { Project } from '@/dto/project.dto';
 import { apcCase } from './apc-case';
 
 const mainVisual = {
-  src: '/images/projects/apc/main.jpg',
+  src: '/images/projects/apc/main-restored.png',
   alt: '농산물 처리 및 물류 환경을 표현한 개념 이미지',
 };
 
@@ -35,33 +35,11 @@ export const apc: Project = {
   },
   visuals: {
     home: {
+      caption: '농산물 물류 환경을 표현한 개념 이미지',
       ...mainVisual,
       sizes: '100vw',
       id: VISUAL_ID.APC_HOME,
       brief: 'APC — processing floor, 21:9 / 16:9 / 4:5',
-      pins: [
-        {
-          label: 'RECEIVING',
-          x: 12,
-          y: 60,
-          tablet: { x: 10, y: 60 },
-          mobile: { x: 8, y: 56 },
-        },
-        {
-          label: 'LOT',
-          x: 44,
-          y: 38,
-          tablet: { x: 44, y: 36 },
-          hideOnMobile: true,
-        },
-        {
-          label: 'QR',
-          x: 71,
-          y: 66,
-          tablet: { x: 72, y: 66 },
-          mobile: { x: 50, y: 30 },
-        },
-      ],
     },
     hero: {
       ...mainVisual,

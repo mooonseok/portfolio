@@ -1,3 +1,4 @@
+import { Cta } from '@/components/atoms/cta';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Heading } from '@/components/atoms/heading';
@@ -59,6 +60,7 @@ export function StoryCardView({
           {st.description}
         </Text>
       ) : null}
+      <Cta href={st.href} label={st.linkLabel} />
       {st.keywords ? (
         <List className='hidden lap:flex lap:flex-col lap:gap-1 lap:text-small lap:leading-[1.5] lap:text-subtle'>
           {st.keywords.map((k) => (

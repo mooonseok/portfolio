@@ -5,8 +5,7 @@ import { Box } from '@/components/atoms/box';
 import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import { ConceptArt } from '@/components/organisms/concept-art/concept-art';
-import type { MetaPair, Pin, Visual } from '@/dto/visual.dto';
-import { NODE_STATE } from '@/constants/flow';
+import type { Visual } from '@/dto/visual.dto';
 import { MEDIA } from '@/constants/breakpoint';
 import { PARALLAX_DEFAULT } from '@/constants/motion-layer';
 import { TAG } from '@/constants/tag';
@@ -15,23 +14,11 @@ import { cx } from '@/lib/cx';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const pinPosition = (p: Pin) =>
-  ({
-    '--x': `${p.x}%`,
-    '--y': `${p.y}%`,
-    '--x-t': `${(p.tablet ?? p).x}%`,
-    '--y-t': `${(p.tablet ?? p).y}%`,
-    '--x-m': `${(p.mobile ?? p.tablet ?? p).x}%`,
-    '--y-m': `${(p.mobile ?? p.tablet ?? p).y}%`,
-  }) as CSSProperties;
-
 export function ConceptFrame({
   visual,
   className,
   ratio,
   radius,
-  meta,
-  metaDelay,
   parallax = PARALLAX_DEFAULT,
   pointer = true,
   fallback,
@@ -44,8 +31,6 @@ export function ConceptFrame({
   className?: string;
   ratio?: string;
   radius?: number;
-  meta?: MetaPair;
-  metaDelay?: number;
   parallax?: number;
   pointer?: boolean;
   fallback?: ReactNode;
@@ -66,6 +51,7 @@ export function ConceptFrame({
         alt={visual.alt}
         fill
         sizes={sizes}
+        quality={85}
         priority={priority}
         className='object-cover'
         style={{
@@ -96,14 +82,13 @@ export function ConceptFrame({
   const vars: Record<string, string> = {};
   if (ratio) vars['--ratio'] = ratio;
   if (radius) vars['--radius'] = `${radius}px`;
-  if (metaDelay) vars['--meta-delay'] = `${metaDelay}ms`;
   return (
     <Box
       as={TAG.FIGURE}
       className={cx('concept-figure', className)}
       style={Object.keys(vars).length ? (vars as CSSProperties) : undefined}
     >
-      <Box className='concept-frame absolute inset-0 overflow-hidden rounded-[var(--radius,0)] bg-placeholder on-dark:bg-dark-2'>
+      <Box className='concept-frame relative overflow-hidden rounded-[var(--radius,0)] bg-placeholder on-dark:bg-dark-2'>
         {range > 0 || shift ? (
           <MotionLayer parallax={range} pointer={shift}>
             {media}
@@ -111,47 +96,24 @@ export function ConceptFrame({
         ) : (
           <Box className='absolute inset-0'>{media}</Box>
         )}
-        {visual.pins?.map((p) => (
-          <Box
-            as={TAG.SPAN}
-            key={p.label}
-            className='group/pin pointer-events-none absolute top-(--y-m) left-(--x-m) flex items-center gap-2 tab:top-(--y-t) tab:left-(--x-t) lap:top-(--y) lap:left-(--x) mob:data-hide-mobile:hidden tab-only:data-hide-tablet:hidden'
-            data-node={p.label}
-            data-link={p.link}
-            data-hide-mobile={p.hideOnMobile || undefined}
-            data-hide-tablet={p.hideOnTablet || undefined}
-            style={pinPosition(p)}
-            aria-hidden='true'
-          >
-            <Box
-              as={TAG.SPAN}
-              className={cx(
-                'flex-none border-[1.25px] border-ink bg-paper [transition:background-color_150ms_var(--ease),border-color_150ms_var(--ease)] on-dark:border-paper on-dark:bg-dark',
-                p.state === NODE_STATE.EXPERIMENT
-                  ? 'ml-[0.5px] size-[8px] rotate-45 group-data-active/pin:border-ink group-data-active/pin:bg-ink on-dark:group-data-active/pin:border-paper on-dark:group-data-active/pin:bg-paper'
-                  : 'size-[9px] rounded-[50%] group-data-active/pin:border-signal group-data-active/pin:bg-signal'
-              )}
-            />
-            <Text
-              as={TAG.SPAN}
-              className='bg-paper px-2 py-1 font-mono text-(length:--fs-meta) tracking-[0.06em] whitespace-nowrap text-ink'
-            >
-              {p.label}
-            </Text>
-          </Box>
-        ))}
         {children}
-        {meta ? (
-          <Box
-            as={TAG.SPAN}
-            className='concept-meta absolute inset-x-0 bottom-0 flex justify-between gap-4 bg-paper px-3 py-2.5 font-mono text-(length:--fs-meta) tracking-[0.06em] text-ink'
-            aria-hidden='true'
-          >
-            <Text as={TAG.SPAN}>{meta[0]}</Text>
-            <Text as={TAG.SPAN}>{meta[1]}</Text>
-          </Box>
-        ) : null}
       </Box>
+      {visual.caption ? (
+        <Box
+          as={TAG.FIGCAPTION}
+          className='concept-caption flex flex-col gap-1.5 border-t border-hairline py-3 text-subtle tab:flex-row tab:flex-wrap tab:items-baseline tab:gap-x-4 tab:gap-y-1.5 on-dark:border-dark-rule on-dark:text-dark-sub'
+        >
+          <Text
+            as={TAG.SPAN}
+            className='shrink-0 font-mono text-[11px] tracking-[0.12em]'
+          >
+            CONCEPT IMAGE
+          </Text>
+          <Text as={TAG.SPAN} className='text-[13px] leading-relaxed'>
+            {visual.caption}
+          </Text>
+        </Box>
+      ) : null}
     </Box>
   );
 }

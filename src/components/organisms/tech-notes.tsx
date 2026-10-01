@@ -11,7 +11,7 @@ export function TechNotes({
   cols = TECH_COLS.TWO,
   tone = TONE.PAPER,
 }: TechNotesProps) {
-  const { isOpen, toggle, panelRef } = useTechNotes(notes);
+  const { isOpen, toggle, panelRef, rootRef } = useTechNotes(notes);
   if (!notes.length) return null;
   const items = notes.map((n) => ({
     id: n.id,
@@ -22,6 +22,7 @@ export function TechNotes({
   }));
   return (
     <TechNotesView
+      rootRef={rootRef}
       items={items}
       cols={cols}
       tone={tone}

@@ -1,4 +1,3 @@
-import { NODE_STATE } from '@/constants/flow';
 import { CASE_LENGTH, PROJECT_SLUG, PROJECT_TIER } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import { VISUAL_ID } from '@/constants/visual';
@@ -6,7 +5,7 @@ import type { Project } from '@/dto/project.dto';
 import { smartFarmCase } from './smart-farm-case';
 
 const mainVisual = {
-  src: '/images/projects/smart-farm/main.jpg',
+  src: '/images/projects/smart-farm/main-restored.png',
   alt: '온실과 재배 환경을 표현한 개념 이미지',
 };
 
@@ -62,21 +61,12 @@ export const smartFarm: Project = {
   },
   visuals: {
     home: {
+      caption: '재배 환경 개념 이미지 · 실제 시험은 사무실에서 진행',
       ...mainVisual,
       sizes:
         '(min-width: 1440px) 644px, (min-width: 1024px) calc(50vw - 58px), (min-width: 744px) calc(100vw - 80px), 100vw',
       id: VISUAL_ID.SMART_HOME,
       brief: 'SMART FARM — greenhouse, 4:3 / 4:5',
-      pins: [
-        {
-          label: 'VENT',
-          state: NODE_STATE.EXPERIMENT,
-          x: 10,
-          y: 18,
-          tablet: { x: 8, y: 16 },
-          hideOnMobile: true,
-        },
-      ],
     },
     sensor: {
       src: '/images/projects/smart-farm/sensor.jpg',

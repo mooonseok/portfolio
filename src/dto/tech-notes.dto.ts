@@ -1,3 +1,4 @@
+import type { RefObject } from 'react';
 import type { TechCols } from '@/constants/case';
 import type { SurfaceTone } from '@/constants/tone';
 import type { Field, TechNote } from '@/dto/field.dto';
@@ -17,6 +18,7 @@ export interface TechNoteItem {
 }
 
 export interface TechNotesViewProps {
+  rootRef: RefObject<HTMLDivElement | null>;
   items: TechNoteItem[];
   cols: TechCols;
   tone: SurfaceTone;
