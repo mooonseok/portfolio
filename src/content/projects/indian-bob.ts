@@ -5,7 +5,7 @@ import type { Project } from '@/dto/project.dto';
 import { indianBobCase } from './indian-bob-case';
 
 const mainVisual = {
-  src: '/images/projects/indian-bob/main.jpg',
+  src: '/images/projects/indian-bob/main-restored.png',
   alt: '모바일과 관리자 기기의 연결을 표현한 개념 이미지',
 };
 

@@ -5,7 +5,7 @@ import type { Project } from '@/dto/project.dto';
 import { smartFarmCase } from './smart-farm-case';
 
 const mainVisual = {
-  src: '/images/projects/smart-farm/main.jpg',
+  src: '/images/projects/smart-farm/main-restored.png',
   alt: '온실과 재배 환경을 표현한 개념 이미지',
 };
 

@@ -51,6 +51,7 @@ export function ConceptFrame({
         alt={visual.alt}
         fill
         sizes={sizes}
+        quality={85}
         priority={priority}
         className='object-cover'
         style={{
@@ -100,15 +101,15 @@ export function ConceptFrame({
       {visual.caption ? (
         <Box
           as={TAG.FIGCAPTION}
-          className='concept-caption flex flex-col gap-1.5 border-t border-hairline py-3 text-subtle tab:flex-row tab:items-baseline tab:gap-4 on-dark:border-dark-rule on-dark:text-dark-sub'
+          className='concept-caption flex flex-col gap-1.5 border-t border-hairline py-3 text-subtle tab:flex-row tab:flex-wrap tab:items-baseline tab:gap-x-4 tab:gap-y-1.5 on-dark:border-dark-rule on-dark:text-dark-sub'
         >
           <Text
             as={TAG.SPAN}
-            className='shrink-0 font-mono text-[10px] tracking-[0.12em]'
+            className='shrink-0 font-mono text-[11px] tracking-[0.12em]'
           >
             CONCEPT IMAGE
           </Text>
-          <Text as={TAG.SPAN} className='text-[12px] leading-relaxed'>
+          <Text as={TAG.SPAN} className='text-[13px] leading-relaxed'>
             {visual.caption}
           </Text>
         </Box>

@@ -5,7 +5,7 @@ import type { Project } from '@/dto/project.dto';
 import { emosaveCase } from './emosave-case';
 
 const mainVisual = {
-  src: '/images/projects/emosave/main.jpg',
+  src: '/images/projects/emosave/main-restored.png',
   alt: '모듈형 마을 커스터마이징을 표현한 개념 이미지',
 };
 

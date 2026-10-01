@@ -5,7 +5,7 @@ import type { Project } from '@/dto/project.dto';
 import { apcCase } from './apc-case';
 
 const mainVisual = {
-  src: '/images/projects/apc/main.jpg',
+  src: '/images/projects/apc/main-restored.png',
   alt: '농산물 처리 및 물류 환경을 표현한 개념 이미지',
 };
 
