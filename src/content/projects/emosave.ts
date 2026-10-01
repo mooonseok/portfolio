@@ -45,14 +45,16 @@ export const emosave: Project = {
     },
     custom: {
       ...mainVisual,
-      sizes: '(min-width: 744px) 33vw, 100vw',
+      sizes:
+        '(min-width: 1440px) 360px, (min-width: 1024px) calc(27.7778vw - 29.1111px), (min-width: 744px) calc(37.5vw - 42.5px), calc(100vw - 40px)',
       position: '50% 75%',
       id: VISUAL_ID.EMOSAVE_CUSTOM,
       brief: 'customization, 1:1',
     },
     village: {
       ...mainVisual,
-      sizes: '(min-width: 744px) 33vw, 100vw',
+      sizes:
+        '(min-width: 1440px) 360px, (min-width: 1024px) calc(27.7778vw - 29.1111px), (min-width: 744px) calc(25vw - 35px), calc(100vw - 40px)',
       position: '50% 40%',
       id: VISUAL_ID.EMOSAVE_VILLAGE,
       brief: 'character / village, 1:1',

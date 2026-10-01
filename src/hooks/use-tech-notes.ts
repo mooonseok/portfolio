@@ -52,6 +52,9 @@ export function useTechNotes(notes: TechNote[]) {
     let frame = 0;
     const onKey = () => {
       keyboard = true;
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && root.contains(active))
+        focused = active;
     };
     const onPointer = () => {
       keyboard = false;

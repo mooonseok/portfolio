@@ -12,7 +12,8 @@
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check:anchors": "node --test scripts/verification/anchors.test.mjs"
+    "check:anchors": "node --test scripts/verification/anchors.test.mjs",
+    "check:metadata": "node --test scripts/verification/metadata.test.mjs"
   },
   "dependencies": {
     "next": "^15.1.0",

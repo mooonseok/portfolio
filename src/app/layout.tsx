@@ -5,6 +5,7 @@ import { site } from '@/content/site';
 import { Anchor } from '@/components/atoms/anchor';
 import { HistoryScroll } from '@/components/organisms/history-scroll';
 import { LINK_AS } from '@/constants/tag';
+import { siteSettings } from '@/lib/site-metadata';
 
 const plex = localFont({
   src: '../../public/fonts/ibm-plex-mono/IBMPlexMono-Regular-latin.woff2',
@@ -15,9 +16,13 @@ const plex = localFont({
   fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 });
 
+const settings = siteSettings(process.env.SITE_URL, process.env.SITE_INDEXABLE);
+
 export const metadata: Metadata = {
   title: `${site.name} — ${site.role}`,
   description: site.headline,
+  robots: { index: settings.indexable, follow: settings.indexable },
+  ...(settings.origin ? { metadataBase: new URL(settings.origin) } : {}),
 };
 
 export const viewport: Viewport = {

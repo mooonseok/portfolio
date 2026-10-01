@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { caseStudies } from '@/sections/case-studies/case-registry';
 import { getProject, getProjects } from '@/lib/content';
+import { site } from '@/content/site';
+import { pageMetadata, siteSettings } from '@/lib/site-metadata';
 
 export function generateStaticParams() {
   return getProjects().map((p) => ({ slug: p.slug }));
@@ -15,10 +17,15 @@ export async function generateMetadata({
   const { slug } = await params;
   const p = getProject(slug);
   if (!p) return {};
-  return {
-    title: `${p.title} — ${p.category} · Park Moonseok`,
-    description: p.summary,
-  };
+  return pageMetadata(
+    siteSettings(process.env.SITE_URL, process.env.SITE_INDEXABLE),
+    {
+      title: `${p.title} — ${p.category} · Park Moonseok`,
+      description: p.summary,
+      path: `/work/${p.slug}`,
+      siteName: site.name,
+    }
+  );
 }
 
 export const dynamicParams = false;

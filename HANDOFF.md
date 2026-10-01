@@ -10,6 +10,7 @@ pnpm lint               # ESLint 9 flat config (eslint.config.mjs), 0 warnings a
 pnpm typecheck
 pnpm test               # selection, scroll position, history and scanner regression tests
 pnpm check:anchors      # production HTML links and group IDs, after pnpm build
+pnpm check:metadata     # after build, with the same SITE_URL / SITE_INDEXABLE values
 pnpm check:boundaries   # architecture rules (see §2)
 pnpm format             # Prettier + Tailwind class sorting
 pnpm format:check
@@ -314,8 +315,9 @@ written as CSS variables / attributes.
 2. **Image captions:** Keep `visual.caption` concise and explicit about
    conceptual imagery; do not imply that an image documents an actual
    deployment.
-3. **Contact:** Fill in `site.contact.email` / `github`. The CONTACT nav item
-   and the footer contact block then appear automatically.
+3. **Contact:** Email is already configured in `site.contact.email`; the CONTACT
+   nav item and footer email are visible. GitHub is optional and stays hidden
+   while `site.contact.github` is empty.
 4. **ABOUT nav:** It currently points to `#about`, which is the Tools / Scope
    section. Change it if you add a separate About section.
 5. **Fonts:** All three families are self-hosted from `public/fonts/`; see
@@ -335,6 +337,32 @@ written as CSS variables / attributes.
 
    Fallback stacks stay in the `@theme` block of `styles/globals.css`
    (`--font-sans`, `--font-mono`); every face uses `font-display: swap`.
+
+6. **Publication metadata:** GitHub's homepage setting points to
+   `https://portfolio-ten-umber-trj7j2b3qz.vercel.app`; verify that existing
+   deployment before relying on it. The next release's canonical origin is still
+   unconfirmed. Use `.env.example` as the configuration template. At build time,
+   set `SITE_URL` to the confirmed HTTPS origin and `SITE_INDEXABLE=true` only
+   for the public production site. Indexing requires both values; otherwise
+   pages are `noindex`, robots permits crawling so search engines can read that
+   directive, and the sitemap is empty. Canonical URLs are omitted when the
+   origin is unset; invalid configured values raise a configuration error. Leave
+   indexing unset or `false` for previews. Rebuild when these settings change.
+   These settings do not provide access control.
+7. **Social sharing:** Home and case pages use their own titles and descriptions
+   with the common card `public/social/portfolio.png`. Check the actual
+   deployment's canonical URLs, image URLs, robots and sitemap after its public
+   URL is confirmed. Build-time configuration details are in README.
+8. **Metadata verification:** After the build, run `pnpm check:metadata` with
+   the same `SITE_URL` / `SITE_INDEXABLE` values used for that build. The
+   checker does not load `.env.local`; supply the values through the shell
+   environment. Verify both default non-indexable output and public-URL fixture
+   output before release; fixture URLs are not deployment destinations.
+9. **CI:** `.github/workflows/verify.yml` runs for pull requests, pushes to
+   `develop` / `main`, and manual dispatch. Node.js 24 and pinned pnpm run the
+   six required checks plus anchors and metadata for both configurations. This
+   workflow does not deploy. Local passing results and a successful GitHub
+   Actions run are separate evidence; check the pushed commit's run.
 
 ## 8. QA (same checklist as Phase 4 LOCKED)
 
