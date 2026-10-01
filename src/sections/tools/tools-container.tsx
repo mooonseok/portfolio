@@ -1,6 +1,6 @@
 import { ToolsView } from './tools-view';
-import { tools } from '@/content/site';
+import { site, tools } from '@/content/site';
 
 export function ToolsContainer() {
-  return <ToolsView rows={tools} />;
+  return <ToolsView rows={tools} about={site.about} />;
 }

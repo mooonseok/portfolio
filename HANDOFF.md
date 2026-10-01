@@ -89,6 +89,11 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 
 ## 3. Data model (summary)
 
+`site.headline` and `site.introduction` provide the Flutter-first hero copy;
+`site.about` provides the Tools / Scope introduction. Content follows the
+owner-confirmed contribution, team size and verification scope. Unconfirmed
+backfill results and OCR evaluation claims are omitted.
+
 `Project` →
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
 
@@ -114,9 +119,8 @@ Every project diagram is now either static or changed only by the visitor
 - FarmFam+ `case.relationMap`
   (`{ id, label, title, hint, hintMobile, note, origin, targets[], check }`) —
   02 SYSTEM, right after Context / Problem. Each node carries `why` (관계의
-  의미), `work` (실제 작업), optional `scope` (the only confirmed transaction
-  range: active group purchase + quantity progress) and optional `note`. `check`
-  is the separate "관련 변경과 테스트" block, not a node. The map `id`
+  의미), `work` (실제 작업), optional `scope` and optional `note`. `check` is
+  the separate "관련 변경과 테스트" block, not a node. The map `id`
   (`order-cancellation`) stays the heading id, so the old `#order-cancellation`
   link still works; no tech note reuses it.
 - APC `case.domains` (`content/projects/apc-domains.ts`) — A 물류·재고 / B QR
@@ -125,19 +129,20 @@ Every project diagram is now either static or changed only by the visitor
   target. The same data feeds the home (`EXPLORER_MODE.HOME`: title, lead,
   steps, link) and the case study (`EXPLORER_MODE.DETAIL`: adds impl list,
   aside, checks, note link). `home.flows` is `[]`.
-- Smart Farm `home.zones` — MONITORING · PRODUCT WORK and CONTROL · EXPERIMENT
-  as two unconnected static areas. `case.controlExperiment.conditions`
-  (`content/projects/smart-farm-control.ts`) — the five safety conditions that
-  used to be tech notes. Each condition keeps its old note id as the button id,
-  so `#command-expiry`, `#fail-safe`, … still land on the section and select
-  that condition; `#mqtt` is the MQTT caption. `zone` marks what the logic
-  relates to (command receive / equipment operation / whole controller); the
-  location text only claims "제어기 안전 로직", not a firmware module.
+- Smart Farm `home.zones` — MONITORING · OFFICE PROTOTYPE and CONTROL ·
+  EXPERIMENT as two separate experimental areas.
+  `case.controlExperiment.conditions` (`content/projects/smart-farm-control.ts`)
+  — the five safety conditions that used to be tech notes. Each condition keeps
+  its old note id as the button id, so `#command-expiry`, `#fail-safe`, … still
+  land on the section and select that condition; `#mqtt` is the MQTT caption.
+  `zone` marks what the logic relates to (command receive / equipment operation
+  / whole controller); the location text only claims "제어기 안전 로직", not a
+  firmware module.
 - IndianBob `case.feature` (`content/projects/indian-bob-feature.ts`) — HABIT
   areas with the related `systems` and `edges` to emphasise. Edges mean
   "connected", not call order.
-- IndianBob `engineeringNote.links` / `footnote` — labels on the Apple Sign-in
-  arrows; code exchange is a footnote because its location is unconfirmed.
+- IndianBob no longer supplies `engineeringNote`; the Apple Sign-in case and its
+  Engineering contents entry are not rendered.
 - Emosave `case.stateExample` — DEFAULT / SELECTED / PLACED copy for the drawn
   `StateSketch` model (home: static comparison, case: state tabs next to
   Customization).
@@ -158,7 +163,9 @@ Rules:
 - **Decisions:** Empty for all five projects, so no Decisions section renders
   anywhere.
 - **Periods:** Read from `content/projects` only. The homepage, case studies and
-  hover meta all use the same value.
+  hover meta all use the same value. Emosave is 2022–2023; IndianBob is
+  2024–2025. The other projects say "2025—2026 중 참여" rather than asserting
+  individual start/end years. Experience groups these participation periods.
 - **Contact:** `site.contact` has empty email and github, so the CONTACT nav
   item, the menu contact links and the footer contact block are all hidden.
   `200 OK` stays in the footer.
@@ -181,8 +188,8 @@ Rules:
 | `feature`                                              | —                                                      | IndianBob 02 System HABIT explorer                                      |
 | `work` (`track`)                                       | —                                                      | What I Worked On (Smart Farm grouped ● / ◇)                             |
 | `techNotes`                                            | —                                                      | Engineering group, flexible fields, no STACK block                      |
-| `engineeringNote`                                      | —                                                      | IndianBob Apple Sign-in dark card                                       |
-| `experiment`                                           | S03 story (homepage uses `site.stories`)               | APC OCR: static flow, NOT SHIPPED + `conclusion` once, under the title  |
+| `engineeringNote`                                      | —                                                      | Optional; currently unused                                              |
+| `experiment`                                           | —                                                      | Optional; currently unused                                              |
 | `stories[].description`                                | Story card body, under title and flow                  | —                                                                       |
 | `surfaceRelation`                                      | IndianBob Featured relation (with `roleSurfaces` subs) | IndianBob Role / Scope overview (with subs)                             |
 | `currentState` · `currentStateTracks`                  | —                                                      | Current State (Smart Farm: 2 columns, stated once)                      |
@@ -192,12 +199,10 @@ Items from the content brief that were **not shown in the UI** because they are
 instructions to the writer, not visitor-facing text:
 
 - FarmFam+ "실제 운영 지표나 매출·성능 개선 수치는 표시하지 않습니다"
-- APC "OCR은 … 미적용 실험으로 표시합니다"
 - The "~로 표현하지 마세요" lines
 
-Smart Farm Control's current state "실제 제품 운영 적용 여부는 확정된 사실로
-표현하지 않습니다" is shown with the same meaning as **"실제 제품 운영 적용
-여부는 확정되지 않았습니다."**
+Smart Farm monitoring describes an office sensor prototype, before farm
+deployment. The LED control experiment remains a separate scope.
 
 ## 5. Motion (scroll-driven, CSS-variable based)
 
@@ -211,9 +216,10 @@ only). Smooth scrolling is only for in-page links: `HistoryScroll` sets
 `html[data-smooth-scroll]` on the first pointer or key input and removes it on
 back/forward, so landing on a URL hash and history restoration jump straight to
 their position. Hash-link clicks that open elsewhere (modifier keys, `target`,
-`download`) or are cancelled are not remembered. The OCR flow and the Smart Farm
-monitoring flow are `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories
-S01–S03 keep their original flows.
+`download`) or are cancelled are not remembered. The Smart Farm monitoring flow
+and Stories S01–S03 are `FLOW_ROLE.STATIC` (first-reveal line draw only).
+Stories cover Flutter state management, IndianBob app/web/API work, and office
+sensor monitoring.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are

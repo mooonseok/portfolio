@@ -12,6 +12,9 @@ export interface Site {
   name: string;
   role: string;
   disciplines: string;
+  headline: string;
+  introduction: string;
+  about: string;
   range: YearRange;
   contact: Contact;
   visualsNote: string;

@@ -21,6 +21,7 @@ export interface ExperienceViewProps {
 }
 
 export interface ToolsViewProps {
+  about: string;
   rows: LabelValue[];
 }
 

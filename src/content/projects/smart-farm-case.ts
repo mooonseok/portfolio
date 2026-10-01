@@ -8,36 +8,32 @@ export const smartFarmCase: CaseContent = {
   role: [],
   roleTracks: [
     {
-      kind: STATUS_KIND.PRODUCT,
+      kind: STATUS_KIND.EXPERIMENT,
       label: 'MONITORING',
-      note: 'Product Work',
+      note: 'Office Prototype',
       body: [
-        '스마트팜 관리 서비스에서는 농장·온실·구역과 센서 위치, 작물·작기·생육·수확·관수 및 알림 UI를 작업했습니다.',
+        '2인 팀에서 센서와 하드웨어 모듈 구성, 측정값 전송, 대시보드 연동을 담당했습니다.',
       ],
     },
     {
       kind: STATUS_KIND.EXPERIMENT,
       label: 'CONTROL',
-      note: 'Experiment',
+      note: 'Separate Experiment',
       body: [
-        '별도의 제어 PoC에서는 센서 수집과 조회, MQTT 명령/응답, 엣지 동기화 및 ESP32 제어기 안전 로직을 구현했습니다.',
+        '기존 LED 출력 제어 실험은 센서 측정·관측 모듈과 별도 범위로 소개합니다.',
       ],
     },
   ],
   contextProblem: [
-    '스마트팜 운영에서는 센서 값 자체를 표시하는 것뿐 아니라 센서가 어느 농장·온실·구역에 위치하는지, 해당 환경에서 어떤 작물과 작기가 운영되고 있는지를 함께 관리해야 했습니다.',
-    '동시에 소프트웨어 명령이 제어기의 출력 동작까지 전달되는지 검증하기 위해 운영 시스템과 별도로 제어 PoC를 진행했습니다.',
+    '실제 스마트팜에 적용하기 전, 사무실에서 시험 모듈을 구성했습니다. 센서에서 얻은 온습도·CO₂ 측정값을 MQTT로 전달하고 대시보드에서 확인하는 흐름을 구현하고 시험했습니다.',
   ],
   systemFlows: [],
   monitoringFlow: {
     id: 'monitoring',
     nodes: [
-      { label: 'SENSOR', sub: '센서 위치 · 농장·온실·구역별 배치' },
-      { label: 'DATA', sub: '환경 데이터 · 조회' },
-      {
-        label: 'MONITORING',
-        sub: '운영 UI · 배치도·센서 지도, 생육·수확·관수, 알림',
-      },
+      { label: 'SENSOR', sub: '온습도 · CO₂ 측정' },
+      { label: 'MQTT', sub: '측정값 전달' },
+      { label: 'DASHBOARD', sub: '측정값 관측' },
     ],
   },
   controlExperiment: {
@@ -86,39 +82,20 @@ export const smartFarmCase: CaseContent = {
   work: [
     {
       track: WORK_TRACK.MONITORING,
-      title: 'Sensor Data',
+      title: 'Hardware',
       body: [
-        '농장·온실·구역별 센서 배치와 센서 위치 선택, 환경 데이터 조회와 관련 UI를 작업했습니다.',
+        'ESP32와 Raspberry Pi를 활용해 센서와 하드웨어 시험 모듈을 구성했습니다.',
       ],
     },
     {
       track: WORK_TRACK.MONITORING,
-      title: 'Monitoring',
-      body: [
-        '농장 등록/수정, 배치도 및 센서 지도, 생육·수확·관수·작업·차량 화면, 알림 읽음 및 이력 기능을 작업했습니다.',
-      ],
+      title: 'MQTT / Dashboard',
+      body: ['측정값을 MQTT로 전달하고 대시보드에서 관측하도록 연결했습니다.'],
     },
     {
       track: WORK_TRACK.MONITORING,
-      title: 'Data / Simulation Separation',
-      body: [
-        '스마트팜 DB에서 시뮬레이션 상태와 참조 값을 별도로 구분하기 위한 스키마 및 제약을 작업했습니다.',
-        '시뮬레이션이 만든 작기·생육·수확·알림 데이터를 사용자 데이터와 구분하고, 다시 실행해도 중복되지 않도록 했습니다.',
-      ],
-    },
-    {
-      track: WORK_TRACK.CONTROL,
-      title: 'Command / Control PoC',
-      body: [
-        'MQTT 기반 명령과 응답, 센서 수집/조회, edge 동기화 및 시험용 출력 제어 흐름을 구현했습니다.',
-      ],
-    },
-    {
-      track: WORK_TRACK.CONTROL,
-      title: 'Equipment',
-      body: [
-        'ESP32-S3 기반 제어기 펌웨어에서 명령 수신과 장비 동작 관련 안전 로직을 작업했습니다.',
-      ],
+      title: 'Office Test',
+      body: ['사무실에서 센서 측정·전달·관측 흐름을 시험했습니다.'],
     },
   ],
   decisions: [],
@@ -126,11 +103,8 @@ export const smartFarmCase: CaseContent = {
   currentState: [],
   currentStateTracks: {
     monitoring: [
-      'Monitoring 영역에서는 농장·온실·센서·작물·생육·수확 등을 다루는 운영 UI와 데이터 구조가 존재합니다.',
+      '사무실 시험 환경에서 개발·테스트를 진행했습니다. 실제 농장 적용 전 단계입니다.',
     ],
-    control: [
-      'PoC 구현 및 검증 코드가 존재합니다.',
-      '실제 제품 운영 적용 여부는 확정되지 않았습니다.',
-    ],
+    control: ['별도 출력 제어 실험은 시험용 LED 1채널을 기준으로 소개합니다.'],
   },
 };

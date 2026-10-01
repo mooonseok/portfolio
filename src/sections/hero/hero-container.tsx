@@ -8,6 +8,8 @@ export function HeroContainer() {
       role={site.role}
       disciplines={site.disciplines}
       range={site.range}
+      headline={site.headline}
+      introduction={site.introduction}
     />
   );
 }

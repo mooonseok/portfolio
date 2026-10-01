@@ -6,7 +6,7 @@ import type { ToolsViewProps } from '@/dto/profile.dto';
 import { BREAKPOINT } from '@/constants/breakpoint';
 import { HEADING, TAG } from '@/constants/tag';
 
-export function ToolsView({ rows }: ToolsViewProps) {
+export function ToolsView({ rows, about }: ToolsViewProps) {
   return (
     <ScrollScene
       as={TAG.SECTION}
@@ -24,6 +24,9 @@ export function ToolsView({ rows }: ToolsViewProps) {
         railFrom={BREAKPOINT.DESKTOP}
         labelFrom={BREAKPOINT.DESKTOP}
       />
+      <Text className='mt-6 max-w-[760px] text-[16px] leading-[1.8] text-subtle tab:text-[18px] lap:ml-[calc((100%_-_11_*_var(--gutter))_/_6_+_2_*_var(--gutter))]'>
+        {about}
+      </Text>
       <Box as={TAG.DL} className='mx-0 mt-4 mb-0 tab:mt-6 lap:mt-12'>
         {rows.map((t) => (
           <Box

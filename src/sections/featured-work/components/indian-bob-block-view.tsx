@@ -60,6 +60,9 @@ export function IndianBobBlockView({
             meta={meta}
           />
         </NavLink>
+        <Text className='text-[16px] leading-[1.7] text-subtle tab:text-[17px] lap:mt-8'>
+          {p.summary}
+        </Text>
         {hasSurfaces ? (
           <Box
             as={TAG.DL}

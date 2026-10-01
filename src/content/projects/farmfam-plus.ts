@@ -14,13 +14,13 @@ export const farmfamPlus: Project = {
   num: '01',
   title: 'FARMFAM+',
   category: 'COMMERCE SYSTEM',
-  period: '2025—2026',
+  period: '2025—2026 중 참여',
   tier: PROJECT_TIER.SELECTED,
   caseLength: CASE_LENGTH.FULL,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Web / API / DB',
   summary:
-    '상품, 주문, 공동구매, 재고, 프로모션처럼 서로 연결된 커머스 상태를 웹·API·DB 전반에서 개발했습니다.',
+    '주문 취소에 맞춰 공동구매 수량과 재고를 정정하는 흐름을 보완했습니다. 취소 정책과 재고 기준을 담당자와 조율하고, 테스트 결제로 동작을 확인했습니다.',
   home: {
     scope: [
       'Product',
@@ -47,10 +47,10 @@ export const farmfamPlus: Project = {
         label: 'GROUP PURCHASE',
         sub: '공동구매',
         title: '진행 수량과 상태 일관성',
-        body: '공동구매 주문은 주문 상태와 함께 진행 수량과 관련 상태를 바꿉니다. 일부 상태만 반영되지 않도록 활성 공동구매와 수량 진행 상태를 같은 트랜잭션 범위에서 처리했습니다.',
+        body: '취소에 따른 공동구매 수량·상태 정정을 보완했습니다. 처리 기준은 담당자와 확인하며 운영 조건에 맞춰 조정했습니다.',
         related: ['주문', '진행 수량', '다단계 보상'],
         to: {
-          label: 'Transaction boundaries',
+          label: '취소 정책과 처리 기준',
           target: 'transaction-boundaries',
         },
       },
@@ -61,7 +61,7 @@ export const farmfamPlus: Project = {
         title: '취소 시 복원과 회귀 검증',
         body: '재고 복원이 주문 취소와 같은 경로에서 처리되도록 연결했습니다. 상태가 연결된 영역이라, 변경한 취소 경로에는 관련 회귀 테스트를 함께 두었습니다.',
         related: ['주문 취소', '공동구매 정정'],
-        to: { label: 'Regression protection', target: 'regression-protection' },
+        to: { label: '취소 동작 확인', target: 'regression-protection' },
       },
     ],
     cta: 'CASE STUDY',
