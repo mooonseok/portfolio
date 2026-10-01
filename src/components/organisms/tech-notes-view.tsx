@@ -10,6 +10,7 @@ import { HEADING, TAG } from '@/constants/tag';
 import { TONE } from '@/constants/tone';
 
 export function TechNotesView({
+  rootRef,
   items,
   cols,
   tone,
@@ -18,6 +19,7 @@ export function TechNotesView({
 }: TechNotesViewProps) {
   return (
     <Box
+      ref={rootRef}
       className={cx(
         'flex flex-col border-b border-b-(color:--rule) tab:grid tab:grid-cols-2 tab:gap-x-(--gutter) tab:gap-y-12 tab:[border-bottom:0]',
         tone === TONE.DARK
@@ -32,10 +34,12 @@ export function TechNotesView({
         <Box
           key={n.id}
           id={n.id}
+          data-tech-note=''
           className='border-t border-t-(color:--rule) tab:flex tab:flex-col tab:gap-3.5 tab:pt-3.5'
         >
           <Heading level={HEADING.H3} className='m-0 [font:inherit]'>
             <Button
+              data-tech-toggle=''
               className='tech-toggle box-border flex min-h-13 w-full cursor-pointer items-center justify-between gap-3 font-mono text-[14px] tracking-[0.06em] focus-visible:[outline:2px_solid_currentColor] focus-visible:outline-offset-2 tab:hidden'
               aria-expanded={n.open}
               aria-controls={n.panelId}
@@ -52,6 +56,8 @@ export function TechNotesView({
             </Button>
             <Text
               as={TAG.SPAN}
+              data-tech-heading=''
+              tabIndex={-1}
               className='hidden tab:block tab:font-mono tab:text-[14px] tab:tracking-[0.06em]'
             >
               {n.title}

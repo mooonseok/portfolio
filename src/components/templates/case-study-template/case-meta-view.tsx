@@ -22,7 +22,7 @@ export function CaseMetaView({
     >
       {meta.map((r) => (
         <Column
-          key={r.key}
+          key={`${r.key}:${r.value}`}
           className={cx(
             'gap-1 border-t py-3 text-[15px] leading-[1.5] lap:gap-1.5',
             darkHeader ? 'border-t-dark-line' : 'border-t-hairline',
