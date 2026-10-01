@@ -1,3 +1,6 @@
+import type { Metadata } from 'next';
+import { site } from '@/content/site';
+import { pageMetadata, siteSettings } from '@/lib/site-metadata';
 import { Box } from '@/components/atoms/box';
 import { SiteHeader } from '@/components/organisms/site-header';
 import { SignalLine } from '@/components/organisms/signal-line';
@@ -10,6 +13,16 @@ import { SelectedWorkContainer } from '@/sections/selected-work/selected-work-co
 import { ThisWebsiteContainer } from '@/sections/this-website/this-website-container';
 import { ToolsContainer } from '@/sections/tools/tools-container';
 import { TAG } from '@/constants/tag';
+
+export const metadata: Metadata = pageMetadata(
+  siteSettings(process.env.SITE_URL, process.env.SITE_INDEXABLE),
+  {
+    title: `${site.name} — ${site.role}`,
+    description: site.headline,
+    path: '/',
+    siteName: site.name,
+  }
+);
 
 export default function HomePage() {
   return (

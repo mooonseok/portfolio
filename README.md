@@ -27,12 +27,13 @@ rules.
 pnpm install
 pnpm dev --port 3100    # development server (stop before pnpm build)
 pnpm build              # production build
-pnpm start              # serve the production build
+pnpm start --port 3100  # serve the production build locally
 
 pnpm lint               # ESLint 9 flat config, fails on any warning
 pnpm typecheck          # tsc --noEmit
 pnpm test               # selection, scroll position, history and scanner regression tests
 pnpm check:anchors      # rendered IDs and content links; run after pnpm build
+pnpm check:metadata     # built metadata; use the same SITE_URL / SITE_INDEXABLE as the build
 pnpm check:boundaries   # architecture rules (scripts/check-boundaries.mjs)
 pnpm format             # Prettier + Tailwind class sorting
 pnpm format:check
@@ -73,10 +74,69 @@ Two rules matter when editing:
 - **Empty means hidden.** An empty string or array removes the whole section
   from the page. Never leave placeholder text such as `TO WRITE` in content.
 - **Status wording is load-bearing.** `PRODUCT WORK` means work implemented in a
-  real product; it does not claim a public launch. Smart Farm MONITORING stays
-  PRODUCT WORK and CONTROL stays EXPERIMENT; the APC OCR work stays EXPERIMENT /
-  NOT SHIPPED.
+  real product; it does not claim a public launch. Smart Farm MONITORING is an
+  office sensor prototype and CONTROL is a separate LED experiment; neither
+  claims farm deployment. The APC OCR experiment is not displayed.
 
 `site.contact.email` is `moonseokp96@gmail.com`; navigation, mobile menu and
 footer expose the contact link. GitHub is empty and remains hidden. Each link
 renders only if its own value is set.
+
+## Publication metadata
+
+The GitHub repository homepage currently points to
+[the existing Vercel address](https://portfolio-ten-umber-trj7j2b3qz.vercel.app).
+Verify that deployment before treating it as the current public site. The
+canonical origin for the next release is not confirmed yet. Metadata uses the
+following build-time environment variables:
+
+| Variable         | Production value                                                 | Preview / local value |
+| ---------------- | ---------------------------------------------------------------- | --------------------- |
+| `SITE_URL`       | Confirmed public HTTPS origin, without a path, query or fragment | Unset                 |
+| `SITE_INDEXABLE` | `true` when the public site is ready for indexing                | Unset or `false`      |
+
+Use `.env.example` as the configuration template. Its defaults leave the URL
+empty and indexing disabled. Set the confirmed production values in the
+deployment environment; keep preview settings separate.
+
+Indexing is enabled only when both a valid `SITE_URL` and the exact value
+`SITE_INDEXABLE=true` are present. Without that combination, page metadata is
+`noindex`, `robots.txt` permits crawling so search engines can read the noindex
+directive and `sitemap.xml` contains no entries. Without `SITE_URL`, canonical
+URLs are omitted. Invalid configured values raise a configuration error.
+`SITE_URL` rejects credentials, paths, queries, fragments, localhost names,
+.local names and all IP literal hosts; a trailing slash is normalized. This
+format validation does not verify public DNS resolution. These controls concern
+search discovery; they do not make a preview private.
+
+Set the production values before `pnpm build` in the deployment environment.
+Changing only the server runtime variables does not update already generated
+metadata; rebuild after changing them. Keep indexing disabled for preview
+deployments even if they inherit the public origin. A preview with a valid
+`SITE_URL` still generates canonical and social-image URLs, but remains
+`noindex` unless indexing is explicitly enabled.
+
+Home and project pages use their own titles and descriptions, and share
+`public/social/portfolio.png` as the Open Graph / Twitter image. After the
+public URL is confirmed, verify canonical URLs, social-image URLs, robots and
+sitemap output on that deployment.
+
+Run `pnpm check:metadata` after `pnpm build`, with the same `SITE_URL` and
+`SITE_INDEXABLE` values supplied to both commands. The check compares the
+generated metadata, robots and sitemap against that configuration. Unlike the
+Next.js build, the checker does not load `.env.local` automatically: export the
+values in the shell or supply them to each command explicitly. CI provides both
+values through the job environment.
+
+## Continuous verification
+
+`.github/workflows/verify.yml` runs on pull requests, pushes to `develop` and
+`main`, and manual dispatch. It uses Node.js 24 and the pnpm version pinned in
+`packageManager`, with a matrix for the default non-indexable configuration and
+a public-URL test fixture. The fixture is only test data, not a deployment
+address.
+
+Each configuration runs lint, typecheck, tests, boundary checks, formatting,
+production build, anchor checks and metadata checks. The workflow verifies the
+project; it does not deploy it. Passing local checks does not confirm a GitHub
+Actions run: inspect the run for the pushed commit separately.
