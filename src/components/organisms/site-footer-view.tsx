@@ -20,7 +20,7 @@ export function SiteFooterView({
     >
       <Box className='container'>
         {contact ? (
-          <Box className='mb-30 grid-page gap-y-4 tab:mb-40 lap:mb-60'>
+          <Box className='mb-16 grid-page gap-y-4 tab:mb-20 lap:mb-24'>
             <Text
               as={TAG.SPAN}
               className='col-span-full mono tab:col-[1/3] tab:pt-2.5 lap:pt-3'

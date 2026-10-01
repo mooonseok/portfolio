@@ -16,12 +16,13 @@ export function FeaturedWorkView({
       as={TAG.SECTION}
       steps={false}
       className='container pt-30 tab:mt-40 tab:border-t tab:border-t-hairline tab:pt-16 lap:mt-(--section) lap:pt-20'
+      id='flutter-work'
       aria-labelledby='featured-h'
     >
       <SectionHeading
         id='featured-h'
         label='04—05'
-        title='Featured Work'
+        title='Flutter Projects'
         rule={RULE.MOBILE}
       />
       <Box className='mt-12 grid-page gap-y-16 tab:mt-18 tab:gap-y-30 lap:mt-24'>

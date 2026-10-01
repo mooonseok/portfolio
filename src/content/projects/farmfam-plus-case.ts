@@ -2,8 +2,7 @@ import type { CaseContent } from '@/dto/case.dto';
 
 export const farmfamPlusCase: CaseContent = {
   role: [
-    '4인 팀에서 공동구매 수량·상태 정정, 재고 복원, Redis 잠금과 관련 테스트를 수정했습니다.',
-    '기획 요구사항에 따른 다단계 공동구매 기능도 구현했습니다.',
+    '4인 팀에서 주문 취소 처리 보완과 다단계 공동구매 기능 개발을 맡았습니다.',
   ],
   roleSurfaces: [{ label: 'WEB' }, { label: 'API' }, { label: 'DB' }],
   contextProblem: [

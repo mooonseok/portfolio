@@ -84,6 +84,7 @@ export function EmosaveCaseView({
           group={groups.work}
           depth={CASE_DEPTH.L3}
           title='What I Worked On'
+          space={CASE_SPACE.SM}
         >
           <ParagraphsView list={workParagraphs} />
         </CaseSectionView>
@@ -92,9 +93,8 @@ export function EmosaveCaseView({
         <CaseSectionView
           group={groups.currentState}
           depth={CASE_DEPTH.L3}
-          title='Current State'
+          title='배운 점'
           space={CASE_SPACE.SM}
-          loose
         >
           <ParagraphsView list={c.currentState} />
         </CaseSectionView>

@@ -77,7 +77,6 @@ Two rules matter when editing:
   PRODUCT WORK and CONTROL stays EXPERIMENT; the APC OCR work stays EXPERIMENT /
   NOT SHIPPED.
 
-`site.contact.email` and `site.contact.github` are both intentionally empty, so
-the CONTACT nav item, the menu contact block and the footer contact block do not
-render. Filling in either one is enough to make all three appear; each link then
+`site.contact.email` is `moonseokp96@gmail.com`; navigation, mobile menu and
+footer expose the contact link. GitHub is empty and remains hidden. Each link
 renders only if its own value is set.

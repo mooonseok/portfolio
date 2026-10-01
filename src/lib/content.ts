@@ -29,7 +29,18 @@ export const getNext = (slug: ProjectSlug): Project => {
 export const hasContact = () =>
   has(site.contact.email) || has(site.contact.github);
 
-const group = (id: GroupId): ContentsGroup => ({ id, label: GROUP_LABEL[id] });
+const group = (id: GroupId, p: Project): ContentsGroup => {
+  if (
+    id === GROUP_ID.CURRENT_STATE &&
+    (p.slug === PROJECT_SLUG.EMOSAVE || p.slug === PROJECT_SLUG.INDIAN_BOB)
+  ) {
+    return { id, label: '배운 점' };
+  }
+  if (id === GROUP_ID.ENGINEERING && p.slug === PROJECT_SLUG.FARMFAM_PLUS) {
+    return { id, label: '협업과 검증' };
+  }
+  return { id, label: GROUP_LABEL[id] };
+};
 
 const present = (list: (ContentsGroup | null)[]) =>
   list.filter((g): g is ContentsGroup => g !== null);
@@ -37,10 +48,10 @@ const present = (list: (ContentsGroup | null)[]) =>
 function shortGroups(p: Project): ContentsGroup[] {
   const c = p.case;
   return present([
-    group(GROUP_ID.OVERVIEW),
-    has(c.interactionFocus ?? []) ? group(GROUP_ID.INTERACTION) : null,
-    has(c.workParagraphs ?? []) ? group(GROUP_ID.WORK) : null,
-    has(c.currentState) ? group(GROUP_ID.CURRENT_STATE) : null,
+    group(GROUP_ID.OVERVIEW, p),
+    has(c.interactionFocus ?? []) ? group(GROUP_ID.INTERACTION, p) : null,
+    has(c.workParagraphs ?? []) ? group(GROUP_ID.WORK, p) : null,
+    has(c.currentState) ? group(GROUP_ID.CURRENT_STATE, p) : null,
   ]);
 }
 
@@ -69,11 +80,11 @@ export function groupsFor(p: Project): ContentsGroup[] {
         has(c.currentStateTracks?.control ?? [])
       : has(c.currentState);
   return present([
-    group(GROUP_ID.OVERVIEW),
-    system ? group(GROUP_ID.SYSTEM) : null,
-    has(c.work) ? group(GROUP_ID.WORK) : null,
-    engineering ? group(GROUP_ID.ENGINEERING) : null,
-    current ? group(GROUP_ID.CURRENT_STATE) : null,
+    group(GROUP_ID.OVERVIEW, p),
+    system ? group(GROUP_ID.SYSTEM, p) : null,
+    has(c.work) ? group(GROUP_ID.WORK, p) : null,
+    engineering ? group(GROUP_ID.ENGINEERING, p) : null,
+    current ? group(GROUP_ID.CURRENT_STATE, p) : null,
   ]);
 }
 

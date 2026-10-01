@@ -154,8 +154,11 @@ sequence the content does not state.
 Project flows and Stories use `FLOW_ROLE.STATIC` and read `state` from data;
 scrolling does not change their selected node. Representative homepage images
 use `visual.caption` for an always-visible figcaption below the image. The
-aspect ratio applies to the media box; captions stay in normal flow. Spatial
-pins and hover metadata overlays are removed.
+aspect ratio applies to the media box; captions stay in normal flow (11px label
+/ 13px description). APC, IndianBob, Smart Farm and Emosave use
+`main-restored.png` clarity-restored concept assets, not higher-resolution
+upscales; original JPGs are retained. Images use quality 85 with responsive
+Next.js optimization. Spatial pins and hover metadata overlays are removed.
 
 Rules:
 
@@ -167,9 +170,9 @@ Rules:
   use the same value. Emosave is 2022–2023; IndianBob is 2024–2025. The other
   projects say "2025—2026 중 참여" rather than asserting individual start/end
   years. Experience groups these participation periods.
-- **Contact:** `site.contact` has empty email and github, so the CONTACT nav
-  item, the menu contact links and the footer contact block are all hidden.
-  `200 OK` stays in the footer.
+- **Contact:** `site.contact.email` is `moonseokp96@gmail.com`; CONTACT
+  navigation, mobile-menu email and footer email are visible. GitHub remains
+  empty.
 
 ## 4. Content → UI mapping
 
@@ -220,7 +223,10 @@ their position. Hash-link clicks that open elsewhere (modifier keys, `target`,
 `download`) or are cancelled are not remembered. The Smart Farm monitoring flow
 and Stories S01–S03 are `FLOW_ROLE.STATIC` (first-reveal line draw only).
 Stories cover Flutter state management, IndianBob app/web/API work, and office
-sensor monitoring.
+sensor monitoring, with links to the relevant case sections. The hero CTA jumps
+to `#flutter-work` (Flutter Projects); existing project order remains unchanged.
+FarmFam engineering is labeled 협업과 검증; IndianBob and Emosave current-state
+groups are labeled 배운 점 without changing anchor IDs.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
@@ -252,6 +258,8 @@ written as CSS variables / attributes.
     resizing focuses a visible primary navigation link. Scroll unlock is
     instant.
   - Closes when a link is selected, and closes automatically at ≥744px.
+- Tech-note keyboard focus moves between the mobile toggle and desktop heading
+  when crossing 744px; pointer users do not receive automatic focus.
 - Accordion (<744):
   - `h3 > button[aria-expanded][aria-controls]`, rows are 52px.
   - First note open by default; several can be open at once.

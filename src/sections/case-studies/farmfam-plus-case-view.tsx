@@ -130,7 +130,7 @@ export function FarmFamPlusCaseView({
         <CaseSectionView
           group={groups.engineering}
           depth={CASE_DEPTH.L4}
-          title='Technical Details'
+          title='협업과 검증'
           space={CASE_SPACE.LG}
           loose
           rule={RULE.HAIRLINE}
