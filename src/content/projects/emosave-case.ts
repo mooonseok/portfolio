@@ -3,9 +3,7 @@ import { VISUAL_SLOT } from '@/constants/visual';
 import type { CaseContent } from '@/dto/case.dto';
 
 export const emosaveCase: CaseContent = {
-  role: [
-    'Flutter 모바일 앱에서 감정 캐릭터 마을 화면과 꾸미기, 이모티콘·스토어 UI 및 일부 로컬라이징·QA 작업을 수행했습니다.',
-  ],
+  role: ['4인 팀에서 감정 탭과 편집 화면에 들어가는 기능 전반을 담당했습니다.'],
   contextProblem: [],
   systemFlows: [],
   interactionFocus: [
@@ -54,7 +52,7 @@ export const emosaveCase: CaseContent = {
         label: '선택',
         code: 'SELECTED',
         title: '아이템을 고른 상태',
-        body: '고른 아이템에 선택 외곽선이 생기고, 놓을 수 있는 배치 대상이 함께 표시됩니다.',
+        body: '고른 아이템에 선택 외곽선이 표시됩니다. 선택한 아이템을 이동하거나 회전할 수 있습니다.',
       },
       {
         id: EMO_STATE.PLACED,
@@ -67,13 +65,12 @@ export const emosaveCase: CaseContent = {
   },
   work: [],
   workParagraphs: [
-    '마을 화면과 꾸미기 UI, 캐릭터·이모티콘 상태 처리, 이모티콘 삭제 및 공유 기능을 작업했습니다.',
-    '스토어 UI 수정과 로컬라이징, 텍스트 clipping 등 UI 오류 수정도 함께 진행했습니다.',
+    '감정 탭과 편집 기능을 구현하면서 BlocBuilder의 배치와 화면 갱신 범위를 고민했습니다.',
+    '상태가 바뀔 때 화면이 어떻게 반응하는지 살피고, 클린 코드와 디자인 패턴을 공부하며 구현 방식을 검토했습니다.',
   ],
   decisions: [],
   techNotes: [],
   currentState: [
-    '2022년 협업 프로젝트입니다.',
-    '포트폴리오에서는 모바일 인터랙션과 상태 기반 UI 작업을 중심으로 소개합니다.',
+    '이때 쌓은 경험은 이후 IndianBob을 비롯한 프로젝트에서 상태 관리 구조를 이해하고 구현하는 바탕이 됐습니다.',
   ],
 };

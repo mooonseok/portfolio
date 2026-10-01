@@ -14,13 +14,13 @@ export const emosave: Project = {
   num: '05',
   title: 'EMOSAVE',
   category: 'MOBILE INTERACTION',
-  period: '2022',
+  period: '2022—2023',
   tier: PROJECT_TIER.FEATURED,
   caseLength: CASE_LENGTH.SHORT,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Mobile / Flutter',
   summary:
-    '감정 캐릭터와 마을을 중심으로 한 Flutter 앱에서 꾸미기와 이모티콘·스토어 등 상태 기반 모바일 UI를 개발했습니다.',
+    '감정 탭과 편집 화면의 기능을 개발했습니다. 상태 변화에 따른 화면 갱신을 다루며 Flutter의 상태 관리 경험을 쌓았습니다.',
   home: {
     scope: ['Character / Village', 'Customization', 'Emoticon / Store'],
     flows: [],

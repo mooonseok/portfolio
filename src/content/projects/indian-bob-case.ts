@@ -3,8 +3,7 @@ import { indianBobFeature } from './indian-bob-feature';
 
 export const indianBobCase: CaseContent = {
   role: [
-    'Flutter 앱에서 커뮤니티·매칭·해빗·이벤트·프로필·알림 등의 기능을 작업했습니다.',
-    'NestJS API에서는 부족·해빗·이벤트·인증·알림 관련 기능을 작업했고, Next.js 관리자에서는 해빗·이벤트·사용자·배너 운영 기능을 작업했습니다.',
+    '4인 팀에서 해빗 기능의 앱 화면, 관리자 웹, 서버 API 개발을 맡았습니다.',
   ],
   roleSurfaces: [
     { label: 'APP', sub: 'Flutter' },
@@ -12,8 +11,7 @@ export const indianBobCase: CaseContent = {
     { label: 'ADMIN', sub: 'Next.js' },
   ],
   contextProblem: [
-    'IndianBob는 사용자용 모바일 앱만으로 끝나는 서비스가 아니라, 앱에서 사용하는 기능을 제공하는 API와 운영자가 사용하는 관리자 웹이 함께 존재하는 제품이었습니다.',
-    '따라서 하나의 기능을 구현할 때 사용자 앱, 서버의 데이터·비즈니스 로직, 관리자에서 설정하고 관리하는 흐름을 함께 다루는 경우가 있었습니다.',
+    '같은 요구사항을 서로 다르게 이해하거나 DB 설계가 변경되는 과정에서, 팀원들과 기능의 동작과 데이터 구조를 다시 확인했습니다. 합의한 내용을 앱·관리자 웹·서버에 반영하며 개발을 진행했습니다.',
   ],
   systemFlows: [],
   feature: indianBobFeature,
@@ -28,70 +26,30 @@ export const indianBobCase: CaseContent = {
   },
   work: [
     {
-      title: 'Community / Matching',
+      title: 'Flutter App',
       body: [
-        '모바일 앱의 부족 커뮤니티, 매칭 및 관련 UI와 서버 API를 작업했습니다.',
+        '사용자가 해빗 기능을 이용하는 앱 화면과 상태 처리를 개발했습니다.',
       ],
     },
     {
-      title: 'Habit / Event',
-      body: [
-        '모바일 앱의 해빗·이벤트 기능, NestJS API의 관련 로직, Next.js 관리자에서 해빗 생성·수정·복제와 이벤트 관리 기능을 작업했습니다.',
-      ],
+      title: 'Admin Web',
+      body: ['해빗 기능을 관리하는 웹 화면을 개발했습니다.'],
     },
     {
-      title: 'Reward / Score',
-      body: [
-        '해빗 보상 처리 및 아동 활동 점수 누적/upsert와 관련된 서버 작업을 수행했습니다.',
-      ],
+      title: 'Server API',
+      body: ['앱과 관리자 웹에 필요한 해빗 API와 데이터 처리를 개발했습니다.'],
     },
     {
-      title: 'Authentication',
+      title: 'Collaboration',
       body: [
-        '앱 초기 인증 연결과 서버 인증 개선, 자동 부족 가입 등 인증 흐름을 작업했습니다.',
-      ],
-    },
-    {
-      title: 'Notifications',
-      body: ['모바일 알림 UI와 서버 알림 관련 기능을 작업했습니다.'],
-    },
-    {
-      title: 'Admin Tools',
-      body: [
-        '해빗·이벤트·키트·사용자·배너 관리자 기능과 기간·숫자 입력 검증, 이벤트 페이지 QA/리팩터링 등을 작업했습니다.',
+        '요구사항과 DB 설계 변경을 팀원들과 조율하고 각 영역에 반영했습니다.',
       ],
     },
   ],
   decisions: [],
   techNotes: [],
-  engineeringNote: {
-    title: 'Apple Sign-in — Android integration',
-    flow: [
-      { label: 'APPLE CALLBACK', sub: '로그인 callback 결과' },
-      { label: '보조 서버', sub: 'Node.js / Express' },
-      { label: 'ANDROID INTENT', sub: '앱으로 결과 전달' },
-      { label: 'APP' },
-    ],
-    links: ['callback 수신', 'Android intent deep link', ''],
-    footnote:
-      '이 흐름에는 code exchange 처리도 포함되며, 처리 위치는 도식에 표시하지 않았습니다.',
-    fields: [
-      {
-        label: 'Context',
-        body: [
-          'Android 환경에서 Apple 로그인 callback 결과를 앱으로 다시 전달해야 하는 연동 흐름이 필요했습니다.',
-        ],
-      },
-      {
-        label: 'Handling',
-        body: [
-          'Node.js/Express 기반 보조 서버의 Apple callback 수신과 Android intent deep link를 통한 앱 전달 흐름을 작업했습니다. code exchange 처리도 포함되지만, 여기서는 그 처리 위치와 순서를 특정하지 않습니다.',
-        ],
-      },
-      { label: 'Scope', body: ['이 구현은 예제 기반 보조 서버입니다.'] },
-    ],
-  },
+
   currentState: [
-    'Flutter 앱, NestJS API, Next.js 관리자 웹에서 각각 작업 이력이 존재하며 2024년부터 2026년까지 기능 개발과 QA/유지보수 작업이 이어졌습니다.',
+    '하나의 기능을 여러 영역에서 구현하면서 화면에 필요한 데이터와 서버의 처리 방식이 맞물리는 부분을 함께 살폈습니다.',
   ],
 };

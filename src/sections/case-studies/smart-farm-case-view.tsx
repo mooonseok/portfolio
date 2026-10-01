@@ -125,8 +125,8 @@ export function SmartFarmCaseView({
           <Box className={tracksClass}>
             {showCurrentMonitoring ? (
               <Box
-                className={trackCol(STATUS_KIND.PRODUCT)}
-                data-kind={STATUS_KIND.PRODUCT}
+                className={trackCol(STATUS_KIND.EXPERIMENT)}
+                data-kind={STATUS_KIND.EXPERIMENT}
               >
                 <MonitoringMarkView />
                 <ParagraphsView list={currentMonitoring} />

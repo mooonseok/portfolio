@@ -58,6 +58,9 @@ export function SmartFarmBlockView({
           <Text as={TAG.SPAN} className='mono'>
             {p.category}
           </Text>
+          <Text className='text-[16px] leading-[1.7] text-subtle tab:text-[17px]'>
+            {p.summary}
+          </Text>
           {hasZones ? (
             <Box className='mt-2.5 tab:mt-4 lap:mt-9'>
               <SmartFarmZonesView zones={zones} />

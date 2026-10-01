@@ -12,7 +12,7 @@ export function ExperienceAxisView({ years }: { years: ExperienceYear[] }) {
         className='tab:col-span-full lap:col-[3/13]'
         data-reveal-item='visual'
       >
-        <Box className='tab:grid tab:grid-cols-5 tab:[align-items:end]'>
+        <Box className='tab:grid tab:grid-cols-3 tab:[align-items:end]'>
           {years.map((y) => (
             <Box
               key={y.year}
@@ -26,7 +26,7 @@ export function ExperienceAxisView({ years }: { years: ExperienceYear[] }) {
         </Box>
         <List
           as={LIST_TAG.OL}
-          className='tab:mt-6 tab:grid tab:grid-cols-5 tab:border-t tab:border-t-ink lap:mt-8'
+          className='tab:mt-6 tab:grid tab:grid-cols-3 tab:border-t tab:border-t-ink lap:mt-8'
           aria-hidden='true'
         >
           {years.map((y) => (

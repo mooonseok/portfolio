@@ -7,79 +7,68 @@ import type { Story } from '@/dto/story.dto';
 export const site: Site = {
   name: 'PARK MOONSEOK',
   role: 'SOFTWARE ENGINEER',
-  disciplines: 'Mobile / Web / Backend / IoT',
+  disciplines: 'Flutter / Web / Backend',
   range: { label: 'Selected Work', years: '2022—2026' },
   contact: { email: '', github: '' },
   visualsNote:
     'Visuals are conceptual representations created for this case study.',
   visualsNoteKo:
     '보안 및 자산 보호를 위해 실제 서비스 화면 대신 프로젝트 구조를 재구성한 시각 자료를 사용했습니다.',
+  about:
+    '설계·개발·테스트·리뷰·배포에 참여하며, 화면에 보이는 기능과 그 뒤의 데이터 처리를 함께 다뤘습니다. 프로젝트에 따라 앱·웹·서버 개발을 맡았고, 운영 과정에서는 QA와 데이터 수정 업무에도 일부 참여했습니다.',
+  introduction:
+    '감정 기록 앱과 해빗 서비스에서 Flutter 개발 경험을 쌓았습니다. 앱 화면의 상태 관리부터 관리자 웹과 서버 API까지 기능에 필요한 영역을 연결하고, 팀원들과 요구사항과 데이터 구조를 조율하며 개발했습니다.',
+  headline: 'Flutter 앱을 중심으로 웹과 서버를 함께 개발합니다.',
 };
 
 export const stories: Story[] = [
   {
     id: 'S01',
-    title: 'LARGE IMAGE PROCESSING',
+    title: 'FLUTTER STATE MANAGEMENT',
     kind: STORY_KIND.FLOW,
     flow: [
-      { label: 'VERY TALL IMAGE' },
-      { label: 'RESIZE' },
-      { label: 'WEBP' },
-      { label: 'UPLOAD', state: NODE_STATE.ACTIVE },
+      { label: 'STATE' },
+      { label: 'BLOCBUILDER' },
+      { label: 'UI', state: NODE_STATE.ACTIVE },
     ],
     description:
-      '초장축·대형 이미지 처리 과정에서 종횡비를 유지한 축소와 WebP 변환 경로를 안정화하고 단위·통합 테스트를 추가했습니다.',
-    keywords: [
-      'Large / extremely tall images',
-      'Transparency preservation',
-      'Regression tests',
-    ],
+      'Emosave에서 BlocBuilder 배치와 화면 갱신 범위를 고민했습니다. 상태 관리 경험을 이후 IndianBob을 비롯한 프로젝트에 적용했습니다.',
   },
   {
     id: 'S02',
-    title: 'APPLE SIGN-IN INTEGRATION',
-    kind: STORY_KIND.SEQUENCE,
-    flow: [
-      { label: 'CALLBACK' },
-      { label: 'SERVER' },
-      { label: 'ANDROID INTENT' },
-      { label: 'APP' },
-    ],
+    title: 'APP / WEB / API',
+    kind: STORY_KIND.FLOW,
+    flow: [{ label: 'APP' }, { label: 'API' }, { label: 'ADMIN' }],
     description:
-      'IndianBob Android 환경에서 Apple 로그인 callback 결과를 보조 서버를 통해 앱 deep link로 전달하는 연동 흐름을 작업했습니다.',
+      'IndianBob 해빗 기능을 앱·웹·서버에 걸쳐 개발했습니다. 요구사항과 DB 설계 변경을 팀원들과 조율하며 각 영역에 반영했습니다.',
   },
   {
     id: 'S03',
-    title: 'HANDWRITTEN OCR',
+    title: 'SENSOR MONITORING',
     kind: STORY_KIND.EXPERIMENT,
     flow: [
-      { label: 'DOCUMENT', state: NODE_STATE.EXPERIMENT },
-      { label: 'OCR PROTOTYPE', state: NODE_STATE.EXPERIMENT },
-      { label: 'VALIDATION', state: NODE_STATE.EXPERIMENT },
-      { label: 'NOT SHIPPED', state: NODE_STATE.EXPERIMENT },
+      { label: 'SENSOR', state: NODE_STATE.EXPERIMENT },
+      { label: 'MQTT', state: NODE_STATE.EXPERIMENT },
+      { label: 'DASHBOARD', state: NODE_STATE.EXPERIMENT },
     ],
     description:
-      '수기 입고 신청서의 반복 입력을 줄이기 위해 OCR 자동화를 프로토타입으로 검토했지만 실제 필체 편차와 업무 데이터 신뢰성 문제로 제품 기능에는 적용하지 않았습니다.',
+      '사무실에서 온습도·CO₂ 센서 시험 모듈을 구성하고, MQTT로 전달한 측정값을 대시보드에서 확인했습니다. 실제 농장 적용 전 단계입니다.',
   },
 ];
 
 export const experience: ExperienceYear[] = [
-  { year: '2022', items: [{ name: 'EMOSAVE', scope: 'Flutter Mobile' }] },
-  { year: '2023', items: [] },
+  { year: '2022—2023', items: [{ name: 'EMOSAVE', scope: 'Flutter Mobile' }] },
   {
-    year: '2024',
+    year: '2024—2025',
+    items: [{ name: 'INDIAN BOB', scope: 'Flutter / Web / API' }],
+  },
+  {
+    year: '2025—2026',
     items: [
-      { name: 'INDIAN BOB', scope: 'App / API / Admin' },
-      { name: 'APC', scope: 'Field / Web / API / DB' },
+      { name: 'FARMFAM+', scope: 'Web / API / DB' },
+      { name: 'APC', scope: 'Web / API / DB' },
+      { name: 'SMART FARM', scope: 'Office Prototype' },
     ],
-  },
-  {
-    year: '2025',
-    items: [{ name: 'FARMFAM+', scope: 'Commerce / Web / API / DB' }],
-  },
-  {
-    year: '2026',
-    items: [{ name: 'SMART FARM', scope: 'Monitoring / IoT' }],
   },
 ];
 

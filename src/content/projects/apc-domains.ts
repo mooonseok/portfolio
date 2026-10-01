@@ -49,22 +49,13 @@ export const apcDomains: Domain[] = [
     id: 'approval',
     code: 'C',
     label: '전자결재',
-    title: '기안·결재·알림을 회사 범위 안에서',
-    lead: '기안과 결재 처리, 알림을 관리자 웹과 서버, DB에서 연결했습니다. 결재를 처리할 때 서버에서 회사 범위와 결재자를 검증합니다.',
+    title: '수기 결재를 서비스 기능으로',
+    lead: '수기로 진행하던 결재를 APC에서 처리할 수 있도록 DB·API·관리자 화면을 구현하고 알림·인쇄를 연결했습니다.',
     steps: [
       { code: 'DRAFT', sub: '기안' },
       { code: 'APPROVAL', sub: '결재 처리' },
       { code: 'NOTIFICATION', sub: '알림' },
     ],
-    checks: {
-      label: '결재 처리 시 서버 검증',
-      items: [
-        '회사 범위 검증',
-        '결재자 검증',
-        '기안자 본인 결재 제한',
-        '트랜잭션 기반 처리',
-      ],
-    },
     implLabel: '구현한 기능',
     impl: [
       '결재 문서·단계·알림·결재선 템플릿 DB 구조',

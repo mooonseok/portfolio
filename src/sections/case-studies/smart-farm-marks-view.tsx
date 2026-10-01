@@ -18,7 +18,13 @@ export const headTitle =
   'text-[length:clamp(22px,6.5vw,28px)] leading-[1.2] tracking-[-0.01em] tab:text-d2 tab:tracking-[-0.012em]';
 
 export function MonitoringMarkView() {
-  return <StatusLabel kind={STATUS_KIND.PRODUCT} label='MONITORING' />;
+  return (
+    <StatusLabel
+      kind={STATUS_KIND.EXPERIMENT}
+      label='MONITORING'
+      tone={TONE.INK}
+    />
+  );
 }
 
 export function ControlMarkView() {

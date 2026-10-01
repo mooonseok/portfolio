@@ -6,7 +6,14 @@ import { Text } from '@/components/atoms/text';
 import type { HeroViewProps } from '@/dto/hero.dto';
 import { HEADING, TAG } from '@/constants/tag';
 
-export function HeroView({ name, role, disciplines, range }: HeroViewProps) {
+export function HeroView({
+  name,
+  role,
+  disciplines,
+  range,
+  headline,
+  introduction,
+}: HeroViewProps) {
   return (
     <Column
       as={TAG.SECTION}
@@ -20,6 +27,14 @@ export function HeroView({ name, role, disciplines, range }: HeroViewProps) {
         >
           {name}
         </Heading>
+        <Column className='max-w-[760px] gap-3'>
+          <Text className='text-[22px] leading-[1.45] font-medium text-balance tab:text-[28px]'>
+            {headline}
+          </Text>
+          <Text className='max-w-[680px] text-[15px] leading-[1.8] text-subtle tab:text-[17px]'>
+            {introduction}
+          </Text>
+        </Column>
         <Grid className='grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-x-4 gap-y-3 border-t border-t-ink pt-3.5 mono leading-[1.6] tab:grid-cols-[repeat(var(--cols),minmax(0,1fr))] tab:gap-x-(--gutter) tab:gap-y-0 lap:pt-4'>
           <Text as={TAG.SPAN} className='tab:col-[1/5] tab:row-1'>
             {role}

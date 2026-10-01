@@ -29,7 +29,10 @@ export function SmartFarmSystemView({ p, groups }: CaseViewModel) {
           <Grid className='grid-cols-[1fr] [align-items:start] gap-y-10 lap:grid-cols-10 lap:gap-x-(--gutter)'>
             <Column className='gap-8 lap:col-[1/5] lap:gap-10'>
               <Column className='items-start gap-3.5'>
-                <StatusLabel kind={STATUS_KIND.PRODUCT} label='PRODUCT WORK' />
+                <StatusLabel
+                  kind={STATUS_KIND.EXPERIMENT}
+                  label='OFFICE PROTOTYPE'
+                />
                 <Heading
                   level={HEADING.H2}
                   className={headTitle}

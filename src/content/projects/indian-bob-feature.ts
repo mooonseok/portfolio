@@ -39,11 +39,11 @@ export const indianBobFeature: Feature = {
     },
     {
       id: 'reward',
-      label: '보상 · 점수',
+      label: '데이터 연동',
       surface: 'API',
       systems: [IB_SYSTEM.API, IB_SYSTEM.DATA],
       edges: [IB_EDGE.API_DATA],
-      body: '해빗 보상 처리와 아동 활동 점수 누적/upsert 관련 서버 작업을 했습니다.',
+      body: '해빗 기능에 필요한 데이터 구조의 변경을 팀원들과 조율하고 서버와 화면에 반영했습니다.',
     },
   ],
 };

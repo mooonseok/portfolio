@@ -14,13 +14,13 @@ export const apc: Project = {
   num: '02',
   title: 'APC',
   category: 'OPERATIONS SYSTEM',
-  period: '2024—2026',
+  period: '2025—2026 중 참여',
   tier: PROJECT_TIER.SELECTED,
   caseLength: CASE_LENGTH.FULL,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'App / Web / API / DB',
   summary:
-    '농산물의 입고·가공·재고 흐름과 근태·전자결재 같은 현장 업무를 앱·웹·API·DB에서 연결해 작업했습니다.',
+    '수기로 진행하던 결재 업무를 시스템에서 처리할 수 있도록 기존 APC에 전자결재 기능을 추가했습니다.',
   home: {
     scope: [
       'Receiving',

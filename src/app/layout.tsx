@@ -17,7 +17,7 @@ const plex = localFont({
 
 export const metadata: Metadata = {
   title: `${site.name} — ${site.role}`,
-  description: `${site.disciplines}. ${site.range.label} ${site.range.years}.`,
+  description: site.headline,
 };
 
 export const viewport: Viewport = {
