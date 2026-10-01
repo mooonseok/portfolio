@@ -12,7 +12,7 @@ export const smartFarmCase: CaseContent = {
       label: 'MONITORING',
       note: 'Product Work',
       body: [
-        '스마트팜 운영 서비스에서는 농장·온실·구역과 센서 위치, 작물·작기·생육·수확·관수 및 알림 UI를 작업했습니다.',
+        '스마트팜 관리 서비스에서는 농장·온실·구역과 센서 위치, 작물·작기·생육·수확·관수 및 알림 UI를 작업했습니다.',
       ],
     },
     {
@@ -26,14 +26,14 @@ export const smartFarmCase: CaseContent = {
   ],
   contextProblem: [
     '스마트팜 운영에서는 센서 값 자체를 표시하는 것뿐 아니라 센서가 어느 농장·온실·구역에 위치하는지, 해당 환경에서 어떤 작물과 작기가 운영되고 있는지를 함께 관리해야 했습니다.',
-    '동시에 소프트웨어에서 실제 장비까지 명령을 전달할 수 있는지 검증하기 위해 운영 시스템과 별도로 장비 제어 PoC를 진행했습니다.',
+    '동시에 소프트웨어 명령이 제어기의 출력 동작까지 전달되는지 검증하기 위해 운영 시스템과 별도로 제어 PoC를 진행했습니다.',
   ],
   systemFlows: [],
   monitoringFlow: {
     id: 'monitoring',
     nodes: [
       { label: 'SENSOR', sub: '센서 위치 · 농장·온실·구역별 배치' },
-      { label: 'DATA', sub: '환경 데이터 · 조회, 시뮬레이션 값과 실측값 구분' },
+      { label: 'DATA', sub: '환경 데이터 · 조회' },
       {
         label: 'MONITORING',
         sub: '운영 UI · 배치도·센서 지도, 생육·수확·관수, 알림',
@@ -46,7 +46,7 @@ export const smartFarmCase: CaseContent = {
     hint: '안전 조건을 선택하면 설명 위치가 표시됩니다',
     command: { code: 'COMMAND', sub: '서버 / edge' },
     controller: { code: 'CONTROLLER', sub: 'ESP32-S3' },
-    equipment: { code: 'EQUIPMENT', sub: '액추에이터' },
+    equipment: { code: 'EQUIPMENT', sub: '시험용 LED 출력' },
     zones: {
       [CONTROL_ZONE.RECEIVE]: '명령 수신 관련',
       [CONTROL_ZONE.ACTUATE]: '장비 동작 관련',
@@ -55,7 +55,7 @@ export const smartFarmCase: CaseContent = {
     link: {
       id: 'mqtt',
       label: 'MQTT',
-      body: '서버/edge와 제어기 사이에서 센서 데이터와 장비 제어 명령을 전달하는 통신 경로로 사용했습니다.',
+      body: '서버/edge와 제어기 사이에서 센서 데이터와 제어 명령을 전달하는 통신 경로로 사용했습니다.',
     },
     caption:
       '설명용 도식 · 제어기 안의 구분은 안전 로직이 무엇과 관련되는지 나타내며, 펌웨어의 실제 모듈 구조를 뜻하지 않습니다.',
@@ -64,7 +64,7 @@ export const smartFarmCase: CaseContent = {
       {
         label: 'WHY',
         body: [
-          '센서 모니터링에서 한 단계 더 나아가 소프트웨어 명령을 실제 제어기와 장비 동작까지 연결할 수 있는지를 검증하기 위해 진행했습니다.',
+          '센서 모니터링에서 한 단계 더 나아가 소프트웨어 명령을 실제 제어기와 출력 동작까지 연결할 수 있는지를 검증하기 위해 진행했습니다.',
         ],
       },
       {
@@ -77,6 +77,7 @@ export const smartFarmCase: CaseContent = {
         label: 'FINDING',
         body: [
           '코드와 테스트 기준으로 명령 전달 및 안전 로직 구현은 확인됩니다.',
+          '검증에 사용한 출력은 시험용 LED 1채널입니다.',
           '실제 현장 장비에서 장기간 운영한 결과나 제어 안정성 수치는 주장하지 않습니다.',
         ],
       },
@@ -102,14 +103,14 @@ export const smartFarmCase: CaseContent = {
       title: 'Data / Simulation Separation',
       body: [
         '스마트팜 DB에서 시뮬레이션 상태와 참조 값을 별도로 구분하기 위한 스키마 및 제약을 작업했습니다.',
-        '시뮬레이션·데모 데이터가 실제 센서 실측값과 동일한 것으로 표현되지 않도록 구분합니다.',
+        '시뮬레이션이 만든 작기·생육·수확·알림 데이터를 사용자 데이터와 구분하고, 다시 실행해도 중복되지 않도록 했습니다.',
       ],
     },
     {
       track: WORK_TRACK.CONTROL,
       title: 'Command / Control PoC',
       body: [
-        'MQTT 기반 명령과 응답, 센서 수집/조회, edge 동기화 및 장비 제어 흐름을 구현했습니다.',
+        'MQTT 기반 명령과 응답, 센서 수집/조회, edge 동기화 및 시험용 출력 제어 흐름을 구현했습니다.',
       ],
     },
     {

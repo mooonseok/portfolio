@@ -70,7 +70,7 @@ export const experience: ExperienceYear[] = [
     year: '2024',
     items: [
       { name: 'INDIAN BOB', scope: 'App / API / Admin' },
-      { name: 'APC', scope: 'Backend / Operations' },
+      { name: 'APC', scope: 'Field / Web / API / DB' },
     ],
   },
   {
@@ -79,10 +79,7 @@ export const experience: ExperienceYear[] = [
   },
   {
     year: '2026',
-    items: [
-      { name: 'APC CORE', scope: 'Field / Web / API / DB' },
-      { name: 'SMART FARM', scope: 'Monitoring / IoT' },
-    ],
+    items: [{ name: 'SMART FARM', scope: 'Monitoring / IoT' }],
   },
 ];
 

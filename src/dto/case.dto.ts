@@ -14,12 +14,6 @@ import type { Track } from '@/dto/status.dto';
 import type { SurfaceRelationContent, SurfaceTile } from '@/dto/surface.dto';
 import type { Decision, WorkItem } from '@/dto/work.dto';
 
-export interface RolePhase {
-  year: string;
-  title: string;
-  scope: string;
-}
-
 export interface InteractionFocus {
   title: string;
   body: string[];
@@ -34,7 +28,6 @@ export interface CurrentStateTracks {
 
 export interface CaseContent {
   role: string[];
-  rolePhases?: RolePhase[];
   roleSurfaces?: SurfaceTile[];
   roleTracks?: Track[];
   stateScope?: StateScope;

@@ -3,7 +3,6 @@ import { CaseSectionView } from './components/case-section-view';
 import { ParagraphsView } from './components/paragraphs-view';
 import { WorkRowsView } from './components/work-rows-view';
 import { TilesView } from './components/tiles-view';
-import { ApcRolePhasesView } from './apc-role-phases-view';
 import { Box } from '@/components/atoms/box';
 import { Text } from '@/components/atoms/text';
 import { DomainExplorer } from '@/components/organisms/domain-explorer/domain-explorer';
@@ -47,7 +46,6 @@ export function ApcCaseView({
     >
       <CaseSectionView depth={CASE_DEPTH.L1} title='Role / Scope' id='role'>
         <ParagraphsView list={c.role} />
-        {c.rolePhases ? <ApcRolePhasesView phases={c.rolePhases} /> : null}
         {c.roleSurfaces ? <TilesView list={c.roleSurfaces} /> : null}
       </CaseSectionView>
       {showContext ? (

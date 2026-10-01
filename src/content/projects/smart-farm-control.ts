@@ -57,7 +57,7 @@ export const smartFarmConditions: ControlCondition[] = [
       {
         label: 'Behavior',
         body: [
-          '제어기 내부에 통신/명령 상태와 연결된 fail-safe 동작을 구현했습니다.',
+          '브로커 연결이 일정 시간 끊기면 출력을 강제로 끄고 그 상태를 유지하는 fail-safe 동작을 제어기 내부에 구현했습니다.',
         ],
       },
     ],
