@@ -18,7 +18,6 @@ export function ApcBlockView({
   href,
   caseLabel,
   surfaces,
-  meta,
   domains,
   domainsLabelId,
   hasDomains,
@@ -47,8 +46,7 @@ export function ApcBlockView({
         >
           <ConceptFrame
             visual={p.visuals.home}
-            className='[--ratio:4_/_5] tab:[--ratio:16_/_9] lap:[--ratio:21_/_9]'
-            meta={meta}
+            className='[--ratio:4_/_5] tab:[--ratio:16_/_9] lap:[--ratio:21_/_9] [&_.concept-caption]:mx-(--margin)'
             parallax={20}
             sizes={IMAGE_SIZES.FULL}
           />

@@ -2,7 +2,6 @@ import type { WorkAreasProps } from '@/dto/explorer.dto';
 import type { DomainExplorerProps } from '@/dto/domain.dto';
 import type { Project } from '@/dto/project.dto';
 import type { Zone } from '@/dto/status.dto';
-import type { MetaPair } from '@/dto/visual.dto';
 
 export interface WorkIndexEntry {
   slug: string;
@@ -16,7 +15,6 @@ export interface WorkBlock {
   href: string;
   caseLabel: string;
   surfaces: string;
-  meta: MetaPair;
 }
 
 export interface FarmFamWorkBlock extends WorkBlock {

@@ -38,7 +38,7 @@ export const farmfamPlus: Project = {
         label: 'ORDER',
         sub: '주문',
         title: '취소 처리의 진입점',
-        body: '하나의 주문은 주문 상태에서 끝나지 않고 공동구매 진행 수량, 재고, 사은품과 정산에도 영향을 줍니다. 이 중 실제 취소 경로에 연결한 작업은 공동구매 정정과 재고 복원입니다. 사은품·정산은 주문이 영향을 주는 업무 영역으로 구분합니다.',
+        body: '주문 취소와 연결된 공동구매 수량·상태 정정과 재고 복원 처리를 보완했습니다.',
         related: ['공동구매', '재고', '사은품 · 정산'],
         to: { label: 'Context / Problem', target: 'context' },
       },
@@ -68,6 +68,7 @@ export const farmfamPlus: Project = {
   },
   visuals: {
     home: {
+      caption: '농산물 커머스를 표현한 개념 이미지',
       ...mainVisual,
       sizes:
         '(min-width: 1440px) 644px, (min-width: 1024px) calc(50vw - 58px), (min-width: 744px) calc(62.5vw - 57.5px), 100vw',

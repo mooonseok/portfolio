@@ -17,7 +17,6 @@ import { HEADING, TAG } from '@/constants/tag';
 export function IndianBobBlockView({
   project: p,
   href,
-  meta,
   surfaces,
   relationLabel,
   rows,
@@ -57,7 +56,6 @@ export function IndianBobBlockView({
             visual={p.visuals.home}
             className='[--ratio:4/3]'
             parallax={6}
-            meta={meta}
           />
         </NavLink>
         <Text className='text-[16px] leading-[1.7] text-subtle tab:text-[17px] lap:mt-8'>

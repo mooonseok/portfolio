@@ -16,7 +16,6 @@ import { HEADING, TAG } from '@/constants/tag';
 export function EmosaveBlockView({
   project: p,
   href,
-  meta,
   example,
   hasStates,
 }: EmosaveBlock) {
@@ -53,7 +52,6 @@ export function EmosaveBlockView({
           className='[--ratio:4/5]'
           radius={20}
           parallax={6}
-          meta={meta}
         />
       </NavLink>
       {hasStates && example ? (

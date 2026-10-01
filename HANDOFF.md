@@ -152,9 +152,10 @@ or transaction scope; each `note` / `caption` says so. No explorer claims a
 sequence the content does not state.
 
 Project flows and Stories use `FLOW_ROLE.STATIC` and read `state` from data;
-scrolling does not change their selected node. Pins carry per-breakpoint
-coordinates (`x/y`, `tablet`, `mobile`, `hideOnMobile`, `hideOnTablet`) because
-each range crops the image differently.
+scrolling does not change their selected node. Representative homepage images
+use `visual.caption` for an always-visible figcaption below the image. The
+aspect ratio applies to the media box; captions stay in normal flow. Spatial
+pins and hover metadata overlays are removed.
 
 Rules:
 
@@ -162,10 +163,10 @@ Rules:
   at all (`has()`). No TO WRITE text ever appears in the UI.
 - **Decisions:** Empty for all five projects, so no Decisions section renders
   anywhere.
-- **Periods:** Read from `content/projects` only. The homepage, case studies and
-  hover meta all use the same value. Emosave is 2022–2023; IndianBob is
-  2024–2025. The other projects say "2025—2026 중 참여" rather than asserting
-  individual start/end years. Experience groups these participation periods.
+- **Periods:** Read from `content/projects` only. The homepage and case studies
+  use the same value. Emosave is 2022–2023; IndianBob is 2024–2025. The other
+  projects say "2025—2026 중 참여" rather than asserting individual start/end
+  years. Experience groups these participation periods.
 - **Contact:** `site.contact` has empty email and github, so the CONTACT nav
   item, the menu contact links and the footer contact block are all hidden.
   `200 OK` stays in the footer.
@@ -175,7 +176,7 @@ Rules:
 | Data                                                   | Homepage                                               | Case study                                                              |
 | ------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------------------- |
 | `summary`                                              | Project description                                    | Overview lead                                                           |
-| `period` · `status` · `surfaces`                       | Meta rail, hover meta bar                              | Header rail, meta list                                                  |
+| `period` · `status` · `surfaces`                       | Meta rail                                              | Header rail, meta list                                                  |
 | `home.scope` (+`scopeMobile` list)                     | SCOPE keywords (explicit shorter list on mobile)       | FarmFam+ Role/Scope keyword row                                         |
 | `home.areas`                                           | FarmFam+ WORK AREAS (tabs ≥744, accordion <744)        | —                                                                       |
 | `home.zones`                                           | Smart Farm MONITORING / CONTROL areas                  | —                                                                       |
@@ -225,16 +226,16 @@ Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
 written as CSS variables / attributes.
 
-| Element            | Behavior                                                                                                                                                                                                                                                                                           | Reduced motion                    |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only; pins `[data-node]` and `[data-link]` light with the node of the same label | first node active, no stepping    |
-| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                                                                                          | complete immediately              |
-| Signal line        | 1px graphite; passed part ink (paper over dark); one 9px marker per `[data-signal-anchor]` — current = signal, inside dark = ON DARK, else open; Tools branches `[data-passed]` (≥744); ends at the footer's `● 200 OK` (`[data-signal-end]`)                                                      | fully drawn, markers still switch |
-| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                                                                                        | visible, no transform             |
-| Parallax / pointer | `ConceptFrame parallax` FarmFam 10 · APC 20 · Smart Farm 10 · others 12; pointer shift ≤6px / 300ms; only fine pointer ≥1024                                                                                                                                                                       | none                              |
-| Hover meta         | period · surfaces bar, 200ms, fine pointer only                                                                                                                                                                                                                                                    | same                              |
-| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                                                                                               | none                              |
-| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                                                                                            | color only                        |
+| Element            | Behavior                                                                                                                                                                                                                                      | Reduced motion                    |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only                        | first node active, no stepping    |
+| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                                     | complete immediately              |
+| Signal line        | 1px graphite; passed part ink (paper over dark); one 9px marker per `[data-signal-anchor]` — current = signal, inside dark = ON DARK, else open; Tools branches `[data-passed]` (≥744); ends at the footer's `● 200 OK` (`[data-signal-end]`) | fully drawn, markers still switch |
+| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                                   | visible, no transform             |
+| Parallax / pointer | `ConceptFrame parallax` FarmFam 10 · APC 20 · Smart Farm 10 · others 12; pointer shift ≤6px / 300ms; only fine pointer ≥1024                                                                                                                  | none                              |
+| Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                                                   | same                              |
+| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                                          | none                              |
+| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                                       | color only                        |
 
 ## 6. Accessibility
 
@@ -302,8 +303,9 @@ written as CSS variables / attributes.
    render the drawn SVG concept illustrations in `organisms/concept-art` — those
    two are finished illustrations, not empty placeholders. The `brief` string is
    a development-only caption and never renders in a production build.
-2. **Pin positions:** Adjust `pins[].x/y` in `content/projects/<slug>.ts` for
-   each image.
+2. **Image captions:** Keep `visual.caption` concise and explicit about
+   conceptual imagery; do not imply that an image documents an actual
+   deployment.
 3. **Contact:** Fill in `site.contact.email` / `github`. The CONTACT nav item
    and the footer contact block then appear automatically.
 4. **ABOUT nav:** It currently points to `#about`, which is the Tools / Scope

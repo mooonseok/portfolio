@@ -9,7 +9,7 @@ export const apcCase: CaseContent = {
     '수기로 진행하던 결재 업무를 시스템에서 처리할 수 있도록 기존 APC에 전자결재 기능을 추가했습니다.',
   ],
   systemFlows: [],
-  domainsTitle: '세 현장 업무와 추적할 수 있는 이력',
+  domainsTitle: '물류·근태·전자결재의 업무 흐름',
   domains: apcDomains,
   work: [
     {

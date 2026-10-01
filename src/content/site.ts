@@ -13,7 +13,7 @@ export const site: Site = {
   visualsNote:
     'Visuals are conceptual representations created for this case study.',
   visualsNoteKo:
-    '보안 및 자산 보호를 위해 실제 서비스 화면 대신 프로젝트 구조를 재구성한 시각 자료를 사용했습니다.',
+    '이 포트폴리오의 이미지와 도식은 프로젝트를 설명하기 위해 재구성한 자료입니다.',
   about:
     '설계·개발·테스트·리뷰·배포에 참여하며, 화면에 보이는 기능과 그 뒤의 데이터 처리를 함께 다뤘습니다. 프로젝트에 따라 앱·웹·서버 개발을 맡았고, 운영 과정에서는 QA와 데이터 수정 업무에도 일부 참여했습니다.',
   introduction:

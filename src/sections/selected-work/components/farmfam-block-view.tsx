@@ -18,7 +18,6 @@ export function FarmFamBlockView({
   href,
   caseLabel,
   surfaces,
-  meta,
   areas,
   hasAreas,
 }: FarmFamWorkBlock) {
@@ -48,8 +47,7 @@ export function FarmFamBlockView({
         >
           <ConceptFrame
             visual={p.visuals.home}
-            className='[--ratio:4_/_5]'
-            meta={meta}
+            className='[--ratio:4_/_5] mob:[&_.concept-caption]:mx-(--margin)'
             parallax={10}
           />
         </NavLink>

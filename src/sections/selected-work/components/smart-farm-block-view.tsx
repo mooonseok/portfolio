@@ -17,7 +17,6 @@ export function SmartFarmBlockView({
   project: p,
   href,
   caseLabel,
-  meta,
   zones,
   hasZones,
   titleFirst,
@@ -76,8 +75,7 @@ export function SmartFarmBlockView({
           >
             <ConceptFrame
               visual={p.visuals.home}
-              className='[--ratio:4_/_5] tab:[--ratio:4_/_3]'
-              meta={meta}
+              className='[--ratio:4_/_5] tab:[--ratio:4_/_3] mob:[&_.concept-caption]:mx-(--margin)'
               parallax={10}
             />
           </NavLink>
