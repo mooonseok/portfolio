@@ -11,7 +11,7 @@ const mainVisual = {
 
 export const apc: Project = {
   slug: PROJECT_SLUG.APC,
-  num: '02',
+  num: '04',
   title: 'APC',
   category: 'OPERATIONS SYSTEM',
   period: '2025—2026 중 참여',
@@ -20,8 +20,16 @@ export const apc: Project = {
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'App / Web / API / DB',
   summary:
-    '수기로 진행하던 결재 업무를 시스템에서 처리할 수 있도록 기존 APC에 전자결재 기능을 추가했습니다.',
+    '농산물 처리장의 입고·정산·현장 업무를 지원하는 시스템입니다. 웹·앱·서버에 걸쳐 운영 기능을 개발했습니다.',
   home: {
+    features: [
+      { title: '입고·정산', body: ['입고 데이터 검증과 정산·ERP 전송 처리'] },
+      {
+        title: '근태·현장 앱',
+        body: ['기기 기반 출근 처리와 Flutter 현장 앱 유지보수'],
+      },
+      { title: '전자결재', body: ['DB·API·관리자 화면과 알림·인쇄 연결'] },
+    ],
     scope: [
       'Receiving',
       'Processing',

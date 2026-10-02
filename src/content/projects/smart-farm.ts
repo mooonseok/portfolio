@@ -11,7 +11,7 @@ const mainVisual = {
 
 export const smartFarm: Project = {
   slug: PROJECT_SLUG.SMART_FARM,
-  num: '03',
+  num: '05',
   title: 'SMART FARM',
   category: 'MONITORING & CONTROL',
   period: '2025—2026 중 참여',
@@ -27,8 +27,19 @@ export const smartFarm: Project = {
   ],
   surfaces: 'Monitoring / Control',
   summary:
-    'ESP32와 Raspberry Pi를 활용해 센서 모듈을 구성하고, 온습도·CO₂ 측정값을 MQTT로 전달해 대시보드에서 관측하도록 구현했습니다.',
+    '온습도·CO₂ 측정값을 전달하고 관측하는 사무실 시험 모듈입니다. 센서 모니터링과 별도의 LED 제어 실험을 진행했습니다.',
   home: {
+    features: [
+      { title: '센서 모듈', body: ['ESP32·Raspberry Pi 기반 온습도·CO₂ 측정'] },
+      {
+        title: '전송·관측',
+        body: ['MQTT로 측정값을 전달하고 대시보드에서 확인'],
+      },
+      {
+        title: '별도 제어 PoC',
+        body: ['ESP32-S3와 LED 시험 출력으로 안전 조건 검토'],
+      },
+    ],
     scope: [],
     flows: [],
     zones: [
@@ -69,6 +80,7 @@ export const smartFarm: Project = {
       brief: 'SMART FARM — greenhouse, 4:3 / 4:5',
     },
     sensor: {
+      caption: '센서 장치 개념 이미지 · 실제 시험 환경은 사무실',
       src: '/images/projects/smart-farm/sensor.jpg',
       sizes: '(min-width: 1440px) 310px, (min-width: 1024px) 25vw, 50vw',
       id: VISUAL_ID.SMART_SENSOR,

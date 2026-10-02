@@ -1,7 +1,4 @@
-import type { WorkAreasProps } from '@/dto/explorer.dto';
-import type { DomainExplorerProps } from '@/dto/domain.dto';
 import type { Project } from '@/dto/project.dto';
-import type { Zone } from '@/dto/status.dto';
 
 export interface WorkIndexEntry {
   slug: string;
@@ -13,28 +10,11 @@ export interface WorkIndexEntry {
 export interface WorkBlock {
   project: Project;
   href: string;
-  caseLabel: string;
-  surfaces: string;
 }
 
-export interface FarmFamWorkBlock extends WorkBlock {
-  areas: WorkAreasProps;
-  hasAreas: boolean;
-}
-
-export interface ApcWorkBlock extends WorkBlock {
-  domains: DomainExplorerProps;
-  domainsLabelId: string;
-  hasDomains: boolean;
-}
-
-export interface SmartFarmWorkBlock extends WorkBlock {
-  titleFirst: string;
-  titleRest: string;
-  hasTitleRest: boolean;
-  zones: Zone[];
-  hasZones: boolean;
-}
+export type FarmFamWorkBlock = WorkBlock;
+export type ApcWorkBlock = WorkBlock;
+export type SmartFarmWorkBlock = WorkBlock;
 
 export interface SelectedWorkViewProps {
   index: WorkIndexEntry[];

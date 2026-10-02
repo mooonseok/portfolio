@@ -11,7 +11,7 @@ const mainVisual = {
 
 export const indianBob: Project = {
   slug: PROJECT_SLUG.INDIAN_BOB,
-  num: '04',
+  num: '01',
   title: 'INDIAN BOB',
   category: 'APP / API / ADMIN',
   period: '2024—2025',
@@ -20,8 +20,19 @@ export const indianBob: Project = {
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'App / API / Admin',
   summary:
-    '해빗 기능을 Flutter 앱, 관리자 웹, 서버 API에 걸쳐 개발했습니다. 요구사항과 데이터 구조의 변경을 팀원들과 조율하며 각 영역에 반영했습니다.',
+    '해빗 참여와 팀 활동을 지원하는 서비스입니다. Flutter 앱, 관리자 웹, 서버 API에 걸쳐 기능을 개발했습니다.',
   home: {
+    features: [
+      {
+        title: '해빗 이용',
+        body: ['Flutter 앱에서 해빗을 이용하는 화면과 상태 처리'],
+      },
+      {
+        title: '관리자 운영',
+        body: ['해빗 생성·수정·복제와 기간·입력값 검증'],
+      },
+      { title: '팀 기능', body: ['팀 생성·수정과 공개 설정에 따른 가입 처리'] },
+    ],
     scope: ['Flutter App', 'Habit', 'Admin Web', 'Server API'],
     scopeMobile: ['Flutter', 'Habit', 'Web', 'API'],
     flows: [],

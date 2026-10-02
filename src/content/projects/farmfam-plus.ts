@@ -11,7 +11,7 @@ const mainVisual = {
 
 export const farmfamPlus: Project = {
   slug: PROJECT_SLUG.FARMFAM_PLUS,
-  num: '01',
+  num: '03',
   title: 'FARMFAM+',
   category: 'COMMERCE SYSTEM',
   period: '2025—2026 중 참여',
@@ -20,8 +20,22 @@ export const farmfamPlus: Project = {
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Web / API / DB',
   summary:
-    '주문 취소에 맞춰 공동구매 수량과 재고를 정정하는 흐름을 보완했습니다. 취소 정책과 재고 기준을 담당자와 조율하고, 테스트 결제로 동작을 확인했습니다.',
+    '공동구매와 시크릿딜을 제공하는 농산물 커머스입니다. 판매 설정, 가격·수량 처리와 주문 변경 흐름을 개발했습니다.',
   home: {
+    features: [
+      {
+        title: '공동구매',
+        body: ['목표 수량·진행 상태·종료 처리와 판매 설정'],
+      },
+      {
+        title: '시크릿딜',
+        body: ['시간에 따른 가격 구간과 주문 시 가격 재확인'],
+      },
+      {
+        title: '주문·판매 운영',
+        body: ['관리자 판매 설정과 취소 시 공동구매·재고 정정'],
+      },
+    ],
     scope: [
       'Product',
       'Order',
@@ -32,38 +46,6 @@ export const farmfamPlus: Project = {
     ],
     scopeMobile: ['Product', 'Order', 'Inventory', 'Group Purchase'],
     flows: [],
-    areas: [
-      {
-        id: 'order',
-        label: 'ORDER',
-        sub: '주문',
-        title: '취소 처리의 진입점',
-        body: '주문 취소와 연결된 공동구매 수량·상태 정정과 재고 복원 처리를 보완했습니다.',
-        related: ['공동구매', '재고', '사은품 · 정산'],
-        to: { label: 'Context / Problem', target: 'context' },
-      },
-      {
-        id: 'group-purchase',
-        label: 'GROUP PURCHASE',
-        sub: '공동구매',
-        title: '진행 수량과 상태 일관성',
-        body: '취소에 따른 공동구매 수량·상태 정정을 보완했습니다. 처리 기준은 담당자와 확인하며 운영 조건에 맞춰 조정했습니다.',
-        related: ['주문', '진행 수량', '다단계 보상'],
-        to: {
-          label: '취소 정책과 처리 기준',
-          target: 'transaction-boundaries',
-        },
-      },
-      {
-        id: 'inventory',
-        label: 'INVENTORY',
-        sub: '재고',
-        title: '취소 시 복원과 회귀 검증',
-        body: '재고 복원이 주문 취소와 같은 경로에서 처리되도록 연결했습니다. 상태가 연결된 영역이라, 변경한 취소 경로에는 관련 회귀 테스트를 함께 두었습니다.',
-        related: ['주문 취소', '공동구매 정정'],
-        to: { label: '취소 동작 확인', target: 'regression-protection' },
-      },
-    ],
     cta: 'CASE STUDY',
   },
   visuals: {

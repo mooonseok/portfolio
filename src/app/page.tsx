@@ -31,8 +31,8 @@ export default function HomePage() {
       <SiteHeader />
       <Box as={TAG.MAIN} id='main-content' tabIndex={-1}>
         <HeroContainer />
-        <SelectedWorkContainer />
         <FeaturedWorkContainer />
+        <SelectedWorkContainer />
         <EngineeringStoriesContainer />
         <ExperienceContainer />
         <ToolsContainer />

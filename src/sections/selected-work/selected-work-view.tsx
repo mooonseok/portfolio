@@ -19,15 +19,15 @@ export function SelectedWorkView({
     <>
       <Box
         as={TAG.SECTION}
-        id='work'
+        id='web-work'
         className='container pt-16 pb-0 tab:pt-40 tab:pb-16 lap:pt-(--section) lap:pb-20'
         aria-labelledby='selected-h'
       >
         <SectionHeading
           id='selected-h'
           anchor={false}
-          label='01—03'
-          title='Selected Work'
+          label='03—04'
+          title='웹·서버 개발'
           aside={
             <Column as={TAG.OL} className='mono leading-[1.6]'>
               {index.map((e) => (
@@ -43,6 +43,14 @@ export function SelectedWorkView({
       </Box>
       <FarmFamBlockView {...farmfam} />
       <ApcBlockView {...apc} />
+      <Box className='container pt-16 tab:pt-24'>
+        <SectionHeading
+          id='experiment-h'
+          label='05'
+          title='센서·제어 실험'
+          anchor={false}
+        />
+      </Box>
       <SmartFarmBlockView {...smartFarm} />
     </>
   );
