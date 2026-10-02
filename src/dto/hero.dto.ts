@@ -2,6 +2,7 @@ import type { YearRange } from '@/dto/site.dto';
 
 export interface HeroViewProps {
   name: string;
+  github: string;
   primaryAction: { href: string; label: string };
   role: string;
   disciplines: string;

@@ -1,3 +1,5 @@
+import { Anchor } from '@/components/atoms/anchor';
+import { Box } from '@/components/atoms/box';
 import { Cta } from '@/components/atoms/cta';
 import { Column } from '@/components/atoms/column';
 import { Grid } from '@/components/atoms/grid';
@@ -15,6 +17,7 @@ export function HeroView({
   range,
   headline,
   introduction,
+  github,
 }: HeroViewProps) {
   return (
     <Column
@@ -33,10 +36,20 @@ export function HeroView({
           <Text className='text-[22px] leading-[1.45] font-medium text-balance tab:text-[28px]'>
             {headline}
           </Text>
-          <Text className='max-w-[680px] text-[15px] leading-[1.8] text-subtle tab:text-[17px]'>
+          <Text className='max-w-[680px] text-[16px] leading-[1.8] text-subtle tab:text-[17px]'>
             {introduction}
           </Text>
-          <Cta href={primaryAction.href} label={primaryAction.label} />
+          <Box className='flex flex-wrap items-center gap-x-6 gap-y-2'>
+            <Cta href={primaryAction.href} label={primaryAction.label} />
+            <Anchor
+              href={github}
+              target='_blank'
+              rel='noreferrer'
+              className='inline-flex min-h-11 items-center text-[16px] underline underline-offset-4'
+            >
+              GitHub ↗
+            </Anchor>
+          </Box>
         </Column>
         <Grid className='grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-x-4 gap-y-3 border-t border-t-ink pt-3.5 mono leading-[1.6] tab:grid-cols-[repeat(var(--cols),minmax(0,1fr))] tab:gap-x-(--gutter) tab:gap-y-0 lap:pt-4'>
           <Text as={TAG.SPAN} className='tab:col-[1/5] tab:row-1'>

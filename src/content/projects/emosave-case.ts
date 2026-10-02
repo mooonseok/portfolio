@@ -8,7 +8,7 @@ export const emosaveCase: CaseContent = {
   systemFlows: [],
   interactionFocus: [
     {
-      title: 'Customization',
+      title: '마을 꾸미기',
       body: [
         '마을을 구성하는 캐릭터와 아이템을 배치하고 변경하는 꾸미기 UI를 작업했습니다.',
       ],
@@ -16,14 +16,14 @@ export const emosaveCase: CaseContent = {
       withStates: true,
     },
     {
-      title: 'Character / Village',
+      title: '캐릭터와 마을',
       body: [
         '캐릭터와 이모티콘 데이터를 기반으로 마을 화면의 상태를 구성하고 표시하는 기능을 작업했습니다.',
       ],
       visual: VISUAL_SLOT.VILLAGE,
     },
     {
-      title: 'Emoticon / Store',
+      title: '이모티콘과 스토어',
       body: [
         '이모티콘 삭제·공유와 스토어 UI 수정, 로컬라이징 및 UI 오류 수정을 작업했습니다.',
       ],
@@ -34,8 +34,7 @@ export const emosaveCase: CaseContent = {
     label: '꾸미기 상태',
     intro:
       '마을 꾸미기에서 사용자가 아이템을 선택하고 배치한 결과가 화면 상태에 반영되는 흐름을 단순화해 표현합니다.',
-    caption:
-      '설명용 예시 · 단순 도형으로 그린 모델이며 실제 앱 화면이나 동작을 그대로 재현한 것이 아닙니다.',
+    caption: '편집 상태를 단순화한 설명용 도식 · 실제 앱 화면 아님',
     homeCaption: '설명용 예시 · 실제 앱 화면 아님',
     slotLabel: '배치 영역',
     trayLabel: '아이템',
@@ -93,13 +92,13 @@ export const emosaveCase: CaseContent = {
         {
           label: '문제',
           body: [
-            '아이템 선택과 배치 변경을 화면에 반영하면서 BlocBuilder를 어느 위치에 둘지 검토했습니다.',
+            '아이템의 선택 상태, 이동량, 회전 각도가 각각 바뀌므로 화면 표시와 저장할 배치 정보를 함께 다뤄야 했습니다.',
           ],
         },
         {
           label: '구현',
           body: [
-            '편집 상태를 다루는 Cubit과 BlocBuilder의 배치를 수정하고 상태 변화가 화면에 반영되는 위치를 검토했습니다.',
+            '이동량과 회전 각도를 각각 Cubit으로 관리하고 BlocBuilder의 배치를 수정했습니다. 저장 데이터에는 기존 좌표와 이동량을 합산하고 현재 회전 각도를 반영했습니다.',
           ],
         },
         {

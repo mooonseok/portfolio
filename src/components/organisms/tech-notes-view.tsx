@@ -21,11 +21,15 @@ export function TechNotesView({
     <Box
       ref={rootRef}
       className={cx(
-        'flex flex-col border-b border-b-(color:--rule) tab:grid tab:grid-cols-2 tab:gap-x-(--gutter) tab:gap-y-12 tab:[border-bottom:0]',
+        'flex flex-col border-b border-b-(color:--rule) tab:grid tab:gap-x-(--gutter) tab:gap-y-12 tab:[border-bottom:0]',
         tone === TONE.DARK
           ? '[--rule:var(--dark-rule)] [--sub:var(--dark-sub)]'
           : '[--rule:var(--hairline)] [--sub:var(--subtle)]',
-        cols === TECH_COLS.THREE && 'lap:grid-cols-3'
+        items.length === 1
+          ? 'tab:max-w-[760px] tab:grid-cols-1'
+          : cols === TECH_COLS.THREE
+            ? 'tab:grid-cols-2 lap:grid-cols-3'
+            : 'tab:grid-cols-2'
       )}
       data-cols={cols}
       data-tone={tone}
@@ -40,7 +44,7 @@ export function TechNotesView({
           <Heading level={HEADING.H3} className='m-0 [font:inherit]'>
             <Button
               data-tech-toggle=''
-              className='tech-toggle box-border flex min-h-13 w-full cursor-pointer items-center justify-between gap-3 font-mono text-[14px] tracking-[0.06em] focus-visible:[outline:2px_solid_currentColor] focus-visible:outline-offset-2 tab:hidden'
+              className='tech-toggle box-border flex min-h-13 w-full cursor-pointer items-center justify-between gap-3 text-left text-[17px] leading-[1.5] font-medium focus-visible:[outline:2px_solid_currentColor] focus-visible:outline-offset-2 tab:hidden'
               aria-expanded={n.open}
               aria-controls={n.panelId}
               onClick={() => onToggle(n.id)}
@@ -58,7 +62,7 @@ export function TechNotesView({
               as={TAG.SPAN}
               data-tech-heading=''
               tabIndex={-1}
-              className='hidden tab:block tab:font-mono tab:text-[14px] tab:tracking-[0.06em]'
+              className='hidden tab:block tab:text-[18px] tab:leading-[1.5] tab:font-medium'
             >
               {n.title}
             </Text>
@@ -77,7 +81,7 @@ export function TechNotesView({
                 {f.body.map((b) => (
                   <Text
                     key={b}
-                    className='text-[15px] leading-[1.6] text-(color:--sub)'
+                    className='text-[16px] leading-[1.7] text-(color:--sub)'
                   >
                     {b}
                   </Text>

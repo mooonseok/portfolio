@@ -38,11 +38,3 @@ export const DECISION_VARIANT = {
 
 export type DecisionVariant =
   (typeof DECISION_VARIANT)[keyof typeof DECISION_VARIANT];
-
-export const STORY_KIND = {
-  FLOW: 'flow',
-  SEQUENCE: 'sequence',
-  EXPERIMENT: 'experiment',
-} as const;
-
-export type StoryKind = (typeof STORY_KIND)[keyof typeof STORY_KIND];

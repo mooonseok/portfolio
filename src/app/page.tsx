@@ -10,7 +10,6 @@ import { ExperienceContainer } from '@/sections/experience/experience-container'
 import { FeaturedWorkContainer } from '@/sections/featured-work/featured-work-container';
 import { HeroContainer } from '@/sections/hero/hero-container';
 import { SelectedWorkContainer } from '@/sections/selected-work/selected-work-container';
-import { ThisWebsiteContainer } from '@/sections/this-website/this-website-container';
 import { ToolsContainer } from '@/sections/tools/tools-container';
 import { TAG } from '@/constants/tag';
 
@@ -36,7 +35,6 @@ export default function HomePage() {
         <EngineeringStoriesContainer />
         <ExperienceContainer />
         <ToolsContainer />
-        <ThisWebsiteContainer />
       </Box>
       <SiteFooter />
     </Box>

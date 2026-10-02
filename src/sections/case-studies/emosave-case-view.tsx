@@ -51,13 +51,13 @@ export function EmosaveCaseView({
           <FocusCardView
             focus={lead}
             visual={p.visuals[lead.visual]}
-            className='max-w-[400px]'
+            className='max-w-[600px] tab:grid tab:grid-cols-2 tab:items-start tab:[&>div:first-child]:row-span-2 tab:[&>div:last-child]:col-2 tab:[&>h3]:col-2 tab:[&>h3]:row-1'
           />
         ) : null}
         {c.stateExample ? (
           <StateComparisonView example={c.stateExample} />
         ) : null}
-        <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2'>
+        <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2 [&_[data-reveal-item=visual]]:max-w-[320px]'>
           {rest.map((focus) => (
             <FocusCardView
               key={focus.title}
