@@ -31,7 +31,10 @@ export const indianBob: Project = {
         title: '관리자 운영',
         body: ['해빗 생성·수정·복제와 기간·입력값 검증'],
       },
-      { title: '팀 기능', body: ['팀 생성·수정과 공개 설정에 따른 가입 처리'] },
+      {
+        title: '팀 기능',
+        body: ['팀 생성·수정과 자동 승인 여부에 따른 가입 처리'],
+      },
     ],
     scope: ['Flutter App', 'Habit', 'Admin Web', 'Server API'],
     scopeMobile: ['Flutter', 'Habit', 'Web', 'API'],

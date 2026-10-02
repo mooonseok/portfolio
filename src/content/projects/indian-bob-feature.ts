@@ -35,7 +35,7 @@ export const indianBobFeature: Feature = {
       surface: 'TEAM',
       systems: [IB_SYSTEM.APP, IB_SYSTEM.API, IB_SYSTEM.DATA],
       edges: [IB_EDGE.APP_API, IB_EDGE.API_DATA],
-      body: '팀 화면의 생성·수정 요청은 서버의 권한 확인과 팀 데이터 처리에 연결됩니다. 공개 설정에 따른 가입 처리와 수정 권한을 서버에서 다뤘습니다.',
+      body: '팀 가입은 자동 승인 여부에 따라 회원 등록과 가입 요청으로 나뉩니다. 기존 가입·요청을 확인하고, 자동 승인 시 정원을 검사합니다. 설정 변경은 서버에서 리더 권한을 확인합니다.',
     },
   ],
 };
