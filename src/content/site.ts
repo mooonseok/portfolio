@@ -28,9 +28,9 @@ export const stories: Story[] = [
     id: 'S01',
     href: '/work/indian-bob#requirements-data',
     linkLabel: 'IndianBob 사례 보기',
-    title: '해빗 입력을 API 데이터로 연결',
+    title: '팀 가입 정책과 설정 권한',
     description:
-      '해빗 복제 시 기존 이미지와 새 파일을 구분하고, 입력값을 생성 API에 맞춰 처리했습니다.',
+      '팀의 가입 승인 방식과 정원, 설정 변경 권한을 서버에서 구분한 사례입니다.',
   },
   {
     id: 'S02',

@@ -47,7 +47,7 @@ export function HeroView({
               rel='noreferrer'
               className='inline-flex min-h-11 items-center text-[16px] underline underline-offset-4'
             >
-              GitHub ↗
+              GitHub 프로필 ↗
             </Anchor>
           </Box>
         </Column>

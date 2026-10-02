@@ -25,7 +25,7 @@ export const emosaveCase: CaseContent = {
     {
       title: '이모티콘과 스토어',
       body: [
-        '이모티콘 삭제·공유와 스토어 UI 수정, 로컬라이징 및 UI 오류 수정을 작업했습니다.',
+        '이모티콘 삭제와 이미지 공유, 스토어 UI 수정과 로컬라이징을 작업했습니다.',
       ],
       visual: VISUAL_SLOT.STORE,
     },
@@ -77,9 +77,7 @@ export const emosaveCase: CaseContent = {
     },
     {
       title: '저장·공유',
-      body: [
-        '편집 결과의 API·로컬 저장과 이모티콘을 이미지로 만들어 공유하는 기능을 작업했습니다.',
-      ],
+      body: ['편집 결과의 API·로컬 저장과 이미지 공유 기능을 작업했습니다.'],
     },
   ],
   workParagraphs: [],
@@ -102,8 +100,16 @@ export const emosaveCase: CaseContent = {
           ],
         },
         {
+          label: '처리 결과',
+          body: [
+            '선택한 아이템의 위치·회전·크기를 최종 배치 데이터로 구성하고, 일반 마을 화면은 저장된 위치와 회전 정보를 이용해 표시합니다.',
+          ],
+        },
+        {
           label: '저장 경계',
-          body: ['편집 결과는 API와 로컬 저장소에 순차 저장합니다.'],
+          body: [
+            '로컬 저장소에 변경을 반영하고 마을 API에 최종 배치 정보를 요청합니다. 두 저장 경로는 하나의 트랜잭션으로 처리하지 않습니다.',
+          ],
         },
       ],
     },

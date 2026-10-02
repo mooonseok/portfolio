@@ -213,10 +213,10 @@ back/forward, so landing on a URL hash and history restoration jump straight to
 their position. Hash-link clicks that open elsewhere (modifier keys, `target`,
 `download`) or are cancelled are not remembered. The Smart Farm monitoring flow
 is `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories cover IndianBob
-habit input/API conversion, Emosave editor state, and FarmFam+ secret-deal price
-validation. The hero CTA jumps to `#flutter-work`. Engineering is labeled 대표
-구현 사례; IndianBob and Emosave retain 배운 점 without changing their
-current-state anchor IDs.
+team admission policy and permission, Emosave editor state, and FarmFam+
+secret-deal price validation. The hero CTA jumps to `#flutter-work`. Engineering
+is labeled 대표 구현 사례; IndianBob and Emosave retain 배운 점 without changing
+their current-state anchor IDs.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
@@ -297,7 +297,8 @@ written as CSS variables / attributes.
 3. **Contact:** Email is already configured in `site.contact.email`; the CONTACT
    nav item and footer email are visible. GitHub is configured as
    `https://github.com/mooonseok` and appears in the homepage intro and every
-   footer.
+   footer and mobile menu, labeled GitHub 프로필. The README distinguishes this
+   site repository from the separate service projects.
 4. **ABOUT nav:** It currently points to `#about`, which is the Tools / Scope
    section. Change it if you add a separate About section.
 5. **Fonts:** All three families are self-hosted from `public/fonts/`; see
