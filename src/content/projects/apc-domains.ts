@@ -44,7 +44,7 @@ export const apcDomains: Domain[] = [
       '근태 관련 DB 구조',
       'Flutter 현장 앱의 버전 확인과 APK 업데이트 처리',
     ],
-    note: { label: 'QR attendance device', target: 'qr-attendance-device' },
+    note: { label: '현장 기기와 앱 유지보수', target: 'qr-attendance-device' },
   },
   {
     id: 'approval',
@@ -64,7 +64,7 @@ export const apcDomains: Domain[] = [
       '관리자 웹의 기안/처리, 알림, 인쇄 UI',
     ],
     note: {
-      label: 'Approval → notification',
+      label: '전자결재 구현 보기',
       target: 'approval-notification',
     },
   },

@@ -60,7 +60,7 @@ export const experience: ExperienceYear[] = [
     year: '2025—2026',
     items: [
       { name: 'FARMFAM+', scope: 'Web / API / DB' },
-      { name: 'APC', scope: 'Web / API / DB' },
+      { name: 'APC', scope: 'Flutter / Web / API / DB' },
       { name: 'SMART FARM', scope: 'Office Prototype' },
     ],
   },
