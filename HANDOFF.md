@@ -103,10 +103,13 @@ backfill results and OCR evaluation claims are omitted.
 
 The homepage order is IndianBob → Emosave → FarmFam+ → APC → Smart Farm. Each
 project is a full-width editorial row: service summary, three static
-`home.features`, one existing conceptual image and a detail link. Flutter work
-comes first; APC retains a dark surface; Smart Farm has its own experiment
-heading. The `work` navigation anchor starts at the Flutter section and the
-existing `flutter-work` CTA anchor remains available.
+`home.features`, one existing conceptual image and a detail link. The homepage
+intro includes GitHub; the former This Website section is removed to keep the
+reading path focused on project work. Case work rows and technical notes use
+16px body text with 1.7 line height; a single technical note uses one column.
+Flutter work comes first; APC retains a dark surface; Smart Farm has its own
+experiment heading. The `work` navigation anchor starts at the Flutter section
+and the existing `flutter-work` CTA anchor remains available.
 
 Case studies show service introduction and an overview (role, development
 surfaces, period and relevant scope limits) before the hero. The reading order
@@ -210,7 +213,7 @@ back/forward, so landing on a URL hash and history restoration jump straight to
 their position. Hash-link clicks that open elsewhere (modifier keys, `target`,
 `download`) or are cancelled are not remembered. The Smart Farm monitoring flow
 is `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories cover IndianBob
-app/web/API coordination, Emosave editor state, and FarmFam+ secret-deal price
+habit input/API conversion, Emosave editor state, and FarmFam+ secret-deal price
 validation. The hero CTA jumps to `#flutter-work`. Engineering is labeled 대표
 구현 사례; IndianBob and Emosave retain 배운 점 without changing their
 current-state anchor IDs.
@@ -292,8 +295,9 @@ written as CSS variables / attributes.
    conceptual imagery; do not imply that an image documents an actual
    deployment.
 3. **Contact:** Email is already configured in `site.contact.email`; the CONTACT
-   nav item and footer email are visible. GitHub is optional and stays hidden
-   while `site.contact.github` is empty.
+   nav item and footer email are visible. GitHub is configured as
+   `https://github.com/mooonseok` and appears in the homepage intro and every
+   footer.
 4. **ABOUT nav:** It currently points to `#about`, which is the Tools / Scope
    section. Change it if you add a separate About section.
 5. **Fonts:** All three families are self-hosted from `public/fonts/`; see
