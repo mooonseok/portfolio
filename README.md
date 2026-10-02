@@ -1,8 +1,24 @@
 # Park Moonseok — Portfolio
 
-Personal portfolio site for a software engineer: a home page with five projects
-and one case study page per project. Static, content-driven, no CMS and no
-backend — every string, flow diagram and image reference lives in `src/content`.
+Flutter 앱을 중심으로 관리자 웹과 서버 API까지 개발한 경험을 소개하는 개인
+포트폴리오입니다. 홈에서 5개 프로젝트의 담당 범위를 훑고, 상세 페이지에서 기능
+관계와 대표 구현 사례를 읽을 수 있습니다.
+
+**이 저장소는 포트폴리오 사이트 코드입니다.** 소개한 서비스의 원본 구현은 별도
+프로젝트에 있습니다. 이미지와 도식은 설명을 위한 재구성 자료입니다. 공식 제출용
+URL은 아직 확정하지 않았습니다.
+
+## 빠르게 확인하기
+
+| 확인할 내용                     | 경로                                                                     |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| 5개 프로젝트의 소개와 담당 범위 | [프로젝트 콘텐츠](src/content/projects/)                                 |
+| 탭·선택·닫힘·복원의 상태 처리   | [선택 로직](src/lib/selection.ts), [선택 훅](src/hooks/use-selection.ts) |
+| 화면 구성과 콘텐츠의 분리       | [페이지 섹션](src/sections/), [공통 컴포넌트](src/components/)           |
+| 회귀 테스트와 CI                | [테스트](scripts/tests/), [검증 workflow](.github/workflows/verify.yml)  |
+
+CMS·서버 API 없이 콘텐츠를 정적으로 렌더링합니다. 문구·도식·이미지 참조는
+`src/content`에서 관리합니다.
 
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · pnpm.
 
@@ -79,8 +95,10 @@ Two rules matter when editing:
   claims farm deployment. The APC OCR experiment is not displayed.
 
 `site.contact.email` is `moonseokp96@gmail.com`; navigation, mobile menu and
-footer expose the contact link. GitHub is empty and remains hidden. Each link
-renders only if its own value is set.
+footer expose the contact link. `site.contact.github` points to
+[the GitHub profile](https://github.com/mooonseok), which is linked from the
+intro, footer and mobile menu. It is a profile link, not a source-code link for
+every featured service. Each contact link renders only if its own value is set.
 
 ## Publication metadata
 

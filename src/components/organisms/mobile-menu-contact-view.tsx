@@ -20,7 +20,7 @@ export function MobileMenuContactView({ contact }: { contact: Contact }) {
           target='_blank'
           rel='noreferrer'
         >
-          GitHub ↗
+          GitHub 프로필 ↗
         </Anchor>
       ) : null}
     </Column>
