@@ -84,21 +84,21 @@ export const smartFarmCase: CaseContent = {
   work: [
     {
       track: WORK_TRACK.MONITORING,
-      title: 'Hardware',
+      title: '센서 모듈',
       body: [
         'ESP32와 Raspberry Pi를 활용해 센서와 하드웨어 시험 모듈을 구성했습니다.',
       ],
     },
     {
       track: WORK_TRACK.MONITORING,
-      title: 'MQTT / Dashboard',
+      title: '측정값 전달·관측',
       body: [
         '측정값을 MQTT로 전달하고 대시보드에서 확인할 수 있도록 연결했습니다.',
       ],
     },
     {
       track: WORK_TRACK.MONITORING,
-      title: 'Office Test',
+      title: '사무실 시험',
       body: ['사무실에서 센서 측정·전달·관측 흐름을 시험했습니다.'],
     },
   ],
