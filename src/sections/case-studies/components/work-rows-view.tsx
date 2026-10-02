@@ -11,12 +11,12 @@ export function WorkRowsView({ items }: { items: WorkItem[] }) {
       {items.map((w) => (
         <Box
           key={w.title}
-          className='flex flex-col gap-1.5 border-t border-t-hairline py-3.5 tab:grid tab:grid-cols-[220px_minmax(0,1fr)] tab:gap-4 tab:py-4'
+          className='flex flex-col gap-1.5 border-t border-t-hairline py-3.5 tab:grid tab:grid-cols-[minmax(120px,0.4fr)_minmax(0,1fr)] tab:gap-4 tab:py-4'
         >
           <Text as={TAG.DT} className='text-[17px] font-medium'>
             {w.title}
           </Text>
-          <Column as={TAG.DD} className='m-0 gap-1.5 text-[15px] leading-[1.6]'>
+          <Column as={TAG.DD} className='m-0 gap-1.5 text-[16px] leading-[1.7]'>
             {w.body.map((b) => (
               <Text key={b}>{b}</Text>
             ))}
