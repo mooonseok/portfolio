@@ -16,6 +16,11 @@ export interface ProjectHome {
   cta: string;
 }
 
+export interface ProjectLink {
+  label: string;
+  href: string;
+}
+
 export interface Project {
   slug: ProjectSlug;
   num: string;
@@ -27,6 +32,7 @@ export interface Project {
   status: StatusItem[];
   surfaces: string;
   summary: string;
+  links?: ProjectLink[];
   home: ProjectHome;
   visuals: Visuals;
   case: CaseContent;

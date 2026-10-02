@@ -3,6 +3,7 @@ import { Column } from '@/components/atoms/column';
 import { Cta } from '@/components/atoms/cta';
 import { NavLink } from '@/components/atoms/nav-link';
 import { Text } from '@/components/atoms/text';
+import { ProjectLinks } from '@/components/molecules/project-links';
 import { ProjectHeader } from '@/components/molecules/project-header';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import type { Project } from '@/dto/project.dto';
@@ -55,9 +56,10 @@ export function ProjectSummaryView({
             parallax={0}
           />
         </NavLink>
-        <Box className='col-span-full tab:col-[3/-1] lap:col-[3/7] lap:row-start-2'>
+        <Column className='col-span-full items-start gap-3 tab:col-[3/-1] lap:col-[3/7] lap:row-start-2'>
           <Cta href={href} label='프로젝트 자세히 보기' />
-        </Box>
+          <ProjectLinks links={p.links} />
+        </Column>
       </Box>
     </Column>
   );

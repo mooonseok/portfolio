@@ -20,7 +20,13 @@ export const emosave: Project = {
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Mobile / Flutter',
   summary:
-    '감정을 기록하고 캐릭터와 아이템으로 마을을 꾸미는 앱입니다. 감정 탭과 편집 기능을 개발했습니다.',
+    '분저장(Emosave)은 감정을 기록하고 캐릭터와 아이템으로 마을을 꾸미는 앱입니다. 감정 탭과 편집 기능을 개발했습니다.',
+  links: [
+    {
+      label: 'Google Play에서 앱 보기',
+      href: 'https://play.google.com/store/apps/details?id=com.lab254.emosave&hl=ko',
+    },
+  ],
   home: {
     features: [
       { title: '감정 기록', body: ['감정 탭의 선택과 화면 상태 처리'] },
@@ -28,7 +34,7 @@ export const emosave: Project = {
         title: '마을 편집',
         body: ['아이템 선택·이동·회전·삭제와 편집 상태 관리'],
       },
-      { title: '저장·공유', body: ['편집 결과 저장과 이모티콘 이미지 공유'] },
+      { title: '저장·공유', body: ['편집 결과 저장과 이미지 공유'] },
     ],
     scope: ['Character / Village', 'Customization', 'Emoticon / Store'],
     flows: [],
