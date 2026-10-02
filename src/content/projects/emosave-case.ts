@@ -63,13 +63,52 @@ export const emosaveCase: CaseContent = {
       },
     ],
   },
-  work: [],
-  workParagraphs: [
-    '감정 탭과 편집 기능을 구현하면서 BlocBuilder의 배치와 화면 갱신 범위를 고민했습니다.',
-    '클린 코드와 디자인 패턴을 공부하며 상태 관리 구현 방식을 검토했습니다.',
+  work: [
+    {
+      title: '감정 기록',
+      body: [
+        '감정 탭의 선택과 상태 처리를 개발하고 화면에 선택 결과를 반영했습니다.',
+      ],
+    },
+    {
+      title: '마을 편집',
+      body: [
+        '아이템 선택·이동·회전·삭제를 다루는 편집 UI와 상태 처리를 개발했습니다.',
+      ],
+    },
+    {
+      title: '저장·공유',
+      body: [
+        '편집 결과의 API·로컬 저장과 이모티콘을 이미지로 만들어 공유하는 기능을 작업했습니다.',
+      ],
+    },
   ],
+  workParagraphs: [],
   decisions: [],
-  techNotes: [],
+  techNotes: [
+    {
+      id: 'editor-state',
+      title: '편집 상태와 화면 갱신',
+      fields: [
+        {
+          label: '문제',
+          body: [
+            '아이템 선택과 배치 변경을 화면에 반영하면서 BlocBuilder를 어느 위치에 둘지 검토했습니다.',
+          ],
+        },
+        {
+          label: '구현',
+          body: [
+            '편집 상태를 다루는 Cubit과 BlocBuilder의 배치를 수정하고 상태 변화가 화면에 반영되는 위치를 검토했습니다.',
+          ],
+        },
+        {
+          label: '저장 경계',
+          body: ['편집 결과는 API와 로컬 저장소에 순차 저장합니다.'],
+        },
+      ],
+    },
+  ],
   currentState: [
     '이때 쌓은 경험은 이후 IndianBob을 비롯한 프로젝트에서 상태 관리 구조를 이해하고 구현하는 바탕이 됐습니다.',
   ],

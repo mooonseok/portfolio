@@ -19,7 +19,6 @@ const titleScale: Record<CaseTitleSize, string> = {
 export function CaseHeaderView({
   project,
   darkHeader,
-  overviewExtra,
   titleSize,
   titleTone,
   showSummary,
@@ -29,7 +28,7 @@ export function CaseHeaderView({
     <Box
       as={TAG.HEADER}
       className={cx(
-        'container pt-12 tab:pt-30 lap:pt-40 short-land:pt-8 [&_h1]:whitespace-nowrap',
+        'container pt-12 tab:pt-20 lap:pt-24 short-land:pt-8 [&_h1]:whitespace-nowrap',
         titleScale[titleSize]
       )}
       data-title={titleSize}
@@ -42,23 +41,30 @@ export function CaseHeaderView({
           tone={titleTone}
         />
       </Box>
+      {showSummary ? (
+        <Text className='mt-6 max-w-[48em] text-lead leading-[1.65] tab:mt-8 tab:ml-[calc(100%/6)]'>
+          {project.summary}
+        </Text>
+      ) : null}
       <Box
         id='overview'
-        className='mt-10 grid-page gap-y-3 border-t border-t-current pt-4 tab:mt-16 tab:gap-y-5 tab:pt-6 lap:mt-20 on-dark:border-t-dark-rule'
+        className='mt-8 grid-page gap-y-3 border-t border-t-current pt-4 tab:mt-10 tab:gap-y-5 tab:pt-6 lap:mt-12 on-dark:border-t-dark-rule'
       >
         <Box className='col-[1/-1] flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mono tab:col-[1/3] tab:flex-col tab:items-start tab:gap-2 tab:pt-1.5'>
           <Text as={TAG.SPAN}>01</Text>
           <Text as={TAG.SPAN} className='muted'>
-            OVERVIEW
+            개요
           </Text>
         </Box>
         <Column className='col-[1/-1] gap-3.5 tab:col-[3/-1] lap:col-[3/9]'>
-          {showSummary ? (
-            <Text className='text-lead leading-[1.55] tracking-[-0.006em]'>
-              {project.summary}
+          <Text as={TAG.SPAN} className='mono muted'>
+            담당 역할
+          </Text>
+          {project.case.role.map((body) => (
+            <Text key={body} className='text-body leading-[1.7]'>
+              {body}
             </Text>
-          ) : null}
-          {overviewExtra}
+          ))}
         </Column>
         <CaseMetaView meta={meta} darkHeader={darkHeader} />
       </Box>

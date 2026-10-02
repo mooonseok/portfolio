@@ -19,7 +19,6 @@ export function SmartFarmCase({ p }: { p: Project }) {
       groups={caseGroupTags(p)}
       monitoringWork={monitoringWork}
       controlWork={controlWork}
-      showContext={has(c.contextProblem)}
       showWork={has(c.work)}
       showMonitoringWork={has(monitoringWork)}
       showControlWork={has(controlWork)}

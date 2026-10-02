@@ -1,6 +1,5 @@
 import { FarmFamPlusCaseView } from './farmfam-plus-case-view';
 import { caseGroupTags } from './case-group-tags';
-import { has } from '@/lib/has';
 import type {
   RelationMap,
   RelationNode,
@@ -44,12 +43,6 @@ export function FarmFamPlusCase({ p }: { p: Project }) {
       p={p}
       groups={caseGroupTags(p)}
       relation={c.relationMap ? toRelation(c.relationMap) : undefined}
-      showScope={has(p.home.scope)}
-      showStateScope={has(c.stateScope?.items ?? [])}
-      showContext={has(c.contextProblem)}
-      showWork={has(c.work)}
-      showTech={has(c.techNotes)}
-      showCurrent={has(c.currentState)}
     />
   );
 }

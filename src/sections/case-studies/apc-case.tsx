@@ -19,7 +19,6 @@ export function ApcCase({ p }: { p: Project }) {
         items: toDomainItems(p.slug, domains, EXPLORER_MODE.DETAIL),
         mode: EXPLORER_MODE.DETAIL,
       }}
-      showContext={has(c.contextProblem)}
       showDomains={has(domains)}
       showWork={has(c.work)}
       showTech={showTech}

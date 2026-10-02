@@ -13,7 +13,6 @@ export function CaseStudyTemplate({
   project,
   hero,
   darkHeader,
-  overviewExtra,
   children,
   titleSize = SIZE.LG,
   surfaceLabel = SURFACE_LABEL.SURFACES,
@@ -25,7 +24,6 @@ export function CaseStudyTemplate({
       project={project}
       hero={hero}
       darkHeader={darkHeader}
-      overviewExtra={overviewExtra}
       titleSize={titleSize}
       titleTone={
         project.tier === PROJECT_TIER.SELECTED ? TONE.SIGNAL : TONE.INK

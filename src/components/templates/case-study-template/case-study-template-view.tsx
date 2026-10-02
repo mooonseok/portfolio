@@ -16,7 +16,6 @@ export function CaseStudyTemplateView({
   children,
   groups,
   next,
-  visualsNote,
   visualsNoteKo,
   ...header
 }: CaseStudyTemplateViewProps) {
@@ -36,7 +35,7 @@ export function CaseStudyTemplateView({
             <ScrollScene>
               <CaseHeaderView {...header} />
               <Box
-                className='mt-10 tab:mt-18 lap:mt-24'
+                className='mt-8 tab:mt-12 lap:mt-14'
                 data-reveal-item='visual'
               >
                 {hero}
@@ -49,7 +48,7 @@ export function CaseStudyTemplateView({
           <CaseContents groups={groups} />
           {children}
         </Box>
-        <CaseNextView next={next} visualsNote={visualsNote} />
+        <CaseNextView next={next} />
       </Box>
       <SiteFooter />
     </>
