@@ -1,4 +1,3 @@
-import { NODE_STATE } from '@/constants/flow';
 import { STORY_KIND } from '@/constants/project';
 import type { LabelValue } from '@/dto/field.dto';
 import type { ExperienceYear, Site } from '@/dto/site.dto';
@@ -25,41 +24,33 @@ export const site: Site = {
 export const stories: Story[] = [
   {
     id: 'S01',
-    href: '/work/emosave#interaction',
-    linkLabel: 'Emosave 사례 보기',
-    title: 'FLUTTER STATE MANAGEMENT',
-    kind: STORY_KIND.FLOW,
-    flow: [
-      { label: 'STATE' },
-      { label: 'BLOCBUILDER' },
-      { label: 'UI', state: NODE_STATE.ACTIVE },
-    ],
+    href: '/work/indian-bob#requirements-data',
+    linkLabel: 'IndianBob 사례 보기',
+    title: '앱·웹·API의 요구사항과 데이터 정렬',
     description:
-      '화면 상태에 맞춰 BlocBuilder를 배치하며 배운 점과 이후 프로젝트에 적용한 경험입니다.',
+      '해빗 기능의 요구사항과 DB 변경을 조율하고 여러 화면과 API에 반영한 경험입니다.',
+    kind: STORY_KIND.FLOW,
+    flow: [],
   },
   {
     id: 'S02',
-    href: '/work/indian-bob#system',
-    linkLabel: 'IndianBob 사례 보기',
-    title: 'APP / WEB / API',
-    kind: STORY_KIND.FLOW,
-    flow: [{ label: 'APP' }, { label: 'API' }, { label: 'ADMIN' }],
+    href: '/work/emosave#editor-state',
+    linkLabel: 'Emosave 사례 보기',
+    title: '편집 상태와 화면 갱신',
     description:
-      '하나의 기능을 앱·웹·서버에 걸쳐 구현하며 요구사항과 DB 설계 변경을 조율한 경험입니다.',
+      '아이템을 편집하는 상태와 BlocBuilder의 배치를 다룬 경험입니다.',
+    kind: STORY_KIND.FLOW,
+    flow: [],
   },
   {
     id: 'S03',
-    href: '/work/smart-farm#system',
-    linkLabel: 'Smart Farm 사례 보기',
-    title: 'SENSOR MONITORING',
-    kind: STORY_KIND.EXPERIMENT,
-    flow: [
-      { label: 'SENSOR', state: NODE_STATE.EXPERIMENT },
-      { label: 'MQTT', state: NODE_STATE.EXPERIMENT },
-      { label: 'DASHBOARD', state: NODE_STATE.EXPERIMENT },
-    ],
+    href: '/work/farmfam-plus#secret-deal-price',
+    linkLabel: 'FarmFam+ 사례 보기',
+    title: '시크릿딜의 가격과 주문 기준',
     description:
-      '사무실 시험 모듈에서 센서 측정값을 MQTT와 대시보드로 연결한 경험입니다.',
+      '시간에 따라 바뀌는 가격을 주문 생성 시점에 다시 확인한 사례입니다.',
+    kind: STORY_KIND.FLOW,
+    flow: [],
   },
 ];
 

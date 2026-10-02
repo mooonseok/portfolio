@@ -49,10 +49,10 @@ export const GROUP_ID = {
 export type GroupId = (typeof GROUP_ID)[keyof typeof GROUP_ID];
 
 export const GROUP_LABEL = {
-  [GROUP_ID.OVERVIEW]: 'Overview',
-  [GROUP_ID.SYSTEM]: 'System',
-  [GROUP_ID.INTERACTION]: 'Interaction',
-  [GROUP_ID.WORK]: 'Work',
-  [GROUP_ID.ENGINEERING]: 'Engineering',
-  [GROUP_ID.CURRENT_STATE]: 'Current State',
+  [GROUP_ID.OVERVIEW]: '개요',
+  [GROUP_ID.SYSTEM]: '기능 간 연결',
+  [GROUP_ID.INTERACTION]: '편집 상태 예시',
+  [GROUP_ID.WORK]: '담당 기능',
+  [GROUP_ID.ENGINEERING]: '대표 구현 사례',
+  [GROUP_ID.CURRENT_STATE]: '결과',
 } as const satisfies Record<GroupId, string>;

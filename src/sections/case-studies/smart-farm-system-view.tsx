@@ -38,7 +38,7 @@ export function SmartFarmSystemView({ p, groups }: CaseViewModel) {
                   className={headTitle}
                   data-reveal-item='title'
                 >
-                  Monitoring System
+                  센서 측정과 관측 흐름
                 </Heading>
               </Column>
               <FlowDiagram

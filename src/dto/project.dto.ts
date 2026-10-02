@@ -3,9 +3,11 @@ import type { CaseContent } from '@/dto/case.dto';
 import type { WorkArea } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
 import type { StatusItem, Zone } from '@/dto/status.dto';
+import type { WorkItem } from '@/dto/work.dto';
 import type { Visuals } from '@/dto/visual.dto';
 
 export interface ProjectHome {
+  features: WorkItem[];
   scope: string[];
   scopeMobile?: string[];
   flows: Flow[];

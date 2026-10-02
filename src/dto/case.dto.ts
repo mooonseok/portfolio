@@ -39,6 +39,7 @@ export interface CaseContent {
   feature?: Feature;
   surfaceRelation?: SurfaceRelationContent;
   work: WorkItem[];
+  connections?: WorkItem[];
   workParagraphs?: string[];
   decisions: Decision[];
   techIntro?: string;

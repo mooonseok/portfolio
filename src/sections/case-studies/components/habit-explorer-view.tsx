@@ -41,7 +41,7 @@ export function HabitExplorerView({
           role='tablist'
           aria-labelledby={labelId}
           aria-orientation={orientation}
-          className='grid-cols-2 gap-2 lap:grid-cols-1'
+          className='grid-cols-1 gap-2'
         >
           {feature.steps.map((s) => {
             const on = s.id === current.id;

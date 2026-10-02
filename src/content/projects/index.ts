@@ -6,9 +6,9 @@ import { indianBob } from './indian-bob';
 import { emosave } from './emosave';
 
 export const projects: Project[] = [
+  indianBob,
+  emosave,
   farmfamPlus,
   apc,
   smartFarm,
-  indianBob,
-  emosave,
 ];

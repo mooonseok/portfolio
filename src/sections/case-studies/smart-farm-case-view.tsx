@@ -12,15 +12,11 @@ import { SmartFarmControlView } from './smart-farm-control-view';
 import { SmartFarmSystemView } from './smart-farm-system-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
-import { StatusLabel } from '@/components/atoms/status-label';
-import { Text } from '@/components/atoms/text';
 import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import type { SmartFarmCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH } from '@/constants/case';
 import { SIZE } from '@/constants/size';
 import { STATUS_KIND } from '@/constants/status';
-import { TAG } from '@/constants/tag';
-import { TONE } from '@/constants/tone';
 import { IMAGE_SIZES } from '@/constants/visual';
 
 export function SmartFarmCaseView({
@@ -28,7 +24,6 @@ export function SmartFarmCaseView({
   groups,
   monitoringWork,
   controlWork,
-  showContext,
   showWork,
   showMonitoringWork,
   showControlWork,
@@ -38,7 +33,6 @@ export function SmartFarmCaseView({
   currentMonitoring,
   currentControl,
 }: SmartFarmCaseViewProps) {
-  const c = p.case;
   return (
     <CaseStudyTemplate
       project={p}
@@ -48,55 +42,18 @@ export function SmartFarmCaseView({
           <ConceptFrame
             visual={p.visuals.hero}
             className='[--ratio:4/5] tab:[--ratio:16/9] lap:[--ratio:21/9]'
-            parallax={10}
+            parallax={0}
             priority
             sizes={IMAGE_SIZES.FULL}
           />
         </Box>
       }
     >
-      {c.roleTracks ? (
-        <CaseSectionView
-          depth={CASE_DEPTH.L1}
-          title='Status / Scope'
-          id='scope'
-        >
-          <Box className={tracksClass}>
-            {c.roleTracks.map((t) => (
-              <Box
-                key={t.label}
-                className={trackCol(t.kind)}
-                data-kind={t.kind}
-              >
-                <StatusLabel
-                  kind={t.kind}
-                  label={t.label}
-                  tone={t.kind === STATUS_KIND.PRODUCT ? TONE.SIGNAL : TONE.INK}
-                />
-                <Text as={TAG.SPAN} className='muted'>
-                  {t.note}
-                </Text>
-                <ParagraphsView list={t.body} />
-              </Box>
-            ))}
-          </Box>
-        </CaseSectionView>
-      ) : null}
-      {showContext ? (
-        <CaseSectionView
-          depth={CASE_DEPTH.L1}
-          title='Context / Problem'
-          id='context'
-        >
-          <ParagraphsView list={c.contextProblem} />
-        </CaseSectionView>
-      ) : null}
-      <SmartFarmSystemView p={p} groups={groups} />
       {showWork ? (
         <CaseSectionView
           group={groups.work}
           depth={CASE_DEPTH.L3}
-          title='What I Worked On'
+          title='담당 기능'
         >
           <Column className='gap-10'>
             {showMonitoringWork ? (
@@ -114,12 +71,13 @@ export function SmartFarmCaseView({
           </Column>
         </CaseSectionView>
       ) : null}
+      <SmartFarmSystemView p={p} groups={groups} />
       <SmartFarmControlView p={p} groups={groups} />
       {showCurrent ? (
         <CaseSectionView
           group={groups.currentState}
           depth={CASE_DEPTH.L3}
-          title='Current State'
+          title='결과'
           loose
         >
           <Box className={tracksClass}>

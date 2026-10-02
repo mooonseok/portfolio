@@ -2,7 +2,6 @@ import { CaseStudyTemplate } from '@/components/templates/case-study-template/ca
 import { CaseSectionView } from './components/case-section-view';
 import { ParagraphsView } from './components/paragraphs-view';
 import { WorkRowsView } from './components/work-rows-view';
-import { TilesView } from './components/tiles-view';
 import { Box } from '@/components/atoms/box';
 import { Text } from '@/components/atoms/text';
 import { DomainExplorer } from '@/components/organisms/domain-explorer/domain-explorer';
@@ -20,7 +19,6 @@ export function ApcCaseView({
   p,
   groups,
   domains,
-  showContext,
   showDomains,
   showWork,
   showTech,
@@ -38,23 +36,19 @@ export function ApcCaseView({
         <ConceptFrame
           visual={p.visuals.hero}
           className='relative mx-auto my-0 max-h-[80svh] max-w-[1440px] [--ratio:4/5] tab:max-h-none tab:[--ratio:16/9] lap:[--ratio:21/9]'
-          parallax={20}
+          parallax={0}
           priority
           sizes={IMAGE_SIZES.FULL}
         />
       }
     >
-      <CaseSectionView depth={CASE_DEPTH.L1} title='Role / Scope' id='role'>
-        <ParagraphsView list={c.role} />
-        {c.roleSurfaces ? <TilesView list={c.roleSurfaces} /> : null}
-      </CaseSectionView>
-      {showContext ? (
+      {showWork ? (
         <CaseSectionView
-          depth={CASE_DEPTH.L1}
-          title='Context / Problem'
-          id='context'
+          group={groups.work}
+          depth={CASE_DEPTH.L3}
+          title='담당 기능'
         >
-          <ParagraphsView list={c.contextProblem} />
+          <WorkRowsView items={c.work} />
         </CaseSectionView>
       ) : null}
       {showDomains ? (
@@ -70,21 +64,12 @@ export function ApcCaseView({
           </Box>
         </CaseSectionView>
       ) : null}
-      {showWork ? (
-        <CaseSectionView
-          group={groups.work}
-          depth={CASE_DEPTH.L3}
-          title='What I Worked On'
-        >
-          <WorkRowsView items={c.work} />
-        </CaseSectionView>
-      ) : null}
       {showTech ? (
         <Box className='mt-24 pt-16 pb-18 surface-dark tab:mt-(--section) tab:pt-30 tab:pb-40'>
           <CaseSectionView
             group={groups.engineering}
             depth={CASE_DEPTH.L4}
-            title='Technical Details'
+            title='대표 구현 사례'
             layout={CASE_LAYOUT.WIDE}
             rule={RULE.DARK}
             className='*:mt-0! mob:*:[border-top-width:0]! mob:*:[border-top-style:none]! mob:*:pt-0!'
@@ -121,7 +106,7 @@ export function ApcCaseView({
         <CaseSectionView
           group={groups.currentState}
           depth={CASE_DEPTH.L3}
-          title='Current State'
+          title='결과'
           loose
         >
           <ParagraphsView list={c.currentState} />

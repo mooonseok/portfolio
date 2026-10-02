@@ -11,7 +11,7 @@ const mainVisual = {
 
 export const emosave: Project = {
   slug: PROJECT_SLUG.EMOSAVE,
-  num: '05',
+  num: '02',
   title: 'EMOSAVE',
   category: 'MOBILE INTERACTION',
   period: '2022—2023',
@@ -20,11 +20,19 @@ export const emosave: Project = {
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Mobile / Flutter',
   summary:
-    '감정 탭과 편집 화면의 기능을 개발했습니다. 상태 변화에 따른 화면 갱신을 다루며 Flutter의 상태 관리 경험을 쌓았습니다.',
+    '감정을 기록하고 캐릭터와 아이템으로 마을을 꾸미는 앱입니다. 감정 탭과 편집 기능을 개발했습니다.',
   home: {
+    features: [
+      { title: '감정 기록', body: ['감정 탭의 선택과 화면 상태 처리'] },
+      {
+        title: '마을 편집',
+        body: ['아이템 선택·이동·회전·삭제와 편집 상태 관리'],
+      },
+      { title: '저장·공유', body: ['편집 결과 저장과 이모티콘 이미지 공유'] },
+    ],
     scope: ['Character / Village', 'Customization', 'Emoticon / Store'],
     flows: [],
-    cta: 'PROJECT NOTE',
+    cta: 'CASE STUDY',
   },
   visuals: {
     home: {

@@ -66,27 +66,17 @@ export function StateSketch({
       >
         {SKETCH_SLOTS.map((shape, i) => {
           const drop = placed && i === SKETCH_DROP;
-          const target = selecting && !shape;
           return (
             <Row
               key={i}
               className={cx(
                 'relative aspect-square items-center justify-center border',
-                drop
-                  ? 'border-[1.5px] border-ink'
-                  : target
-                    ? 'border-dashed border-ink'
-                    : 'border-hairline',
+                drop ? 'border-[1.5px] border-ink' : 'border-hairline',
                 shape || drop ? 'bg-placeholder' : 'bg-transparent'
               )}
             >
               {shape ? <Shape shape={shape} ink={false} /> : null}
               {drop ? <Shape shape={pick} ink /> : null}
-              {target && !compact ? (
-                <Text as={TAG.SPAN} className='absolute mono'>
-                  +
-                </Text>
-              ) : null}
             </Row>
           );
         })}

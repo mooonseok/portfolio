@@ -24,7 +24,6 @@ export interface CaseStudyTemplateProps {
   project: Project;
   hero: ReactNode;
   darkHeader?: boolean;
-  overviewExtra?: ReactNode;
   children: ReactNode;
   titleSize?: CaseTitleSize;
   surfaceLabel?: SurfaceLabel;
@@ -34,7 +33,6 @@ export interface CaseStudyTemplateProps {
 export interface CaseHeaderViewProps {
   project: Project;
   darkHeader?: boolean;
-  overviewExtra?: ReactNode;
   titleSize: CaseTitleSize;
   titleTone: AccentTone;
   showSummary: boolean;

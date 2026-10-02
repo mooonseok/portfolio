@@ -47,7 +47,7 @@ src/
                   SurfaceRelation, FieldRows (presentational only)
     organisms/    ScrollScene, SignalLine, ConceptFrame, ConceptArt, SiteHeader,
                   MobileMenu, SiteFooter, TechNotes, ExperimentBlock,
-                  DomainExplorer (APC home + case study)
+                  DomainExplorer (APC case study)
     templates/    CaseStudyTemplate (frame, nav, meta, contents, next, footer only)
   hooks/          use-<name>.ts client logic called by containers
   dto/            *.dto.ts object shapes (interfaces / types only)
@@ -81,8 +81,8 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 - **Server components by default.** `'use client'` only on containers that own
   browser state (MobileMenu, SiteHeaderNav, TechNotes, CaseContents,
   ScrollScene, SignalLine, MotionLayer, HistoryScroll, DomainExplorer and the
-  explorer section components: FarmFam+ `WorkAreas` / `RelationMap`, Smart Farm
-  `ControlConditions`, IndianBob `HabitExplorer`, Emosave `StateExample`).
+  explorer section components: FarmFam+ `RelationMap`, Smart Farm
+  `ControlConditions`, IndianBob `HabitExplorer`).
 - **Styling.** Utilities in className; Preflight is off (the editorial base in
   `globals.css` replaces it); custom variants
   `mob tab-only short-land fine coarse on-dark js inview reveal-pending`;
@@ -96,70 +96,64 @@ owner-confirmed contribution, team size and verification scope. Unconfirmed
 backfill results and OCR evaluation claims are omitted.
 
 `Project` →
-`slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
+`slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
 
 `case`:
-`role, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
+`role, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], connections?, workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
 
-`surfaceRelation` (`{ label, rows }`) is the single definition of IndianBob's
-USER → MOBILE APP → API → DATA relation with the ADMIN branch. The homepage
-Featured block and the case study Role / Scope overview both read it through
-`surfaceRows`, which adds the per-row `sub` captions from `roleSurfaces`.
+The homepage order is IndianBob → Emosave → FarmFam+ → APC → Smart Farm. Each
+project is a full-width editorial row: service summary, three static
+`home.features`, one existing conceptual image and a detail link. Flutter work
+comes first; APC retains a dark surface; Smart Farm has its own experiment
+heading. The `work` navigation anchor starts at the Flutter section and the
+existing `flutter-work` CTA anchor remains available.
 
-Every project diagram is now either static or changed only by the visitor
-(click, tap, keyboard). Nothing is selected by scrolling. The explorer data:
+Case studies show service introduction and an overview (role, development
+surfaces, period and relevant scope limits) before the hero. The reading order
+is overview → work → connections / interaction → implementation examples →
+optional learning / result. Duplicate Role / Scope and Context sections are
+removed. Contents labels and numbers follow the actual section order.
 
-- FarmFam+ `home.areas` (`{ id, label, sub, title, body, related[], to }`) —
-  WORK AREAS: one focus per area (entry point / group-purchase consistency /
-  restore + regression), each linking to its case-study anchor (`to.target`:
-  `context`, `transaction-boundaries`, `regression-protection`). `home.flows` is
-  `[]`.
-- FarmFam+ `case.stateScope` — the static "주문이 영향을 주는 상태 · 처리 순서
-  아님" list in Role / Scope that replaced the old 5-step sequence and reverse
-  path.
-- FarmFam+ `case.relationMap`
-  (`{ id, label, title, hint, hintMobile, note, origin, targets[], check }`) —
-  02 SYSTEM, right after Context / Problem. Each node carries `why` (관계의
-  의미), `work` (실제 작업), optional `scope` and optional `note`. `check` is
-  the separate "관련 변경과 테스트" block, not a node. The map `id`
-  (`order-cancellation`) stays the heading id, so the old `#order-cancellation`
-  link still works; no tech note reuses it.
-- APC `case.domains` (`content/projects/apc-domains.ts`) — A 물류·재고 / B QR
-  근태 / C 전자결재, each with static `steps`, `impl`, optional `aside`
-  (fingerprint fallback) / `checks` (approval server checks) and a `note`
-  target. The same data feeds the home (`EXPLORER_MODE.HOME`: title, lead,
-  steps, link) and the case study (`EXPLORER_MODE.DETAIL`: adds impl list,
-  aside, checks, note link). `home.flows` is `[]`.
-- Smart Farm `home.zones` — MONITORING · OFFICE PROTOTYPE and CONTROL ·
-  EXPERIMENT as two separate experimental areas.
-  `case.controlExperiment.conditions` (`content/projects/smart-farm-control.ts`)
-  — the five safety conditions that used to be tech notes. Each condition keeps
-  its old note id as the button id, so `#command-expiry`, `#fail-safe`, … still
-  land on the section and select that condition; `#mqtt` is the MQTT caption.
-  `zone` marks what the logic relates to (command receive / equipment operation
-  / whole controller); the location text only claims "제어기 안전 로직", not a
-  firmware module.
-- IndianBob `case.feature` (`content/projects/indian-bob-feature.ts`) — HABIT
-  areas with the related `systems` and `edges` to emphasise. Edges mean
-  "connected", not call order.
-- IndianBob no longer supplies `engineeringNote`; the Apple Sign-in case and its
-  Engineering contents entry are not rendered.
-- Emosave `case.stateExample` — DEFAULT / SELECTED / PLACED copy for the drawn
-  `StateSketch` model (home: static comparison, case: state tabs next to
-  Customization).
+- FarmFam+ `case.connections` compares group purchase and secret deal as
+  separate sales paths. Work includes sales settings and order changes.
+  `secret-deal-price` covers time-dependent pricing and order revalidation.
+  `case.relationMap` is a cancellation example inside Engineering. Its
+  `order-cancellation` heading anchor and separate regression check remain.
+  External refund and inventory restoration are not claimed to share the
+  group-purchase DB transaction.
+- APC `case.domains` is A 입고·정산 / B 근태·현장 앱 / C 전자결재. The detail
+  explorer uses static steps, implementation items and note links. Examples
+  cover approval and settlement / ERP outbox; the device / APK note remains
+  supplementary. Existing note anchors are retained.
+- Smart Farm monitoring stays static. Five `controlExperiment.conditions` select
+  the relevant safety explanation and preserve their old hash IDs. Control is a
+  separate ESP32-S3 / LED single-channel PoC. The fan concept image is not used
+  as evidence of controlled equipment. Experiment purpose, implementation scope
+  and test boundary are outside the changing panel.
+- IndianBob `case.feature` selects 해빗 이용 / 관리자 운영 / 팀 기능 and
+  highlights related systems and connections. Three options are vertically
+  stacked at every width. Two examples cover input validation and coordinating
+  requirements / data across app, web and API. Apple Sign-in remains omitted.
+- Emosave `case.stateExample` is a static DEFAULT / SELECTED / PLACED comparison
+  beside the interaction content, with an explanatory-example caption. The
+  drawing does not invent a drop-target indicator. Work covers emotion input,
+  editing and save / share. `editor-state` discusses Cubit and BlocBuilder
+  placement without an unmeasured performance claim.
 
 Lines in these diagrams show connection only, not execution order, parallelism
 or transaction scope; each `note` / `caption` says so. No explorer claims a
 sequence the content does not state.
 
-Project flows and Stories use `FLOW_ROLE.STATIC` and read `state` from data;
-scrolling does not change their selected node. Representative homepage images
-use `visual.caption` for an always-visible figcaption below the image. The
-aspect ratio applies to the media box; captions stay in normal flow (11px label
-/ 13px description). APC, IndianBob, Smart Farm and Emosave use
-`main-restored.png` clarity-restored concept assets, not higher-resolution
-upscales; original JPGs are retained. Images use quality 85 with responsive
-Next.js optimization. Spatial pins and hover metadata overlays are removed.
+Project flows use `FLOW_ROLE.STATIC`; scrolling does not change their selected
+node. Stories are text-and-link summaries without repeated flow diagrams.
+Representative homepage images use `visual.caption` for an always-visible
+figcaption below the image. The aspect ratio applies to the media box; captions
+stay in normal flow (11px label / 13px description). APC, IndianBob, Smart Farm
+and Emosave use `main-restored.png` clarity-restored concept assets, not
+higher-resolution upscales; original JPGs are retained. Images use quality 85
+with responsive Next.js WebP optimization. AVIF is disabled after the 750px
+Smart Farm conversion stalled during local production-browser verification.
+Spatial pins and hover metadata overlays are removed.
 
 Rules:
 
@@ -177,28 +171,21 @@ Rules:
 
 ## 4. Content → UI mapping
 
-| Data                                                   | Homepage                                               | Case study                                                              |
-| ------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------------------- |
-| `summary`                                              | Project description                                    | Overview lead                                                           |
-| `period` · `status` · `surfaces`                       | Meta rail                                              | Header rail, meta list                                                  |
-| `home.scope` (+`scopeMobile` list)                     | SCOPE keywords (explicit shorter list on mobile)       | FarmFam+ Role/Scope keyword row                                         |
-| `home.areas`                                           | FarmFam+ WORK AREAS (tabs ≥744, accordion <744)        | —                                                                       |
-| `home.zones`                                           | Smart Farm MONITORING / CONTROL areas                  | —                                                                       |
-| `domains`                                              | APC FIELD WORK tabs                                    | APC System (same data + impl, aside, checks, note link)                 |
-| `stateScope` · `relationMap`                           | —                                                      | FarmFam+ Role / Scope list · 02 System relation map                     |
-| `case.role` · `roleSurfaces` · `roleTracks`            | —                                                      | Role / Scope (Smart Farm: Status / Scope in 2 columns)                  |
-| `case.contextProblem`                                  | —                                                      | Context / Problem                                                       |
-| `systemFlows` · `monitoringFlow`                       | —                                                      | System group                                                            |
-| `controlExperiment` (rows + `conditions`)              | —                                                      | Smart Farm Control Experiment (Engineering), dashed, condition selector |
-| `feature`                                              | —                                                      | IndianBob 02 System HABIT explorer                                      |
-| `work` (`track`)                                       | —                                                      | What I Worked On (Smart Farm grouped ● / ◇)                             |
-| `techNotes`                                            | —                                                      | Engineering group, flexible fields, no STACK block                      |
-| `engineeringNote`                                      | —                                                      | Optional; currently unused                                              |
-| `experiment`                                           | —                                                      | Optional; currently unused                                              |
-| `stories[].description`                                | Story card body, under title and flow                  | —                                                                       |
-| `surfaceRelation`                                      | IndianBob Featured relation (with `roleSurfaces` subs) | IndianBob Role / Scope overview (with subs)                             |
-| `currentState` · `currentStateTracks`                  | —                                                      | Current State (Smart Farm: 2 columns, stated once)                      |
-| `interactionFocus` · `stateExample` · `workParagraphs` | Emosave static state comparison                        | Emosave Interaction (state tabs beside Customization) / Work            |
+| Data                                   | Homepage                             | Case study                                         |
+| -------------------------------------- | ------------------------------------ | -------------------------------------------------- |
+| `summary`                              | Service introduction                 | Introduction before overview                       |
+| `period` · `status` · `surfaces`       | Project header                       | Header and overview metadata                       |
+| `home.features`                        | Three static feature summaries       | —                                                  |
+| `case.role`                            | —                                    | Overview before hero                               |
+| `work`                                 | —                                    | Broad feature scope before diagrams                |
+| `connections` · `relationMap`          | —                                    | FarmFam+ sales comparison and cancellation example |
+| `domains`                              | —                                    | APC business explorer                              |
+| `monitoringFlow` · `controlExperiment` | —                                    | Static monitoring and separate control PoC         |
+| `feature`                              | —                                    | IndianBob feature-to-system explorer               |
+| `techNotes`                            | —                                    | Representative implementation examples             |
+| `interactionFocus` · `stateExample`    | —                                    | Emosave illustrations and static state comparison  |
+| `stories[].description`                | Three text summaries with case links | —                                                  |
+| `currentState`                         | —                                    | Optional learning / result                         |
 
 Items from the content brief that were **not shown in the UI** because they are
 instructions to the writer, not visitor-facing text:
@@ -222,12 +209,11 @@ only). Smooth scrolling is only for in-page links: `HistoryScroll` sets
 back/forward, so landing on a URL hash and history restoration jump straight to
 their position. Hash-link clicks that open elsewhere (modifier keys, `target`,
 `download`) or are cancelled are not remembered. The Smart Farm monitoring flow
-and Stories S01–S03 are `FLOW_ROLE.STATIC` (first-reveal line draw only).
-Stories cover Flutter state management, IndianBob app/web/API work, and office
-sensor monitoring, with links to the relevant case sections. The hero CTA jumps
-to `#flutter-work` (Flutter Projects); existing project order remains unchanged.
-FarmFam engineering is labeled 협업과 검증; IndianBob and Emosave current-state
-groups are labeled 배운 점 without changing anchor IDs.
+is `FLOW_ROLE.STATIC` (first-reveal line draw only). Stories cover IndianBob
+app/web/API coordination, Emosave editor state, and FarmFam+ secret-deal price
+validation. The hero CTA jumps to `#flutter-work`. Engineering is labeled 대표
+구현 사례; IndianBob and Emosave retain 배운 점 without changing their
+current-state anchor IDs.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
@@ -239,7 +225,7 @@ written as CSS variables / attributes.
 | Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                                     | complete immediately              |
 | Signal line        | 1px graphite; passed part ink (paper over dark); one 9px marker per `[data-signal-anchor]` — current = signal, inside dark = ON DARK, else open; Tools branches `[data-passed]` (≥744); ends at the footer's `● 200 OK` (`[data-signal-end]`) | fully drawn, markers still switch |
 | Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                                   | visible, no transform             |
-| Parallax / pointer | `ConceptFrame parallax` FarmFam 10 · APC 20 · Smart Farm 10 · others 12; pointer shift ≤6px / 300ms; only fine pointer ≥1024                                                                                                                  | none                              |
+| Parallax / pointer | Current project summary and case hero `ConceptFrame parallax` 0; pointer shift ≤6px / 300ms; only fine pointer ≥1024                                                                                                                          | none                              |
 | Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                                                   | same                              |
 | Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                                          | none                              |
 | CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                                       | color only                        |
@@ -265,25 +251,15 @@ written as CSS variables / attributes.
   - `h3 > button[aria-expanded][aria-controls]`, rows are 52px.
   - First note open by default; several can be open at once.
   - Opens the matching note when the URL hash points to it.
-- FarmFam+ WORK AREAS:
-  - ≥744: `tablist` / `tab` / `tabpanel` with roving tabindex, ←/→ (wrapping),
-    Home/End and automatic activation. Panels are stacked in one grid cell, so
-    the block does not change height between areas.
-  - <744: `h4 > button[aria-expanded][aria-controls]` + `role="region"`. One
-    item at most is open; tapping the open item closes it. The tapped title
-    keeps its screen position when the item above collapses.
-  - Both structures share one choice (`useChoiceGroup`): when every item is
-    closed the tabs show the last valid choice (order if none). The hidden copy
-    is `display: none`; if focus was inside when the breakpoint flips, it moves
-    to the matching visible control without scrolling.
 - FarmFam+ relation map: ≥744 bordered `button[aria-pressed][aria-controls]`
   nodes in a `role="group"` plus one panel; <744 a tree of
   `button[aria-expanded]` with the explanation directly under the tapped node.
   Connectors are `aria-hidden`; the panel text carries the same relation.
-- APC domains, IndianBob HABIT, Emosave states: `tablist` / `tab` / `tabpanel`
-  (`useTabKeys`). APC and Emosave are horizontal (←/→). IndianBob is vertical at
-  ≥1024 (`aria-orientation="vertical"`, ↑/↓) and a 2×2 grid below (←/→ move in
-  reading order, ↑/↓ move by row). Home/End everywhere.
+- APC domains and IndianBob features: `tablist` / `tab` / `tabpanel`
+  (`useTabKeys`), roving tabindex, Home/End and automatic activation. APC uses
+  horizontal ←/→; IndianBob uses vertical ↑/↓ at every width. IndianBob's
+  explanation panel stays keyboard-focusable. Emosave's state examples are
+  static and do not add focus stops.
 - Smart Farm conditions: `button[aria-pressed]` chips; the drawing is
   `aria-hidden` and the panel states "▲ 설명 위치 · …" in text.
 - Contents derives its current group from document positions on scroll, resize,

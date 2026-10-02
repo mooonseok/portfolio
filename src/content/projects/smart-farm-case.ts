@@ -5,7 +5,10 @@ import type { CaseContent } from '@/dto/case.dto';
 import { smartFarmConditions } from './smart-farm-control';
 
 export const smartFarmCase: CaseContent = {
-  role: [],
+  role: [
+    '2인 팀에서 센서 모듈 구성·측정값 전송·대시보드 연동을 담당했습니다.',
+    '제어 PoC는 센서 모니터링과 별도의 LED 1채널 실험이며 실제 농장 적용 전 단계입니다.',
+  ],
   roleTracks: [
     {
       kind: STATUS_KIND.EXPERIMENT,
@@ -37,8 +40,8 @@ export const smartFarmCase: CaseContent = {
     ],
   },
   controlExperiment: {
-    title: 'Control Experiment',
-    subtitle: '어디서 무엇을 막는가',
+    title: '별도 제어 PoC',
+    subtitle: 'LED 시험 출력의 안전 조건',
     hint: '안전 조건을 선택하면 설명 위치가 표시됩니다',
     command: { code: 'COMMAND', sub: '서버 / edge' },
     controller: { code: 'CONTROLLER', sub: 'ESP32-S3' },
@@ -58,19 +61,19 @@ export const smartFarmCase: CaseContent = {
     conditions: smartFarmConditions,
     rows: [
       {
-        label: 'WHY',
+        label: '목적',
         body: [
           '센서 모니터링에서 한 단계 더 나아가 소프트웨어 명령을 실제 제어기와 출력 동작까지 연결할 수 있는지를 검증하기 위해 진행했습니다.',
         ],
       },
       {
-        label: 'PROTOTYPE',
+        label: '구현 범위',
         body: [
           'MQTT 기반 서버/edge 통신과 ESP32-S3 제어기를 연결하고, 명령 만료·중복 방지·fail-safe·duty 제한 같은 제어 안전 로직을 포함한 PoC를 구현했습니다.',
         ],
       },
       {
-        label: 'FINDING',
+        label: '검증 대상·한계',
         body: [
           '검증에 사용한 출력은 시험용 LED 1채널입니다.',
           '실제 농장 적용 전 단계입니다.',
@@ -102,10 +105,4 @@ export const smartFarmCase: CaseContent = {
   decisions: [],
   techNotes: [],
   currentState: [],
-  currentStateTracks: {
-    monitoring: [
-      '사무실 시험 환경에서 개발·테스트를 진행했습니다. 실제 농장 적용 전 단계입니다.',
-    ],
-    control: ['제어 실험의 출력 대상은 시험용 LED 1채널입니다.'],
-  },
 };

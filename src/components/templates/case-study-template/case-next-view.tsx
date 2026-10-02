@@ -1,17 +1,10 @@
 import { Box } from '@/components/atoms/box';
 import { NavLink } from '@/components/atoms/nav-link';
-import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
 import type { CaseNextLink } from '@/dto/case-template.dto';
 import { TAG } from '@/constants/tag';
 
-export function CaseNextView({
-  next,
-  visualsNote,
-}: {
-  next: CaseNextLink;
-  visualsNote: string;
-}) {
+export function CaseNextView({ next }: { next: CaseNextLink }) {
   return (
     <Box
       as={TAG.NAV}
@@ -37,11 +30,6 @@ export function CaseNextView({
           </Text>
         </NavLink>
       </Box>
-      <Row className='mt-16 flex-wrap justify-between gap-x-6 gap-y-2 mono muted tab:mt-30 lap:mt-40'>
-        <Text className='font-sans text-[14px] leading-[1.5] tracking-[0] tab:[font:inherit]'>
-          {visualsNote}
-        </Text>
-      </Row>
     </Box>
   );
 }
