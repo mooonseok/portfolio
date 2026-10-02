@@ -34,7 +34,10 @@ export const emosave: Project = {
         title: '마을 편집',
         body: ['아이템 선택·이동·회전·삭제와 편집 상태 관리'],
       },
-      { title: '저장·공유', body: ['편집 결과 저장과 이미지 공유'] },
+      {
+        title: '저장·공유',
+        body: ['편집 결과 저장과 다이어리 화면 캡처 공유'],
+      },
     ],
     scope: ['Character / Village', 'Customization', 'Emoticon / Store'],
     flows: [],

@@ -24,9 +24,7 @@ export const emosaveCase: CaseContent = {
     },
     {
       title: '이모티콘과 스토어',
-      body: [
-        '이모티콘 삭제와 이미지 공유, 스토어 UI 수정과 로컬라이징을 작업했습니다.',
-      ],
+      body: ['이모티콘 삭제, 스토어 UI 수정과 로컬라이징을 작업했습니다.'],
       visual: VISUAL_SLOT.STORE,
     },
   ],
@@ -77,7 +75,9 @@ export const emosaveCase: CaseContent = {
     },
     {
       title: '저장·공유',
-      body: ['편집 결과의 API·로컬 저장과 이미지 공유 기능을 작업했습니다.'],
+      body: [
+        '편집 결과의 API·로컬 저장을 처리하고, 다이어리 상세 화면을 이미지로 캡처해 공유하는 기능을 개발했습니다.',
+      ],
     },
   ],
   workParagraphs: [],
