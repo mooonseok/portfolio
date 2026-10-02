@@ -8,6 +8,11 @@ Flutter 앱을 중심으로 관리자 웹과 서버 API까지 개발한 경험�
 프로젝트에 있습니다. 이미지와 도식은 설명을 위한 재구성 자료입니다. 공식 제출용
 URL은 아직 확정하지 않았습니다.
 
+공개 앱 등록 페이지:
+
+- [인디언밥 — Google Play](https://play.google.com/store/apps/details?id=com.connecto.indianbob&hl=ko)
+- [분저장 — Google Play](https://play.google.com/store/apps/details?id=com.lab254.emosave&hl=ko)
+
 ## 빠르게 확인하기
 
 | 확인할 내용                     | 경로                                                                     |

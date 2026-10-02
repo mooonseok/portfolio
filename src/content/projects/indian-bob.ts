@@ -20,7 +20,13 @@ export const indianBob: Project = {
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'App / API / Admin',
   summary:
-    '해빗 참여와 팀 활동을 지원하는 서비스입니다. Flutter 앱, 관리자 웹, 서버 API에 걸쳐 기능을 개발했습니다.',
+    '인디언밥은 해빗 참여와 팀 활동을 지원하는 서비스입니다. Flutter 앱, 관리자 웹, 서버 API에 걸쳐 기능을 개발했습니다.',
+  links: [
+    {
+      label: 'Google Play에서 앱 보기',
+      href: 'https://play.google.com/store/apps/details?id=com.connecto.indianbob&hl=ko',
+    },
+  ],
   home: {
     features: [
       {

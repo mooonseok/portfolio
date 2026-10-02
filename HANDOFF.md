@@ -96,7 +96,7 @@ owner-confirmed contribution, team size and verification scope. Unconfirmed
 backfill results and OCR evaluation claims are omitted.
 
 `Project` →
-`slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
+`slug, num, title, category, period, tier, caseLength, status[], surfaces, summary, links?, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
 
 `case`:
 `role, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], connections?, workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
@@ -110,6 +110,13 @@ reading path focused on project work. Case work rows and technical notes use
 Flutter work comes first; APC retains a dark surface; Smart Farm has its own
 experiment heading. The `work` navigation anchor starts at the Flutter section
 and the existing `flutter-work` CTA anchor remains available.
+
+IndianBob and Emosave include verified Google Play links in `project.links`,
+shown beside the home detail action and below the case overview. The package IDs
+match their local Android builds. Store listings identify the public apps; they
+do not establish current backend availability or authorship of every feature.
+Emosave is also identified by its public Korean name, 분저장. App Store links
+are omitted until their direct availability is confirmed.
 
 Case studies show service introduction and an overview (role, development
 surfaces, period and relevant scope limits) before the hero. The reading order

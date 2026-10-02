@@ -2,6 +2,7 @@ import { CaseMetaView } from './case-meta-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Text } from '@/components/atoms/text';
+import { ProjectLinks } from '@/components/molecules/project-links';
 import { ProjectHeader } from '@/components/molecules/project-header';
 import { cx } from '@/lib/cx';
 import type { CaseHeaderViewProps } from '@/dto/case-template.dto';
@@ -67,6 +68,11 @@ export function CaseHeaderView({
           ))}
         </Column>
         <CaseMetaView meta={meta} darkHeader={darkHeader} />
+        {project.links?.length ? (
+          <Box className='col-span-full tab:col-[3/-1]'>
+            <ProjectLinks links={project.links} />
+          </Box>
+        ) : null}
       </Box>
     </Box>
   );
