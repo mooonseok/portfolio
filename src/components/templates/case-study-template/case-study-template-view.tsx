@@ -16,6 +16,7 @@ export function CaseStudyTemplateView({
   children,
   groups,
   next,
+  visualsNoteKo,
   ...header
 }: CaseStudyTemplateViewProps) {
   return (
@@ -35,6 +36,9 @@ export function CaseStudyTemplateView({
               <CaseHeaderView {...header} />
               <Box className='container mt-8 pb-12 tab:mt-12 tab:pb-16 lap:mt-14'>
                 {hero}
+                <Text className='mt-4 text-small text-subtle on-dark:text-dark-sub'>
+                  {visualsNoteKo}
+                </Text>
               </Box>
             </ScrollScene>
           </Box>

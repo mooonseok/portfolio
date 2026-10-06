@@ -43,6 +43,7 @@ export interface CaseStudyTemplateViewProps extends CaseHeaderViewProps {
   children: ReactNode;
   groups: ContentsGroup[];
   next: CaseNextLink;
+  visualsNoteKo: string;
 }
 
 export interface CaseContentsItem {

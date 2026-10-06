@@ -25,7 +25,7 @@ export const site: Site = {
     legendBuilt: '개발 참여',
     legendExperiment: '실험',
     experiment: '실험',
-    note: '',
+    note: '세로선은 같은 프로젝트에서 함께 맡은 영역을 잇는 표시이며, 호출 순서나 작업량을 뜻하지 않습니다.',
   },
   about:
     '팀원들과 요구사항과 데이터 구조를 조율하며 앱·관리자 웹·서버 API를 개발했습니다. 테스트·리뷰·배포와 운영 QA에도 참여했습니다.',

@@ -10,11 +10,13 @@ export function BoardNoteView({
   id,
   open,
   read,
+  experiment,
 }: {
   column: BoardColumn;
   id: string;
   open: boolean;
   read: string;
+  experiment: string;
 }) {
   return (
     <Box id={id} className='board-note' hidden={!open}>
@@ -31,6 +33,14 @@ export function BoardNoteView({
                 {b.tech ? (
                   <Text as={TAG.SPAN} className='note-tech'>
                     {b.tech}
+                  </Text>
+                ) : null}
+                {b.experiment ? (
+                  <Text as={TAG.SPAN} className='note-exp'>
+                    <Text as={TAG.SPAN} aria-hidden='true'>
+                      ◇{' '}
+                    </Text>
+                    {experiment}
                   </Text>
                 ) : null}
               </Text>

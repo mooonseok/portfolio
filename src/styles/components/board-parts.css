@@ -62,14 +62,12 @@
   font-weight: 600;
   color: var(--marker-blue);
 }
-.note-layer[data-kind='experiment'] .note-lines {
-  display: grid;
-  gap: 10px;
-  padding-left: 1.1em;
-  list-style: disc;
-}
-.note-floor {
+.note-layer[data-kind='experiment'] .note-floor {
   color: var(--marker-green);
+}
+.note-exp {
+  font-size: 12.5px;
+  font-weight: 500;
 }
 .note-tech {
   font-weight: 500;

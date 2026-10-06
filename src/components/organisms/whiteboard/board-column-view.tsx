@@ -84,7 +84,13 @@ export function BoardColumnView({
           </Box>
         ))}
       </Box>
-      <BoardNoteView column={c} id={noteId} open={selected} read={copy.read} />
+      <BoardNoteView
+        column={c}
+        id={noteId}
+        open={selected}
+        read={copy.read}
+        experiment={copy.experiment}
+      />
     </ListItem>
   );
 }

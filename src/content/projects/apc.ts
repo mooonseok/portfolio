@@ -25,7 +25,7 @@ export const apc: Project = {
     {
       floor: FLOOR.APP,
       tech: 'Flutter',
-      summary: '현장 앱 업데이트',
+      summary: '현장 앱 업데이트 (유지보수)',
       lines: [
         '현장 앱의 버전 확인과 APK 업데이트를 처리하고, 설치 전후 키오스크 상태를 유지·복구했습니다.',
       ],
