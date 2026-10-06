@@ -3,15 +3,15 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--signal);
+  background: var(--marker-blue);
 }
-.status-label[data-tone='ink'] .status-mark {
-  background: currentColor;
+.surface-dark .status-mark {
+  background: #8fb0ff;
 }
 .status-label[data-kind='experiment'] .status-mark {
   border-radius: 0;
   background: none;
-  border: 1.25px solid currentColor;
+  border: 1.25px solid var(--marker-green);
   transform: rotate(45deg);
 }
 .status-mark[data-pulse] {
@@ -22,12 +22,9 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1.25px solid var(--signal);
+  border: 1.25px solid var(--marker-blue);
   opacity: 0;
   pointer-events: none;
-}
-.status-label[data-tone='ink'] .status-mark[data-pulse]::after {
-  border-color: currentColor;
 }
 .status-label[data-kind='experiment'] .status-mark[data-pulse]::after {
   display: none;

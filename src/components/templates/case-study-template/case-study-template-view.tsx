@@ -34,12 +34,9 @@ export function CaseStudyTemplateView({
           <Box className={cx('pb-0', header.darkHeader && 'surface-dark')}>
             <ScrollScene>
               <CaseHeaderView {...header} />
-              <Box
-                className='mt-8 tab:mt-12 lap:mt-14'
-                data-reveal-item='visual'
-              >
+              <Box className='container mt-8 pb-12 tab:mt-12 tab:pb-16 lap:mt-14'>
                 {hero}
-                <Text className='container mt-4 text-small text-subtle on-dark:text-dark-sub'>
+                <Text className='mt-4 text-small text-subtle on-dark:text-dark-sub'>
                   {visualsNoteKo}
                 </Text>
               </Box>

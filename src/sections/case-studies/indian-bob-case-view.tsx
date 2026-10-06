@@ -2,8 +2,6 @@ import { CaseStudyTemplate } from '@/components/templates/case-study-template/ca
 import { CaseSectionView } from './components/case-section-view';
 import { WorkRowsView } from './components/work-rows-view';
 import { ParagraphsView } from './components/paragraphs-view';
-import { Box } from '@/components/atoms/box';
-import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { HabitExplorer } from './components/habit-explorer';
@@ -13,20 +11,7 @@ import { SIZE } from '@/constants/size';
 export function IndianBobCaseView({ p, groups }: IndianBobCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate
-      project={p}
-      titleSize={SIZE.MD}
-      hero={
-        <Box className='container'>
-          <ConceptFrame
-            visual={p.visuals.app}
-            className='[--ratio:4/3] tab:[--ratio:16/9]'
-            parallax={0}
-            priority
-          />
-        </Box>
-      }
-    >
+    <CaseStudyTemplate project={p} titleSize={SIZE.MD}>
       <CaseSectionView
         group={groups.work}
         depth={CASE_DEPTH.L1}

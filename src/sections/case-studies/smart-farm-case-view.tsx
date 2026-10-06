@@ -12,12 +12,10 @@ import { SmartFarmControlView } from './smart-farm-control-view';
 import { SmartFarmSystemView } from './smart-farm-system-view';
 import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
-import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import type { SmartFarmCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH } from '@/constants/case';
 import { SIZE } from '@/constants/size';
 import { STATUS_KIND } from '@/constants/status';
-import { IMAGE_SIZES } from '@/constants/visual';
 
 export function SmartFarmCaseView({
   p,
@@ -34,21 +32,7 @@ export function SmartFarmCaseView({
   currentControl,
 }: SmartFarmCaseViewProps) {
   return (
-    <CaseStudyTemplate
-      project={p}
-      titleSize={SIZE.MD}
-      hero={
-        <Box className='container'>
-          <ConceptFrame
-            visual={p.visuals.hero}
-            className='[--ratio:4/5] tab:[--ratio:16/9] lap:[--ratio:21/9]'
-            parallax={0}
-            priority
-            sizes={IMAGE_SIZES.FULL}
-          />
-        </Box>
-      }
-    >
+    <CaseStudyTemplate project={p} titleSize={SIZE.MD}>
       {showWork ? (
         <CaseSectionView
           group={groups.work}
