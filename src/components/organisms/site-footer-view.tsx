@@ -6,6 +6,9 @@ import { Text } from '@/components/atoms/text';
 import type { SiteFooterViewProps } from '@/dto/chrome.dto';
 import { TAG } from '@/constants/tag';
 
+const contactLinkClassName =
+  'inline-flex min-h-11 items-center self-start border-b border-b-current focus-visible:border-b-signal active:border-b-signal fine:hover:border-b-signal';
+
 export function SiteFooterView({
   name,
   email,
@@ -31,7 +34,7 @@ export function SiteFooterView({
               {email ? (
                 <Anchor
                   href={`mailto:${email}`}
-                  className='flex min-h-11 items-center self-start text-[20px] leading-normal font-medium wrap-anywhere tab:text-[24px]'
+                  className={`${contactLinkClassName} text-[20px] leading-normal font-medium wrap-anywhere tab:text-[24px]`}
                 >
                   {email}
                 </Anchor>
@@ -39,7 +42,7 @@ export function SiteFooterView({
               {github ? (
                 <Anchor
                   href={github}
-                  className='inline-flex min-h-11 items-center self-start border-b border-b-current text-body hover:border-b-signal'
+                  className={`${contactLinkClassName} text-body`}
                   target='_blank'
                   rel='noreferrer'
                 >
