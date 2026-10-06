@@ -150,8 +150,3 @@
     margin: 8px 0 0;
   }
 }
-@media (max-width: 1023px) {
-  .board-legend .legend-empty {
-    display: none;
-  }
-}

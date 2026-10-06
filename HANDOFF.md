@@ -104,13 +104,15 @@ DB / 기기). At 1024px and above each built cell is a blue marker box showing i
 technology and first work line; layers the developer did not build are faint
 dotted outlines; vertically adjacent built cells in one project are joined by a
 short marker line (connection only, not order). Below 1024px each project lists
-its built layers as marker chips. Selecting a project name draws a red marker
-loop and opens a yellow note below the matrix (the matrix does not move) with
-period, status and every layer's technology and work lines, plus the case link.
-Blue solid = product work, green dashed = experiment, red = current selection.
-The loop draws in 360ms and the note enters in 200ms only for pointer
-activation; keyboard and reduced-motion selection are immediate. Experiment
-cells carry a screen-reader "(실험)" suffix.
+all five layers as marker chips, with unbuilt layers as faint dotted chips. Each
+column header shows the service and participation period. Selecting a project
+name draws a red marker loop and opens a yellow note below the matrix (the
+matrix does not move) with period, status and every layer's technology and work
+lines, plus the case link. Blue solid = product work, green dashed = experiment,
+red = current selection. The loop draws in 300ms and the note enters in 180ms
+only when a pointer opens the first note; switching notes, keyboard and
+reduced-motion selection are immediate. Selecting keeps the tapped title at the
+same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
 
 `Project` →
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, boardService, layers[], summary, links?, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`

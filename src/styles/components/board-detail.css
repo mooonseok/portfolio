@@ -80,8 +80,3 @@
     font-size: 14.5px;
   }
 }
-@media (max-width: 1023px) {
-  .board-detail .board-legend .legend-empty {
-    display: inline-flex;
-  }
-}

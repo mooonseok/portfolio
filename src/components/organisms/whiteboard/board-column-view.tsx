@@ -19,7 +19,7 @@ export function BoardColumnView({
   index: number;
   selected: boolean;
   copy: BoardCopy;
-  onSelect: (slug: string, pointer: boolean) => void;
+  onSelect: (slug: string, pointer: boolean, target: HTMLElement) => void;
 }) {
   const noteId = `board-note-${c.slug}`;
   return (
@@ -33,17 +33,20 @@ export function BoardColumnView({
           className='board-title'
           aria-expanded={selected}
           aria-controls={noteId}
-          onClick={(event) => onSelect(c.slug, event.detail > 0)}
+          onClick={(event) =>
+            onSelect(c.slug, event.detail > 0, event.currentTarget)
+          }
         >
           <Text as={TAG.SPAN} className='board-title-text'>
             {c.title}
             <MarkerPathView d={c.loop} className='board-loop' />
           </Text>
-          <Text as={TAG.SPAN} className='board-toggle'>
+          <Text as={TAG.SPAN} className='board-toggle' aria-hidden='true'>
             {selected ? copy.hide : copy.show}
           </Text>
         </Button>
         <Text className='board-service'>{c.service}</Text>
+        <Text className='board-period nowrap'>{c.period}</Text>
       </Box>
       <Box className='board-boxes'>
         {c.boxes.map((b) => (
@@ -58,16 +61,16 @@ export function BoardColumnView({
             {b.joinNext ? (
               <MarkerPathView d={b.joinNext} className='box-join' />
             ) : null}
+            <Text as={TAG.SPAN} className='box-floor'>
+              {b.label}
+              {b.experiment ? (
+                <Text as={TAG.SPAN} className='sr-only'>
+                  {` (${copy.experiment})`}
+                </Text>
+              ) : null}
+            </Text>
             {b.lit ? (
               <>
-                <Text as={TAG.SPAN} className='box-floor'>
-                  {b.label}
-                  {b.experiment ? (
-                    <Text as={TAG.SPAN} className='sr-only'>
-                      {` (${copy.experiment})`}
-                    </Text>
-                  ) : null}
-                </Text>
                 {b.tech ? (
                   <Text as={TAG.SPAN} className='box-tech'>
                     {b.tech}

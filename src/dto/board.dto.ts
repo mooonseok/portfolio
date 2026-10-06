@@ -47,5 +47,5 @@ export interface WhiteboardProps {
 export interface WhiteboardViewProps extends WhiteboardProps {
   selected: string | null;
   animate: boolean;
-  onSelect: (slug: string, pointer: boolean) => void;
+  onSelect: (slug: string, pointer: boolean, target: HTMLElement) => void;
 }

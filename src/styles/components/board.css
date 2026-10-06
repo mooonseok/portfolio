@@ -69,11 +69,16 @@
   line-height: 1.6;
   margin: 8px 0 0;
 }
+.board-period {
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--subtle);
+}
 .board-loop {
   position: absolute;
-  inset: -9px -14px;
-  width: calc(100% + 28px);
-  height: calc(100% + 18px);
+  inset: -12px -22px;
+  width: calc(100% + 44px);
+  height: calc(100% + 24px);
   stroke: var(--marker-red);
   stroke-width: 2px;
   stroke-dasharray: 100;
@@ -98,7 +103,7 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .board[data-animate] .board-col[data-selected] .board-loop {
-    transition: stroke-dashoffset var(--dur-draw) var(--ease-draw);
+    transition: stroke-dashoffset 300ms var(--ease-out);
   }
 }
 .board-boxes {
@@ -112,10 +117,18 @@
   min-width: 0;
   padding: 7px 13px;
 }
-.board-box:not([data-lit]),
 .box-line,
 .box-join {
   display: none;
+}
+.board-box:not([data-lit]) .box-stroke {
+  stroke: var(--marker-ghost);
+  stroke-width: 1.5px;
+  stroke-dasharray: 2 4;
+}
+.board-box:not([data-lit]) .box-floor {
+  color: var(--subtle);
+  font-weight: 400;
 }
 .marker-svg {
   position: absolute;
