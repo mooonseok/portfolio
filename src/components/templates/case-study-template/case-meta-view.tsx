@@ -17,7 +17,7 @@ export function CaseMetaView({
   return (
     <Grid
       as={TAG.DL}
-      className='col-[1/-1] mx-0 mt-2 mb-0 grid-cols-2 gap-x-4 tab:col-[3/-1] tab:mt-0 lap:col-[10/13] lap:grid-cols-[1fr] lap:[align-content:start]'
+      className='mx-0 mt-6 mb-0 grid-cols-1 gap-x-4'
       data-reveal-item='meta'
     >
       {meta.map((r) => (

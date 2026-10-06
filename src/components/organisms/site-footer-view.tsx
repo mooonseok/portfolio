@@ -6,6 +6,9 @@ import { Text } from '@/components/atoms/text';
 import type { SiteFooterViewProps } from '@/dto/chrome.dto';
 import { TAG } from '@/constants/tag';
 
+const contactLinkClassName =
+  'inline-flex min-h-11 items-center self-start border-b border-b-current focus-visible:border-b-signal active:border-b-signal fine:hover:border-b-signal';
+
 export function SiteFooterView({
   name,
   email,
@@ -15,23 +18,23 @@ export function SiteFooterView({
   return (
     <Box
       as={TAG.FOOTER}
-      className='pt-(--section) pb-[calc(24px_+_env(safe-area-inset-bottom))] surface-dark tab:pb-[calc(36px_+_env(safe-area-inset-bottom))] lap:pb-[calc(48px_+_env(safe-area-inset-bottom))]'
+      className='pt-12 pb-[calc(24px_+_env(safe-area-inset-bottom))] surface-dark tab:pt-16 tab:pb-[calc(36px_+_env(safe-area-inset-bottom))] lap:pt-20 lap:pb-[calc(48px_+_env(safe-area-inset-bottom))]'
       id={contact ? 'contact' : undefined}
     >
       <Box className='container'>
         {contact ? (
-          <Box className='mb-16 grid-page gap-y-4 tab:mb-20 lap:mb-24'>
+          <Box className='mb-8 grid-page gap-y-4 tab:mb-10 lap:mb-12'>
             <Text
               as={TAG.SPAN}
               className='col-span-full mono tab:col-[1/3] tab:pt-2.5 lap:pt-3'
             >
               CONTACT
             </Text>
-            <Column className='col-span-full gap-4 tab:col-[3/-1] tab:gap-6 lap:gap-8'>
+            <Column className='col-span-full gap-1 tab:col-[3/-1] tab:gap-2'>
               {email ? (
                 <Anchor
                   href={`mailto:${email}`}
-                  className='flex min-h-11 items-center text-[length:clamp(24px,7vw,32px)] leading-[1.15] font-medium tracking-[-0.01em] wrap-anywhere tab:block tab:text-[length:clamp(36px,5.8vw,56px)] tab:leading-none tab:tracking-[-0.016em] lap:text-[64px] lap:tracking-[-0.018em]'
+                  className={`${contactLinkClassName} text-[20px] leading-normal font-medium wrap-anywhere tab:text-[24px]`}
                 >
                   {email}
                 </Anchor>
@@ -39,7 +42,7 @@ export function SiteFooterView({
               {github ? (
                 <Anchor
                   href={github}
-                  className='inline-flex min-h-11 items-center self-start border-b border-b-current text-[20px] hover:border-b-signal tab:text-[22px] lap:pb-1 lap:text-[28px] lap:tracking-[-0.01em]'
+                  className={`${contactLinkClassName} text-body`}
                   target='_blank'
                   rel='noreferrer'
                 >

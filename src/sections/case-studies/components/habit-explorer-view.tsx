@@ -1,5 +1,6 @@
 import type { KeyboardEvent } from 'react';
 import { HabitMapView } from './habit-map-view';
+import { VisualsNote } from '@/components/organisms/visuals-note';
 import { Button } from '@/components/atoms/button';
 import { ChoiceDot } from '@/components/atoms/choice-dot';
 import { Column } from '@/components/atoms/column';
@@ -101,6 +102,7 @@ export function HabitExplorerView({
           </Text>
         </Column>
       </Grid>
+      <VisualsNote />
     </Column>
   );
 }

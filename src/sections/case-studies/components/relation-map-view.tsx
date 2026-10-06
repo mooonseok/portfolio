@@ -6,6 +6,7 @@ import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Grid } from '@/components/atoms/grid';
 import { Text } from '@/components/atoms/text';
+import { VisualsNote } from '@/components/organisms/visuals-note';
 import type { RelationMapViewProps } from '@/dto/explorer.dto';
 import { TAG } from '@/constants/tag';
 
@@ -46,6 +47,7 @@ export function RelationMapView(props: RelationMapViewProps) {
       <Text as={TAG.SPAN} id={noteId} className='text-small text-subtle'>
         {note}
       </Text>
+      <VisualsNote />
     </Box>
   );
 }

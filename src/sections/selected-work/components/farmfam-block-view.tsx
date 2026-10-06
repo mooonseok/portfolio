@@ -9,7 +9,7 @@ export function FarmFamBlockView({ project, href }: FarmFamWorkBlock) {
       as={TAG.ARTICLE}
       id={project.slug}
       steps={false}
-      className='container py-14 tab:py-24 lap:py-30'
+      className='col-span-full border-t border-t-hairline pt-10 tab:pt-14'
     >
       <ProjectSummaryView project={project} href={href} />
     </ScrollScene>

@@ -6,12 +6,11 @@ import { TechNotes } from '@/components/organisms/tech-notes';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { HabitExplorer } from './components/habit-explorer';
 import type { IndianBobCaseViewProps } from '@/dto/case-view.dto';
-import { SIZE } from '@/constants/size';
 
 export function IndianBobCaseView({ p, groups }: IndianBobCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate project={p} titleSize={SIZE.MD}>
+    <CaseStudyTemplate project={p}>
       <CaseSectionView
         group={groups.work}
         depth={CASE_DEPTH.L1}

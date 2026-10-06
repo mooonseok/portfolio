@@ -2,7 +2,6 @@ import { CaseContents } from './case-contents';
 import { CaseHeaderView } from './case-header-view';
 import { CaseNextView } from './case-next-view';
 import { Box } from '@/components/atoms/box';
-import { Text } from '@/components/atoms/text';
 import { ScrollScene } from '@/components/organisms/scroll-scene';
 import { SiteFooter } from '@/components/organisms/site-footer';
 import { SiteHeader } from '@/components/organisms/site-header';
@@ -16,7 +15,6 @@ export function CaseStudyTemplateView({
   children,
   groups,
   next,
-  visualsNoteKo,
   ...header
 }: CaseStudyTemplateViewProps) {
   return (
@@ -29,11 +27,8 @@ export function CaseStudyTemplateView({
           <Box className={cx('pb-0', header.darkHeader && 'surface-dark')}>
             <ScrollScene>
               <CaseHeaderView {...header} />
-              <Box className='container mt-8 pb-12 tab:mt-12 tab:pb-16 lap:mt-14'>
+              <Box className='container mt-8 pb-12 tab:mt-12 tab:pb-16'>
                 {hero}
-                <Text className='mt-4 text-small text-subtle on-dark:text-dark-sub'>
-                  {visualsNoteKo}
-                </Text>
               </Box>
             </ScrollScene>
           </Box>

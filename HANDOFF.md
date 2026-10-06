@@ -105,8 +105,9 @@ joined by a short marker line (connection only, not order). Below 1024px each
 project lists its owned layers as marker chips; unbuilt layers are hidden. Each
 column header shows the service and participation period. Selecting a project
 name draws a red marker loop and opens a yellow note below the matrix (the
-matrix does not move) with every layer's technology and complete work sentences
-(`layers.lines`) as separate list items, plus the case link. Period and product
+matrix does not move) with layer-only headings and complete work sentences
+(`layers.lines`) as separate list items, plus the case link. Technology names
+are omitted from note headings consistently across projects. Period and product
 status stay outside the note. Blue solid = 직접 개발·유지보수, green dashed =
 experiment, red = current selection. The loop draws in 300ms and the note enters
 in 180ms only when a pointer opens the first note; switching notes, keyboard and
@@ -120,22 +121,27 @@ same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
 `role, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], connections?, workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
 
 Below the hero, the project order follows the board: Emosave → IndianBob →
-FarmFam+ → APC → Smart Farm (사용자 앱 / 업무 시스템 / 센서·제어 실험). Each
-project is a full-width editorial row: built-layer chips, service summary, three
-or four static `home.features` on a light writing surface and one detail link.
-Concept images, decorative section numbers, the SignalLine and footer `200 OK`
-are no longer rendered. The Experience section is removed; the board header
-carries the periods. The homepage intro includes GitHub; the former This Website
-section is removed to keep the reading path focused on project work. Case work
-rows and technical notes use 16px body text with 1.7 line height; a single
-technical note uses one column. APC retains a dark surface; Smart Farm has its
-own experiment heading. The `work` navigation anchor starts at the project list
-and the `flutter-work` anchor remains available. Case pages open with an
-enlarged single-project board (`BoardDetailView`) instead of a concept photo. It
-shows compact layer summaries only for owned layers, without repeated header
-layer chips. The work sections below retain implementation detail. The
-`visualsNoteKo` reconstruction notice and the board connector meaning remain
-visible.
+FarmFam+ → APC → Smart Farm. Product projects use peer-level headings without
+사용자 앱 / 업무 시스템 group titles; 센서·제어 실험 remains a separate heading.
+Each project is a full-width editorial row: built-layer chips, service summary,
+three or four static `home.features` on a light writing surface and one detail
+link. Concept images, decorative section numbers, the SignalLine and footer
+`200 OK` are no longer rendered. The Experience section is removed; the board
+header carries the periods. The homepage intro includes GitHub; the former This
+Website section is removed to keep the reading path focused on project work.
+Case work rows and technical notes use 16px body text with 1.7 line height; a
+single technical note uses one column. All home projects share the light paper
+surface; APC case-study dark sections remain. Smart Farm has its own experiment
+heading. The `work` navigation anchor starts at the project list and the
+`flutter-work` anchor remains available. Case pages show a definition list of
+owned areas (`ProjectScopeListView`) after the introduction. Each row pairs an
+area with its work summary and, when supplied, technology. Only separators
+between rows remain; there is no board frame, tinted box, connector or legend.
+Technology moves below the work summary on mobile; tablet and wider use three
+columns. Experiment rows carry a visible experiment label. The work sections
+below retain implementation detail. `VisualsNote` renders the unchanged
+`visualsNoteKo` reconstruction notice beside the actual diagrams in each case
+study. The home whiteboard and its connector explanation are unchanged.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs
@@ -144,11 +150,17 @@ do not establish current backend availability or authorship of every feature.
 Emosave is also identified by its public Korean name, 분저장. App Store links
 are omitted until their direct availability is confirmed.
 
-Case studies show service introduction and an overview (role, development
-surfaces, period and relevant scope limits) before the hero. The reading order
+Case studies start at `#overview` with the project title, one period/status row,
+service introduction, full role text and any store links on one reading axis.
+Titles use 36/48/56px at mobile/tablet/laptop sizes; summary text uses 18/20px
+and role text keeps the body scale. The standalone overview number and duplicate
+period sidebar are removed. Unique role metadata and scope limits remain. The
+scope list follows after 32px on mobile and 48px from tablet. The reading order
 is overview → work → connections / interaction → implementation examples →
 optional learning / result. Duplicate Role / Scope and Context sections are
-removed. Contents labels and numbers follow the actual section order.
+removed. Contents labels and numbers follow the actual section order. NEXT is a
+single full-row link with a 20/24px project name, persistent underline, the NEXT
+label and an arrow; its decorative project number is omitted.
 
 - FarmFam+ `case.connections` compares group purchase and secret deal as
   separate sales paths. Work includes sales settings and order changes.
@@ -201,7 +213,7 @@ Rules:
   use the same value. Emosave is 2022–2023; IndianBob is 2024–2025. The other
   projects say "2025—2026 중 참여" rather than asserting individual start/end
   years. The home board header shows these participation periods.
-- **Contact:** `site.contact.email` is `mspark9696@Naver.com`; CONTACT
+- **Contact:** `site.contact.email` is `mspark9696@naver.com`; CONTACT
   navigation, mobile-menu email and footer email are visible. GitHub remains
   empty.
 
@@ -263,7 +275,7 @@ written as CSS variables / attributes.
 | `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only | first node active, no stepping |
 | Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                              | complete immediately           |
 | Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                            | visible, no transform          |
-| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case boards do not mount it                                                                                                      | none                           |
+| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case scope lists do not mount it                                                                                                 | none                           |
 | Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                            | same                           |
 | Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                   | none                           |
 | CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                | color only                     |

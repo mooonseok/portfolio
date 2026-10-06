@@ -9,27 +9,29 @@ export function CaseNextView({ next }: { next: CaseNextLink }) {
     <Box
       as={TAG.NAV}
       aria-label='Next project'
-      className='container mt-30 border-t border-t-ink pt-5 pb-[calc(28px+env(safe-area-inset-bottom))] tab:mt-(--section) tab:pt-8 tab:pb-16'
+      className='container mt-12 border-t border-t-ink tab:mt-16 lap:mt-20'
     >
-      <Box className='flex flex-col gap-3 tab:grid tab:grid-cols-[repeat(var(--cols),minmax(0,1fr))] tab:gap-x-(--gutter)'>
-        <Text as={TAG.SPAN} className='mono muted tab:col-[1/3] tab:pt-3'>
+      <NavLink
+        href={next.href}
+        className='group/next grid min-h-11 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-6 gap-y-1 py-5 tab:grid-cols-[auto_minmax(0,1fr)_auto] tab:py-6'
+      >
+        <Text as={TAG.SPAN} className='col-start-1 row-start-1 mono muted'>
           NEXT
         </Text>
-        <NavLink
-          href={next.href}
-          className='group/next flex min-h-11 flex-wrap items-baseline justify-between gap-2 tab:col-[3/-1]'
+        <Text
+          as={TAG.SPAN}
+          className='col-start-1 row-start-2 text-[20px] leading-[1.3] font-medium wrap-anywhere underline decoration-1 underline-offset-4 group-focus-visible/next:decoration-signal group-active/next:decoration-signal tab:col-start-2 tab:row-start-1 tab:text-[24px] fine:group-hover/next:decoration-signal'
         >
-          <Text
-            as={TAG.SPAN}
-            className='text-[length:clamp(28px,9vw,36px)] leading-[1.05] font-medium tracking-[-0.012em] group-hover/next:underline group-hover/next:decoration-signal group-hover/next:decoration-1 group-hover/next:underline-offset-8 tab:text-[length:clamp(44px,5.6vw,56px)] tab:leading-none tab:tracking-[-0.018em] lap:text-[length:clamp(56px,4.45vw,64px)]'
-          >
-            {next.title}
-          </Text>
-          <Text as={TAG.SPAN} className='mono'>
-            {next.num} →
-          </Text>
-        </NavLink>
-      </Box>
+          {next.title}
+        </Text>
+        <Text
+          as={TAG.SPAN}
+          aria-hidden='true'
+          className='col-start-2 row-span-2 row-start-1 text-body tab:col-start-3 tab:row-span-1'
+        >
+          →
+        </Text>
+      </NavLink>
     </Box>
   );
 }

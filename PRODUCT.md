@@ -42,7 +42,7 @@ web
   (2025.10–재직 중, FarmFam+·APC·Smart Farm).
 - 배포는 Vercel로 할 예정이다. 공식 공개 URL(canonical origin)은 아직 확정되지
   않았고, 메타데이터는 빌드 시 `SITE_URL` / `SITE_INDEXABLE`로 정한다.
-- 연락처: `mspark9696@Naver.com`, GitHub 프로필 `https://github.com/mooonseok`
+- 연락처: `mspark9696@naver.com`, GitHub 프로필 `https://github.com/mooonseok`
   (프로필 링크이며 소개한 서비스의 원본 코드 링크가 아니다).
 
 ## Capabilities and Constraints

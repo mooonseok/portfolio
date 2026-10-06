@@ -14,7 +14,6 @@ import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import type { SmartFarmCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH } from '@/constants/case';
-import { SIZE } from '@/constants/size';
 import { STATUS_KIND } from '@/constants/status';
 
 export function SmartFarmCaseView({
@@ -32,7 +31,7 @@ export function SmartFarmCaseView({
   currentControl,
 }: SmartFarmCaseViewProps) {
   return (
-    <CaseStudyTemplate project={p} titleSize={SIZE.MD}>
+    <CaseStudyTemplate project={p}>
       {showWork ? (
         <CaseSectionView
           group={groups.work}
