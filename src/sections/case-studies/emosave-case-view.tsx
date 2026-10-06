@@ -33,22 +33,14 @@ export function EmosaveCaseView({
         layout={CASE_LAYOUT.WIDE}
       >
         {lead ? (
-          <FocusCardView
-            focus={lead}
-            visual={p.visuals[lead.visual]}
-            className='max-w-[600px] tab:grid tab:grid-cols-2 tab:items-start tab:[&>div:first-child]:row-span-2 tab:[&>div:last-child]:col-2 tab:[&>h3]:col-2 tab:[&>h3]:row-1'
-          />
+          <FocusCardView focus={lead} className='work-sheet max-w-[600px]' />
         ) : null}
         {c.stateExample ? (
           <StateComparisonView example={c.stateExample} />
         ) : null}
-        <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2 [&_[data-reveal-item=visual]]:max-w-[320px]'>
+        <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2'>
           {rest.map((focus) => (
-            <FocusCardView
-              key={focus.title}
-              focus={focus}
-              visual={p.visuals[focus.visual]}
-            />
+            <FocusCardView key={focus.title} focus={focus} />
           ))}
         </Box>
       </CaseSectionView>

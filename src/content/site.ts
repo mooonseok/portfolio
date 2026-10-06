@@ -22,7 +22,7 @@ export const site: Site = {
     hide: '접기',
     legendEmpty: '담당 범위 밖',
     read: '자세히 보기',
-    legendBuilt: '개발 참여',
+    legendBuilt: '직접 개발·유지보수',
     legendExperiment: '실험',
     experiment: '실험',
     note: '세로선은 같은 프로젝트에서 함께 맡은 영역을 잇는 표시이며, 호출 순서나 작업량을 뜻하지 않습니다.',

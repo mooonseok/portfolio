@@ -57,15 +57,6 @@ export function SiteFooterView({
               {name}
             </Text>
           </Text>
-          <Text as={TAG.SPAN} className='inline-flex items-center gap-2 muted'>
-            <Text
-              as={TAG.SPAN}
-              className='h-[7px] w-[7px] rounded-[50%] bg-signal'
-              aria-hidden='true'
-              data-signal-end=''
-            />
-            200 OK
-          </Text>
         </Row>
       </Box>
     </Box>

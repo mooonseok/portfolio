@@ -22,6 +22,7 @@ export function ProjectHeader({
   titleNode,
   category = CATEGORY_PLACEMENT.BELOW,
   reveal = false,
+  showLayers = true,
 }: {
   project: Project;
   fs: TitleFs;
@@ -30,6 +31,7 @@ export function ProjectHeader({
   titleNode?: ReactNode;
   category?: CategoryPlacement;
   reveal?: boolean;
+  showLayers?: boolean;
 }) {
   return (
     <Box className='grid-page gap-y-5'>
@@ -37,9 +39,6 @@ export function ProjectHeader({
         className='col-span-full flex flex-wrap items-center gap-x-4 gap-y-1.5 mono tab:col-[1/3] tab:flex-col tab:items-start tab:gap-x-2 tab:gap-y-2 tab:pt-2 lap:pt-3'
         data-reveal-item={reveal ? 'meta' : undefined}
       >
-        <Text as={TAG.SPAN} data-signal-anchor={project.slug}>
-          {project.num}
-        </Text>
         <Text as={TAG.SPAN} className='nowrap muted'>
           {project.period}
         </Text>
@@ -70,18 +69,14 @@ export function ProjectHeader({
         >
           {titleNode ?? project.title}
         </Heading>
-        <Text
-          as={TAG.SPAN}
-          className='mono tab:group-data-[category=inline]/title:pb-2.5 lap:group-data-[category=inline]/title:pb-3'
-        >
-          {project.category}
-        </Text>
       </Box>
-      <LayerChips
-        layers={project.layers}
-        label='직접 개발한 영역'
-        className='layer-chips col-span-full tab:col-[3/-1]'
-      />
+      {showLayers ? (
+        <LayerChips
+          layers={project.layers}
+          label='직접 개발·유지보수한 영역'
+          className='layer-chips col-span-full tab:col-[3/-1]'
+        />
+      ) : null}
     </Box>
   );
 }

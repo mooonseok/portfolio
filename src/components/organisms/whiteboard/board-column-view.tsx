@@ -32,6 +32,7 @@ export function BoardColumnView({
         <Button
           className='board-title'
           aria-expanded={selected}
+          aria-pressed={selected}
           aria-controls={noteId}
           onClick={(event) =>
             onSelect(c.slug, event.detail > 0, event.currentTarget)

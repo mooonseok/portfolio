@@ -17,6 +17,7 @@
 @import './components/board-detail.css' layer(components);
 @import './components/board-layout.css' layer(components);
 @import './components/hero.css' layer(components);
+@import './components/work-sheet.css' layer(components);
 
 @theme static {
   --breakpoint-*: initial;

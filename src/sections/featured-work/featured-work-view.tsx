@@ -21,7 +21,7 @@ export function FeaturedWorkView({
     >
       <SectionHeading
         id='featured-h'
-        label='01—02'
+        label=''
         title='사용자 앱'
         rule={RULE.MOBILE}
       />

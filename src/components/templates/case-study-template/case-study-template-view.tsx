@@ -22,11 +22,6 @@ export function CaseStudyTemplateView({
   return (
     <>
       <Box className='relative'>
-        <Text
-          as={TAG.SPAN}
-          className='hidden tab:pointer-events-none tab:absolute tab:top-[300px] tab:bottom-[260px] tab:left-[max(var(--rail-x),calc((100%_-_1440px)_/_2_+_var(--rail-x)))] tab:z-2 tab:block tab:border-l tab:border-l-graphite'
-          aria-hidden='true'
-        />
         <Box className={cx(header.darkHeader && 'surface-dark')}>
           <SiteHeader dark={header.darkHeader} back current={NAV_ID.WORK} />
         </Box>

@@ -20,39 +20,41 @@ export function BoardDetailView({
     >
       <Box className='board-surface'>
         <List className='detail-rows'>
-          {column.boxes.map((b) => (
-            <ListItem
-              key={b.floor}
-              className='detail-row'
-              data-lit={b.lit || undefined}
-              data-kind={b.kind}
-              aria-hidden={b.lit ? undefined : true}
-            >
-              <Text as={TAG.SPAN} className='detail-floor'>
-                {b.label}
-                {b.experiment ? (
-                  <Text as={TAG.SPAN} className='sr-only'>
-                    {` (${copy.experiment})`}
-                  </Text>
-                ) : null}
-              </Text>
-              <Box className='detail-box'>
-                {b.joinNext ? (
-                  <MarkerPathView d={b.joinNext} className='detail-join' />
-                ) : null}
-                {b.tech ? (
-                  <Text as={TAG.SPAN} className='detail-tech'>
-                    {b.tech}
-                  </Text>
-                ) : null}
-                {b.lit ? (
-                  <Text as={TAG.SPAN} className='detail-lines'>
-                    {b.summary}
-                  </Text>
-                ) : null}
-              </Box>
-            </ListItem>
-          ))}
+          {column.boxes
+            .filter((b) => b.lit)
+            .map((b) => (
+              <ListItem
+                key={b.floor}
+                className='detail-row'
+                data-lit={b.lit || undefined}
+                data-kind={b.kind}
+                aria-hidden={b.lit ? undefined : true}
+              >
+                <Text as={TAG.SPAN} className='detail-floor'>
+                  {b.label}
+                  {b.experiment ? (
+                    <Text as={TAG.SPAN} className='sr-only'>
+                      {` (${copy.experiment})`}
+                    </Text>
+                  ) : null}
+                </Text>
+                <Box className='detail-box'>
+                  {b.joinNext ? (
+                    <MarkerPathView d={b.joinNext} className='detail-join' />
+                  ) : null}
+                  {b.tech ? (
+                    <Text as={TAG.SPAN} className='detail-tech'>
+                      {b.tech}
+                    </Text>
+                  ) : null}
+                  {b.lit ? (
+                    <Text as={TAG.SPAN} className='detail-lines'>
+                      {b.summary}
+                    </Text>
+                  ) : null}
+                </Box>
+              </ListItem>
+            ))}
         </List>
       </Box>
       <Box as={TAG.FIGCAPTION} className='board-legend'>

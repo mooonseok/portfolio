@@ -16,7 +16,7 @@ export function EngineeringStoriesView({ cards }: EngineeringStoriesViewProps) {
     >
       <SectionHeading
         id='stories-h'
-        label='S01—S03'
+        label=''
         title='대표 구현 사례'
         size={HEADING.H3}
         rule={false}
