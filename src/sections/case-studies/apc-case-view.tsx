@@ -10,7 +10,6 @@ import { TechNotes } from '@/components/organisms/tech-notes';
 import type { ApcCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { RULE } from '@/constants/rule';
-import { SIZE } from '@/constants/size';
 import { TONE } from '@/constants/tone';
 
 export function ApcCaseView({
@@ -26,7 +25,7 @@ export function ApcCaseView({
 }: ApcCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate project={p} darkHeader titleSize={SIZE.XL}>
+    <CaseStudyTemplate project={p} darkHeader>
       {showWork ? (
         <CaseSectionView
           group={groups.work}

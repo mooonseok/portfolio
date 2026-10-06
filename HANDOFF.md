@@ -137,7 +137,9 @@ heading. The `work` navigation anchor starts at the project list and the
 single-project board (`BoardDetailView`) instead of a concept photo. It shows
 compact layer summaries only for owned layers, without repeated header layer
 chips. The work sections below retain implementation detail. The `visualsNoteKo`
-reconstruction notice and the board connector meaning remain visible.
+reconstruction notice and the board connector meaning remain visible together in
+the board caption. Detail boards have a 2px frame without shadow and show only
+the legend kinds present in their owned layers; the home board is unchanged.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs
@@ -146,11 +148,17 @@ do not establish current backend availability or authorship of every feature.
 Emosave is also identified by its public Korean name, 분저장. App Store links
 are omitted until their direct availability is confirmed.
 
-Case studies show service introduction and an overview (role, development
-surfaces, period and relevant scope limits) before the hero. The reading order
-is overview → work → connections / interaction → implementation examples →
-optional learning / result. Duplicate Role / Scope and Context sections are
-removed. Contents labels and numbers follow the actual section order.
+Case studies start at `#overview` with the project title, one period/status row,
+service introduction, full role text and any store links on one reading axis.
+Titles use 36/48/56px at mobile/tablet/laptop sizes; summary text uses 18/20px
+and role text keeps the body scale. The standalone overview number and duplicate
+period sidebar are removed. Unique role metadata and scope limits remain. The
+board follows after 32px on mobile and 48px from tablet. The reading order is
+overview → work → connections / interaction → implementation examples → optional
+learning / result. Duplicate Role / Scope and Context sections are removed.
+Contents labels and numbers follow the actual section order. NEXT is a single
+full-row link with a 20/24px project name, persistent underline, the NEXT label
+and an arrow; its decorative project number is omitted.
 
 - FarmFam+ `case.connections` compares group purchase and secret deal as
   separate sales paths. Work includes sales settings and order changes.

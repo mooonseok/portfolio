@@ -8,7 +8,6 @@ import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { FocusCardView } from './components/focus-card-view';
 import { StateComparisonView } from './components/state-comparison-view';
 import type { EmosaveCaseViewProps } from '@/dto/case-view.dto';
-import { SIZE } from '@/constants/size';
 
 export function EmosaveCaseView({
   p,
@@ -18,7 +17,7 @@ export function EmosaveCaseView({
 }: EmosaveCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate project={p} titleSize={SIZE.SM}>
+    <CaseStudyTemplate project={p}>
       <CaseSectionView
         group={groups.work}
         depth={CASE_DEPTH.L1}

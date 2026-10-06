@@ -8,14 +8,12 @@ import { BoardDetailView } from '@/components/organisms/whiteboard/board-detail-
 import type { CaseStudyTemplateProps } from '@/dto/case-template.dto';
 import { SURFACE_LABEL } from '@/constants/case';
 import { PROJECT_TIER } from '@/constants/project';
-import { SIZE } from '@/constants/size';
 import { TONE } from '@/constants/tone';
 
 export function CaseStudyTemplate({
   project,
   darkHeader,
   children,
-  titleSize = SIZE.LG,
   surfaceLabel = SURFACE_LABEL.SURFACES,
   role,
 }: CaseStudyTemplateProps) {
@@ -23,17 +21,21 @@ export function CaseStudyTemplate({
   return (
     <CaseStudyTemplateView
       project={project}
-      hero={<BoardDetailView column={boardColumn(project)} copy={site.board} />}
+      hero={
+        <BoardDetailView
+          column={boardColumn(project)}
+          copy={site.board}
+          visualsNoteKo={site.visualsNoteKo}
+        />
+      }
       darkHeader={darkHeader}
-      titleSize={titleSize}
       titleTone={
         project.tier === PROJECT_TIER.SELECTED ? TONE.SIGNAL : TONE.INK
       }
       showSummary={has(project.summary)}
       meta={caseMetaRows(project, surfaceLabel, role)}
       groups={groupsFor(project)}
-      next={{ href: `/work/${next.slug}`, title: next.title, num: next.num }}
-      visualsNoteKo={site.visualsNoteKo}
+      next={{ href: `/work/${next.slug}`, title: next.title }}
     >
       {children}
     </CaseStudyTemplateView>

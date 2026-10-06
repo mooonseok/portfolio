@@ -8,9 +8,11 @@ import { TAG } from '@/constants/tag';
 export function BoardDetailView({
   column,
   copy,
+  visualsNoteKo,
 }: {
   column: BoardColumn;
   copy: BoardCopy;
+  visualsNoteKo: string;
 }) {
   return (
     <Box
@@ -58,16 +60,20 @@ export function BoardDetailView({
         </List>
       </Box>
       <Box as={TAG.FIGCAPTION} className='board-legend'>
-        <Text as={TAG.SPAN} className='legend-item' data-kind='built'>
-          {copy.legendBuilt}
-        </Text>
-        <Text as={TAG.SPAN} className='legend-item' data-kind='experiment'>
-          {copy.legendExperiment}
-        </Text>
-        <Text as={TAG.SPAN} className='legend-empty'>
-          {copy.legendEmpty}
-        </Text>
+        <Box className='flex flex-wrap gap-x-6 gap-y-2'>
+          {column.boxes.some((b) => b.lit && !b.experiment) ? (
+            <Text as={TAG.SPAN} className='legend-item' data-kind='built'>
+              {copy.legendBuilt}
+            </Text>
+          ) : null}
+          {column.boxes.some((b) => b.lit && b.experiment) ? (
+            <Text as={TAG.SPAN} className='legend-item' data-kind='experiment'>
+              {copy.legendExperiment}
+            </Text>
+          ) : null}
+        </Box>
         {copy.note ? <Text className='legend-note'>{copy.note}</Text> : null}
+        <Text>{visualsNoteKo}</Text>
       </Box>
     </Box>
   );

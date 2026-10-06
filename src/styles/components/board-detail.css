@@ -1,3 +1,7 @@
+.board-detail .board-surface {
+  border-width: 2px;
+  box-shadow: none;
+}
 .detail-rows {
   display: grid;
   gap: 14px;
@@ -63,7 +67,14 @@
   stroke-width: 2px;
 }
 .board-detail .board-legend {
+  display: grid;
+  gap: 8px;
+  max-width: 40em;
+  margin-top: 16px;
   color: var(--subtle);
+}
+.board-detail .legend-note {
+  max-width: none;
 }
 .surface-dark .board-detail .board-legend {
   color: var(--dark-sub);
