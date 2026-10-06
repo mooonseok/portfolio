@@ -103,7 +103,7 @@ Two rules matter when editing:
   office sensor prototype and CONTROL is a separate LED experiment; neither
   claims farm deployment. The APC OCR experiment is not displayed.
 
-`site.contact.email` is `moonseokp96@gmail.com`; navigation, mobile menu and
+`site.contact.email` is `mspark9696@Naver.com`; navigation, mobile menu and
 footer expose the contact link. `site.contact.github` points to
 [the GitHub profile](https://github.com/mooonseok), which is linked from the
 intro, footer and mobile menu. It is a profile link, not a source-code link for
