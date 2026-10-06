@@ -8,6 +8,7 @@ export interface BoardBox {
   kind?: StatusKind;
   experiment: boolean;
   tech?: string;
+  summary: string;
   lines: string[];
   path: string;
   joinNext?: string;

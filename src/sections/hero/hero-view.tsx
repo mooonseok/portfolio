@@ -40,7 +40,9 @@ export function HeroView({
         </Box>
         <Box className='hero-description'>
           <Text className='hero-headline'>{headline}</Text>
-          <Text className='hero-lead'>{introduction}</Text>
+          {introduction ? (
+            <Text className='hero-lead'>{introduction}</Text>
+          ) : null}
           <Box className='flex flex-wrap items-center gap-x-6 gap-y-2'>
             <JumpLink href={primaryAction.href} label={primaryAction.label} />
             <Anchor

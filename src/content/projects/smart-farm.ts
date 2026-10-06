@@ -31,14 +31,22 @@ export const smartFarm: Project = {
   layers: [
     {
       floor: FLOOR.ADMIN,
+      summary: '측정값 대시보드 연동',
+      lines: [
+        'MQTT로 전송한 측정값을 대시보드에서 확인할 수 있도록 연동했습니다.',
+      ],
       kind: STATUS_KIND.EXPERIMENT,
-      lines: ['측정값 대시보드 연동'],
     },
     {
       floor: FLOOR.DEVICE,
+      summary: '센서 모니터링·LED 제어',
+      lines: [
+        'ESP32와 Raspberry Pi로 센서 시험 모듈을 구성하고, 온습도·CO₂ 측정과 MQTT 전송을 사무실에서 시험했습니다.',
+        '별도 LED 제어 실험에서 ESP32-S3와 LED 1채널을 이용해 MQTT 명령 수신과 출력 제어를 구현했습니다.',
+        '제어기의 명령 만료·중복 방지, 연결 단절 시 출력 차단, 동작 시간 제한과 bootId를 이용한 장치 상태 식별을 구현했습니다.',
+        '하드웨어 없이 실행하는 호스트 시험으로 제어 로직을 확인했습니다. 실제 장비 출력·네트워크 시험과는 구분합니다.',
+      ],
       kind: STATUS_KIND.EXPERIMENT,
-      tech: 'ESP32 · Raspberry Pi',
-      lines: ['센서 모듈·MQTT 전송', '별도 LED 제어 PoC'],
     },
   ],
   summary:
@@ -46,16 +54,22 @@ export const smartFarm: Project = {
   home: {
     features: [
       {
-        title: '센서 측정',
-        body: ['ESP32와 Raspberry Pi로 센서 모듈을 구성했습니다.'],
+        title: '센서 모니터링',
+        body: [
+          'ESP32와 Raspberry Pi로 온습도·CO₂ 센서 모듈을 구성하고 측정값을 MQTT로 전송했습니다.',
+        ],
       },
       {
-        title: '측정값 확인',
-        body: ['MQTT로 보낸 측정값을 대시보드에서 확인했습니다.'],
+        title: '대시보드 연동',
+        body: [
+          '전송한 측정값을 대시보드에서 확인할 수 있도록 연결하고, 사무실에서 측정·전송 흐름을 시험했습니다.',
+        ],
       },
       {
-        title: 'LED 제어 실험',
-        body: ['ESP32-S3와 LED로 제어 조건을 시험했습니다.'],
+        title: '별도 LED 제어 실험',
+        body: [
+          'ESP32-S3와 LED 1채널로 명령 만료·중복 방지, 연결 단절 시 출력 차단과 동작 시간 제한을 구현했습니다.',
+        ],
       },
     ],
     scope: [],

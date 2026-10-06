@@ -90,29 +90,29 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 
 ## 3. Data model (summary)
 
-`site.headline` names the layers the developer built (Flutter app, admin web,
-server API, device experiments); the hero also shows `site.disciplines` and
-`site.introduction`. `site.about` provides the Tools / Scope introduction.
-Project summaries describe the service, while three short sentences describe the
-work performed. Device experiments stay in Smart Farm. Content follows the
-owner-confirmed contribution, team size and verification scope. Unconfirmed
-backfill results and OCR evaluation claims are omitted.
+`site.headline` introduces user apps and business systems. The hero keeps a
+single introduction sentence; `site.about` describes collaboration and delivery.
+Project summaries describe the service; three or four feature descriptions
+explain concrete work. Device experiments stay in Smart Farm. Content follows
+the owner-confirmed contribution, team size and verification scope.
 
 The hero whiteboard (`organisms/whiteboard`, data from `project.layers`) has
 five projects in start-year order and five layers (앱 / 관리자 웹 / 서버 API /
 DB / 기기). At 1024px and above each built cell is a blue marker box showing its
-technology and first work line; layers the developer did not build are faint
-dotted outlines; vertically adjacent built cells in one project are joined by a
-short marker line (connection only, not order). Below 1024px each project lists
-all five layers as marker chips, with unbuilt layers as faint dotted chips. Each
-column header shows the service and participation period. Selecting a project
-name draws a red marker loop and opens a yellow note below the matrix (the
-matrix does not move) with period, status and every layer's technology and work
-lines, plus the case link. Blue solid = product work, green dashed = experiment,
-red = current selection. The loop draws in 300ms and the note enters in 180ms
-only when a pointer opens the first note; switching notes, keyboard and
-reduced-motion selection are immediate. Selecting keeps the tapped title at the
-same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
+technology and a dedicated `layers.summary`; layers the developer did not build
+are faint dotted outlines; vertically adjacent built cells in one project are
+joined by a short marker line (connection only, not order). Below 1024px each
+project lists all five layers as marker chips, with unbuilt layers as faint
+dotted chips. Each column header shows the service and participation period.
+Selecting a project name draws a red marker loop and opens a yellow note below
+the matrix (the matrix does not move) with every layer's technology and complete
+work sentences (`layers.lines`) as separate list items, plus the case link.
+Period and product status stay outside the note. Blue solid = product work,
+green dashed = experiment, red = current selection. The loop draws in 300ms and
+the note enters in 180ms only when a pointer opens the first note; switching
+notes, keyboard and reduced-motion selection are immediate. Selecting keeps the
+tapped title at the same screen position. Experiment cells carry a screen-reader
+"(실험)" suffix.
 
 `Project` →
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, boardService, layers[], summary, links?, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
@@ -123,15 +123,16 @@ same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
 Below the hero, the project order follows the board: Emosave → IndianBob →
 FarmFam+ → APC → Smart Farm (사용자 앱 / 업무 시스템 / 센서·제어 실험). Each
 project is a full-width editorial row: built-layer chips, service summary, three
-static `home.features`, one existing conceptual image and a detail link. The
-Experience section is removed; the board header carries the periods. The
+or four static `home.features`, one existing conceptual image and a detail link.
+The Experience section is removed; the board header carries the periods. The
 homepage intro includes GitHub; the former This Website section is removed to
 keep the reading path focused on project work. Case work rows and technical
 notes use 16px body text with 1.7 line height; a single technical note uses one
 column. APC retains a dark surface; Smart Farm has its own experiment heading.
 The `work` navigation anchor starts at the project list and the `flutter-work`
 anchor remains available. Case pages open with an enlarged single-project board
-(`BoardDetailView`) instead of a concept photo.
+(`BoardDetailView`) instead of a concept photo. It shows compact layer
+summaries; the work sections below retain implementation detail.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs
@@ -302,7 +303,8 @@ written as CSS variables / attributes.
 - Reveal hiding is enabled per mounted scene, so failed hydration keeps server
   content visible; print always shows reveal items, diagram lines and every tech
   note.
-- The Korean conceptual-visual notice appears below every case board.
+- Concept images and explanatory diagrams keep their local captions; the factual
+  scope board has no general conceptual-image notice.
 - No panel is `aria-live`; the tab / pressed relationship announces changes.
 - Touch targets are at least 44×44px (MENU, CLOSE, CTA, menu links 64px,
   accordion 52px, Contents links, WORK AREAS rows 60px, relation nodes 60px+,

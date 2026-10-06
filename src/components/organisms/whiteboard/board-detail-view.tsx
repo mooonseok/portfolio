@@ -47,7 +47,7 @@ export function BoardDetailView({
                 ) : null}
                 {b.lit ? (
                   <Text as={TAG.SPAN} className='detail-lines'>
-                    {b.lines.join(' · ')}
+                    {b.summary}
                   </Text>
                 ) : null}
               </Box>
@@ -65,7 +65,7 @@ export function BoardDetailView({
         <Text as={TAG.SPAN} className='legend-empty'>
           {copy.legendEmpty}
         </Text>
-        <Text className='legend-note'>{copy.note}</Text>
+        {copy.note ? <Text className='legend-note'>{copy.note}</Text> : null}
       </Box>
     </Box>
   );

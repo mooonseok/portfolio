@@ -33,8 +33,6 @@ export function CaseStudyTemplate({
       meta={caseMetaRows(project, surfaceLabel, role)}
       groups={groupsFor(project)}
       next={{ href: `/work/${next.slug}`, title: next.title, num: next.num }}
-      visualsNote={site.visualsNote}
-      visualsNoteKo={site.visualsNoteKo}
     >
       {children}
     </CaseStudyTemplateView>

@@ -28,7 +28,7 @@ export const indianBobCase: CaseContent = {
     {
       title: '해빗 이용',
       body: [
-        'Flutter 앱에서 해빗을 이용하는 화면과 상태 처리, 단계별 입력 검증을 개발했습니다.',
+        'Flutter 앱에서 해빗을 이용하는 화면과 상태 처리, 단계별 입력 검증을 개발했습니다. 해빗 기능의 서버 API도 작업하며 앱에서 사용하는 응답 구조를 맞췄습니다.',
       ],
     },
     {

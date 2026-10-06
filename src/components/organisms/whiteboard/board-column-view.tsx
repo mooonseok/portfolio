@@ -77,7 +77,7 @@ export function BoardColumnView({
                   </Text>
                 ) : null}
                 <Text as={TAG.SPAN} className='box-line'>
-                  {b.lines[0]}
+                  {b.summary}
                 </Text>
               </>
             ) : null}

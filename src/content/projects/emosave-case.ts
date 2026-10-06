@@ -79,6 +79,10 @@ export const emosaveCase: CaseContent = {
         '편집 결과의 API·로컬 저장을 처리하고, 다이어리 상세 화면을 이미지로 캡처해 공유하는 기능을 개발했습니다.',
       ],
     },
+    {
+      title: '스토어와 이모티콘',
+      body: ['이모티콘 삭제, 스토어 UI 수정과 로컬라이징을 작업했습니다.'],
+    },
   ],
   workParagraphs: [],
   decisions: [],

@@ -16,6 +16,7 @@ function boxes(p: Project): BoardBox[] {
       kind: layer ? (layer.kind ?? STATUS_KIND.PRODUCT) : undefined,
       experiment: layer?.kind === STATUS_KIND.EXPERIMENT,
       tech: layer?.tech,
+      summary: layer?.summary ?? '',
       lines: layer?.lines ?? [],
       path: markerRect(seedOf(p.slug + floor) + i),
     };
