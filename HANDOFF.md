@@ -105,8 +105,9 @@ joined by a short marker line (connection only, not order). Below 1024px each
 project lists its owned layers as marker chips; unbuilt layers are hidden. Each
 column header shows the service and participation period. Selecting a project
 name draws a red marker loop and opens a yellow note below the matrix (the
-matrix does not move) with every layer's technology and complete work sentences
-(`layers.lines`) as separate list items, plus the case link. Period and product
+matrix does not move) with layer-only headings and complete work sentences
+(`layers.lines`) as separate list items, plus the case link. Technology names
+are omitted from note headings consistently across projects. Period and product
 status stay outside the note. Blue solid = 직접 개발·유지보수, green dashed =
 experiment, red = current selection. The loop draws in 300ms and the note enters
 in 180ms only when a pointer opens the first note; switching notes, keyboard and

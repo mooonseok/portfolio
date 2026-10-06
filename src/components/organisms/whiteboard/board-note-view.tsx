@@ -30,11 +30,6 @@ export function BoardNoteView({
             <ListItem key={b.floor} className='note-layer' data-kind={b.kind}>
               <Text as={TAG.SPAN} className='note-floor'>
                 {b.label}
-                {b.tech ? (
-                  <Text as={TAG.SPAN} className='note-tech'>
-                    {b.tech}
-                  </Text>
-                ) : null}
                 {b.experiment ? (
                   <Text as={TAG.SPAN} className='note-exp'>
                     <Text as={TAG.SPAN} aria-hidden='true'>
