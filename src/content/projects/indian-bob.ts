@@ -12,7 +12,7 @@ const mainVisual = {
 
 export const indianBob: Project = {
   slug: PROJECT_SLUG.INDIAN_BOB,
-  num: '01',
+  num: '02',
   title: 'INDIAN BOB',
   category: 'APP / API / ADMIN',
   period: '2024—2025',

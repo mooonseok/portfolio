@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Box } from '@/components/atoms/box';
 import { Heading } from '@/components/atoms/heading';
+import { LayerChips } from '@/components/molecules/layer-chips';
 import { StatusLabel } from '@/components/atoms/status-label';
 import { Text } from '@/components/atoms/text';
 import type { Project } from '@/dto/project.dto';
@@ -76,6 +77,11 @@ export function ProjectHeader({
           {project.category}
         </Text>
       </Box>
+      <LayerChips
+        layers={project.layers}
+        label='직접 개발한 영역'
+        className='layer-chips col-span-full tab:col-[3/-1]'
+      />
     </Box>
   );
 }

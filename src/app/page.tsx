@@ -6,7 +6,6 @@ import { SiteHeader } from '@/components/organisms/site-header';
 import { SignalLine } from '@/components/organisms/signal-line';
 import { SiteFooter } from '@/components/organisms/site-footer';
 import { EngineeringStoriesContainer } from '@/sections/engineering-stories/engineering-stories-container';
-import { ExperienceContainer } from '@/sections/experience/experience-container';
 import { FeaturedWorkContainer } from '@/sections/featured-work/featured-work-container';
 import { HeroContainer } from '@/sections/hero/hero-container';
 import { SelectedWorkContainer } from '@/sections/selected-work/selected-work-container';
@@ -33,7 +32,6 @@ export default function HomePage() {
         <FeaturedWorkContainer />
         <SelectedWorkContainer />
         <EngineeringStoriesContainer />
-        <ExperienceContainer />
         <ToolsContainer />
       </Box>
       <SiteFooter />

@@ -1,5 +1,5 @@
 import type { LabelValue } from '@/dto/field.dto';
-import type { ExperienceYear, Site } from '@/dto/site.dto';
+import type { Site } from '@/dto/site.dto';
 import type { Story } from '@/dto/story.dto';
 
 export const site: Site = {
@@ -60,22 +60,6 @@ export const stories: Story[] = [
     title: '시크릿딜의 가격과 주문 기준',
     description:
       '시간에 따라 바뀌는 가격을 주문 생성 시점에 다시 확인한 사례입니다.',
-  },
-];
-
-export const experience: ExperienceYear[] = [
-  { year: '2022—2023', items: [{ name: 'EMOSAVE', scope: 'Flutter Mobile' }] },
-  {
-    year: '2024—2025',
-    items: [{ name: 'INDIAN BOB', scope: 'Flutter / Web / API' }],
-  },
-  {
-    year: '2025—2026',
-    items: [
-      { name: 'FARMFAM+', scope: 'Web / API / DB' },
-      { name: 'APC', scope: 'Flutter / Web / API / DB' },
-      { name: 'SMART FARM', scope: 'Office Prototype' },
-    ],
   },
 ];
 

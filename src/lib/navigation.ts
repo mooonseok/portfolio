@@ -9,9 +9,7 @@ const item = (id: NavId, base: string): NavItem => ({
 });
 
 export function getNavItems(base = ''): NavItem[] {
-  const items = [NAV_ID.WORK, NAV_ID.EXPERIENCE, NAV_ID.ABOUT].map((id) =>
-    item(id, base)
-  );
+  const items = [NAV_ID.WORK, NAV_ID.ABOUT].map((id) => item(id, base));
   if (hasContact()) items.push(item(NAV_ID.CONTACT, base));
   return items;
 }

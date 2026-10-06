@@ -12,7 +12,7 @@ const mainVisual = {
 
 export const emosave: Project = {
   slug: PROJECT_SLUG.EMOSAVE,
-  num: '02',
+  num: '01',
   title: 'EMOSAVE',
   category: 'MOBILE INTERACTION',
   period: '2022—2023',

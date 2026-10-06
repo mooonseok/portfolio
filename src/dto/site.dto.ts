@@ -24,13 +24,3 @@ export interface Site {
   visualsNoteKo: string;
   board: BoardCopy;
 }
-
-export interface ExperienceItem {
-  name: string;
-  scope: string;
-}
-
-export interface ExperienceYear {
-  year: string;
-  items: ExperienceItem[];
-}

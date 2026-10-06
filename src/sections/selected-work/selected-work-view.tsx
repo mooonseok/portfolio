@@ -27,12 +27,15 @@ export function SelectedWorkView({
           id='selected-h'
           anchor={false}
           label='03—04'
-          title='웹·서버 개발'
+          title='업무 시스템'
           aside={
             <Column as={TAG.OL} className='mono leading-[1.6]'>
               {index.map((e) => (
                 <ListItem key={e.slug}>
-                  <Anchor href={e.href} className='inline-block py-0.5'>
+                  <Anchor
+                    href={e.href}
+                    className='inline-flex min-h-11 items-center'
+                  >
                     {e.num} {e.title}
                   </Anchor>
                 </ListItem>

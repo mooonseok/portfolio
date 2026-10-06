@@ -146,3 +146,36 @@
   flex-basis: 100%;
   max-width: 64ch;
 }
+.layer-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+.layer-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 10px 5px;
+  border: 2px solid var(--marker-blue);
+  border-radius: 6px 3px 7px 4px / 4px 7px 3px 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--marker-blue);
+}
+.layer-chip[data-kind='experiment'] {
+  border-style: dashed;
+  border-color: var(--marker-green);
+  color: var(--marker-green);
+}
+.layer-chip-tech {
+  font-weight: 400;
+  color: var(--ink);
+}
+.surface-dark .layer-chip {
+  border-color: #8fb0ff;
+  color: #8fb0ff;
+}
+.surface-dark .layer-chip-tech {
+  color: var(--paper);
+}
