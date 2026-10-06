@@ -5,6 +5,7 @@ import { Grid } from '@/components/atoms/grid';
 import { Heading } from '@/components/atoms/heading';
 import { StatusLabel } from '@/components/atoms/status-label';
 import { FlowDiagram } from '@/components/molecules/flow-diagram';
+import { VisualsNote } from '@/components/organisms/visuals-note';
 import type { CaseViewModel } from '@/dto/case-view.dto';
 import { CASE_DEPTH, CASE_LAYOUT, CASE_SPACE } from '@/constants/case';
 import { FLOW_ORIENT, FLOW_ROLE } from '@/constants/flow';
@@ -48,6 +49,7 @@ export function SmartFarmSystemView({ p, groups }: CaseViewModel) {
               />
             </Column>
           </Grid>
+          <VisualsNote />
         </CaseSectionView>
       ) : null}
     </>

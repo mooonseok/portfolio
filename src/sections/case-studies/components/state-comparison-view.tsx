@@ -3,6 +3,7 @@ import { Column } from '@/components/atoms/column';
 import { Heading } from '@/components/atoms/heading';
 import { Text } from '@/components/atoms/text';
 import { StateSketch } from '@/components/molecules/state-sketch';
+import { VisualsNote } from '@/components/organisms/visuals-note';
 import type { StateExample } from '@/dto/state-example.dto';
 import { HEADING } from '@/constants/tag';
 
@@ -26,6 +27,7 @@ export function StateComparisonView({ example }: { example: StateExample }) {
         ))}
       </Box>
       <Text className='text-small text-subtle'>{example.caption}</Text>
+      <VisualsNote />
     </Column>
   );
 }

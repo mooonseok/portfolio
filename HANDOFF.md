@@ -133,13 +133,15 @@ Case work rows and technical notes use 16px body text with 1.7 line height; a
 single technical note uses one column. All home projects share the light paper
 surface; APC case-study dark sections remain. Smart Farm has its own experiment
 heading. The `work` navigation anchor starts at the project list and the
-`flutter-work` anchor remains available. Case pages open with an enlarged
-single-project board (`BoardDetailView`) instead of a concept photo. It shows
-compact layer summaries only for owned layers, without repeated header layer
-chips. The work sections below retain implementation detail. The `visualsNoteKo`
-reconstruction notice and the board connector meaning remain visible together in
-the board caption. Detail boards have a 2px frame without shadow and show only
-the legend kinds present in their owned layers; the home board is unchanged.
+`flutter-work` anchor remains available. Case pages show a definition list of
+owned areas (`ProjectScopeListView`) after the introduction. Each row pairs an
+area with its work summary and, when supplied, technology. Only separators
+between rows remain; there is no board frame, tinted box, connector or legend.
+Technology moves below the work summary on mobile; tablet and wider use three
+columns. Experiment rows carry a visible experiment label. The work sections
+below retain implementation detail. `VisualsNote` renders the unchanged
+`visualsNoteKo` reconstruction notice beside the actual diagrams in each case
+study. The home whiteboard and its connector explanation are unchanged.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs
@@ -153,12 +155,12 @@ service introduction, full role text and any store links on one reading axis.
 Titles use 36/48/56px at mobile/tablet/laptop sizes; summary text uses 18/20px
 and role text keeps the body scale. The standalone overview number and duplicate
 period sidebar are removed. Unique role metadata and scope limits remain. The
-board follows after 32px on mobile and 48px from tablet. The reading order is
-overview → work → connections / interaction → implementation examples → optional
-learning / result. Duplicate Role / Scope and Context sections are removed.
-Contents labels and numbers follow the actual section order. NEXT is a single
-full-row link with a 20/24px project name, persistent underline, the NEXT label
-and an arrow; its decorative project number is omitted.
+scope list follows after 32px on mobile and 48px from tablet. The reading order
+is overview → work → connections / interaction → implementation examples →
+optional learning / result. Duplicate Role / Scope and Context sections are
+removed. Contents labels and numbers follow the actual section order. NEXT is a
+single full-row link with a 20/24px project name, persistent underline, the NEXT
+label and an arrow; its decorative project number is omitted.
 
 - FarmFam+ `case.connections` compares group purchase and secret deal as
   separate sales paths. Work includes sales settings and order changes.
@@ -273,7 +275,7 @@ written as CSS variables / attributes.
 | `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only | first node active, no stepping |
 | Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                              | complete immediately           |
 | Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                            | visible, no transform          |
-| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case boards do not mount it                                                                                                      | none                           |
+| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case scope lists do not mount it                                                                                                 | none                           |
 | Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                            | same                           |
 | Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                   | none                           |
 | CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                | color only                     |

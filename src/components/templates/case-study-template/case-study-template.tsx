@@ -3,8 +3,7 @@ import { caseMetaRows } from './case-meta';
 import { site } from '@/content/site';
 import { getNext, groupsFor } from '@/lib/content';
 import { has } from '@/lib/has';
-import { boardColumn } from '@/lib/board';
-import { BoardDetailView } from '@/components/organisms/whiteboard/board-detail-view';
+import { ProjectScopeListView } from '@/components/organisms/project-scope-list-view';
 import type { CaseStudyTemplateProps } from '@/dto/case-template.dto';
 import { SURFACE_LABEL } from '@/constants/case';
 import { PROJECT_TIER } from '@/constants/project';
@@ -22,10 +21,10 @@ export function CaseStudyTemplate({
     <CaseStudyTemplateView
       project={project}
       hero={
-        <BoardDetailView
-          column={boardColumn(project)}
-          copy={site.board}
-          visualsNoteKo={site.visualsNoteKo}
+        <ProjectScopeListView
+          layers={project.layers}
+          label={`${project.title} ${site.board.label}`}
+          experimentLabel={site.board.experiment}
         />
       }
       darkHeader={darkHeader}

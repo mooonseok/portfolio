@@ -7,6 +7,7 @@ import { Text } from '@/components/atoms/text';
 import { DomainExplorer } from '@/components/organisms/domain-explorer/domain-explorer';
 import { ExperimentBlock } from '@/components/organisms/experiment-block';
 import { TechNotes } from '@/components/organisms/tech-notes';
+import { VisualsNote } from '@/components/organisms/visuals-note';
 import type { ApcCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { RULE } from '@/constants/rule';
@@ -45,6 +46,7 @@ export function ApcCaseView({
         >
           <Box className='-mx-(--margin) px-5 pt-2 pb-8 surface-dark tab:mx-0 tab:px-8 tab:pb-10 lap:px-10 lap:pt-4 lap:pb-12'>
             <DomainExplorer {...domains} />
+            <VisualsNote />
           </Box>
         </CaseSectionView>
       ) : null}
