@@ -62,8 +62,17 @@ export const stories: Story[] = [
 ];
 
 export const tools: LabelValue[] = [
-  { label: 'MOBILE', value: 'Flutter / Dart' },
-  { label: 'WEB', value: 'TypeScript / Next.js / React' },
-  { label: 'BACKEND', value: 'NestJS / PostgreSQL / Redis' },
-  { label: 'DEVICE', value: 'MQTT / ESP32' },
+  { label: '언어', value: 'Dart, TypeScript' },
+  { label: '모바일', value: 'Flutter, Bloc / Cubit' },
+  { label: '웹', value: 'React, Next.js, Tailwind CSS, MUI' },
+  { label: '백엔드', value: 'NestJS' },
+  { label: 'DB · 캐시', value: 'PostgreSQL, Redis' },
+  { label: '클라우드', value: 'AWS, Google Cloud' },
+  { label: '배포', value: 'Docker, GitHub Actions' },
+  { label: '개발 · 협업', value: 'Git, GitHub' },
+  { label: '테스트', value: 'Jest' },
+  {
+    label: '디바이스 · 통신',
+    value: 'ESP32 / ESP32-S3, Raspberry Pi, MQTT (프로토타입)',
+  },
 ];
