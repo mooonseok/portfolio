@@ -11,6 +11,11 @@ html {
     scroll-behavior: smooth;
   }
 }
+@media (max-width: 743px) {
+  html {
+    scroll-padding-top: calc(56px + env(safe-area-inset-top));
+  }
+}
 body {
   margin: 0;
   background: var(--paper);

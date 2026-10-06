@@ -6,7 +6,7 @@ import type { RelationMapViewProps } from '@/dto/explorer.dto';
 import { TAG } from '@/constants/tag';
 
 const seg =
-  'absolute border-graphite [transition:border-color_150ms_var(--ease),border-width_150ms_var(--ease)] data-on:border-ink';
+  'absolute border-graphite [transition:border-color_150ms_var(--ease)] data-on:border-ink';
 
 const center = (i: number, n: number) => ((i + 0.5) / n) * 100;
 

@@ -1,3 +1,4 @@
+import { FLOOR } from '@/constants/floor';
 import { CASE_LENGTH, PROJECT_SLUG, PROJECT_TIER } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import { VISUAL_ID } from '@/constants/visual';
@@ -11,7 +12,7 @@ const mainVisual = {
 
 export const indianBob: Project = {
   slug: PROJECT_SLUG.INDIAN_BOB,
-  num: '01',
+  num: '02',
   title: 'INDIAN BOB',
   category: 'APP / API / ADMIN',
   period: '2024—2025',
@@ -19,8 +20,34 @@ export const indianBob: Project = {
   caseLength: CASE_LENGTH.MEDIUM,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'App / API / Admin',
-  summary:
-    '인디언밥은 해빗 참여와 팀 활동을 지원하는 서비스입니다. Flutter 앱, 관리자 웹, 서버 API에 걸쳐 기능을 개발했습니다.',
+  boardService: '해빗 참여 서비스',
+  layers: [
+    {
+      floor: FLOOR.APP,
+      summary: '해빗 이용·입력 검증',
+      lines: ['해빗 이용 화면과 상태 처리, 단계별 입력 검증을 개발했습니다.'],
+      tech: 'Flutter',
+    },
+    {
+      floor: FLOOR.ADMIN,
+      summary: '해빗·이벤트 관리',
+      lines: [
+        '해빗 생성·수정·복제와 이벤트 관리 화면을 개발했습니다.',
+        '기간·숫자·이미지 입력을 검증하고, 복제 시 기존 이미지와 새 파일을 처리했습니다.',
+      ],
+      tech: 'Next.js',
+    },
+    {
+      floor: FLOOR.API,
+      summary: '해빗·팀 기능',
+      lines: [
+        '해빗 기능의 서버 API를 작업했습니다.',
+        '팀 생성·수정과 승인 방식에 따른 회원 등록·가입 요청 저장을 구현했습니다. 정원·중복 요청과 설정 변경 권한도 확인하도록 했습니다.',
+      ],
+      tech: 'NestJS',
+    },
+  ],
+  summary: '해빗에 참여하고 팀원들과 함께 활동하는 서비스입니다.',
   links: [
     {
       label: 'Google Play에서 앱 보기',
@@ -31,15 +58,21 @@ export const indianBob: Project = {
     features: [
       {
         title: '해빗 이용',
-        body: ['Flutter 앱에서 해빗을 이용하는 화면과 상태 처리'],
+        body: [
+          '앱 화면과 상태 처리, 입력 검증을 개발하고 해빗 기능의 서버 API를 작업했습니다.',
+        ],
       },
       {
         title: '관리자 운영',
-        body: ['해빗 생성·수정·복제와 기간·입력값 검증'],
+        body: [
+          '해빗 생성·수정·복제와 이벤트 관리 화면을 만들고, 기간·숫자·이미지 입력을 검증했습니다.',
+        ],
       },
       {
         title: '팀 기능',
-        body: ['팀 생성·수정과 자동 승인 여부에 따른 가입 처리'],
+        body: [
+          '팀 생성·수정과 회원 등록·가입 요청 처리를 구현하고, 정원·중복 요청·설정 변경 권한을 확인하도록 했습니다.',
+        ],
       },
     ],
     scope: ['Flutter App', 'Habit', 'Admin Web', 'Server API'],

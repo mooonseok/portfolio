@@ -7,13 +7,11 @@ import { Text } from '@/components/atoms/text';
 import { DomainExplorer } from '@/components/organisms/domain-explorer/domain-explorer';
 import { ExperimentBlock } from '@/components/organisms/experiment-block';
 import { TechNotes } from '@/components/organisms/tech-notes';
-import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import type { ApcCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { RULE } from '@/constants/rule';
 import { SIZE } from '@/constants/size';
 import { TONE } from '@/constants/tone';
-import { IMAGE_SIZES } from '@/constants/visual';
 
 export function ApcCaseView({
   p,
@@ -28,20 +26,7 @@ export function ApcCaseView({
 }: ApcCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate
-      project={p}
-      darkHeader
-      titleSize={SIZE.XL}
-      hero={
-        <ConceptFrame
-          visual={p.visuals.hero}
-          className='relative mx-auto my-0 max-h-[80svh] max-w-[1440px] [--ratio:4/5] tab:max-h-none tab:[--ratio:16/9] lap:[--ratio:21/9]'
-          parallax={0}
-          priority
-          sizes={IMAGE_SIZES.FULL}
-        />
-      }
-    >
+    <CaseStudyTemplate project={p} darkHeader titleSize={SIZE.XL}>
       {showWork ? (
         <CaseSectionView
           group={groups.work}

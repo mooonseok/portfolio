@@ -21,16 +21,16 @@ export function FeaturedWorkView({
     >
       <SectionHeading
         id='featured-h'
-        label='01—02'
-        title='Flutter 앱 개발'
+        label=''
+        title='사용자 앱'
         rule={RULE.MOBILE}
       />
       <Box
         id='flutter-work'
         className='mt-10 grid-page gap-y-16 tab:mt-14 tab:gap-y-24'
       >
-        <IndianBobBlockView {...indianBob} />
         <EmosaveBlockView {...emosave} />
+        <IndianBobBlockView {...indianBob} />
       </Box>
     </ScrollScene>
   );

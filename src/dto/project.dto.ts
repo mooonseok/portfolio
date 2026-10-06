@@ -2,6 +2,7 @@ import type { CaseLength, ProjectSlug, ProjectTier } from '@/constants/project';
 import type { CaseContent } from '@/dto/case.dto';
 import type { WorkArea } from '@/dto/explorer.dto';
 import type { Flow } from '@/dto/flow.dto';
+import type { Layer } from '@/dto/layer.dto';
 import type { StatusItem, Zone } from '@/dto/status.dto';
 import type { WorkItem } from '@/dto/work.dto';
 import type { Visuals } from '@/dto/visual.dto';
@@ -31,6 +32,8 @@ export interface Project {
   caseLength: CaseLength;
   status: StatusItem[];
   surfaces: string;
+  layers: Layer[];
+  boardService: string;
   summary: string;
   links?: ProjectLink[];
   home: ProjectHome;

@@ -22,11 +22,6 @@ export function CaseStudyTemplateView({
   return (
     <>
       <Box className='relative'>
-        <Text
-          as={TAG.SPAN}
-          className='hidden tab:pointer-events-none tab:absolute tab:top-[300px] tab:bottom-[260px] tab:left-[max(var(--rail-x),calc((100%_-_1440px)_/_2_+_var(--rail-x)))] tab:z-2 tab:block tab:border-l tab:border-l-graphite'
-          aria-hidden='true'
-        />
         <Box className={cx(header.darkHeader && 'surface-dark')}>
           <SiteHeader dark={header.darkHeader} back current={NAV_ID.WORK} />
         </Box>
@@ -34,12 +29,9 @@ export function CaseStudyTemplateView({
           <Box className={cx('pb-0', header.darkHeader && 'surface-dark')}>
             <ScrollScene>
               <CaseHeaderView {...header} />
-              <Box
-                className='mt-8 tab:mt-12 lap:mt-14'
-                data-reveal-item='visual'
-              >
+              <Box className='container mt-8 pb-12 tab:mt-12 tab:pb-16 lap:mt-14'>
                 {hero}
-                <Text className='container mt-4 text-small text-subtle on-dark:text-dark-sub'>
+                <Text className='mt-4 text-small text-subtle on-dark:text-dark-sub'>
                   {visualsNoteKo}
                 </Text>
               </Box>

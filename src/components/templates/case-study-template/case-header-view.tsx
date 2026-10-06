@@ -40,6 +40,7 @@ export function CaseHeaderView({
           fs={TITLE_FS.CASE}
           as={HEADING.H1}
           tone={titleTone}
+          showLayers={false}
         />
       </Box>
       {showSummary ? (

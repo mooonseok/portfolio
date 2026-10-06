@@ -7,8 +7,7 @@ import { JumpLink } from '@/components/atoms/jump-link';
 import type { DomainItem } from '@/dto/domain.dto';
 import { HEADING } from '@/constants/tag';
 
-const layer =
-  'col-start-1 row-start-1 [&:not([data-selected])]:invisible mob:[&:not([data-selected])]:hidden';
+const layer = 'col-start-1 row-start-1 [&:not([data-selected])]:invisible';
 
 export function DomainDetailPanelView({
   items,
@@ -52,13 +51,20 @@ export function DomainDetailPanelView({
             </Column>
           ))}
         </Grid>
-        <Column
-          key={current.id}
-          className='gap-6 motion-safe:animate-[fade-in_150ms_var(--ease)]'
-        >
-          <DomainDetailView domain={current} />
-          <JumpLink href={current.noteHref} label={current.linkLabel} />
-        </Column>
+        <Grid>
+          {items.map((d) => (
+            <Column
+              key={d.id}
+              aria-hidden={hide(d)}
+              inert={d.id !== current.id}
+              data-selected={sel(d)}
+              className={`${layer} gap-6`}
+            >
+              <DomainDetailView domain={d} />
+              <JumpLink href={d.noteHref} label={d.linkLabel} />
+            </Column>
+          ))}
+        </Grid>
       </Column>
     </Grid>
   );

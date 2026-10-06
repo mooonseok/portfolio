@@ -26,14 +26,17 @@ export function SelectedWorkView({
         <SectionHeading
           id='selected-h'
           anchor={false}
-          label='03—04'
-          title='웹·서버 개발'
+          label=''
+          title='업무 시스템'
           aside={
             <Column as={TAG.OL} className='mono leading-[1.6]'>
               {index.map((e) => (
                 <ListItem key={e.slug}>
-                  <Anchor href={e.href} className='inline-block py-0.5'>
-                    {e.num} {e.title}
+                  <Anchor
+                    href={e.href}
+                    className='inline-flex min-h-11 items-center'
+                  >
+                    {e.title}
                   </Anchor>
                 </ListItem>
               ))}
@@ -46,7 +49,7 @@ export function SelectedWorkView({
       <Box className='container pt-16 tab:pt-24'>
         <SectionHeading
           id='experiment-h'
-          label='05'
+          label=''
           title='센서·제어 실험'
           anchor={false}
         />

@@ -17,7 +17,7 @@ export function ToolsView({ rows, about }: ToolsViewProps) {
     >
       <SectionHeading
         id='tools-h'
-        label='—'
+        label=''
         title='Tools / Scope'
         size={HEADING.H3}
         rule={false}

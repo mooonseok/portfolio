@@ -1,0 +1,27 @@
+.work-sheet {
+  color: var(--ink);
+  background: var(--board-white);
+  border: 1px solid var(--board-frame);
+  border-top: 2px solid var(--marker-blue);
+  padding: clamp(20px, 3vw, 36px);
+}
+.press-feedback.press-feedback {
+  transition:
+    transform var(--dur-press) var(--ease-out),
+    background-color var(--dur-press) var(--ease-out),
+    color var(--dur-press) var(--ease-out);
+}
+.press-feedback:active {
+  transform: translateY(1px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .press-feedback:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .board-box:not([data-lit]) {
+    display: none;
+  }
+}

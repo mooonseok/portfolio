@@ -1,8 +1,11 @@
 # Park Moonseok — Portfolio
 
-Flutter 앱을 중심으로 관리자 웹과 서버 API까지 개발한 경험을 소개하는 개인
-포트폴리오입니다. 홈에서 5개 프로젝트의 담당 범위를 훑고, 상세 페이지에서 기능
-관계와 대표 구현 사례를 읽을 수 있습니다.
+Flutter 앱·관리자 웹·서버 API와 사무실 기기 실험에서 맡은 작업을 소개하는 개인
+포트폴리오입니다. 홈 화이트보드에서 5개 프로젝트의 담당 영역과 기술을 비교하고,
+이름을 선택해 영역별 작업과 사례 링크를 확인할 수 있습니다. 좁은 화면에서는
+프로젝트별 목록으로 바뀝니다. 상세 페이지는 그 프로젝트의 보드로 시작하고, 기능
+관계와 대표 구현 사례를 읽을 수 있습니다. 홈 소개는 사진 대신 담당 기능을 읽는
+판면으로 구성하고, 상세 보드에는 실제 담당한 영역만 표시합니다.
 
 **이 저장소는 포트폴리오 사이트 코드입니다.** 소개한 서비스의 원본 구현은 별도
 프로젝트에 있습니다. 이미지와 도식은 설명을 위한 재구성 자료입니다. 공식 제출용
@@ -28,10 +31,11 @@ CMS·서버 API 없이 콘텐츠를 정적으로 렌더링합니다. 문구·도
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · pnpm.
 
 Design and content decisions, the data model and the QA checklist are in
-[HANDOFF.md](HANDOFF.md). Branch, commit, verification and background-process
-rules for anyone (or any agent) working in this repo are in
-[AGENTS.md](AGENTS.md); `CLAUDE.md` imports it so Claude Code loads the same
-rules.
+[HANDOFF.md](HANDOFF.md). Visual tokens and whiteboard component rules are in
+[DESIGN.md](DESIGN.md), with preview extensions in `.impeccable/design.json`.
+Branch, commit, verification and background-process rules for anyone (or any
+agent) working in this repo are in [AGENTS.md](AGENTS.md); `CLAUDE.md` imports
+it so Claude Code loads the same rules.
 
 ## Requirements
 
@@ -50,7 +54,7 @@ pnpm dev --port 3100    # development server (stop before pnpm build)
 pnpm build              # production build
 pnpm start --port 3100  # serve the production build locally
 
-pnpm lint               # ESLint 9 flat config, fails on any warning
+pnpm lint               # ESLint 9; excludes installed skill folders only, fails on warnings
 pnpm typecheck          # tsc --noEmit
 pnpm test               # selection, scroll position, history and scanner regression tests
 pnpm check:anchors      # rendered IDs and content links; run after pnpm build

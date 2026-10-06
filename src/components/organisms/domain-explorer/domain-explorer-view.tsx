@@ -42,7 +42,7 @@ export function DomainExplorerView({
               data-selected={on || undefined}
               onClick={() => onSelect(x.id)}
               onKeyDown={onKeyDown}
-              className='group/tab -mb-px flex min-h-14 cursor-pointer flex-col items-start gap-1.5 bg-transparent px-2.5 pt-3 pb-2.5 text-left text-dark-sub [box-shadow:inset_0_-2px_0_transparent] [border:0] [transition:background-color_150ms_var(--ease),box-shadow_150ms_var(--ease),color_150ms_var(--ease)] focus-visible:outline-offset-[-2px] data-selected:bg-dark-tint data-selected:text-paper data-selected:[box-shadow:inset_0_-2px_0_var(--paper)] tab:px-4 tab:pt-3.5 tab:pb-3 fine:hover:text-paper'
+              className='press-feedback group/tab -mb-px flex min-h-14 cursor-pointer flex-col items-start gap-1.5 bg-transparent px-2.5 pt-3 pb-2.5 text-left text-dark-sub [box-shadow:inset_0_-2px_0_transparent] [border:0] [transition:background-color_150ms_var(--ease),box-shadow_150ms_var(--ease),color_150ms_var(--ease)] focus-visible:outline-offset-[-2px] data-selected:bg-dark-tint data-selected:text-paper data-selected:[box-shadow:inset_0_-2px_0_var(--paper)] tab:px-4 tab:pt-3.5 tab:pb-3 fine:hover:text-paper'
             >
               <Row as={TAG.SPAN} className='items-center gap-2 mono'>
                 <ChoiceDot on={on} />

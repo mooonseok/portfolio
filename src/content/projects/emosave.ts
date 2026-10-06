@@ -1,3 +1,4 @@
+import { FLOOR } from '@/constants/floor';
 import { CASE_LENGTH, PROJECT_SLUG, PROJECT_TIER } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import { VISUAL_ID } from '@/constants/visual';
@@ -11,7 +12,7 @@ const mainVisual = {
 
 export const emosave: Project = {
   slug: PROJECT_SLUG.EMOSAVE,
-  num: '02',
+  num: '01',
   title: 'EMOSAVE',
   category: 'MOBILE INTERACTION',
   period: '2022—2023',
@@ -19,8 +20,22 @@ export const emosave: Project = {
   caseLength: CASE_LENGTH.SHORT,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Mobile / Flutter',
+  boardService: '감정 기록 앱',
+  layers: [
+    {
+      floor: FLOOR.APP,
+      summary: '감정 기록·마을 편집',
+      lines: [
+        '감정 탭의 선택과 상태 처리를 구현했습니다.',
+        '마을 아이템의 선택·이동·회전·삭제와 편집 상태를 처리했습니다.',
+        '편집 결과를 로컬에 저장하고 마을 API에 반영했으며, 다이어리 상세 화면의 이미지 캡처·공유를 구현했습니다.',
+        '이모티콘 삭제, 스토어 UI 수정과 로컬라이징을 작업했습니다.',
+      ],
+      tech: 'Flutter · Cubit',
+    },
+  ],
   summary:
-    '분저장(Emosave)은 감정을 기록하고 캐릭터와 아이템으로 마을을 꾸미는 앱입니다. 감정 탭과 편집 기능을 개발했습니다.',
+    '분저장(Emosave)은 감정을 기록하고 캐릭터와 아이템으로 마을을 꾸미는 앱입니다.',
   links: [
     {
       label: 'Google Play에서 앱 보기',
@@ -29,14 +44,25 @@ export const emosave: Project = {
   ],
   home: {
     features: [
-      { title: '감정 기록', body: ['감정 탭의 선택과 화면 상태 처리'] },
       {
-        title: '마을 편집',
-        body: ['아이템 선택·이동·회전·삭제와 편집 상태 관리'],
+        title: '감정 기록',
+        body: ['감정 선택 결과를 화면에 반영하고 상태를 관리했습니다.'],
       },
       {
-        title: '저장·공유',
-        body: ['편집 결과 저장과 다이어리 화면 캡처 공유'],
+        title: '마을 편집',
+        body: [
+          '캐릭터와 아이템을 배치하고, 선택·이동·회전·삭제하는 편집 기능을 개발했습니다.',
+        ],
+      },
+      {
+        title: '저장과 공유',
+        body: [
+          '편집 결과의 API·로컬 저장과 다이어리 화면의 이미지 캡처·공유를 구현했습니다.',
+        ],
+      },
+      {
+        title: '스토어와 이모티콘',
+        body: ['이모티콘 삭제와 스토어 UI 수정, 로컬라이징을 작업했습니다.'],
       },
     ],
     scope: ['Character / Village', 'Customization', 'Emoticon / Store'],

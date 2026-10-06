@@ -3,7 +3,6 @@ import { CaseSectionView } from './components/case-section-view';
 import { WorkRowsView } from './components/work-rows-view';
 import { ParagraphsView } from './components/paragraphs-view';
 import { Box } from '@/components/atoms/box';
-import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { RelationMap } from './components/relation-map';
@@ -19,19 +18,7 @@ export function FarmFamPlusCaseView({
 }: FarmFamPlusCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate
-      project={p}
-      hero={
-        <Box className='container'>
-          <ConceptFrame
-            visual={p.visuals.hero}
-            className='[--ratio:3/2]'
-            parallax={0}
-            priority
-          />
-        </Box>
-      }
-    >
+    <CaseStudyTemplate project={p}>
       <CaseSectionView
         group={groups.work}
         depth={CASE_DEPTH.L1}

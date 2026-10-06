@@ -19,10 +19,7 @@ export function ControlPanelView({
       id={panelId}
       className={cx('gap-4 border-t border-t-ink pt-4', className)}
     >
-      <Column
-        key={current.id}
-        className='gap-4 motion-safe:animate-[fade-in_150ms_var(--ease)]'
-      >
+      <Column key={current.id} className='gap-4'>
         <Heading
           level={HEADING.H3}
           className='text-d3 leading-[1.25] font-medium tracking-[-0.012em]'

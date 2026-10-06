@@ -8,7 +8,7 @@ import { CONTROL_ZONE, type ControlZone } from '@/constants/control';
 import { TAG } from '@/constants/tag';
 
 const zoneBox =
-  'flex min-h-12 flex-1 flex-col justify-center gap-1 px-3 py-2 [border:1px_dashed_var(--graphite)] [transition:background-color_150ms_var(--ease)] data-on:[border:1.5px_solid_var(--ink)] data-on:bg-tint';
+  'flex min-h-12 flex-1 flex-col justify-center gap-1 px-3 py-2 [border:1px_dashed_var(--graphite)] [transition:background-color_150ms_var(--ease)] data-on:border-ink data-on:[box-shadow:inset_0_0_0_0.5px_var(--ink)] data-on:bg-tint';
 
 function End({ node }: { node: ControlNode }) {
   return (
@@ -49,12 +49,11 @@ export function ControlDiagramView({
   className?: string;
 }) {
   const whole = zone === CONTROL_ZONE.CONTROLLER;
-  const mark = (z: ControlZone) =>
-    z === zone ? (
-      <Text as={TAG.SPAN} className='mono'>
-        ▲ 설명 위치
-      </Text>
-    ) : null;
+  const mark = (z: ControlZone) => (
+    <Text as={TAG.SPAN} className={cx('mono', z !== zone && 'invisible')}>
+      ▲ 설명 위치
+    </Text>
+  );
   return (
     <Column as={TAG.FIGURE} className={cx('min-w-0 gap-4', className)}>
       <Box aria-hidden='true' className='flex flex-col'>
@@ -86,11 +85,9 @@ export function ControlDiagramView({
               </Box>
             ))}
           </Box>
-          {whole ? (
-            <Text as={TAG.SPAN} className='mono'>
-              ▲ 설명 위치 · {c.zones[CONTROL_ZONE.CONTROLLER]}
-            </Text>
-          ) : null}
+          <Text as={TAG.SPAN} className={cx('mono', !whole && 'invisible')}>
+            ▲ 설명 위치 · {c.zones[CONTROL_ZONE.CONTROLLER]}
+          </Text>
         </Column>
         <Wire />
         <End node={c.equipment} />

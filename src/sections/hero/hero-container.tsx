@@ -1,5 +1,8 @@
 import { HeroView } from './hero-view';
+import { Whiteboard } from '@/components/organisms/whiteboard/whiteboard';
 import { site } from '@/content/site';
+import { boardColumns, boardFloors } from '@/lib/board';
+import { getProjects } from '@/lib/content';
 
 export function HeroContainer() {
   return (
@@ -12,6 +15,13 @@ export function HeroContainer() {
       range={site.range}
       headline={site.headline}
       introduction={site.introduction}
+      board={
+        <Whiteboard
+          floors={boardFloors()}
+          columns={boardColumns(getProjects())}
+          copy={site.board}
+        />
+      }
     />
   );
 }

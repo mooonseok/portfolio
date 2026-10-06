@@ -3,7 +3,6 @@ import { CaseSectionView } from './components/case-section-view';
 import { WorkRowsView } from './components/work-rows-view';
 import { ParagraphsView } from './components/paragraphs-view';
 import { Box } from '@/components/atoms/box';
-import { ConceptFrame } from '@/components/organisms/concept-frame/concept-frame';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { FocusCardView } from './components/focus-card-view';
@@ -19,21 +18,7 @@ export function EmosaveCaseView({
 }: EmosaveCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate
-      project={p}
-      titleSize={SIZE.SM}
-      hero={
-        <Box className='container'>
-          <ConceptFrame
-            visual={p.visuals.main}
-            className='[--ratio:4/3] tab:[--ratio:16/9]'
-            radius={24}
-            parallax={0}
-            priority
-          />
-        </Box>
-      }
-    >
+    <CaseStudyTemplate project={p} titleSize={SIZE.SM}>
       <CaseSectionView
         group={groups.work}
         depth={CASE_DEPTH.L1}
@@ -48,22 +33,14 @@ export function EmosaveCaseView({
         layout={CASE_LAYOUT.WIDE}
       >
         {lead ? (
-          <FocusCardView
-            focus={lead}
-            visual={p.visuals[lead.visual]}
-            className='max-w-[600px] tab:grid tab:grid-cols-2 tab:items-start tab:[&>div:first-child]:row-span-2 tab:[&>div:last-child]:col-2 tab:[&>h3]:col-2 tab:[&>h3]:row-1'
-          />
+          <FocusCardView focus={lead} className='work-sheet max-w-[600px]' />
         ) : null}
         {c.stateExample ? (
           <StateComparisonView example={c.stateExample} />
         ) : null}
-        <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2 [&_[data-reveal-item=visual]]:max-w-[320px]'>
+        <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2'>
           {rest.map((focus) => (
-            <FocusCardView
-              key={focus.title}
-              focus={focus}
-              visual={p.visuals[focus.visual]}
-            />
+            <FocusCardView key={focus.title} focus={focus} />
           ))}
         </Box>
       </CaseSectionView>

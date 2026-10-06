@@ -1,0 +1,55 @@
+.hero-intro,
+.hero-identity,
+.hero-description {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.hero-name {
+  font-size: clamp(40px, 12vw, 60px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  overflow-wrap: normal;
+}
+.hero-lead {
+  max-width: 44ch;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--subtle);
+}
+.hero-headline {
+  font-size: 21px;
+  line-height: 1.45;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+@media (min-width: 744px) and (max-width: 1439px) {
+  .hero-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 24px 40px;
+    align-items: start;
+  }
+  .hero-name {
+    font-size: clamp(40px, 4.5vw, 60px);
+  }
+  .hero-range {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 1440px) {
+  .hero-name {
+    font-size: 60px;
+  }
+  .hero-lead {
+    max-width: 44ch;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--subtle);
+  }
+  .hero-headline {
+    font-size: 25px;
+  }
+}

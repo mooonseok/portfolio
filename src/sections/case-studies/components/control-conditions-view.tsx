@@ -34,7 +34,7 @@ export function ControlConditionsView({
               aria-controls={panelId}
               data-selected={on || undefined}
               onClick={() => onSelect(x.id)}
-              className='min-h-11 cursor-pointer border border-ink bg-transparent px-3.5 py-2 text-[15px] leading-[1.35] decoration-1 underline-offset-4 [transition:background-color_150ms_var(--ease),color_150ms_var(--ease)] data-selected:bg-ink data-selected:font-medium data-selected:text-paper fine:hover:underline'
+              className='press-feedback min-h-11 cursor-pointer border border-ink bg-transparent px-3.5 py-2 text-[15px] leading-[1.35] decoration-1 underline-offset-4 [transition:background-color_150ms_var(--ease),color_150ms_var(--ease)] data-selected:bg-ink data-selected:font-medium data-selected:text-paper fine:hover:underline'
             >
               {x.label}
             </Button>
@@ -42,11 +42,19 @@ export function ControlConditionsView({
         })}
       </Box>
       <Grid className='grid-cols-[minmax(0,1fr)] gap-y-8 lap:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lap:gap-x-12'>
-        <ControlPanelView
-          panelId={panelId}
-          current={current}
-          className='lap:col-[2] lap:row-[1]'
-        />
+        <Grid id={panelId} className='lap:col-[2] lap:row-[1]'>
+          {c.conditions.map((x) => (
+            <Box
+              key={x.id}
+              aria-hidden={x.id !== current.id}
+              inert={x.id !== current.id}
+              data-selected={x.id === current.id || undefined}
+              className='col-start-1 row-start-1 [&:not([data-selected])]:invisible'
+            >
+              <ControlPanelView panelId={`${panelId}-${x.id}`} current={x} />
+            </Box>
+          ))}
+        </Grid>
         <ControlDiagramView
           c={c}
           zone={current.zone}

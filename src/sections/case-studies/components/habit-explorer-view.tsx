@@ -81,7 +81,7 @@ export function HabitExplorerView({
             role='tabpanel'
             tabIndex={0}
             aria-labelledby={tabId(current.id)}
-            className='gap-3 border-t border-t-ink pt-4 motion-safe:animate-[fade-in_150ms_var(--ease)]'
+            className='gap-3 border-t border-t-ink pt-4'
           >
             <Text as={TAG.SPAN} className='mono'>
               관련 시스템 · {current.systems.join(' · ')}

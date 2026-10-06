@@ -3,10 +3,8 @@ import { site } from '@/content/site';
 import { pageMetadata, siteSettings } from '@/lib/site-metadata';
 import { Box } from '@/components/atoms/box';
 import { SiteHeader } from '@/components/organisms/site-header';
-import { SignalLine } from '@/components/organisms/signal-line';
 import { SiteFooter } from '@/components/organisms/site-footer';
 import { EngineeringStoriesContainer } from '@/sections/engineering-stories/engineering-stories-container';
-import { ExperienceContainer } from '@/sections/experience/experience-container';
 import { FeaturedWorkContainer } from '@/sections/featured-work/featured-work-container';
 import { HeroContainer } from '@/sections/hero/hero-container';
 import { SelectedWorkContainer } from '@/sections/selected-work/selected-work-container';
@@ -25,15 +23,13 @@ export const metadata: Metadata = pageMetadata(
 
 export default function HomePage() {
   return (
-    <Box className='relative [--signal-bottom:0px] [--signal-top:560px] short-land:[--signal-top:320px]'>
-      <SignalLine />
+    <Box className='relative'>
       <SiteHeader />
       <Box as={TAG.MAIN} id='main-content' tabIndex={-1}>
         <HeroContainer />
         <FeaturedWorkContainer />
         <SelectedWorkContainer />
         <EngineeringStoriesContainer />
-        <ExperienceContainer />
         <ToolsContainer />
       </Box>
       <SiteFooter />

@@ -1,5 +1,5 @@
 import { Box } from '@/components/atoms/box';
-import type { StatusKind } from '@/constants/status';
+import { STATUS_KIND, type StatusKind } from '@/constants/status';
 import { TAG } from '@/constants/tag';
 import { TONE, type AccentTone } from '@/constants/tone';
 
@@ -27,7 +27,14 @@ export function StatusLabel({
         aria-hidden='true'
         data-pulse={pulse || undefined}
       />
-      <Box as={TAG.SPAN}>{label}</Box>
+      <Box as={TAG.SPAN}>
+        {label}
+        {kind === STATUS_KIND.EXPERIMENT ? (
+          <Box as={TAG.SPAN} className='sr-only'>
+            {' (실험)'}
+          </Box>
+        ) : null}
+      </Box>
     </Box>
   );
 }

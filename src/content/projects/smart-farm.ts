@@ -1,3 +1,4 @@
+import { FLOOR } from '@/constants/floor';
 import { CASE_LENGTH, PROJECT_SLUG, PROJECT_TIER } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import { VISUAL_ID } from '@/constants/visual';
@@ -26,18 +27,49 @@ export const smartFarm: Project = {
     { kind: STATUS_KIND.EXPERIMENT, label: 'CONTROL', note: 'Experiment' },
   ],
   surfaces: 'Monitoring / Control',
+  boardService: '센서 모니터링 실험',
+  layers: [
+    {
+      floor: FLOOR.ADMIN,
+      summary: '측정값 대시보드 연동',
+      lines: [
+        'MQTT로 전송한 측정값을 대시보드에서 확인할 수 있도록 연동했습니다.',
+      ],
+      kind: STATUS_KIND.EXPERIMENT,
+    },
+    {
+      floor: FLOOR.DEVICE,
+      summary: '센서 모니터링·LED 제어',
+      lines: [
+        'ESP32와 Raspberry Pi로 센서 시험 모듈을 구성하고, 온습도·CO₂ 측정과 MQTT 전송을 사무실에서 시험했습니다.',
+        '별도 LED 제어 실험에서 ESP32-S3와 LED 1채널을 이용해 MQTT 명령 수신과 출력 제어를 구현했습니다.',
+        '제어기의 명령 만료·중복 방지, 연결 단절 시 출력 차단, 동작 시간 제한과 bootId를 이용한 장치 상태 식별을 구현했습니다.',
+        '하드웨어 없이 실행하는 호스트 시험으로 제어 로직을 확인했습니다. 실제 장비 출력·네트워크 시험과는 구분합니다.',
+      ],
+      kind: STATUS_KIND.EXPERIMENT,
+    },
+  ],
   summary:
-    '온습도·CO₂ 측정값을 전달하고 관측하는 사무실 시험 모듈입니다. 센서 모니터링과 별도의 LED 제어 실험을 진행했습니다.',
+    '사무실에서 온습도와 CO₂ 측정, 데이터 전송을 시험했습니다. LED 제어는 별도 실험으로 진행했습니다.',
   home: {
     features: [
-      { title: '센서 모듈', body: ['ESP32·Raspberry Pi 기반 온습도·CO₂ 측정'] },
       {
-        title: '전송·관측',
-        body: ['MQTT로 측정값을 전달하고 대시보드에서 확인'],
+        title: '센서 모니터링',
+        body: [
+          'ESP32와 Raspberry Pi로 온습도·CO₂ 센서 모듈을 구성하고 측정값을 MQTT로 전송했습니다.',
+        ],
       },
       {
-        title: '별도 제어 PoC',
-        body: ['ESP32-S3와 LED 시험 출력으로 안전 조건 검토'],
+        title: '대시보드 연동',
+        body: [
+          '전송한 측정값을 대시보드에서 확인할 수 있도록 연결하고, 사무실에서 측정·전송 흐름을 시험했습니다.',
+        ],
+      },
+      {
+        title: '별도 LED 제어 실험',
+        body: [
+          'ESP32-S3와 LED 1채널로 명령 만료·중복 방지, 연결 단절 시 출력 차단과 동작 시간 제한을 구현했습니다.',
+        ],
       },
     ],
     scope: [],

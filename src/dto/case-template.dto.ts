@@ -22,7 +22,6 @@ export interface CaseNextLink {
 
 export interface CaseStudyTemplateProps {
   project: Project;
-  hero: ReactNode;
   darkHeader?: boolean;
   children: ReactNode;
   titleSize?: CaseTitleSize;
@@ -44,7 +43,6 @@ export interface CaseStudyTemplateViewProps extends CaseHeaderViewProps {
   children: ReactNode;
   groups: ContentsGroup[];
   next: CaseNextLink;
-  visualsNote: string;
   visualsNoteKo: string;
 }
 

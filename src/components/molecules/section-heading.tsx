@@ -48,12 +48,14 @@ export function SectionHeading({
       data-label-from={labelFrom}
       data-signal-anchor={anchor ? id : undefined}
     >
-      <Text
-        as={TAG.SPAN}
-        className='col-span-full mono max-lap:group-data-[label-from=desktop]/heading:hidden tab:group-data-[rail-from=tablet]/heading:col-[1/3] lap:col-[1/3] lap:group-data-[size=h3]/heading:pt-1.5'
-      >
-        {label}
-      </Text>
+      {label ? (
+        <Text
+          as={TAG.SPAN}
+          className='col-span-full mono max-lap:group-data-[label-from=desktop]/heading:hidden tab:group-data-[rail-from=tablet]/heading:col-[1/3] lap:col-[1/3] lap:group-data-[size=h3]/heading:pt-1.5'
+        >
+          {label}
+        </Text>
+      ) : null}
       <Heading
         level={HEADING.H2}
         id={id}

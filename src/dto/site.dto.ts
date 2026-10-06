@@ -8,6 +8,8 @@ export interface YearRange {
   years: string;
 }
 
+import type { BoardCopy } from '@/dto/board.dto';
+
 export interface Site {
   name: string;
   role: string;
@@ -20,14 +22,5 @@ export interface Site {
   contact: Contact;
   visualsNote: string;
   visualsNoteKo: string;
-}
-
-export interface ExperienceItem {
-  name: string;
-  scope: string;
-}
-
-export interface ExperienceYear {
-  year: string;
-  items: ExperienceItem[];
+  board: BoardCopy;
 }
