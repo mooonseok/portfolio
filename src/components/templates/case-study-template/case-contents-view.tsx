@@ -84,13 +84,14 @@ export function CaseContentsView({
           as={LIST_TAG.OL}
           className='flex flex-col border-t border-t-hairline px-3.5 pt-0 pb-2'
         >
-          {items.map((g) => (
+          {items.map((g, i) => (
             <ListItem key={g.id}>
               <Anchor
                 href={`#${g.id}`}
                 onClick={onClose}
                 className={linkClass}
                 tabIndex={stuck ? 0 : -1}
+                aria-current={i === currentIndex ? 'location' : undefined}
               >
                 <Text as={TAG.SPAN} className='muted'>
                   {g.num}

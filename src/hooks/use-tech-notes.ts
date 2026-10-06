@@ -6,7 +6,7 @@ import type { TechNote } from '@/dto/field.dto';
 import { MEDIA } from '@/constants/breakpoint';
 import { useAnchorTarget } from '@/hooks/use-anchor-target';
 
-const HEIGHT_MS = 200;
+const HEIGHT_MS = 220;
 const animates = () =>
   window.matchMedia(MEDIA.MOBILE).matches &&
   !window.matchMedia(MEDIA.REDUCED_MOTION).matches;
@@ -18,7 +18,6 @@ export function useTechNotes(notes: TechNote[]) {
   );
   const panels = useRef(new Map<string, HTMLDivElement>());
   const animations = useRef(new Map<string, Animation>());
-  const closing = useRef(new Set<string>());
   const reveal = useCallback((id: string) => {
     const animation = animations.current.get(id);
     if (animation) {
@@ -26,7 +25,6 @@ export function useTechNotes(notes: TechNote[]) {
       animation.cancel();
       animations.current.delete(id);
     }
-    closing.current.delete(id);
     setOpen((o) => new Set(o).add(id));
   }, []);
   useAnchorTarget(
@@ -96,15 +94,13 @@ export function useTechNotes(notes: TechNote[]) {
 
   const toggle = (id: string) => {
     const el = panels.current.get(id);
-    const expanding = !open.has(id) || closing.current.has(id);
-    const height = el?.getBoundingClientRect().height ?? 0;
+    const expanding = !open.has(id);
     const previous = animations.current.get(id);
     if (previous) {
       previous.onfinish = null;
       previous.cancel();
       animations.current.delete(id);
     }
-    closing.current.delete(id);
     const finish = () =>
       setOpen((old) => {
         const next = new Set(old);
@@ -112,30 +108,19 @@ export function useTechNotes(notes: TechNote[]) {
         else next.delete(id);
         return next;
       });
-    if (!el || !animates()) {
+    if (!el || !expanding || !animates()) {
       finish();
       return;
     }
-    if (expanding) flushSync(finish);
-    else closing.current.add(id);
+    flushSync(finish);
     const animation = el.animate(
-      [
-        { height: `${height}px` },
-        { height: `${expanding ? el.scrollHeight : 0}px` },
-      ],
-      {
-        duration: HEIGHT_MS,
-        easing: 'ease-out',
-        fill: 'forwards',
-      }
+      [{ height: '0px' }, { height: `${el.scrollHeight}px` }],
+      { duration: HEIGHT_MS, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' }
     );
     animations.current.set(id, animation);
     animation.onfinish = () => {
-      if (animations.current.get(id) !== animation) return;
-      if (!expanding) flushSync(finish);
-      closing.current.delete(id);
-      animations.current.delete(id);
-      animation.cancel();
+      if (animations.current.get(id) === animation)
+        animations.current.delete(id);
     };
   };
   const panelRef = (id: string) => (el: HTMLDivElement | null) => {

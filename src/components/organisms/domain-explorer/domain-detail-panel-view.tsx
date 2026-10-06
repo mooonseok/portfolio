@@ -52,10 +52,7 @@ export function DomainDetailPanelView({
             </Column>
           ))}
         </Grid>
-        <Column
-          key={current.id}
-          className='gap-6 motion-safe:animate-[fade-in_150ms_var(--ease)]'
-        >
+        <Column key={current.id} className='gap-6'>
           <DomainDetailView domain={current} />
           <JumpLink href={current.noteHref} label={current.linkLabel} />
         </Column>
