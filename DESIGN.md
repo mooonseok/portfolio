@@ -57,7 +57,7 @@ typography:
   error-title-tablet:
     fontSize: '48px'
   contact-display:
-    fontSize: '64px'
+    fontSize: '24px'
 rounded:
   board: '6px'
   square: '0px'
@@ -118,7 +118,9 @@ CSS family는 GeneralSans / PretendardVariable이며 위 frontmatter에는 표�
 이름을 기재합니다. 본문은 모바일 16px, 744px부터 17px입니다. 메모 본문은 16px /
 1.75입니다. 히어로 이름은 모바일 clamp(40px, 12vw, 60px), 중간 화면은
 clamp(40px, 4.5vw, 60px), 1440px부터 60px입니다. 소개 문장은 21px / 1.45,
-1440px부터 25px입니다.
+1440px부터 25px입니다. 기술 스택의 분류와 기술명은 모두 본문 크기(모바일 16px,
+744px부터 17px)로 맞추고 분류만 중간 굵기를 씁니다. 연락처 이메일은 모바일 20px,
+744px부터 24px이며 GitHub 링크는 본문 크기입니다.
 
 ## Layout
 

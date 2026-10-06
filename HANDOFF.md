@@ -203,7 +203,7 @@ Rules:
   use the same value. Emosave is 2022–2023; IndianBob is 2024–2025. The other
   projects say "2025—2026 중 참여" rather than asserting individual start/end
   years. The home board header shows these participation periods.
-- **Contact:** `site.contact.email` is `mspark9696@Naver.com`; CONTACT
+- **Contact:** `site.contact.email` is `mspark9696@naver.com`; CONTACT
   navigation, mobile-menu email and footer email are visible. GitHub remains
   empty.
 

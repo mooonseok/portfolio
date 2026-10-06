@@ -35,13 +35,13 @@ export function ToolsView({ rows, about }: ToolsViewProps) {
           >
             <Text
               as={TAG.DT}
-              className='col-[1] text-[14px] leading-relaxed font-medium tab:col-[1/3] lap:col-[3/5]'
+              className='col-[1] text-body leading-relaxed font-medium tab:col-[1/3] lap:col-[3/5]'
             >
               {t.label}
             </Text>
             <Text
               as={TAG.DD}
-              className='col-[1] m-0 mt-2 text-[16px] leading-relaxed tab:col-[3/-1] tab:mt-0 tab:text-[22px] lap:col-[5/13] lap:text-[22px] lap:tracking-[-0.01em]'
+              className='col-[1] m-0 mt-2 text-body leading-relaxed tab:col-[3/-1] tab:mt-0 lap:col-[5/13]'
             >
               {t.value}
             </Text>

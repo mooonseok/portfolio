@@ -8,7 +8,7 @@ export const site: Site = {
   disciplines: 'Flutter / Web / Backend',
   range: { label: 'Selected Work', years: '2022—2026' },
   contact: {
-    email: 'mspark9696@Naver.com',
+    email: 'mspark9696@naver.com',
     github: 'https://github.com/mooonseok',
   },
   visualsNote:
