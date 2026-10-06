@@ -24,7 +24,7 @@ export const farmfamPlus: Project = {
   layers: [
     {
       floor: FLOOR.ADMIN,
-      summary: '공동구매·시크릿딜 설정',
+      summary: '관리자 판매 설정',
       lines: [
         '상품 이미지·가격·판매 기간·공동구매 목표 수량을 설정하고 수정하는 기능을 개발했습니다.',
       ],
