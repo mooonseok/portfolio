@@ -30,6 +30,11 @@ export const smartFarm: Project = {
   boardService: '센서 모니터링 실험',
   layers: [
     {
+      floor: FLOOR.ADMIN,
+      kind: STATUS_KIND.EXPERIMENT,
+      lines: ['측정값 대시보드 연동'],
+    },
+    {
       floor: FLOOR.DEVICE,
       kind: STATUS_KIND.EXPERIMENT,
       tech: 'ESP32 · Raspberry Pi',

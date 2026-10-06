@@ -25,7 +25,7 @@ export const apc: Project = {
     {
       floor: FLOOR.APP,
       tech: 'Flutter',
-      lines: ['현장 앱 버전 확인', 'APK 설치 안내'],
+      lines: ['현장 앱 업데이트 처리 (유지보수)', '버전 확인·APK 설치 안내'],
     },
     {
       floor: FLOOR.ADMIN,

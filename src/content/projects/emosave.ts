@@ -24,8 +24,12 @@ export const emosave: Project = {
   layers: [
     {
       floor: FLOOR.APP,
-      tech: 'Flutter',
-      lines: ['감정 탭', '마을 편집 상태', '저장·캡처 공유'],
+      tech: 'Flutter · Cubit',
+      lines: [
+        '감정 탭 선택·상태 처리',
+        '마을 편집 상태',
+        '편집 저장·다이어리 캡처 공유',
+      ],
     },
   ],
   summary:

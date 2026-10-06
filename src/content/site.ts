@@ -25,15 +25,15 @@ export const site: Site = {
     legendBuilt: '직접 개발한 영역 · PRODUCT WORK',
     legendExperiment: '사무실 시험·별도 실험 · EXPERIMENT',
     experiment: '실험',
-    note: '칸 크기는 작업량을 뜻하지 않습니다. 칸 사이 선은 한 프로젝트에서 이어 맡은 영역을 잇고, 실행 순서는 뜻하지 않습니다.',
+    note: '칸 크기는 작업량과 관계없습니다. 세로선은 한 프로젝트에서 함께 맡은 영역을 표시할 뿐 호출 순서가 아닙니다.',
   },
   about:
     'Flutter 앱과 관리자 웹, 서버 API를 개발했습니다. 팀원들과 요구사항과 데이터 구조를 조율하고, 테스트·리뷰·배포와 운영 QA에 참여했습니다.',
   introduction:
-    '프로젝트마다 직접 개발한 영역을 보드에 표시했습니다. 직접 맡지 않은 영역은 흐린 점선으로 비워 두었습니다.',
+    '프로젝트 5개에서 직접 개발한 영역을 보드에 표시하고, 맡지 않은 영역은 흐린 점선으로 남겼습니다.',
   primaryAction: { href: '#work', label: '프로젝트 목록 보기' },
   headline:
-    'Flutter 앱부터 관리자 웹, 서버 API, 기기 실험까지 맡은 영역을 직접 개발했습니다.',
+    'Flutter 앱부터 관리자 웹, 서버 API까지 개발했고, 센서 기기 실험도 진행했습니다.',
 };
 
 export const stories: Story[] = [

@@ -28,11 +28,16 @@ export const farmfamPlus: Project = {
     },
     {
       floor: FLOOR.API,
-      lines: ['공동구매 진행·종료', '시크릿딜 가격 재확인', 'Redis 잠금 보완'],
+      lines: [
+        '공동구매 진행·종료',
+        '시크릿딜 가격 재확인',
+        '취소 경로의 수량·재고 정정',
+        'Redis 잠금 보완',
+      ],
     },
     {
       floor: FLOOR.DB,
-      lines: ['취소 시 수량·재고 정정'],
+      lines: ['공동구매 진행 수량 정정 트랜잭션'],
     },
   ],
   summary: '공동구매와 시크릿딜로 농산물을 판매하는 서비스입니다.',
