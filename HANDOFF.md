@@ -121,22 +121,23 @@ same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
 `role, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], connections?, workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
 
 Below the hero, the project order follows the board: Emosave → IndianBob →
-FarmFam+ → APC → Smart Farm (사용자 앱 / 업무 시스템 / 센서·제어 실험). Each
-project is a full-width editorial row: built-layer chips, service summary, three
-or four static `home.features` on a light writing surface and one detail link.
-Concept images, decorative section numbers, the SignalLine and footer `200 OK`
-are no longer rendered. The Experience section is removed; the board header
-carries the periods. The homepage intro includes GitHub; the former This Website
-section is removed to keep the reading path focused on project work. Case work
-rows and technical notes use 16px body text with 1.7 line height; a single
-technical note uses one column. APC retains a dark surface; Smart Farm has its
-own experiment heading. The `work` navigation anchor starts at the project list
-and the `flutter-work` anchor remains available. Case pages open with an
-enlarged single-project board (`BoardDetailView`) instead of a concept photo. It
-shows compact layer summaries only for owned layers, without repeated header
-layer chips. The work sections below retain implementation detail. The
-`visualsNoteKo` reconstruction notice and the board connector meaning remain
-visible.
+FarmFam+ → APC → Smart Farm. Product projects use peer-level headings without
+사용자 앱 / 업무 시스템 group titles; 센서·제어 실험 remains a separate heading.
+Each project is a full-width editorial row: built-layer chips, service summary,
+three or four static `home.features` on a light writing surface and one detail
+link. Concept images, decorative section numbers, the SignalLine and footer
+`200 OK` are no longer rendered. The Experience section is removed; the board
+header carries the periods. The homepage intro includes GitHub; the former This
+Website section is removed to keep the reading path focused on project work.
+Case work rows and technical notes use 16px body text with 1.7 line height; a
+single technical note uses one column. All home projects share the light paper
+surface; APC case-study dark sections remain. Smart Farm has its own experiment
+heading. The `work` navigation anchor starts at the project list and the
+`flutter-work` anchor remains available. Case pages open with an enlarged
+single-project board (`BoardDetailView`) instead of a concept photo. It shows
+compact layer summaries only for owned layers, without repeated header layer
+chips. The work sections below retain implementation detail. The `visualsNoteKo`
+reconstruction notice and the board connector meaning remain visible.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs

@@ -6,19 +6,26 @@ import { ProjectLinks } from '@/components/molecules/project-links';
 import { ProjectHeader } from '@/components/molecules/project-header';
 import type { Project } from '@/dto/project.dto';
 import { TITLE_FS } from '@/constants/project-header';
-import { TAG } from '@/constants/tag';
+import { HEADING, TAG, type HeadingLevel } from '@/constants/tag';
 import { TONE } from '@/constants/tone';
 
 export function ProjectSummaryView({
   project: p,
   href,
+  headingLevel = HEADING.H2,
 }: {
   project: Project;
   href: string;
+  headingLevel?: HeadingLevel;
 }) {
   return (
     <Column className='gap-8 [--fs-case-title:clamp(36px,9vw,64px)] tab:gap-12 tab:[--fs-case-title:clamp(56px,7.5vw,100px)] lap:gap-14'>
-      <ProjectHeader project={p} fs={TITLE_FS.CASE} tone={TONE.INK} />
+      <ProjectHeader
+        project={p}
+        fs={TITLE_FS.CASE}
+        tone={TONE.INK}
+        as={headingLevel}
+      />
       <Box className='grid-page gap-y-8 tab:gap-y-10'>
         <Column className='col-span-full min-w-0 gap-7 tab:col-[3/-1] lap:col-[3/-1] lap:row-start-1 lap:gap-9'>
           <Text className='max-w-[36em] text-body leading-[1.7]'>
