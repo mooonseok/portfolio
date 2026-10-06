@@ -1,3 +1,4 @@
+import { FLOOR } from '@/constants/floor';
 import { CASE_LENGTH, PROJECT_SLUG, PROJECT_TIER } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import { VISUAL_ID } from '@/constants/visual';
@@ -19,8 +20,16 @@ export const emosave: Project = {
   caseLength: CASE_LENGTH.SHORT,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Mobile / Flutter',
+  boardService: '감정 기록 앱',
+  layers: [
+    {
+      floor: FLOOR.APP,
+      tech: 'Flutter',
+      lines: ['감정 탭', '마을 편집 상태', '저장·캡처 공유'],
+    },
+  ],
   summary:
-    '분저장(Emosave)은 감정을 기록하고 캐릭터와 아이템으로 마을을 꾸미는 앱입니다. 감정 탭과 편집 기능을 개발했습니다.',
+    '분저장(Emosave)은 감정을 기록하고 캐릭터와 아이템으로 마을을 꾸미는 앱입니다.',
   links: [
     {
       label: 'Google Play에서 앱 보기',
@@ -29,14 +38,17 @@ export const emosave: Project = {
   ],
   home: {
     features: [
-      { title: '감정 기록', body: ['감정 탭의 선택과 화면 상태 처리'] },
       {
-        title: '마을 편집',
-        body: ['아이템 선택·이동·회전·삭제와 편집 상태 관리'],
+        title: '감정 기록',
+        body: ['감정 선택 화면과 상태 관리를 구현했습니다.'],
       },
       {
-        title: '저장·공유',
-        body: ['편집 결과 저장과 다이어리 화면 캡처 공유'],
+        title: '마을 편집',
+        body: ['마을의 아이템을 편집하는 기능을 개발했습니다.'],
+      },
+      {
+        title: '저장과 공유',
+        body: ['편집 결과 저장과 다이어리 화면 공유를 구현했습니다.'],
       },
     ],
     scope: ['Character / Village', 'Customization', 'Emoticon / Store'],

@@ -1,3 +1,4 @@
+import { FLOOR } from '@/constants/floor';
 import { CASE_LENGTH, PROJECT_SLUG, PROJECT_TIER } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import { VISUAL_ID } from '@/constants/visual';
@@ -19,21 +20,35 @@ export const farmfamPlus: Project = {
   caseLength: CASE_LENGTH.FULL,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'Web / API / DB',
-  summary:
-    '공동구매와 시크릿딜을 제공하는 농산물 커머스입니다. 판매 설정, 가격·수량 처리와 주문 변경 흐름을 개발했습니다.',
+  boardService: '농산물 커머스',
+  layers: [
+    {
+      floor: FLOOR.ADMIN,
+      lines: ['판매 설정', '가격·기간·목표 수량'],
+    },
+    {
+      floor: FLOOR.API,
+      lines: ['공동구매 진행·종료', '시크릿딜 가격 재확인', 'Redis 잠금 보완'],
+    },
+    {
+      floor: FLOOR.DB,
+      lines: ['취소 시 수량·재고 정정'],
+    },
+  ],
+  summary: '공동구매와 시크릿딜로 농산물을 판매하는 서비스입니다.',
   home: {
     features: [
       {
         title: '공동구매',
-        body: ['목표 수량·진행 상태·종료 처리와 판매 설정'],
+        body: ['공동구매 판매 설정과 종료 처리를 개발했습니다.'],
       },
       {
         title: '시크릿딜',
-        body: ['시간에 따른 가격 구간과 주문 시 가격 재확인'],
+        body: ['주문 시점에 시크릿딜 가격을 다시 확인하도록 구현했습니다.'],
       },
       {
-        title: '주문·판매 운영',
-        body: ['관리자 판매 설정과 취소 시 공동구매·재고 정정'],
+        title: '주문 취소',
+        body: ['취소된 주문의 수량과 재고를 정정하는 처리를 보완했습니다.'],
       },
     ],
     scope: [

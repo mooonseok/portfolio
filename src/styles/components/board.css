@@ -1,0 +1,154 @@
+.board {
+  margin: 0;
+  min-width: 0;
+}
+.board-surface {
+  background: var(--board-white);
+  border: 7px solid var(--board-frame);
+  outline: 1px solid var(--board-edge);
+  outline-offset: -1px;
+  border-radius: 6px;
+  padding: 18px 16px 24px;
+  box-shadow:
+    inset 0 0 0 1px #eceeec,
+    0 22px 40px -28px rgb(27 31 36 / 0.45);
+}
+.board-hint {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--subtle);
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hairline);
+}
+.board-floors {
+  display: none;
+}
+.board-col {
+  display: block;
+  padding: 20px 0;
+}
+.board-col + .board-col {
+  border-top: 1px solid var(--hairline);
+}
+.board-head {
+  min-width: 0;
+}
+.board-title {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.board-title-text {
+  position: relative;
+  transition: transform var(--dur-press) var(--ease-out);
+}
+.board-toggle {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--subtle);
+  white-space: nowrap;
+}
+.board-title:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+.board-title:active .board-title-text {
+  transform: scale(0.98);
+}
+.board-service {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+.board-loop {
+  position: absolute;
+  inset: -9px -14px;
+  width: calc(100% + 28px);
+  height: calc(100% + 18px);
+  stroke: var(--marker-red);
+  stroke-width: 2px;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+}
+.board-col[data-selected] .board-loop {
+  opacity: 1;
+  stroke-dashoffset: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .board-col:not([data-selected]) .board-title:hover .board-loop {
+    opacity: 0.35;
+    stroke-dashoffset: 62;
+    transition:
+      stroke-dashoffset var(--dur-enter) var(--ease-out),
+      opacity var(--dur-state) var(--ease-out);
+  }
+  .board-title:hover .board-toggle {
+    color: var(--marker-blue);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .board[data-animate] .board-col[data-selected] .board-loop {
+    transition: stroke-dashoffset var(--dur-draw) var(--ease-draw);
+  }
+}
+.board-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.board-box {
+  position: relative;
+  min-width: 0;
+  padding: 7px 13px;
+}
+.board-box:not([data-lit]),
+.box-line,
+.box-join {
+  display: none;
+}
+.marker-svg {
+  position: absolute;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.marker-svg path {
+  vector-effect: non-scaling-stroke;
+}
+.box-stroke {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: var(--marker-blue);
+  stroke-width: 2px;
+}
+.board-box[data-kind='experiment'] .box-stroke {
+  stroke: var(--marker-green);
+  stroke-dasharray: 5 5;
+}
+.box-floor,
+.box-tech {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--marker-blue);
+}
+.box-tech::before {
+  content: ' · ';
+}
+.board-box[data-kind='experiment'] :is(.box-floor, .box-tech) {
+  color: var(--marker-green);
+}

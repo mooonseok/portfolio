@@ -15,12 +15,25 @@ export const site: Site = {
     'Visuals are conceptual representations created for this case study.',
   visualsNoteKo:
     '이 포트폴리오의 이미지와 도식은 프로젝트를 설명하기 위해 재구성한 자료입니다.',
+  board: {
+    label: '프로젝트별 담당 범위',
+    hint: '프로젝트 이름을 누르면 영역별 작업과 기술이 메모로 붙습니다.',
+    show: '메모 보기',
+    hide: '메모 닫기',
+    legendEmpty: '흐린 점선 · 맡지 않은 영역',
+    read: '사례 읽기',
+    legendBuilt: '직접 개발한 영역 · PRODUCT WORK',
+    legendExperiment: '사무실 시험·별도 실험 · EXPERIMENT',
+    experiment: '실험',
+    note: '칸 크기는 작업량을 뜻하지 않습니다. 칸 사이 선은 한 프로젝트에서 이어 맡은 영역을 잇고, 실행 순서는 뜻하지 않습니다.',
+  },
   about:
     'Flutter 앱과 관리자 웹, 서버 API를 개발했습니다. 팀원들과 요구사항과 데이터 구조를 조율하고, 테스트·리뷰·배포와 운영 QA에 참여했습니다.',
   introduction:
-    '감정 기록·해빗 서비스의 앱 화면과 상태 처리를 개발했습니다. 관리자 웹과 서버 API도 맡아 사용자 기능과 운영 업무를 연결했습니다.',
-  primaryAction: { href: '#flutter-work', label: 'Flutter 작업 보기' },
-  headline: 'Flutter 앱을 중심으로 웹과 서버를 함께 개발합니다.',
+    '프로젝트마다 직접 개발한 영역을 보드에 표시했습니다. 직접 맡지 않은 영역은 흐린 점선으로 비워 두었습니다.',
+  primaryAction: { href: '#work', label: '프로젝트 목록 보기' },
+  headline:
+    'Flutter 앱부터 관리자 웹, 서버 API, 기기 실험까지 맡은 영역을 직접 개발했습니다.',
 };
 
 export const stories: Story[] = [

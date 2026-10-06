@@ -1,3 +1,4 @@
+import { FLOOR } from '@/constants/floor';
 import { CASE_LENGTH, PROJECT_SLUG, PROJECT_TIER } from '@/constants/project';
 import { STATUS_KIND } from '@/constants/status';
 import { VISUAL_ID } from '@/constants/visual';
@@ -19,16 +20,41 @@ export const apc: Project = {
   caseLength: CASE_LENGTH.FULL,
   status: [{ kind: STATUS_KIND.PRODUCT, label: 'PRODUCT WORK' }],
   surfaces: 'App / Web / API / DB',
-  summary:
-    '농산물 처리장의 입고·정산·현장 업무를 지원하는 시스템입니다. 웹·앱·서버에 걸쳐 운영 기능을 개발했습니다.',
+  boardService: '농산물 처리장 업무 시스템',
+  layers: [
+    {
+      floor: FLOOR.APP,
+      tech: 'Flutter',
+      lines: ['현장 앱 버전 확인', 'APK 설치 안내'],
+    },
+    {
+      floor: FLOOR.ADMIN,
+      lines: ['전자결재 관리자 화면', '알림·인쇄'],
+    },
+    {
+      floor: FLOOR.API,
+      lines: ['입고 검증·정산', 'ERP 전송·재처리', '출근 처리'],
+    },
+    {
+      floor: FLOOR.DB,
+      lines: ['결재 문서·단계·결재선', 'ERP 전송 outbox'],
+    },
+  ],
+  summary: '농산물 처리장의 입고와 정산, 현장 업무를 지원하는 시스템입니다.',
   home: {
     features: [
-      { title: '입고·정산', body: ['입고 데이터 검증과 정산·ERP 전송 처리'] },
       {
-        title: '근태·현장 앱',
-        body: ['기기 기반 출근 처리와 Flutter 현장 앱 유지보수'],
+        title: '입고와 정산',
+        body: ['입고 데이터 검증과 정산, ERP 전송을 개발했습니다.'],
       },
-      { title: '전자결재', body: ['DB·API·관리자 화면과 알림·인쇄 연결'] },
+      {
+        title: '근태와 현장 앱',
+        body: ['기기 기반 출근 처리를 개발하고 현장 앱을 유지보수했습니다.'],
+      },
+      {
+        title: '전자결재',
+        body: ['전자결재의 DB와 API, 관리자 화면을 개발했습니다.'],
+      },
     ],
     scope: [
       'Receiving',

@@ -12,6 +12,10 @@
 @import './components/flow-diagram-orient.css' layer(components);
 @import './components/flow-diagram-draw.css' layer(components);
 @import './components/chrome.css' layer(components);
+@import './components/board.css' layer(components);
+@import './components/board-parts.css' layer(components);
+@import './components/board-layout.css' layer(components);
+@import './components/hero.css' layer(components);
 
 @theme static {
   --breakpoint-*: initial;
@@ -31,7 +35,7 @@
   --color-dark-line: #2a2e2b;
   --color-dark-rule: #3a3e3b;
   --color-dark-sub: #a9ada9;
-  --color-signal: #18b67a;
+  --color-signal: #d23a2e;
   --color-placeholder: #e4e3dd;
   --color-tint: #e9e8e2;
   --color-dark-tint: #1f2320;
@@ -49,8 +53,6 @@
   --text-meta: 13px;
   --text-meta--line-height: 1.5;
   --text-meta--letter-spacing: 0.06em;
-
-  --ease-editorial: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @theme inline {

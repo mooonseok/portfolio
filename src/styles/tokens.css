@@ -15,6 +15,30 @@
   --subtle: var(--color-subtle);
 
   --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-draw: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-press: 120ms;
+  --dur-state: 150ms;
+  --dur-swap: 160ms;
+  --dur-exit: 120ms;
+  --dur-enter: 200ms;
+  --dur-height: 220ms;
+  --dur-draw: 360ms;
+
+  --board-white: #fcfcfa;
+  --board-frame: #d7dadc;
+  --board-edge: #b8bcc0;
+  --board-tray: #c9cdd0;
+  --board-tray-edge: #b3b8bc;
+  --marker-ink: #1b1f24;
+  --marker-blue: #1f5fd6;
+  --marker-red: #d23a2e;
+  --marker-green: #177349;
+  --marker-ghost: #cfd2cc;
+  --marker-cap: #f4f4f2;
+  --note-paper: #fff3b5;
+  --note-ink: #342d15;
 
   --cols: 4;
   --margin: 20px;

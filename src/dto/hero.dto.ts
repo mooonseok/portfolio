@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { YearRange } from '@/dto/site.dto';
 
 export interface HeroViewProps {
@@ -9,4 +10,5 @@ export interface HeroViewProps {
   headline: string;
   introduction: string;
   range: YearRange;
+  board: ReactNode;
 }
