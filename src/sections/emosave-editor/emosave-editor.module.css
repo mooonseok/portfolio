@@ -1,0 +1,94 @@
+.editor {
+  max-width: 800px;
+  margin: 32px auto 0;
+}
+
+.stage {
+  position: relative;
+  height: clamp(300px, 48vw, 420px);
+  background: #e9e7df;
+  border-radius: 20px;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+
+.selection {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  font-size: 14px;
+  color: var(--color-subtle);
+  pointer-events: none;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 16px;
+}
+
+.moves {
+  display: flex;
+  gap: 4px;
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.control[aria-pressed='true'] {
+  border-color: var(--color-signal);
+  font-weight: 500;
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.control:active:not(:disabled) {
+  background: var(--color-hairline);
+}
+
+.control:disabled {
+  color: var(--color-subtle);
+  opacity: 0.45;
+  cursor: default;
+}
+
+.fineHelp {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fineHelp {
+    display: inline;
+  }
+  .touchHelp {
+    display: none;
+  }
+  .control:hover:not(:disabled) {
+    border-color: var(--color-ink);
+  }
+}
+
+@media (min-width: 744px) {
+  .editor {
+    margin-top: 48px;
+  }
+}

@@ -57,6 +57,21 @@ Farm의 센서 시험과 LED 제어는 별도 실험으로 표현합니다. 첫 
 설정, 저장소 접근 실패에서도 생략합니다. 건너뛰기와 Escape로 즉시 닫거나 하단의
 오프닝 다시 보기로 수동 재생할 수 있습니다.
 
+## Emosave 배치 편집 미리보기
+
+`pnpm dev --port 3100` 실행 후 `/preview/emosave-editor`에서 집 한 채를
+선택·이동·회전하고 처음 배치로 복원할 수 있습니다. 실제 앱 화면이나 Flutter
+구현을 재현한 것이 아닌 설명용 예시입니다. PC는 드래그 또는 선택 후 위치 클릭,
+터치는 선택 후 위치 탭을 사용합니다. 방향 버튼과 키보드로도 조작할 수 있습니다.
+저장·API 호출은 하지 않으며 새로고침하면 초기 상태로 돌아옵니다.
+
+홈과 상세 페이지에서는 노출하거나 불러오지 않습니다. 전용 코드는
+`src/sections/emosave-editor/`, `src/lib/emosave-editor/`,
+`src/hooks/use-emosave-editor.ts`에 분리되어 있습니다. 이 미리보기 추가 커밋을
+revert하면 기존 작업실 변경 없이 제거할 수 있습니다. 검색
+색인·canonical·사이트맵에서 제외하며 WebGL을 사용할 수 없으면 안내와 실제 구현
+사례 링크를 제공합니다.
+
 ## Requirements
 
 - Node.js 22.18 or newer (verified on 24). `pnpm test` imports `.ts` files
@@ -182,8 +197,8 @@ commands above provide local verification; this repository does not currently
 provide the previously documented GitHub Actions verification matrix. Local
 checks do not confirm remote CI or deployment success.
 
-`pnpm check:metadata` also checks that both preview routes remain `noindex`,
-have no canonical URL and stay out of the sitemap, including indexable builds.
+`pnpm check:metadata` also checks that all preview routes remain `noindex`, have
+no canonical URL and stay out of the sitemap, including indexable builds.
 
 ## 홈 화면 전환
 

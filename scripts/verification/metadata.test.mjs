@@ -126,7 +126,7 @@ test('share image exists at the published path with the advertised dimensions', 
   assert.equal(png.readUInt32BE(20), 630);
 });
 
-for (const path of ['classic', 'diorama']) {
+for (const path of ['classic', 'diorama', 'emosave-editor']) {
   test(`preview/${path}: remains excluded from indexing in every build mode`, () => {
     const html = read(`preview/${path}.html`);
     assert.deepEqual(

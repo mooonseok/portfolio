@@ -109,6 +109,20 @@ entry. Returning or reloading restores the panel before scroll placement; a
 fresh entry starts unselected. Existing router history fields are preserved. The
 classic layout described below remains available through the switch.
 
+`/preview/emosave-editor` is an isolated explanatory placement editor with one
+house, selection, bounded movement, quarter-turn rotation and reset. It is not
+an app screenshot or a reproduction of the original Flutter implementation. The
+fixed camera and item appearance inherit the workshop. Mouse dragging and
+select-then-place share the same in-memory state as the DOM direction buttons;
+touch uses taps with vertical scrolling preserved. Arrow keys are scoped to the
+control group. Interrupted gestures restore the starting placement. Rendering is
+requested only on change or resize; there is no motion interpolation or idle
+animation, including with reduced motion. Dedicated section, hook and
+`lib/emosave-editor` modules are imported only by its preview route. Home and
+case studies do not link to or load it. It has no persistence or API calls and
+remains noindex, without a canonical URL or sitemap entry. WebGL failure leaves
+an explanation and the link to the existing Emosave implementation case.
+
 `site.headline` introduces user apps and business systems. The hero keeps a
 single introduction sentence; `site.about` describes collaboration and delivery.
 Project summaries describe the service; three or four feature descriptions
