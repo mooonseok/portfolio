@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, MouseEvent } from 'react';
-import type { ProjectSlug } from '@/constants/project';
+import { PROJECT_SLUG, type ProjectSlug } from '@/constants/project';
+import { readDioramaHistory, withDioramaHistory } from '@/lib/diorama-history';
+import type { DioramaHistory } from '@/dto/diorama-history.dto';
 import { DIORAMA } from '@/constants/diorama';
 
 export function useDioramaStage() {
@@ -8,6 +10,7 @@ export function useDioramaStage() {
   const labelRefs = useRef<
     Partial<Record<ProjectSlug, HTMLButtonElement | null>>
   >({});
+  const pendingHistory = useRef<DioramaHistory | null>(null);
   const anchor = useRef<{ element: HTMLElement; top: number } | null>(null);
   const restoreFocus = useRef(false);
   const lastSelected = useRef<ProjectSlug | null>(null);
@@ -23,6 +26,35 @@ export function useDioramaStage() {
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [reduced, setReduced] = useState(true);
+
+  useLayoutEffect(() => {
+    const saved = readDioramaHistory(
+      history.state,
+      Object.values(PROJECT_SLUG)
+    );
+    if (saved) {
+      pendingHistory.current = saved;
+      selectedRef.current = saved.selected;
+      lastSelected.current = saved.selected;
+      userPreference.current = saved.enabled;
+      setSelected(saved.selected);
+      setWide(window.matchMedia(DIORAMA.DESKTOP).matches);
+    }
+    const save = () => {
+      try {
+        history.replaceState(
+          withDioramaHistory(history.state, {
+            selected: selectedRef.current,
+            enabled: userPreference.current,
+            scrollY: window.scrollY,
+          }),
+          ''
+        );
+      } catch {}
+    };
+    window.addEventListener('pagehide', save);
+    return () => window.removeEventListener('pagehide', save);
+  }, []);
 
   useEffect(() => {
     const media = window.matchMedia(DIORAMA.REDUCED);
@@ -98,6 +130,15 @@ export function useDioramaStage() {
   }, [enabled]);
 
   useLayoutEffect(() => {
+    const saved = pendingHistory.current;
+    if (
+      saved &&
+      selected === saved.selected &&
+      wide === window.matchMedia(DIORAMA.DESKTOP).matches
+    ) {
+      pendingHistory.current = null;
+      window.scrollTo({ top: saved.scrollY, behavior: 'instant' });
+    }
     const current = anchor.current;
     anchor.current = null;
     if (current?.element.isConnected) {
