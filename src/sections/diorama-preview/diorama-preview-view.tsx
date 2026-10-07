@@ -27,28 +27,24 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
           href='/'
           className='min-h-11 content-center text-sm underline underline-offset-4'
         >
-          박문석 포트폴리오
+          박문석 · Software Engineer
         </Anchor>
         <Text className='text-sm text-subtle'>프로젝트 작업실 · 미리보기</Text>
       </Box>
-      <Box className='mx-auto max-w-[1440px] pt-10 tab:pt-14'>
+      <Box className='mx-auto max-w-[1440px] pt-6 tab:pt-7'>
         <Heading
           level={HEADING.H1}
-          className='font-sans text-[clamp(40px,7vw,80px)] leading-none tracking-[-0.035em]'
+          className='font-sans text-[clamp(32px,4vw,48px)] leading-none tracking-[-0.035em]'
         >
           프로젝트 작업실
         </Heading>
-        <Text className='mt-5 max-w-[48ch] text-lg leading-relaxed'>
-          앱과 업무 시스템부터 센서·제어 실험까지, 프로젝트를 선택해 담당한 일을
-          살펴보세요.
+        <Text className='mt-3 max-w-[58ch] text-base leading-relaxed'>
+          프로젝트를 선택해 직접 개발한 기능과 실험 내용을 살펴보세요.
         </Text>
-        <Text className='mt-3 text-sm text-subtle'>
-          박문석 · Software Engineer
-        </Text>
-        <Box className='mt-8 grid items-start gap-8 lap:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)] lap:gap-10'>
+        <Box className='mt-6 grid items-start gap-6 lap:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)] lap:gap-10'>
           <Box>
             <Box as={TAG.FIGURE} className='m-0'>
-              <Box className='relative aspect-[6/5] overflow-hidden rounded-[20px] bg-[#e9e7df] tab:aspect-[4/3]'>
+              <Box className='relative aspect-[5/3] w-full overflow-hidden rounded-[20px] bg-[#e9e7df] lap:aspect-auto lap:h-[380px]'>
                 <Image
                   src={DIORAMA.POSTER}
                   alt='Emosave, IndianBob, FarmFam+, APC, Smart Farm을 표현한 다섯 개의 개념 모형'
@@ -97,7 +93,7 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
               </Button>
             </Box>
           </Box>
-          <DioramaDetailsView {...props} />
+          {props.wide && <DioramaDetailsView {...props} />}
         </Box>
       </Box>
     </Box>

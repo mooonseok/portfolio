@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, MouseEvent } from 'react';
 import type { ProjectSlug } from '@/constants/project';
 import { DIORAMA } from '@/constants/diorama';
@@ -8,6 +8,8 @@ export function useDioramaStage() {
   const labelRefs = useRef<
     Partial<Record<ProjectSlug, HTMLButtonElement | null>>
   >({});
+  const anchor = useRef<{ element: HTMLElement; top: number } | null>(null);
+  const restoreFocus = useRef(false);
   const lastSelected = useRef<ProjectSlug | null>(null);
   const stageRef = useRef<ReturnType<
     typeof import('@/lib/diorama/create-stage').createStage
@@ -17,6 +19,7 @@ export function useDioramaStage() {
   const reducedRef = useRef(true);
   const [selected, setSelected] = useState<ProjectSlug | null>(null);
   const [enabled, setEnabled] = useState(false);
+  const [wide, setWide] = useState(false);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [reduced, setReduced] = useState(true);
@@ -25,6 +28,10 @@ export function useDioramaStage() {
     const media = window.matchMedia(DIORAMA.REDUCED);
     const desktop = window.matchMedia(DIORAMA.DESKTOP);
     const updateViewport = () => {
+      restoreFocus.current = !!document.activeElement?.closest(
+        `#${DIORAMA.PANEL_ID}`
+      );
+      setWide(desktop.matches);
       if (userPreference.current === null) setEnabled(desktop.matches);
     };
     const update = () => {
@@ -90,6 +97,21 @@ export function useDioramaStage() {
     };
   }, [enabled]);
 
+  useLayoutEffect(() => {
+    const current = anchor.current;
+    anchor.current = null;
+    if (current?.element.isConnected) {
+      const delta = current.element.getBoundingClientRect().top - current.top;
+      if (Math.abs(delta) > 1)
+        window.scrollBy({ top: delta, behavior: 'instant' });
+    }
+    if (restoreFocus.current) {
+      restoreFocus.current = false;
+      if (lastSelected.current)
+        labelRefs.current[lastSelected.current]?.focus({ preventScroll: true });
+    }
+  }, [selected, wide]);
+
   function select(value: ProjectSlug | null, immediate: boolean) {
     if (value) lastSelected.current = value;
     selectedRef.current = value;
@@ -108,11 +130,18 @@ export function useDioramaStage() {
     labelRefs,
     selected,
     enabled,
+    wide,
     ready: enabled && ready && !failed,
     failed,
     reduced,
-    onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) =>
-      select(selectedRef.current === slug ? null : slug, event.detail === 0),
+    onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) => {
+      if (!wide)
+        anchor.current = {
+          element: event.currentTarget,
+          top: event.currentTarget.getBoundingClientRect().top,
+        };
+      select(selectedRef.current === slug ? null : slug, event.detail === 0);
+    },
     onClose,
     onToggle: () => {
       setReady(false);

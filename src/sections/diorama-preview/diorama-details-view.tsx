@@ -15,7 +15,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       as={TAG.SECTION}
       id={DIORAMA.PANEL_ID}
       aria-label='선택한 프로젝트 담당 영역'
-      className={`min-h-[420px] rounded-[16px] p-6 tab:p-8 lap:min-h-[760px] ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border border-hairline'}`}
+      className={`rounded-[16px] p-6 tab:p-8 ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border border-hairline'}`}
     >
       <Box className='flex items-start justify-between gap-4'>
         <Heading level={HEADING.H2} className='text-2xl font-semibold'>
@@ -32,6 +32,12 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       </Box>
       {project ? (
         <Box>
+          <Anchor
+            href={project.href}
+            className='mt-2 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4'
+          >
+            구현 사례 자세히 보기
+          </Anchor>
           <Text className='mt-4 text-base leading-[1.7]'>
             {project.summary}
           </Text>
@@ -65,19 +71,10 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
           </Anchor>
         </Box>
       ) : (
-        <Box className='mt-5 space-y-5 text-base leading-[1.7] text-subtle'>
-          <Text>
-            감정을 기록하는 앱, 해빗 참여 서비스, 농산물 커머스와 업무 시스템을
-            개발해 왔습니다.
-          </Text>
-          <Text>
-            프로젝트를 선택하면 직접 개발·유지보수한 영역과 구체적인 작업을
-            확인할 수 있습니다.
-          </Text>
-          <Text>
-            Smart Farm은 사무실 센서 시험과 별도로 진행한 LED 제어 실험입니다.
-          </Text>
-        </Box>
+        <Text className='mt-4 text-base leading-[1.7] text-subtle'>
+          모형이나 이름표를 선택하면 담당 영역과 구체적인 작업이 여기에
+          표시됩니다.
+        </Text>
       )}
     </Box>
   );

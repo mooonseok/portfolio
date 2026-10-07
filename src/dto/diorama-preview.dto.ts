@@ -25,6 +25,7 @@ export interface DioramaPreviewProps {
   labelRefs: RefObject<Partial<Record<ProjectSlug, HTMLButtonElement | null>>>;
   selected: ProjectSlug | null;
   enabled: boolean;
+  wide: boolean;
   ready: boolean;
   failed: boolean;
   reduced: boolean;
