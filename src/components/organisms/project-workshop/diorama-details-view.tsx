@@ -6,6 +6,7 @@ import { Button } from '@/components/atoms/button';
 import { List, ListItem } from '@/components/atoms/list';
 import { DIORAMA } from '@/constants/diorama';
 import { HEADING, TAG } from '@/constants/tag';
+import { DioramaOverviewView } from './diorama-overview-view';
 import type { DioramaPreviewProps } from '@/dto/diorama-preview.dto';
 
 export function DioramaDetailsView(props: DioramaPreviewProps) {
@@ -14,12 +15,16 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
     <Box
       as={TAG.SECTION}
       id={DIORAMA.PANEL_ID}
-      aria-label='선택한 프로젝트 담당 영역'
+      aria-labelledby='project-stage-title'
       className={`rounded-[16px] p-6 tab:p-8 ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border border-hairline'}`}
     >
       <Box className='flex items-start justify-between gap-4'>
-        <Heading level={HEADING.H2} className='text-2xl font-semibold'>
-          {project?.title ?? '어떤 일을 했나요?'}
+        <Heading
+          id='project-stage-title'
+          level={HEADING.H2}
+          className='text-2xl font-semibold'
+        >
+          {project?.title ?? '담당 영역 한눈에'}
         </Heading>
         {project && (
           <Button
@@ -47,13 +52,16 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
               ? '센서 시험과 별도 LED 제어 실험'
               : '직접 개발·유지보수'}
           </Text>
-          <List className='mt-6 list-none space-y-6 p-0'>
+          <List className='mt-6 list-none space-y-7 p-0'>
             {project.layers.map((layer) => (
-              <ListItem key={layer.label}>
+              <ListItem
+                key={layer.label}
+                className='border-t border-current/15 pt-5'
+              >
                 <Heading level={HEADING.H3} className='text-base font-semibold'>
                   {layer.label}
                 </Heading>
-                <List className='mt-2 list-disc space-y-2 pl-5'>
+                <List className='mt-3 list-disc space-y-3 pl-5'>
                   {layer.lines.map((line) => (
                     <ListItem key={line} className='text-base leading-[1.7]'>
                       {line}
@@ -71,10 +79,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
           </Anchor>
         </Box>
       ) : (
-        <Text className='mt-4 text-base leading-[1.7] text-subtle'>
-          모형이나 이름표를 선택하면 담당 영역과 구체적인 작업이 여기에
-          표시됩니다.
-        </Text>
+        <DioramaOverviewView projects={props.projects} />
       )}
     </Box>
   );

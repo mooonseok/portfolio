@@ -10,8 +10,8 @@ export function WorkshopHome() {
       header={<SiteHeader />}
       footer={<SiteFooter />}
     >
-      <EngineeringStoriesContainer />
-      <ToolsContainer />
+      <EngineeringStoriesContainer compact />
+      <ToolsContainer compact />
     </DioramaPreviewContainer>
   );
 }

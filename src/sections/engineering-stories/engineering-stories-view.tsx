@@ -6,12 +6,19 @@ import type { EngineeringStoriesViewProps } from '@/dto/profile.dto';
 import { BREAKPOINT } from '@/constants/breakpoint';
 import { HEADING, TAG } from '@/constants/tag';
 
-export function EngineeringStoriesView({ cards }: EngineeringStoriesViewProps) {
+export function EngineeringStoriesView({
+  cards,
+  compact,
+}: EngineeringStoriesViewProps) {
   return (
     <ScrollScene
       as={TAG.SECTION}
       steps={false}
-      className='container pt-30 tab:pt-40 lap:pt-(--section)'
+      className={
+        compact
+          ? 'container pt-10 tab:pt-16'
+          : 'container pt-30 tab:pt-40 lap:pt-(--section)'
+      }
       aria-labelledby='stories-h'
     >
       <SectionHeading
