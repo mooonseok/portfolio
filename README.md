@@ -39,15 +39,23 @@ it so Claude Code loads the same rules.
 
 ## 3D 미리보기
 
-`pnpm dev --port 3100` 실행 후 `/preview/diorama`에서 FarmFam+ 단일 모형을
-확인할 수 있습니다. 기존 홈과 상세 페이지는 유지합니다. 미리보기는 검색 색인에서
-제외하며 관리자 웹·서버·DB를 표현한 개념 모형과 기존 담당 범위 콘텐츠를
-연결합니다.
+`pnpm dev --port 3100` 실행 후 `/preview/diorama`에서 Emosave, IndianBob,
+FarmFam+, APC, Smart Farm의 개념 모형을 확인할 수 있습니다. 기존 홈과 상세
+페이지는 유지하며, 미리보기는 검색 색인에서 제외합니다. 감정 기록과 마을 편집,
+해빗 체크와 팀 참여, 상품 관리, 입고·결재, 센서·LED 시험을 프로젝트별 형태로
+구분합니다. 정적 그림도 같은 개념을 표현합니다. 각 모형과 이름표는 기존
+프로젝트의 담당 범위 전체 및 상세 페이지로 연결합니다.
 
-이름표는 키보드로 선택할 수 있고 Escape로 선택을 해제합니다. 모바일은 정적
-그림으로 시작하며, 3D를 사용할 수 없는 환경에서도 설명과 상세 링크를 제공합니다.
-Three.js는 3D를 사용할 때만 불러옵니다. 다섯 프로젝트 확장과 첫 방문 오프닝은
-아직 적용하지 않았습니다.
+이름표는 데스크톱에서 모형과 같은 3+2 순서로 배치하며, 좁은 화면에서는 선택한
+이름표 바로 아래에 담당 업무를 펼칩니다. 설명은 한 곳에만 표시하고 상세 링크는
+본문 위아래에 제공합니다. 이름표는 키보드로 선택할 수 있고 Escape로 선택을
+해제합니다. 모바일은 정적 그림으로 시작하며, 3D를 사용할 수 없는 환경에서도
+설명과 상세 링크를 제공합니다. Three.js는 3D를 사용할 때만 불러옵니다. Smart
+Farm의 센서 시험과 LED 제어는 별도 실험으로 표현합니다. 첫 방문에는 1.6초
+오프닝을 표시합니다. 같은 브라우저의 방문 기록을 저장하여 재방문·새로고침·뒤로
+가기에서는 자동 재생을 생략합니다. 해시 링크나 스크롤 복원 상태, 모션 줄이기
+설정, 저장소 접근 실패에서도 생략합니다. 건너뛰기와 Escape로 즉시 닫거나 하단의
+오프닝 다시 보기로 수동 재생할 수 있습니다.
 
 ## Requirements
 
@@ -169,13 +177,20 @@ values through the job environment.
 
 ## Continuous verification
 
-`.github/workflows/verify.yml` runs on pull requests, pushes to `develop` and
-`main`, and manual dispatch. It uses Node.js 24 and the pnpm version pinned in
-`packageManager`, with a matrix for the default non-indexable configuration and
-a public-URL test fixture. The fixture is only test data, not a deployment
-address.
+There is currently no `.github/workflows/verify.yml` in this checkout. The
+commands above provide local verification; this repository does not currently
+provide the previously documented GitHub Actions verification matrix. Local
+checks do not confirm remote CI or deployment success.
 
-Each configuration runs lint, typecheck, tests, boundary checks, formatting,
-production build, anchor checks and metadata checks. The workflow verifies the
-project; it does not deploy it. Passing local checks does not confirm a GitHub
-Actions run: inspect the run for the pushed commit separately.
+`pnpm check:metadata` also checks that both preview routes remain `noindex`,
+have no canonical URL and stay out of the sitemap, including indexable builds.
+
+## 홈 화면 전환
+
+현재 홈은 프로젝트 작업실입니다. `src/constants/home.ts`의
+`HOME.WORKSHOP_ENABLED`를 `false`로 바꾸고 다시 빌드하면 기존 홈으로 돌아갑니다.
+기존 구성은 `src/app/_home/classic-home.tsx`에 보존하며 `/preview/classic`에서
+비교할 수 있습니다. 작업실 구성은 `src/app/_home/workshop-home.tsx`, 공용 3D
+UI는 `src/components/organisms/project-workshop/`에 있습니다.
+`/preview/diorama`는 독립 작업실 미리보기로 유지합니다. 두 미리보기는 검색
+색인을 차단합니다. 화면 전환은 콘텐츠와 프로젝트 상세 페이지를 바꾸지 않습니다.

@@ -90,6 +90,25 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 
 ## 3. Data model (summary)
 
+The active home uses the project workshop in `app/_home/workshop-home.tsx`.
+`constants/home.ts` selects it with `HOME.WORKSHOP_ENABLED`; set it to false and
+rebuild to restore the unchanged classic composition in
+`app/_home/classic-home.tsx`. `/preview/classic` preserves the old home for
+comparison. Both preview routes remain noindex. The workshop reuses
+`components/organisms/project-workshop`, includes all project layer work in its
+selection panels and links to the unchanged case studies. It replaces the
+classic hero and repeated project rows, then renders the existing engineering
+stories, tools and footer. Its opening makes the whole home chrome and content
+inert. The unselected desktop panel lists each project and its owned areas with
+direct case links. Selected panels retain all work sentences with separators
+between areas. Stories and tools use compact section spacing only on the
+workshop home; classic spacing remains unchanged. On page exit, the workshop
+saves its selection, explicit 3D preference and scroll position to that browser
+history entry. Returning or reloading restores the panel before scroll
+placement; a fresh entry starts unselected. Existing router history fields are
+preserved. The classic layout described below remains available through the
+switch.
+
 `site.headline` introduces user apps and business systems. The hero keeps a
 single introduction sentence; `site.about` describes collaboration and delivery.
 Project summaries describe the service; three or four feature descriptions

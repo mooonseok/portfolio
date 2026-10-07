@@ -45,9 +45,11 @@ export function createModel() {
   box(0.18, 0.45, 0.18, dark, -0.55, 0.58, -0.25);
   box(0.85, 0.08, 0.55, paper, -0.55, 0.27, -0.25);
   box(0.28, 0.72, 0.035, paper, -1.14, 1.35, -0.12);
-  [1.59, 1.35, 1.11].forEach((y) =>
-    box(0.75, 0.1, 0.035, paper, -0.4, y, -0.12)
-  );
+  [1.58, 1.31, 1.04].forEach((y) => {
+    box(0.17, 0.17, 0.035, paper, -0.83, y, -0.12);
+    box(0.53, 0.055, 0.035, paper, -0.34, y + 0.04, -0.12);
+    box(0.32, 0.035, 0.035, paper, -0.44, y - 0.05, -0.12);
+  });
   box(0.62, 1.4, 0.72, paper, 1.05, 0.89, -0.4);
   [0.52, 0.88, 1.24].forEach((y) => {
     box(0.46, 0.2, 0.025, dark, 1.05, y, -0.025);
@@ -60,6 +62,8 @@ export function createModel() {
   [-1.2, -0.9, -0.6].forEach((x) => {
     box(0.06, 0.42, 0.03, dark, x, 0.43, 1.33);
     add(new THREE.SphereGeometry(0.14, 12, 8), blue, x, 0.73, 1.0);
+    const leaf = box(0.1, 0.025, 0.045, paper, x + 0.03, 0.89, 1.0);
+    leaf.rotation.z = 0.45;
   });
   const ring = new THREE.Mesh(
     new THREE.TorusGeometry(2.63, 0.026, 8, 96),

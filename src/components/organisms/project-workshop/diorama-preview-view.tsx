@@ -7,6 +7,7 @@ import { Button } from '@/components/atoms/button';
 import { DIORAMA } from '@/constants/diorama';
 import { HEADING, TAG } from '@/constants/tag';
 import type { DioramaPreviewProps } from '@/dto/diorama-preview.dto';
+import { DioramaLabelsView } from './diorama-labels-view';
 import { DioramaDetailsView } from './diorama-details-view';
 
 export function DioramaPreviewView(props: DioramaPreviewProps) {
@@ -16,40 +17,58 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
       id='main-content'
       tabIndex={-1}
       onKeyDown={props.onKeyDown}
-      className='min-h-screen bg-paper px-5 py-6 text-ink tab:px-10 lap:px-12'
+      className='min-h-screen bg-paper text-ink'
     >
-      <Box
-        as={TAG.HEADER}
-        className='mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 border-b border-hairline pb-5'
-      >
-        <Anchor
-          href='/'
-          className='min-h-11 content-center text-sm underline underline-offset-4'
+      {!props.home && (
+        <Box
+          as={TAG.HEADER}
+          className='container flex flex-wrap items-center justify-between gap-4 border-b border-hairline pt-6 pb-5'
         >
-          박문석 포트폴리오
-        </Anchor>
-        <Text className='text-sm text-subtle'>FarmFam+ · 화면 미리보기</Text>
-      </Box>
-      <Box className='mx-auto max-w-[1440px] pt-10 tab:pt-14'>
+          <Anchor
+            href='/'
+            className='min-h-11 content-center text-sm underline underline-offset-4'
+          >
+            박문석 · Software Engineer
+          </Anchor>
+          <Text className='text-sm text-subtle'>
+            프로젝트 작업실 · 미리보기
+          </Text>
+        </Box>
+      )}
+      <Box
+        as={TAG.SECTION}
+        id={props.home ? 'work' : undefined}
+        className='container pt-8 pb-12 tab:pt-10'
+      >
+        {props.home && <Box id='flutter-work' />}
         <Heading
           level={HEADING.H1}
-          className='font-sans text-[clamp(40px,7vw,80px)] leading-none tracking-[-0.035em]'
+          className='font-sans text-[clamp(32px,4vw,48px)] leading-none tracking-[-0.035em]'
         >
-          {props.title}
+          {props.home ? '박문석의 프로젝트 작업실' : '프로젝트 작업실'}
         </Heading>
-        <Text className='mt-5 max-w-[48ch] text-lg leading-relaxed'>
-          {props.summary}
+        <Text className='mt-3 max-w-[58ch] text-base leading-relaxed'>
+          {props.home
+            ? props.headline
+            : '프로젝트를 선택해 직접 개발한 기능과 실험 내용을 살펴보세요.'}
         </Text>
-        <Text className='mt-3 text-sm text-subtle'>
-          {props.period} · 관리자 웹 / 서버 API / DB
-        </Text>
-        <Box className='mt-8 grid items-start gap-8 lap:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)] lap:gap-10'>
+        {props.home && (
+          <Anchor
+            href={props.github ?? ''}
+            target='_blank'
+            rel='noreferrer'
+            className='mt-2 inline-flex min-h-11 items-center text-sm underline underline-offset-4'
+          >
+            GitHub ↗
+          </Anchor>
+        )}
+        <Box className='mt-6 grid items-start gap-6 lap:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)] lap:gap-10'>
           <Box>
             <Box as={TAG.FIGURE} className='m-0'>
-              <Box className='relative aspect-[6/5] overflow-hidden rounded-[20px] bg-[#e9e7df] tab:aspect-[4/3]'>
+              <Box className='relative aspect-[5/3] w-full overflow-hidden rounded-[20px] bg-[#e9e7df] lap:aspect-auto lap:h-[380px]'>
                 <Image
                   src={DIORAMA.POSTER}
-                  alt='FarmFam+의 관리자 웹, 서버와 데이터베이스를 표현한 개념 모형'
+                  alt='Emosave, IndianBob, FarmFam+, APC, Smart Farm을 표현한 다섯 개의 개념 모형'
                   fill
                   priority
                   sizes={DIORAMA.POSTER_SIZES}
@@ -67,25 +86,11 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
                 as={TAG.FIGCAPTION}
                 className='mt-3 text-sm leading-relaxed text-subtle'
               >
-                관리자 웹·서버·DB를 표현한 개념 모형입니다. 실제 서비스 화면이나
-                시스템 구조도는 아닙니다.
+                프로젝트별 개념 모형입니다. 실제 화면이나 프로젝트 사이의 연결을
+                나타내지 않습니다.
               </Text>
             </Box>
-            <Button
-              ref={props.labelRef}
-              id={DIORAMA.LABEL_ID}
-              aria-pressed={props.selected}
-              aria-controls={DIORAMA.PANEL_ID}
-              onClick={props.onSelect}
-              className={`mt-5 flex min-h-16 w-full items-center justify-between gap-4 rounded-lg border-2 px-5 py-4 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--marker-blue)] active:scale-[0.99] motion-reduce:transform-none ${props.selected ? 'border-[var(--marker-red)] bg-[var(--note-paper)]' : 'border-ink bg-paper hover:bg-[var(--board-white)]'}`}
-            >
-              <Text as={TAG.SPAN} className='font-sans text-xl font-semibold'>
-                {props.title}
-              </Text>
-              <Text as={TAG.SPAN} className='text-sm'>
-                {props.selected ? '담당 영역 닫기' : '담당 영역 보기'}
-              </Text>
-            </Button>
+            <DioramaLabelsView {...props} />
             <Box className='mt-3 flex flex-wrap items-center justify-between gap-2'>
               <Text
                 role='status'
@@ -109,9 +114,10 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
               </Button>
             </Box>
           </Box>
-          <DioramaDetailsView {...props} />
+          {props.wide && <DioramaDetailsView {...props} />}
         </Box>
       </Box>
+      {props.children}
     </Box>
   );
 }

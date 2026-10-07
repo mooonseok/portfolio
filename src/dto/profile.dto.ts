@@ -5,11 +5,15 @@ export interface StoryCard {
   story: Story;
 }
 
-export interface EngineeringStoriesViewProps {
+export interface HomeSectionProps {
+  compact?: boolean;
+}
+
+export interface EngineeringStoriesViewProps extends HomeSectionProps {
   cards: StoryCard[];
 }
 
-export interface ToolsViewProps {
+export interface ToolsViewProps extends HomeSectionProps {
   about: string;
   rows: LabelValue[];
 }

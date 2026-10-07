@@ -125,3 +125,20 @@ test('share image exists at the published path with the advertised dimensions', 
   assert.equal(png.readUInt32BE(16), 1200);
   assert.equal(png.readUInt32BE(20), 630);
 });
+
+for (const path of ['classic', 'diorama']) {
+  test(`preview/${path}: remains excluded from indexing in every build mode`, () => {
+    const html = read(`preview/${path}.html`);
+    assert.deepEqual(
+      tags(html, 'meta')
+        .filter((m) => m.name === 'robots')
+        .map((m) => m.content),
+      ['noindex, nofollow']
+    );
+    assert.equal(
+      tags(html, 'link').filter((m) => m.rel === 'canonical').length,
+      0
+    );
+    assert.ok(!read('sitemap.xml.body').includes(`/preview/${path}`));
+  });
+}

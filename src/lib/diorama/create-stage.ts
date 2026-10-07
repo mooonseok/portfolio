@@ -3,22 +3,28 @@ import type {
   DioramaStage,
   DioramaStageOptions,
 } from '@/dto/diorama-stage.dto';
-import { createModel, disposeModel } from './create-model';
+import { disposeModel } from './create-model';
+import { createProjectScene } from './create-project-scene';
+import { createSceneMotion } from './create-scene-motion';
 
 export function createStage(
   host: HTMLDivElement,
   options: DioramaStageOptions
 ): DioramaStage {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  const scene = new THREE.Scene();
-  const { group, ring } = createModel();
-  scene.add(group, new THREE.HemisphereLight(0xffffff, 0xb6b8b0, 2.2));
+  const { scene, models } = createProjectScene();
+  let renderer: THREE.WebGLRenderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  } catch (error) {
+    disposeModel(scene);
+    throw error;
+  }
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xb6b8b0, 2.2));
   const light = new THREE.DirectionalLight(0xffffff, 2.4);
   light.position.set(-3, 7, 5);
   scene.add(light);
   const camera = new THREE.OrthographicCamera(-4, 4, 3, -3, 0.1, 50);
-  camera.position.set(5.5, 5, 7);
-  camera.lookAt(0, 0.7, 0);
+  const motion = createSceneMotion(models, camera);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   const canvas = renderer.domElement;
   canvas.style.cssText = 'width:100%;height:100%;display:block';
@@ -26,31 +32,22 @@ export function createStage(
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   let disposed = false;
-  let selected = false;
   let reduced = options.reducedMotion;
   let frame = 0;
   let last = 0;
-  let progress = 0;
   const render = (now: number) => {
     frame = 0;
     if (disposed || document.hidden) return;
     const delta = Math.min((now - (last || now - 16)) / 1000, 0.05);
     last = now;
-    const target = selected ? 1 : 0;
-    progress = reduced
-      ? target
-      : THREE.MathUtils.lerp(progress, target, 1 - Math.exp(-14 * delta));
-    if (Math.abs(progress - target) < 0.001) progress = target;
-    group.position.y = progress * 0.16;
-    ring.material.opacity = progress;
-    ring.visible = progress > 0;
+    const moving = motion.tick(delta, reduced);
     try {
       renderer.render(scene, camera);
     } catch {
       fail();
       return;
     }
-    if (progress !== target) wake();
+    if (moving) wake();
   };
   const wake = () => {
     if (!disposed && !document.hidden && !frame)
@@ -61,7 +58,7 @@ export function createStage(
     const { width, height } = host.getBoundingClientRect();
     if (width <= 0 || height <= 0) return;
     const aspect = width / height;
-    const halfHeight = Math.max(2.5, 3.45 / aspect);
+    const halfHeight = Math.max(3.9, 5.6 / aspect);
     camera.left = -halfHeight * aspect;
     camera.right = halfHeight * aspect;
     camera.top = halfHeight;
@@ -73,7 +70,7 @@ export function createStage(
   };
   const intersects = (event: PointerEvent | MouseEvent) => {
     const rect = canvas.getBoundingClientRect();
-    if (!rect.width || !rect.height) return false;
+    if (!rect.width || !rect.height) return null;
     pointer.set(
       ((event.clientX - rect.left) / rect.width) * 2 - 1,
       -((event.clientY - rect.top) / rect.height) * 2 + 1
@@ -81,12 +78,26 @@ export function createStage(
     scene.updateMatrixWorld(true);
     camera.updateMatrixWorld(true);
     raycaster.setFromCamera(pointer, camera);
-    return raycaster
-      .intersectObjects(group.children, true)
-      .some((hit) => hit.object instanceof THREE.Mesh && hit.object !== ring);
+    const hit = raycaster
+      .intersectObjects(
+        models.map((model) => model.group),
+        true
+      )
+      .find(
+        (entry) =>
+          entry.object instanceof THREE.Mesh &&
+          entry.object.visible &&
+          entry.object.userData.projectSlug
+      );
+    return (
+      models.find((model) => model.slug === hit?.object.userData.projectSlug)
+        ?.slug ?? null
+    );
   };
   const click = (event: MouseEvent) => {
-    if (!disposed && intersects(event)) options.onSelect();
+    if (disposed) return;
+    const slug = intersects(event);
+    if (slug) options.onSelect(slug);
   };
   const move = (event: PointerEvent) => {
     canvas.style.cursor = intersects(event) ? 'pointer' : 'default';
@@ -151,14 +162,12 @@ export function createStage(
   return {
     setSelected(value, immediate = false) {
       if (disposed) return;
-      selected = value;
-      if (immediate || reduced) progress = selected ? 1 : 0;
+      motion.select(value, immediate || reduced);
       last = 0;
       wake();
     },
     setReducedMotion(value) {
       reduced = value;
-      if (reduced) progress = selected ? 1 : 0;
       wake();
     },
     dispose,

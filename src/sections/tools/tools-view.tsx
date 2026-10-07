@@ -6,13 +6,17 @@ import type { ToolsViewProps } from '@/dto/profile.dto';
 import { BREAKPOINT } from '@/constants/breakpoint';
 import { HEADING, TAG } from '@/constants/tag';
 
-export function ToolsView({ rows, about }: ToolsViewProps) {
+export function ToolsView({ rows, about, compact }: ToolsViewProps) {
   return (
     <ScrollScene
       as={TAG.SECTION}
       steps={false}
       id='about'
-      className='container pt-(--section) tab:pt-40 lap:pt-(--section)'
+      className={
+        compact
+          ? 'container pt-20 tab:pt-24'
+          : 'container pt-(--section) tab:pt-40 lap:pt-(--section)'
+      }
       aria-labelledby='tools-h'
     >
       <SectionHeading
