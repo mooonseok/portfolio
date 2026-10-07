@@ -85,7 +85,6 @@ export function useEmosaveEditor() {
       : '',
     ...bubbles,
     onSelect,
-    onMove,
     onDelete,
     onResize: (direction: number) => {
       if (failed) return;

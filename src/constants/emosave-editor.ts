@@ -42,13 +42,6 @@ export const EDITOR_INITIAL_ITEMS = [
   { id: EDITOR_CHARACTER.DROP, x: 0.5, y: 0.74, angle: 0, scale: 1 },
 ] as const;
 
-export const EDITOR_MOVE = [
-  { label: '왼쪽', x: -1, y: 0, angle: 180 },
-  { label: '위', x: 0, y: -1, angle: -90 },
-  { label: '아래', x: 0, y: 1, angle: 90 },
-  { label: '오른쪽', x: 1, y: 0, angle: 0 },
-] as const;
-
 export const EDITOR_KEYS: Record<string, readonly [number, number]> = {
   ArrowLeft: [-1, 0],
   ArrowUp: [0, -1],

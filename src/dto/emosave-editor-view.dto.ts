@@ -20,7 +20,6 @@ export interface EditorViewProps {
   failed: boolean;
   onAssetError: () => void;
   onSelect: (id: EditorItemId | null) => void;
-  onMove: (x: number, y: number) => void;
   onRotate: (direction: number) => void;
   onDelete: () => void;
   onResize: (direction: number) => void;

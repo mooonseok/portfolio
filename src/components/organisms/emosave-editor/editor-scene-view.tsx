@@ -28,7 +28,6 @@ export function EditorSceneView(props: EditorViewProps) {
         fill
         sizes={EDITOR_ASSET_SIZE.DOME}
         className={styles.backdrop}
-        priority
         onError={props.onAssetError}
         draggable={false}
       />
@@ -62,7 +61,6 @@ export function EditorSceneView(props: EditorViewProps) {
               fill
               sizes={EDITOR_ASSET_SIZE.CHARACTER}
               draggable={false}
-              priority
               onError={props.onAssetError}
             />
           </Button>
