@@ -37,6 +37,18 @@ Branch, commit, verification and background-process rules for anyone (or any
 agent) working in this repo are in [AGENTS.md](AGENTS.md); `CLAUDE.md` imports
 it so Claude Code loads the same rules.
 
+## 3D 미리보기
+
+`pnpm dev --port 3100` 실행 후 `/preview/diorama`에서 FarmFam+ 단일 모형을
+확인할 수 있습니다. 기존 홈과 상세 페이지는 유지합니다. 미리보기는 검색 색인에서
+제외하며 관리자 웹·서버·DB를 표현한 개념 모형과 기존 담당 범위 콘텐츠를
+연결합니다.
+
+이름표는 키보드로 선택할 수 있고 Escape로 선택을 해제합니다. 모바일은 정적
+그림으로 시작하며, 3D를 사용할 수 없는 환경에서도 설명과 상세 링크를 제공합니다.
+Three.js는 3D를 사용할 때만 불러옵니다. 다섯 프로젝트 확장과 첫 방문 오프닝은
+아직 적용하지 않았습니다.
+
 ## Requirements
 
 - Node.js 22.18 or newer (verified on 24). `pnpm test` imports `.ts` files

@@ -1,0 +1,123 @@
+import { useEffect, useRef, useState } from 'react';
+import type { KeyboardEvent, MouseEvent } from 'react';
+import { DIORAMA } from '@/constants/diorama';
+
+export function useDioramaStage() {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLButtonElement>(null);
+  const stageRef = useRef<ReturnType<
+    typeof import('@/lib/diorama/create-stage').createStage
+  > | null>(null);
+  const userPreference = useRef<boolean | null>(null);
+  const selectedRef = useRef(false);
+  const reducedRef = useRef(true);
+  const [selected, setSelected] = useState(false);
+  const [enabled, setEnabled] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [reduced, setReduced] = useState(true);
+
+  useEffect(() => {
+    const media = window.matchMedia(DIORAMA.REDUCED);
+    const desktop = window.matchMedia(DIORAMA.DESKTOP);
+    const updateViewport = () => {
+      if (userPreference.current === null) setEnabled(desktop.matches);
+    };
+    const update = () => {
+      reducedRef.current = media.matches;
+      setReduced(media.matches);
+      stageRef.current?.setReducedMotion(media.matches);
+    };
+    update();
+    updateViewport();
+    media.addEventListener('change', update);
+    desktop.addEventListener('change', updateViewport);
+    return () => {
+      media.removeEventListener('change', update);
+      desktop.removeEventListener('change', updateViewport);
+    };
+  }, []);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!enabled || !host) return;
+    let cancelled = false;
+    let errored = false;
+    let stage: typeof stageRef.current = null;
+    const fail = () => {
+      if (!cancelled) {
+        errored = true;
+        if (stageRef.current === stage) stageRef.current = null;
+        setFailed(true);
+        setReady(false);
+      }
+    };
+    setFailed(false);
+    setReady(false);
+    void import('@/lib/diorama/create-stage')
+      .then(({ createStage }) => {
+        if (cancelled) return;
+        stage = createStage(host, {
+          onSelect: () => {
+            selectedRef.current = !selectedRef.current;
+            setSelected(selectedRef.current);
+            stageRef.current?.setSelected(
+              selectedRef.current,
+              reducedRef.current
+            );
+          },
+          onError: fail,
+          reducedMotion: reducedRef.current,
+        });
+        if (cancelled || errored) {
+          stage.dispose();
+          return;
+        }
+        stageRef.current = stage;
+        stage.setSelected(selectedRef.current, true);
+        setReady(true);
+      })
+      .catch(fail);
+    return () => {
+      cancelled = true;
+      stage?.dispose();
+      if (stageRef.current === stage) stageRef.current = null;
+    };
+  }, [enabled]);
+
+  function select(value: boolean, immediate: boolean) {
+    selectedRef.current = value;
+    setSelected(value);
+    stageRef.current?.setSelected(value, immediate || reducedRef.current);
+  }
+
+  function onClose() {
+    select(false, true);
+    labelRef.current?.focus({ preventScroll: true });
+  }
+
+  return {
+    hostRef,
+    labelRef,
+    selected,
+    enabled,
+    ready: enabled && ready && !failed,
+    failed,
+    reduced,
+    onSelect: (event: MouseEvent<HTMLButtonElement>) =>
+      select(!selectedRef.current, event.detail === 0),
+    onClose,
+    onToggle: () => {
+      setReady(false);
+      setFailed(false);
+      userPreference.current = !enabled;
+      setEnabled(userPreference.current);
+    },
+    onKeyDown: (event: KeyboardEvent) => {
+      if (event.key === DIORAMA.ESCAPE && selectedRef.current) {
+        event.preventDefault();
+        onClose();
+      }
+    },
+  };
+}
