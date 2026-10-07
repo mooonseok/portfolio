@@ -220,11 +220,13 @@ label and an arrow; its decorative project number is omitted.
   highlights related systems and connections. Three options are vertically
   stacked at every width. Two examples cover input validation and coordinating
   requirements / data across app, web and API. Apple Sign-in remains omitted.
-- Emosave `case.stateExample` is a static DEFAULT / SELECTED / PLACED comparison
-  beside the interaction content, with an explanatory-example caption. The
-  drawing does not invent a drop-target indicator. Work covers emotion input,
-  editing and save / share. `editor-state` discusses Cubit and BlocBuilder
-  placement without an unmeasured performance claim.
+- Emosave `case.stateExample` follows the same asymmetric blue house through
+  choosing an item, changing its position and direction, and reflecting the
+  result. The static illustration preserves the explanatory-example caption.
+  Desktop uses three columns; tablet places each drawing beside its explanation,
+  while mobile stacks the steps. The drawing does not invent a drop target. Work
+  covers emotion input, editing and save / share. `editor-state` discusses Cubit
+  and BlocBuilder placement without an unmeasured performance claim.
 
 Lines in these diagrams show connection only, not execution order, parallelism
 or transaction scope; each `note` / `caption` says so. No explorer claims a
