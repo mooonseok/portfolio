@@ -1,4 +1,4 @@
-import type { KeyboardEvent, MouseEvent, RefObject } from 'react';
+import type { KeyboardEvent, MouseEvent, ReactNode, RefObject } from 'react';
 import type { ProjectSlug } from '@/constants/project';
 
 export interface DioramaLayer {
@@ -19,6 +19,10 @@ export interface DioramaProject {
 }
 
 export interface DioramaPreviewProps {
+  home?: boolean;
+  children?: ReactNode;
+  headline?: string;
+  github?: string;
   projects: DioramaProject[];
   project: DioramaProject | null;
   hostRef: RefObject<HTMLDivElement | null>;
@@ -33,4 +37,11 @@ export interface DioramaPreviewProps {
   onClose: () => void;
   onToggle: () => void;
   onKeyDown: (event: KeyboardEvent) => void;
+}
+
+export interface DioramaContainerProps {
+  home?: boolean;
+  header?: ReactNode;
+  children?: ReactNode;
+  footer?: ReactNode;
 }

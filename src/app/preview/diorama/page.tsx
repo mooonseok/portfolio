@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { DioramaPreviewContainer } from '@/sections/diorama-preview/diorama-preview-container';
+import { DioramaPreviewContainer } from '@/components/organisms/project-workshop/diorama-preview-container';
 
 export const metadata: Metadata = {
   title: '프로젝트 작업실 미리보기 — 박문석',

@@ -187,3 +187,13 @@ Each configuration runs lint, typecheck, tests, boundary checks, formatting,
 production build, anchor checks and metadata checks. The workflow verifies the
 project; it does not deploy it. Passing local checks does not confirm a GitHub
 Actions run: inspect the run for the pushed commit separately.
+
+## 홈 화면 전환
+
+현재 홈은 프로젝트 작업실입니다. `src/constants/home.ts`의
+`HOME.WORKSHOP_ENABLED`를 `false`로 바꾸고 다시 빌드하면 기존 홈으로 돌아갑니다.
+기존 구성은 `src/app/_home/classic-home.tsx`에 보존하며 `/preview/classic`에서
+비교할 수 있습니다. 작업실 구성은 `src/app/_home/workshop-home.tsx`, 공용 3D
+UI는 `src/components/organisms/project-workshop/`에 있습니다.
+`/preview/diorama`는 독립 작업실 미리보기로 유지합니다. 두 미리보기는 검색
+색인을 차단합니다. 화면 전환은 콘텐츠와 프로젝트 상세 페이지를 바꾸지 않습니다.

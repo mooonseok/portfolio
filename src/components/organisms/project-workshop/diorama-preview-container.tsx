@@ -1,5 +1,6 @@
 'use client';
 
+import type { DioramaContainerProps } from '@/dto/diorama-preview.dto';
 import { Box } from '@/components/atoms/box';
 import { useDioramaOpening } from '@/hooks/use-diorama-opening';
 import { DioramaOpeningView } from './diorama-opening-view';
@@ -8,6 +9,7 @@ import { emosave } from '@/content/projects/emosave';
 import { indianBob } from '@/content/projects/indian-bob';
 import { apc } from '@/content/projects/apc';
 import { smartFarm } from '@/content/projects/smart-farm';
+import { site } from '@/content/site';
 import { FLOOR_LABEL } from '@/constants/floor';
 import { STATUS_KIND } from '@/constants/status';
 import { useDioramaStage } from '@/hooks/use-diorama-stage';
@@ -32,19 +34,31 @@ const projects = [emosave, indianBob, farmfamPlus, apc, smartFarm].map(
   })
 );
 
-export function DioramaPreviewContainer() {
+export function DioramaPreviewContainer({
+  home = false,
+  header,
+  children,
+  footer,
+}: DioramaContainerProps) {
   const stage = useDioramaStage();
   const opening = useDioramaOpening();
   return (
     <>
       <Box inert={opening.active}>
+        {header}
         <DioramaPreviewView
+          home={home}
+          headline={site.headline}
+          github={site.contact.github}
           {...stage}
           projects={projects}
           project={
             projects.find((project) => project.slug === stage.selected) ?? null
           }
-        />
+        >
+          {children}
+        </DioramaPreviewView>
+        {footer}
       </Box>
       <DioramaOpeningView {...opening} />
     </>
