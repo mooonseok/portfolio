@@ -321,10 +321,10 @@ input and removes it on back/forward, so landing on a URL hash and history
 restoration jump straight to their position. Hash-link clicks that open
 elsewhere (modifier keys, `target`, `download`) or are cancelled are not
 remembered. The Smart Farm monitoring flow is `FLOW_ROLE.STATIC` (first-reveal
-line draw only). Stories cover IndianBob team admission policy and permission,
-Emosave editor state, and FarmFam+ secret-deal price validation. The hero CTA
-jumps to `#work`. Engineering is labeled 대표 구현 사례; IndianBob and Emosave
-retain 배운 점 without changing their current-state anchor IDs.
+line draw only). Stories cover APC app updates and kiosk restoration, Emosave
+editor state, and FarmFam+ secret-deal price validation. The hero CTA jumps to
+`#work`. Engineering is labeled 대표 구현 사례; IndianBob and Emosave retain
+배운 점 without changing their current-state anchor IDs.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
