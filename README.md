@@ -177,16 +177,13 @@ values through the job environment.
 
 ## Continuous verification
 
-`.github/workflows/verify.yml` runs on pull requests, pushes to `develop` and
-`main`, and manual dispatch. It uses Node.js 24 and the pnpm version pinned in
-`packageManager`, with a matrix for the default non-indexable configuration and
-a public-URL test fixture. The fixture is only test data, not a deployment
-address.
+There is currently no `.github/workflows/verify.yml` in this checkout. The
+commands above provide local verification; this repository does not currently
+provide the previously documented GitHub Actions verification matrix. Local
+checks do not confirm remote CI or deployment success.
 
-Each configuration runs lint, typecheck, tests, boundary checks, formatting,
-production build, anchor checks and metadata checks. The workflow verifies the
-project; it does not deploy it. Passing local checks does not confirm a GitHub
-Actions run: inspect the run for the pushed commit separately.
+`pnpm check:metadata` also checks that both preview routes remain `noindex`,
+have no canonical URL and stay out of the sitemap, including indexable builds.
 
 ## 홈 화면 전환
 
