@@ -1,17 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, MouseEvent } from 'react';
+import type { ProjectSlug } from '@/constants/project';
 import { DIORAMA } from '@/constants/diorama';
 
 export function useDioramaStage() {
   const hostRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLButtonElement>(null);
+  const labelRefs = useRef<
+    Partial<Record<ProjectSlug, HTMLButtonElement | null>>
+  >({});
+  const lastSelected = useRef<ProjectSlug | null>(null);
   const stageRef = useRef<ReturnType<
     typeof import('@/lib/diorama/create-stage').createStage
   > | null>(null);
   const userPreference = useRef<boolean | null>(null);
-  const selectedRef = useRef(false);
+  const selectedRef = useRef<ProjectSlug | null>(null);
   const reducedRef = useRef(true);
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState<ProjectSlug | null>(null);
   const [enabled, setEnabled] = useState(false);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -58,8 +62,9 @@ export function useDioramaStage() {
       .then(({ createStage }) => {
         if (cancelled) return;
         stage = createStage(host, {
-          onSelect: () => {
-            selectedRef.current = !selectedRef.current;
+          onSelect: (slug) => {
+            lastSelected.current = slug;
+            selectedRef.current = selectedRef.current === slug ? null : slug;
             setSelected(selectedRef.current);
             stageRef.current?.setSelected(
               selectedRef.current,
@@ -85,27 +90,29 @@ export function useDioramaStage() {
     };
   }, [enabled]);
 
-  function select(value: boolean, immediate: boolean) {
+  function select(value: ProjectSlug | null, immediate: boolean) {
+    if (value) lastSelected.current = value;
     selectedRef.current = value;
     setSelected(value);
     stageRef.current?.setSelected(value, immediate || reducedRef.current);
   }
 
   function onClose() {
-    select(false, true);
-    labelRef.current?.focus({ preventScroll: true });
+    select(null, true);
+    if (lastSelected.current)
+      labelRefs.current[lastSelected.current]?.focus({ preventScroll: true });
   }
 
   return {
     hostRef,
-    labelRef,
+    labelRefs,
     selected,
     enabled,
     ready: enabled && ready && !failed,
     failed,
     reduced,
-    onSelect: (event: MouseEvent<HTMLButtonElement>) =>
-      select(!selectedRef.current, event.detail === 0),
+    onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) =>
+      select(selectedRef.current === slug ? null : slug, event.detail === 0),
     onClose,
     onToggle: () => {
       setReady(false);

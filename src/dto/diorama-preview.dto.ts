@@ -1,4 +1,5 @@
 import type { KeyboardEvent, MouseEvent, RefObject } from 'react';
+import type { ProjectSlug } from '@/constants/project';
 
 export interface DioramaLayer {
   label: string;
@@ -6,21 +7,28 @@ export interface DioramaLayer {
   lines: string[];
 }
 
-export interface DioramaPreviewProps {
+export interface DioramaProject {
+  slug: ProjectSlug;
   title: string;
+  service: string;
   summary: string;
   period: string;
   href: string;
+  experiment: boolean;
   layers: DioramaLayer[];
-  features: { title: string; body: string[] }[];
+}
+
+export interface DioramaPreviewProps {
+  projects: DioramaProject[];
+  project: DioramaProject | null;
   hostRef: RefObject<HTMLDivElement | null>;
-  labelRef: RefObject<HTMLButtonElement | null>;
-  selected: boolean;
+  labelRefs: RefObject<Partial<Record<ProjectSlug, HTMLButtonElement | null>>>;
+  selected: ProjectSlug | null;
   enabled: boolean;
   ready: boolean;
   failed: boolean;
   reduced: boolean;
-  onSelect: (event: MouseEvent<HTMLButtonElement>) => void;
+  onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) => void;
   onClose: () => void;
   onToggle: () => void;
   onKeyDown: (event: KeyboardEvent) => void;

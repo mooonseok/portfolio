@@ -1,11 +1,13 @@
+import type { ProjectSlug } from '@/constants/project';
+
 export interface DioramaStageOptions {
-  onSelect: () => void;
+  onSelect: (slug: ProjectSlug) => void;
   onError: () => void;
   reducedMotion: boolean;
 }
 
 export interface DioramaStage {
-  setSelected: (selected: boolean, immediate?: boolean) => void;
+  setSelected: (selected: ProjectSlug | null, immediate?: boolean) => void;
   setReducedMotion: (reduced: boolean) => void;
   dispose: () => void;
 }
