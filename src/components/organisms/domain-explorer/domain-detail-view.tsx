@@ -9,8 +9,8 @@ export function DomainDetailView({ domain: d }: { domain: DomainItem }) {
   return (
     <>
       {d.aside ? (
-        <Column className='gap-1 px-3.5 py-3 [border:1px_dashed_var(--dark-sub)]'>
-          <Text as={TAG.SPAN} className='mono text-dark-sub'>
+        <Column className='gap-1 px-3.5 py-3 [border:1px_dashed_var(--subtle)]'>
+          <Text as={TAG.SPAN} className='mono text-subtle'>
             {d.aside.label}
           </Text>
           <Text className='text-[15px] leading-[1.6]'>{d.aside.body}</Text>
@@ -18,14 +18,14 @@ export function DomainDetailView({ domain: d }: { domain: DomainItem }) {
       ) : null}
       {d.checks ? (
         <Column className='gap-2.5'>
-          <Text as={TAG.SPAN} className='mono text-dark-sub'>
+          <Text as={TAG.SPAN} className='mono text-subtle'>
             {d.checks.label}
           </Text>
           <List className='flex flex-wrap gap-2'>
             {d.checks.items.map((c) => (
               <ListItem
                 key={c}
-                className='border border-dark-rule px-3 py-1.5 text-small leading-[1.5]'
+                className='border border-hairline px-3 py-1.5 text-small leading-[1.5]'
               >
                 {c}
               </ListItem>
@@ -33,8 +33,8 @@ export function DomainDetailView({ domain: d }: { domain: DomainItem }) {
           </List>
         </Column>
       ) : null}
-      <Column className='gap-2.5 border-t border-t-dark-rule pt-4'>
-        <Text as={TAG.SPAN} className='mono text-dark-sub'>
+      <Column className='gap-2.5 border-t border-t-hairline pt-4'>
+        <Text as={TAG.SPAN} className='mono text-subtle'>
           {d.implLabel}
         </Text>
         <List className='flex flex-col gap-1.5'>
@@ -44,7 +44,7 @@ export function DomainDetailView({ domain: d }: { domain: DomainItem }) {
               key={m}
               className='gap-2.5 text-[15px] leading-[1.6]'
             >
-              <Text as={TAG.SPAN} aria-hidden='true' className='text-dark-sub'>
+              <Text as={TAG.SPAN} aria-hidden='true' className='text-subtle'>
                 –
               </Text>
               <Text as={TAG.SPAN}>{m}</Text>

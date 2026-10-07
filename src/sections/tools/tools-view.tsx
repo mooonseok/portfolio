@@ -14,8 +14,8 @@ export function ToolsView({ rows, about, compact }: ToolsViewProps) {
       id='about'
       className={
         compact
-          ? 'container pt-20 tab:pt-24'
-          : 'container pt-(--section) tab:pt-40 lap:pt-(--section)'
+          ? 'container py-20 tab:py-24'
+          : 'container pt-(--section) pb-20 tab:pt-40 tab:pb-24 lap:pt-(--section)'
       }
       aria-labelledby='tools-h'
     >

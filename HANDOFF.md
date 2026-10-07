@@ -102,12 +102,12 @@ stories, tools and footer. Its opening makes the whole home chrome and content
 inert. The unselected desktop panel lists each project and its owned areas with
 direct case links. Selected panels retain all work sentences with separators
 between areas. Stories and tools use compact section spacing only on the
-workshop home; classic spacing remains unchanged. On page exit, the workshop
-saves its selection, explicit 3D preference and scroll position to that browser
-history entry. Returning or reloading restores the panel before scroll
-placement; a fresh entry starts unselected. Existing router history fields are
-preserved. The classic layout described below remains available through the
-switch.
+workshop home. Both home variants leave 80px below the tools table on mobile and
+96px from tablet before the footer. On page exit, the workshop saves its
+selection, explicit 3D preference and scroll position to that browser history
+entry. Returning or reloading restores the panel before scroll placement; a
+fresh entry starts unselected. Existing router history fields are preserved. The
+classic layout described below remains available through the switch.
 
 `site.headline` introduces user apps and business systems. The hero keeps a
 single introduction sentence; `site.about` describes collaboration and delivery.
@@ -150,17 +150,18 @@ header carries the periods. The homepage intro includes GitHub; the former This
 Website section is removed to keep the reading path focused on project work.
 Case work rows and technical notes use 16px body text with 1.7 line height; a
 single technical note uses one column. All home projects share the light paper
-surface; APC case-study dark sections remain. Smart Farm has its own experiment
-heading. The `work` navigation anchor starts at the project list and the
-`flutter-work` anchor remains available. Case pages show a definition list of
-owned areas (`ProjectScopeListView`) after the introduction. Each row pairs an
-area with its work summary and, when supplied, technology. Only separators
-between rows remain; there is no board frame, tinted box, connector or legend.
-Technology moves below the work summary on mobile; tablet and wider use three
-columns. Experiment rows carry a visible experiment label. The work sections
-below retain implementation detail. `VisualsNote` renders the unchanged
-`visualsNoteKo` reconstruction notice beside the actual diagrams in each case
-study. The home whiteboard and its connector explanation are unchanged.
+surface; APC case-study sections use the same light paper surface as the other
+cases. Smart Farm has its own experiment heading. The `work` navigation anchor
+starts at the project list and the `flutter-work` anchor remains available. Case
+pages show a definition list of owned areas (`ProjectScopeListView`) after the
+introduction. Each row pairs an area with its work summary and, when supplied,
+technology. Only separators between rows remain; there is no board frame, tinted
+box, connector or legend. Technology moves below the work summary on mobile;
+tablet and wider use three columns. Experiment rows carry a visible experiment
+label. The work sections below retain implementation detail. `VisualsNote`
+renders the unchanged `visualsNoteKo` reconstruction notice beside the actual
+diagrams in each case study. The home whiteboard and its connector explanation
+are unchanged.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs

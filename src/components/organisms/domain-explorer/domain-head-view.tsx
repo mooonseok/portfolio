@@ -19,7 +19,7 @@ export function DomainHeadView({
       >
         {d.title}
       </Heading>
-      <Text className='text-[15.5px] leading-[1.65] text-dark-sub tab:text-body'>
+      <Text className='text-[15.5px] leading-[1.65] text-subtle tab:text-body'>
         {d.lead}
       </Text>
     </Column>

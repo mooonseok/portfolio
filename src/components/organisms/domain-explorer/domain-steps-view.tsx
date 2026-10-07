@@ -27,13 +27,13 @@ export function DomainStepsView({
             <Box
               as={TAG.SPAN}
               aria-hidden='true'
-              className='relative z-1 mt-1.5 size-[11px] rounded-[50%] border-[1.25px] border-paper bg-dark tab:mt-0'
+              className='relative z-1 mt-1.5 size-[11px] rounded-[50%] border-[1.25px] border-ink bg-paper tab:mt-0'
             />
             {last ? null : (
               <Box
                 as={TAG.SPAN}
                 aria-hidden='true'
-                className='absolute top-[17px] bottom-[-6px] left-[5px] border-l-[1.25px] border-l-paper tab:top-[5px] tab:right-0 tab:bottom-auto tab:left-[11px] tab:border-t-[1.25px] tab:border-l-0 tab:border-t-paper'
+                className='absolute top-[17px] bottom-[-6px] left-[5px] border-l-[1.25px] border-l-ink tab:top-[5px] tab:right-0 tab:bottom-auto tab:left-[11px] tab:border-t-[1.25px] tab:border-l-0 tab:border-t-ink'
               />
             )}
             <Box className='flex min-w-0 flex-col gap-0.5'>
@@ -42,7 +42,7 @@ export function DomainStepsView({
               </Text>
               <Text
                 as={TAG.SPAN}
-                className='text-[14px] leading-[1.45] text-dark-sub'
+                className='text-[14px] leading-[1.45] text-subtle'
               >
                 {s.sub}
               </Text>
