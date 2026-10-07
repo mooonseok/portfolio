@@ -1,5 +1,8 @@
 'use client';
 
+import { Box } from '@/components/atoms/box';
+import { useDioramaOpening } from '@/hooks/use-diorama-opening';
+import { DioramaOpeningView } from './diorama-opening-view';
 import { farmfamPlus } from '@/content/projects/farmfam-plus';
 import { emosave } from '@/content/projects/emosave';
 import { indianBob } from '@/content/projects/indian-bob';
@@ -31,13 +34,19 @@ const projects = [emosave, indianBob, farmfamPlus, apc, smartFarm].map(
 
 export function DioramaPreviewContainer() {
   const stage = useDioramaStage();
+  const opening = useDioramaOpening();
   return (
-    <DioramaPreviewView
-      {...stage}
-      projects={projects}
-      project={
-        projects.find((project) => project.slug === stage.selected) ?? null
-      }
-    />
+    <>
+      <Box inert={opening.active}>
+        <DioramaPreviewView
+          {...stage}
+          projects={projects}
+          project={
+            projects.find((project) => project.slug === stage.selected) ?? null
+          }
+        />
+      </Box>
+      <DioramaOpeningView {...opening} />
+    </>
   );
 }

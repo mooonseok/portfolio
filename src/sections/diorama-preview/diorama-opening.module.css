@@ -1,0 +1,130 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: max(24px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
+  background: var(--paper);
+  color: var(--ink);
+  animation: opening-exit 1600ms var(--ease-out) both;
+}
+
+.titleBlock {
+  width: min(100%, 760px);
+  animation: opening-arrive 600ms var(--ease-out) both;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(40px, 10.5vw, 96px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.nameLine {
+  display: block;
+}
+
+.stroke {
+  width: min(44%, 230px);
+  height: 7px;
+  margin-top: 28px;
+  background: var(--marker-red);
+  transform: rotate(-3deg);
+}
+
+.caption {
+  margin-top: 28px;
+  font-size: clamp(18px, 2.5vw, 24px);
+  line-height: 1.5;
+}
+
+.skip {
+  position: absolute;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.replay {
+  display: block;
+  margin: 0 max(24px, calc((100% - 1440px) / 2)) 24px auto;
+  min-height: 44px;
+  padding: 8px;
+  background: transparent;
+  border: 0;
+  color: var(--subtle);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.skip:focus-visible,
+.replay:focus-visible {
+  outline: 2px solid var(--marker-blue);
+  outline-offset: 4px;
+}
+
+.skip:active,
+.replay:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skip:hover {
+    background: var(--note-paper);
+  }
+
+  .replay:hover {
+    color: var(--ink);
+  }
+}
+
+@keyframes opening-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes opening-exit {
+  0%,
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .titleBlock {
+    animation: none;
+  }
+
+  .skip:active,
+  .replay:active {
+    transform: none;
+  }
+}
