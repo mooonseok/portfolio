@@ -137,7 +137,7 @@ export function createEditorPointer(session: EditorSession) {
       const rotating = previous.hit.mode === EDITOR_GESTURE.ROTATE;
       const resizing = previous.hit.mode === EDITOR_GESTURE.RESIZE;
       if (previous.dragging) {
-        if (hit && (rotating || resizing ? withinStage(hit) : hit.inside))
+        if ((!rotating && !resizing) || (hit && withinStage(hit)))
           session.finish(
             rotating
               ? EDITOR_GESTURE.ROTATE

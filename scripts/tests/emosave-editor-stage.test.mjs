@@ -110,7 +110,7 @@ test('zero-size and outside-dome surfaces do not start a captured gesture', (t) 
   assert.equal(f.session.get().selectedId, null);
 });
 
-test('transient drag paints immediately and outside release restores DOM and peers', (t) => {
+test('transient drag paints immediately and outside release commits bounded DOM placement', (t) => {
   const f = setup(t);
   f.session.select('sprout');
   const saved = f.session.get();
@@ -121,11 +121,15 @@ test('transient drag paints immediately and outside release restores DOM and pee
   assert.equal(node(f, 'cloud').getAttribute('aria-pressed'), 'true');
   assert.equal(f.changes.at(-1).message, undefined);
   f.emit('pointerup', f.point(1.1, 1.1));
-  assert.deepEqual(f.session.get(), saved);
-  assert.equal(node(f, 'cloud').style.left, `${start.x * 100}%`);
-  assert.equal(node(f, 'cloud').getAttribute('aria-pressed'), 'false');
-  assert.equal(node(f, 'sprout').getAttribute('aria-pressed'), 'true');
+  const placed = f.session.get();
+  assert.notDeepEqual(placed.items[0], start);
+  assert.deepEqual(placed.items.slice(1), saved.items.slice(1));
+  assert.equal(node(f, 'cloud').style.left, `${placed.items[0].x * 100}%`);
+  assert.equal(node(f, 'cloud').getAttribute('aria-pressed'), 'true');
+  assert.equal(node(f, 'sprout').getAttribute('aria-pressed'), 'false');
   assert.equal(f.captures.size, 0);
+  f.emit('lostpointercapture');
+  assert.deepEqual(f.session.get(), placed);
 });
 
 test('stage disposal leaves the DOM placement stable and stops new input', (t) => {

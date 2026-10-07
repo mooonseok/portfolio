@@ -128,17 +128,19 @@ within 75–160% of original size and dome bounds. Reset restores all three
 characters, including deleted ones. A character choice row allows selection
 behind overlaps. Selection temporarily raises an item without changing its
 permanent order. Rotated corners must remain inside the dome; rejected rotation
-never silently changes position. Interrupted gestures restore the starting
-state. Speech bubbles alternate with timers, pause while editing or offscreen,
-and retain the user's pause across reset. Reduced motion starts paused. There is
-no idle RAF, React update per drag frame, camera control, persistence or API
-call. Dedicated section, hooks and `lib/emosave-editor` modules load only on
-this preview route. Home and case studies do not link to or load it. It remains
-noindex without a canonical URL or sitemap entry. Image failure leaves an
-explanation and case link. Speech bubbles use a preview-local 14px radius with
-one 3px corner and the shared hairline border; near the top they appear below
-the character. Committed position, rotation and size changes have
-screen-reader-only summaries. No per-frame announcements are emitted.
+never silently changes position. Movement released outside the dome keeps the
+bounded placement already shown; it does not roll back merely because the
+pointer left the area. Explicit cancellation and interrupted gestures restore
+the starting state. Speech bubbles alternate with timers, pause while editing or
+offscreen, and retain the user's pause across reset. Reduced motion starts
+paused. There is no idle RAF, React update per drag frame, camera control,
+persistence or API call. Dedicated section, hooks and `lib/emosave-editor`
+modules load only on this preview route. Home and case studies do not link to or
+load it. It remains noindex without a canonical URL or sitemap entry. Image
+failure leaves an explanation and case link. Speech bubbles use a preview-local
+14px radius with one 3px corner and the shared hairline border; near the top
+they appear below the character. Committed position, rotation and size changes
+have screen-reader-only summaries. No per-frame announcements are emitted.
 
 `site.headline` introduces user apps and business systems. The hero keeps a
 single introduction sentence; `site.about` describes collaboration and delivery.

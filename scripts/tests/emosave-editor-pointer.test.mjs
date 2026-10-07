@@ -85,15 +85,21 @@ test('drag switches selection but preserves grab offset and every other item', (
 });
 
 for (const outside of [null, hit(1, 1, null, false)]) {
-  test(`outside release rolls back all items and previous selection: ${!!outside}`, () => {
+  test(`outside movement release keeps the last valid placement: ${!!outside}`, () => {
     const { session, pointer } = setup();
     session.select('sprout');
     session.rotate(1);
     const saved = session.get();
     pointer.down(event(), hit());
     pointer.move(event({ clientX: 140 }), hit(0.6, 0.5, null));
+    const placed = session.get();
     pointer.up(event({ clientX: 150 }), outside);
-    assert.deepEqual(session.get(), saved);
+    assert.deepEqual(session.get(), placed);
+    assert.deepEqual(session.get().items.slice(1), saved.items.slice(1));
+    assert.equal(session.get().selectedId, 'cloud');
+    pointer.cancel();
+    pointer.up(event(), hit());
+    assert.deepEqual(session.get(), placed);
   });
 }
 
