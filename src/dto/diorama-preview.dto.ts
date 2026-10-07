@@ -28,14 +28,12 @@ export interface DioramaPreviewProps {
   hostRef: RefObject<HTMLDivElement | null>;
   labelRefs: RefObject<Partial<Record<ProjectSlug, HTMLButtonElement | null>>>;
   selected: ProjectSlug | null;
-  enabled: boolean;
   wide: boolean;
   ready: boolean;
   failed: boolean;
   reduced: boolean;
   onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) => void;
   onClose: () => void;
-  onToggle: () => void;
   onKeyDown: (event: KeyboardEvent) => void;
 }
 

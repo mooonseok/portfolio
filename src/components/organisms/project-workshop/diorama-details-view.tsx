@@ -39,12 +39,6 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       </Box>
       {project ? (
         <Box>
-          <Anchor
-            href={project.href}
-            className='mt-2 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4'
-          >
-            구현 사례 자세히 보기
-          </Anchor>
           <Text className='mt-4 text-base leading-[1.7]'>
             {project.summary}
           </Text>

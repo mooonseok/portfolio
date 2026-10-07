@@ -102,12 +102,16 @@ stories, tools and footer. Its opening makes the whole home chrome and content
 inert. The unselected desktop panel lists each project and its owned areas with
 direct case links. Selected panels retain all work sentences with separators
 between areas. Stories and tools use compact section spacing only on the
-workshop home. Both home variants leave 80px below the tools table on mobile and
-96px from tablet before the footer. On page exit, the workshop saves its
-selection, explicit 3D preference and scroll position to that browser history
-entry. Returning or reloading restores the panel before scroll placement; a
-fresh entry starts unselected. Existing router history fields are preserved. The
-classic layout described below remains available through the switch.
+workshop home. Workshop stories align with the main container rather than the
+classic metadata rail. Selected notes have one case link below the work list. 3D
+loads automatically at every viewport width, with a static illustration during
+loading or failure and no user-facing 3D toggle. Both home variants leave 80px
+below the tools table on mobile and 96px from tablet before the footer. On page
+exit, the workshop saves its selection and scroll position to that browser
+history entry. Returning or reloading restores the panel before scroll
+placement; a fresh entry starts unselected. Existing router history fields are
+preserved. The classic layout described below remains available through the
+switch.
 
 `/preview/emosave-editor` is an isolated explanatory placement editor with one
 house, selection, bounded movement, quarter-turn rotation and reset. It is not
