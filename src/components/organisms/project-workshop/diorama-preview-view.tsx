@@ -64,6 +64,28 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
         )}
         <Box className='mt-6 grid items-start gap-6 lap:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)] lap:gap-10'>
           <Box>
+            <Box className='mb-3 flex flex-wrap items-center justify-between gap-2'>
+              <Text
+                role='status'
+                aria-live='polite'
+                className='text-sm text-subtle'
+              >
+                {props.failed
+                  ? '3D를 불러오지 못해 정적 화면을 표시합니다.'
+                  : props.enabled && !props.ready
+                    ? '3D를 준비하고 있습니다.'
+                    : props.ready
+                      ? '모형이나 아래 이름표로 선택할 수 있습니다.'
+                      : '3D를 켜면 모형을 눌러 선택할 수 있습니다.'}
+              </Text>
+              <Button
+                onClick={props.onToggle}
+                aria-pressed={props.enabled}
+                className='min-h-11 px-2 text-sm underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2'
+              >
+                {props.enabled ? '3D 끄기' : '3D 켜기'}
+              </Button>
+            </Box>
             <Box as={TAG.FIGURE} className='m-0'>
               <Box className='relative aspect-[5/3] w-full overflow-hidden rounded-[20px] bg-[#e9e7df] lap:aspect-auto lap:h-[380px]'>
                 <Image
@@ -91,28 +113,6 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
               </Text>
             </Box>
             <DioramaLabelsView {...props} />
-            <Box className='mt-3 flex flex-wrap items-center justify-between gap-2'>
-              <Text
-                role='status'
-                aria-live='polite'
-                className='text-sm text-subtle'
-              >
-                {props.failed
-                  ? '3D를 불러오지 못해 정적 화면을 표시합니다.'
-                  : props.enabled && !props.ready
-                    ? '3D를 준비하고 있습니다.'
-                    : props.ready
-                      ? '모형이나 아래 이름표로 선택할 수 있습니다.'
-                      : '정적 화면에서도 프로젝트를 선택할 수 있습니다.'}
-              </Text>
-              <Button
-                onClick={props.onToggle}
-                aria-pressed={props.enabled}
-                className='min-h-11 px-2 text-sm underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2'
-              >
-                {props.enabled ? '3D 끄기' : '3D 켜기'}
-              </Button>
-            </Box>
           </Box>
           {props.wide && <DioramaDetailsView {...props} />}
         </Box>

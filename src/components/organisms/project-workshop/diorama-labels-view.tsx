@@ -56,14 +56,6 @@ export function DioramaLabelsView(props: DioramaPreviewProps) {
                   실험
                 </Text>
               )}
-              {props.selected === project.slug && (
-                <Text
-                  as={TAG.SPAN}
-                  className='text-xs text-[var(--marker-red)]'
-                >
-                  선택됨
-                </Text>
-              )}
             </Text>
             <Text as={TAG.SPAN} className='text-sm leading-relaxed text-subtle'>
               {project.service}

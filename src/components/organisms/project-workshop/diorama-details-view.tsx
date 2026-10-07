@@ -2,6 +2,7 @@ import { Box } from '@/components/atoms/box';
 import { Text } from '@/components/atoms/text';
 import { Heading } from '@/components/atoms/heading';
 import { Anchor } from '@/components/atoms/anchor';
+import { CloseIcon } from '@/components/atoms/close-icon';
 import { Button } from '@/components/atoms/button';
 import { List, ListItem } from '@/components/atoms/list';
 import { DIORAMA } from '@/constants/diorama';
@@ -29,9 +30,10 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
         {project && (
           <Button
             onClick={props.onClose}
-            className='min-h-11 shrink-0 px-2 text-sm underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2'
+            aria-label='담당 업무 닫기'
+            className='fine:hover:bg-black/5 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2'
           >
-            닫기
+            <CloseIcon />
           </Button>
         )}
       </Box>
