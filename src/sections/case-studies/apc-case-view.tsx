@@ -10,8 +10,6 @@ import { TechNotes } from '@/components/organisms/tech-notes';
 import { VisualsNote } from '@/components/organisms/visuals-note';
 import type { ApcCaseViewProps } from '@/dto/case-view.dto';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
-import { RULE } from '@/constants/rule';
-import { TONE } from '@/constants/tone';
 
 export function ApcCaseView({
   p,
@@ -26,7 +24,7 @@ export function ApcCaseView({
 }: ApcCaseViewProps) {
   const c = p.case;
   return (
-    <CaseStudyTemplate project={p} darkHeader>
+    <CaseStudyTemplate project={p}>
       {showWork ? (
         <CaseSectionView
           group={groups.work}
@@ -44,36 +42,28 @@ export function ApcCaseView({
           layout={CASE_LAYOUT.WIDE}
           loose
         >
-          <Box className='-mx-(--margin) px-5 pt-2 pb-8 surface-dark tab:mx-0 tab:px-8 tab:pb-10 lap:px-10 lap:pt-4 lap:pb-12'>
+          <Box>
             <DomainExplorer {...domains} />
             <VisualsNote />
           </Box>
         </CaseSectionView>
       ) : null}
       {showTech ? (
-        <Box className='mt-24 pt-16 pb-18 surface-dark tab:mt-(--section) tab:pt-30 tab:pb-40'>
-          <CaseSectionView
-            group={groups.engineering}
-            depth={CASE_DEPTH.L4}
-            title='대표 구현 사례'
-            layout={CASE_LAYOUT.WIDE}
-            rule={RULE.DARK}
-            className='*:mt-0! mob:*:[border-top-width:0]! mob:*:[border-top-style:none]! mob:*:pt-0!'
-            intro={
-              c.techIntro ? (
-                <Text className='text-[15px] leading-[1.6] text-dark-sub'>
-                  {c.techIntro}
-                </Text>
-              ) : undefined
-            }
-          >
-            <TechNotes
-              notes={c.techNotes}
-              cols={TECH_COLS.THREE}
-              tone={TONE.DARK}
-            />
-          </CaseSectionView>
-        </Box>
+        <CaseSectionView
+          group={groups.engineering}
+          depth={CASE_DEPTH.L2}
+          title='대표 구현 사례'
+          layout={CASE_LAYOUT.WIDE}
+          intro={
+            c.techIntro ? (
+              <Text className='text-[15px] leading-[1.6] text-subtle'>
+                {c.techIntro}
+              </Text>
+            ) : undefined
+          }
+        >
+          <TechNotes notes={c.techNotes} cols={TECH_COLS.THREE} />
+        </CaseSectionView>
       ) : null}
       {c.experiment ? (
         <CaseSectionView
