@@ -113,19 +113,32 @@ placement; a fresh entry starts unselected. Existing router history fields are
 preserved. The classic layout described below remains available through the
 switch.
 
-`/preview/emosave-editor` is an isolated explanatory placement editor with one
-house, selection, bounded movement, quarter-turn rotation and reset. It is not
-an app screenshot or a reproduction of the original Flutter implementation. The
-fixed camera and item appearance inherit the workshop. Mouse dragging and
-select-then-place share the same in-memory state as the DOM direction buttons;
-touch uses taps with vertical scrolling preserved. Arrow keys are scoped to the
-control group. Interrupted gestures restore the starting placement. Rendering is
-requested only on change or resize; there is no motion interpolation or idle
-animation, including with reduced motion. Dedicated section, hook and
-`lib/emosave-editor` modules are imported only by its preview route. Home and
-case studies do not link to or load it. It has no persistence or API calls and
-remains noindex, without a canonical URL or sitemap entry. WebGL failure leaves
-an explanation and the link to the existing Emosave implementation case.
+`/preview/emosave-editor` is an isolated explanatory 2D dome editor with three
+original characters, single selection, bounded movement, in-plane rotation,
+resizing, deletion and reset. It is not an app screenshot or a reproduction of
+the original Flutter implementation. Generated artwork and demonstration
+dialogue are identified as newly composed examples; image prompts live in the
+asset provenance JSON and PNG metadata. DOM image layers replace the former
+Three.js house renderer. Mouse dragging and touch dragging of an already
+selected character share state with keyboard and direction controls. Empty taps
+clear selection; unselected areas preserve vertical scrolling. Opposite corner
+handles rotate and resize, with a third corner button for deletion. Selection
+never enlarges an item. Button rotation uses 15-degree steps; resizing stays
+within 75–160% of original size and dome bounds. Reset restores all three
+characters, including deleted ones. A character choice row allows selection
+behind overlaps. Selection temporarily raises an item without changing its
+permanent order. Rotated corners must remain inside the dome; rejected rotation
+never silently changes position. Interrupted gestures restore the starting
+state. Speech bubbles alternate with timers, pause while editing or offscreen,
+and retain the user's pause across reset. Reduced motion starts paused. There is
+no idle RAF, React update per drag frame, camera control, persistence or API
+call. Dedicated section, hooks and `lib/emosave-editor` modules load only on
+this preview route. Home and case studies do not link to or load it. It remains
+noindex without a canonical URL or sitemap entry. Image failure leaves an
+explanation and case link. Speech bubbles use a preview-local 14px radius with
+one 3px corner and the shared hairline border; near the top they appear below
+the character. Committed position, rotation and size changes have
+screen-reader-only summaries. No per-frame announcements are emitted.
 
 `site.headline` introduces user apps and business systems. The hero keeps a
 single introduction sentence; `site.about` describes collaboration and delivery.

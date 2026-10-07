@@ -3,8 +3,9 @@ import { Box } from '@/components/atoms/box';
 import { Heading } from '@/components/atoms/heading';
 import { Text } from '@/components/atoms/text';
 import { HEADING, TAG } from '@/constants/tag';
-import type { EditorViewProps } from '@/dto/emosave-editor.dto';
+import type { EditorViewProps } from '@/dto/emosave-editor-view.dto';
 import { EditorControlsView } from './editor-controls-view';
+import { EditorSceneView } from './editor-scene-view';
 import styles from './emosave-editor.module.css';
 
 export function EmosaveEditorView(props: EditorViewProps) {
@@ -13,81 +14,66 @@ export function EmosaveEditorView(props: EditorViewProps) {
       as={TAG.MAIN}
       id='main-content'
       tabIndex={-1}
-      className='container min-h-screen pt-6 pb-16'
+      className='container min-h-screen pt-4 pb-12'
     >
-      <Anchor
-        href='/'
-        className='inline-flex min-h-11 items-center text-sm underline underline-offset-4'
-      >
+      <Anchor href='/' className={styles.link}>
         작업실로 돌아가기
       </Anchor>
       <Box className={styles.editor}>
-        <Heading
-          level={HEADING.H1}
-          className='text-[28px] leading-tight font-medium tab:text-[32px]'
-        >
+        <Heading level={HEADING.H1} className={styles.title}>
           Emosave · 마을 편집
         </Heading>
-        <Text className='mt-3 text-sm text-subtle'>
+        <Text className='mt-2 text-sm text-subtle'>
           배치 편집 개념 예시 · 실제 앱 화면 아님
         </Text>
-        <Box
-          as={TAG.FIGURE}
-          aria-label='집 한 채를 놓는 배치 영역'
-          className='m-0 mt-6'
-        >
-          <Box className={styles.stage}>
-            <Box ref={props.hostRef} className='absolute inset-0' />
-            {!props.ready && (
-              <Text
-                role='status'
-                className='absolute inset-0 m-auto h-fit max-w-[24em] px-6 text-center text-sm leading-relaxed text-subtle'
-              >
-                {props.failed
-                  ? '3D를 불러오지 못했습니다. 아래 구현 사례에서 편집 기능 설명을 확인할 수 있습니다.'
-                  : '배치 영역을 준비하고 있습니다.'}
-              </Text>
-            )}
-            {props.ready && (
-              <Text className={styles.selection} aria-hidden>
-                {props.selected
-                  ? `집 선택됨 · 앞면: ${props.front}`
-                  : '집을 눌러 선택'}
-              </Text>
-            )}
-          </Box>
+        <Box as={TAG.FIGURE} className='m-0 mt-4'>
+          <EditorSceneView {...props} />
           <Text
             as={TAG.FIGCAPTION}
             id='editor-help'
-            className='mt-4 text-sm leading-relaxed'
+            className='mt-2 text-sm leading-relaxed'
           >
             <Text as={TAG.SPAN} className={styles.fineHelp}>
-              집을 끌거나, 선택한 뒤 놓을 위치를 누르세요.
+              캐릭터를 끌어 이동하고, 모서리 손잡이로 회전과 크기를 조절하세요.
             </Text>
             <Text as={TAG.SPAN} className={styles.touchHelp}>
-              집을 선택한 뒤 놓을 위치를 누르세요.
+              캐릭터를 먼저 선택한 뒤 끌어 보세요. 빈 곳을 누르면 선택이
+              해제됩니다.
             </Text>
           </Text>
         </Box>
         <EditorControlsView {...props} />
-        <Text className='mt-3 text-sm leading-relaxed text-subtle'>
-          방향 버튼으로도 이동할 수 있습니다. 조작 버튼에 포커스가 있을 때
-          방향키로 이동하고 Esc로 선택을 해제하세요.
-        </Text>
         <Text
+          className={styles.notice}
           role='status'
           aria-live='polite'
           aria-atomic='true'
-          className='sr-only'
         >
           {props.notice}
+          <Text as={TAG.SPAN} id='editor-placement' className='sr-only'>
+            {props.placementDescription}
+          </Text>
+        </Text>
+        <Text id='editor-handle-help' className='sr-only'>
+          회전 손잡이는 좌우 키로 회전합니다. 크기 손잡이는 왼쪽·아래 키로 작게,
+          오른쪽·위 키로 크게 조절합니다. 아래 버튼으로도 조작할 수 있습니다.
+        </Text>
+        <Text
+          id='editor-keyboard-help'
+          className='text-sm leading-relaxed text-subtle'
+        >
+          방향키로 이동, 회전 손잡이에서 좌우 키로 회전할 수 있습니다. 빈 곳이나
+          Esc로 선택 해제, Delete로 삭제하세요.
         </Text>
         <Anchor
           href='/work/emosave#editor-state'
-          className='mt-8 inline-flex min-h-11 items-center text-sm underline underline-offset-4'
+          className={`${styles.link} mt-5`}
         >
           실제 담당한 편집 기능과 상태 처리 보기
         </Anchor>
+        <Text className='mt-2 text-xs leading-relaxed text-subtle'>
+          캐릭터와 대사는 설명을 위해 새로 구성했습니다.
+        </Text>
       </Box>
     </Box>
   );

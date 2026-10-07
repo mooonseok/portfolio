@@ -1,137 +1,142 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import * as THREE from 'three';
-import { dispatch, fixture } from './emosave-editor-fixture.mjs';
+import { fixture } from './emosave-editor-fixture.mjs';
 
 function setup(t) {
   const f = fixture();
   const stage = f.create();
   t.after(() => {
     stage.dispose();
+    stage.dispose();
     f.assertClean();
   });
-  return { f, stage };
+  return f;
 }
-function screen(f, point) {
-  const { camera } = f.flush();
-  const projected = point.clone().project(camera);
-  const rect = f.canvas.getBoundingClientRect();
-  return {
-    clientX: rect.left + ((projected.x + 1) * rect.width) / 2,
-    clientY: rect.top + ((1 - projected.y) * rect.height) / 2,
-  };
+function tap(f, x, y, values = {}) {
+  const event = { ...f.point(x, y), ...values };
+  f.emit('pointerdown', event);
+  f.emit('pointerup', event);
+}
+function node(f, id) {
+  return f.nodes.find((value) => value.dataset.editorItem === id);
 }
 
-test('renders coalesce and no idle RAF remains after paint, hover or resize', (t) => {
-  const { f, stage } = setup(t);
-  assert.equal(f.pending(), 1);
-  f.session.select(true);
-  f.session.move(1, 0);
-  f.session.rotate();
-  assert.equal(f.pending(), 1);
-  f.flush();
-  assert.equal(f.counts.renders, 1);
-  assert.equal(f.pending(), 0);
-  f.emit('pointermove', { clientX: 400, clientY: 250 });
-  assert.equal(f.pending(), 0);
-  f.flush();
-  assert.equal(f.counts.renders, 1);
-  f.resize(500, 300);
-  f.resize(600, 350);
-  assert.equal(f.pending(), 1);
-  f.flush();
-  assert.equal(f.pending(), 0);
-  assert.equal(f.counts.renders, 2);
-  assert.equal(f.counts.pixelRatio, 2);
-  assert.equal(f.attributes.get('aria-hidden'), 'true');
-  assert.match(f.canvas.style.cssText, /touch-action:pan-y/);
-  stage.dispose();
-  stage.paint(f.session.get());
-  f.resize(700, 400);
-  assert.equal(f.pending(), 0);
+test('DOM paint aligns selected state, centre anchor, rotation and coordinates', (t) => {
+  const f = setup(t);
+  f.session.select('cloud');
+  f.session.place({ x: 0.5, y: 0.5 });
+  f.session.rotate(-1);
+  const cloud = node(f, 'cloud');
+  assert.equal(cloud.style.left, '50%');
+  assert.equal(cloud.style.top, '50%');
+  assert.equal(
+    cloud.style.transform,
+    'translate(-50%, -50%) rotate(345deg) scale(1)'
+  );
+  assert.equal(cloud.style.zIndex, '10');
+  assert.equal(cloud.getAttribute('aria-pressed'), 'true');
+  assert.equal(node(f, 'sprout').getAttribute('aria-pressed'), 'false');
+  f.session.select(null);
+  assert.equal(cloud.style.zIndex, '1');
+  assert.equal(cloud.getAttribute('aria-pressed'), 'false');
 });
 
-test('hidden documents cancel RAF and resume with only one render', (t) => {
-  const { f } = setup(t);
-  f.document.hidden = true;
-  dispatch(f.document, 'visibilitychange');
-  f.session.select(true);
-  f.session.move(1, 0);
-  assert.equal(f.pending(), 0);
-  f.flush();
-  assert.equal(f.counts.renders, 0);
-  f.document.hidden = false;
-  dispatch(f.document, 'visibilitychange');
-  assert.equal(f.pending(), 1);
-  f.flush();
-  assert.equal(f.counts.renders, 1);
-  assert.equal(f.pending(), 0);
-});
-
-test('real raycasting selects the house and click-places on the ground', (t) => {
-  const { f } = setup(t);
-  const house = screen(f, new THREE.Vector3(0, 0.4, 0));
-  f.emit('pointerdown', house);
-  f.emit('pointerup', house);
-  assert.equal(f.session.get().selected, true);
-  const ground = screen(f, new THREE.Vector3(1.2, 0, 1.2));
-  f.emit('pointerdown', ground);
-  f.emit('pointerup', ground);
-  assert.ok(Math.abs(f.session.get().x - 1.2) < 1e-6);
-  assert.ok(Math.abs(f.session.get().z - 1.2) < 1e-6);
-  f.flush();
-  assert.equal(f.pending(), 0);
-});
-
-test('release outside the canvas restores the pre-drag pose', (t) => {
-  const { f } = setup(t);
-  f.session.select(true);
-  const saved = f.session.get();
-  const house = screen(f, new THREE.Vector3(0, 0.4, 0));
-  f.emit('pointerdown', house);
-  f.emit('pointermove', { clientX: 1000, clientY: 280 });
-  assert.notDeepEqual(f.session.get(), saved);
-  f.emit('pointerup', { clientX: 1000, clientY: 280 });
-  assert.deepEqual(f.session.get(), saved);
-  assert.equal(f.captures.size, 0);
-});
-
-test('resize cancels a drag and its late up cannot commit a stale position', (t) => {
-  const { f } = setup(t);
-  const saved = f.session.get();
-  const house = screen(f, new THREE.Vector3(0, 0.4, 0));
-  f.emit('pointerdown', house);
-  f.emit('pointermove', {
-    clientX: house.clientX + 70,
-    clientY: house.clientY,
-  });
-  assert.notDeepEqual(f.session.get(), saved);
-  f.resize(600, 350);
-  assert.deepEqual(f.session.get(), saved);
-  f.emit('pointerup', house);
-  assert.deepEqual(f.session.get(), saved);
-  assert.equal(f.captures.size, 0);
-});
-
-test('paint applies quarter turns and selection without rebuilding resources', (t) => {
-  const { f } = setup(t);
-  const resources = [...f.resources.keys()];
-  f.session.select(true);
-  f.session.place({ x: 1, z: -1 });
-  for (let turn = 1; turn <= 4; turn++) {
-    f.session.rotate();
-    f.flush();
-    const { house, ring } = f.model;
-    assert.deepEqual(house.position.toArray(), [1, 0, -1]);
-    assert.equal(house.rotation.y, Math.PI / 4 + ((turn % 4) * Math.PI) / 2);
-    assert.equal(ring.visible, true);
-    assert.deepEqual(ring.position.toArray(), [1, 0.008, -1]);
-    assert.equal(f.pending(), 0);
+test('overlapping hit order matches temporary selection and restores normal order', (t) => {
+  const f = setup(t);
+  for (const id of ['cloud', 'sprout', 'drop']) {
+    f.session.select(id);
+    f.session.place({ x: 0.5, y: 0.5 });
   }
-  f.session.reset();
-  f.flush();
-  assert.equal(f.model.ring.visible, false);
-  assert.deepEqual(f.model.house.position.toArray(), [0, 0, 0]);
-  assert.deepEqual([...f.resources.keys()], resources);
-  assert.ok([...f.resources.values()].every((count) => count === 0));
+  f.session.select(null);
+  tap(f, 0.5, 0.5);
+  assert.equal(f.session.get().selectedId, 'drop');
+  f.session.select('cloud');
+  tap(f, 0.5, 0.5);
+  assert.equal(f.session.get().selectedId, 'cloud');
+  assert.equal(node(f, 'cloud').style.zIndex, '10');
+  f.session.select('sprout');
+  tap(f, 0.5, 0.5);
+  assert.equal(f.session.get().selectedId, 'sprout');
+  f.session.select(null);
+  assert.deepEqual(
+    f.nodes.map((value) => value.style.zIndex),
+    ['1', '2', '3']
+  );
+  tap(f, 0.5, 0.5);
+  assert.equal(f.session.get().selectedId, 'drop');
+});
+
+test('rotated-square hit uses the visible orientation rather than its old box', (t) => {
+  const f = setup(t);
+  f.session.select('cloud');
+  f.session.place({ x: 0.5, y: 0.5 });
+  for (let index = 0; index < 3; index++) f.session.rotate(1);
+  f.session.select(null);
+  tap(f, 0.62, 0.5);
+  assert.equal(f.session.get().selectedId, 'cloud');
+  f.session.select(null);
+  tap(f, 0.59, 0.59);
+  assert.equal(f.session.get().selectedId, null);
+});
+
+test('normalized hits track resizing and page position at all required widths', (t) => {
+  const f = setup(t);
+  for (const width of [390, 744, 1024, 1440]) {
+    Object.assign(f.rect, { width, height: width, left: 137, top: 83 });
+    f.session.reset();
+    const cloud = f.session.get().items[0];
+    tap(f, cloud.x, cloud.y, { pointerType: 'touch' });
+    assert.equal(f.session.get().selectedId, 'cloud');
+    f.emit('pointerdown', {
+      ...f.point(cloud.x, cloud.y),
+      pointerType: 'touch',
+    });
+    f.emit('pointermove', { ...f.point(0.5, 0.5), pointerType: 'touch' });
+    f.emit('pointerup', { ...f.point(0.5, 0.5), pointerType: 'touch' });
+    assert.ok(Math.abs(f.session.get().items[0].x - 0.5) < 1e-10);
+    assert.ok(Math.abs(f.session.get().items[0].y - 0.5) < 1e-10);
+    assert.ok(Math.abs(parseFloat(node(f, 'cloud').style.left) - 50) < 1e-8);
+  }
+});
+
+test('zero-size and outside-dome surfaces do not start a captured gesture', (t) => {
+  const f = setup(t);
+  tap(f, 0.13, 0.1);
+  assert.equal(f.captures.size, 0);
+  assert.equal(f.session.get().selectedId, null);
+  f.rect.width = 0;
+  tap(f, 0.29, 0.61);
+  assert.equal(f.captures.size, 0);
+  assert.equal(f.session.get().selectedId, null);
+});
+
+test('transient drag paints immediately and outside release restores DOM and peers', (t) => {
+  const f = setup(t);
+  f.session.select('sprout');
+  const saved = f.session.get();
+  const start = saved.items[0];
+  f.emit('pointerdown', f.point(start.x, start.y));
+  f.emit('pointermove', f.point(0.5, 0.5));
+  assert.equal(node(f, 'cloud').style.left, '50%');
+  assert.equal(node(f, 'cloud').getAttribute('aria-pressed'), 'true');
+  assert.equal(f.changes.at(-1).message, undefined);
+  f.emit('pointerup', f.point(1.1, 1.1));
+  assert.deepEqual(f.session.get(), saved);
+  assert.equal(node(f, 'cloud').style.left, `${start.x * 100}%`);
+  assert.equal(node(f, 'cloud').getAttribute('aria-pressed'), 'false');
+  assert.equal(node(f, 'sprout').getAttribute('aria-pressed'), 'true');
+  assert.equal(f.captures.size, 0);
+});
+
+test('stage disposal leaves the DOM placement stable and stops new input', (t) => {
+  const f = fixture();
+  const stage = f.create();
+  t.after(() => stage.dispose());
+  tap(f, 0.29, 0.61);
+  const saved = f.session.get();
+  stage.dispose();
+  f.assertClean();
+  tap(f, 0.5, 0.5);
+  assert.deepEqual(f.session.get(), saved);
+  assert.equal(f.captures.size, 0);
 });

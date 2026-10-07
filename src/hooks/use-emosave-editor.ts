@@ -1,20 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import { EDITOR_FRONT, EDITOR_KEYS } from '@/constants/emosave-editor';
-import type { EditorStage } from '@/dto/emosave-editor.dto';
+import { EDITOR_KEYS } from '@/constants/emosave-editor';
+import type { EditorItemId } from '@/dto/emosave-editor.dto';
+import { createEditorDomStage } from '@/lib/emosave-editor/create-dom-stage';
 import {
   createEditorSession,
   initialEditorState,
 } from '@/lib/emosave-editor/state';
+import { useEditorBubbles } from './use-editor-bubbles';
 
 export function useEmosaveEditor() {
   const hostRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<EditorStage | null>(null);
+  const stageRef = useRef<ReturnType<typeof createEditorDomStage> | null>(null);
   const mounted = useRef(false);
   const [snapshot, setSnapshot] = useState(initialEditorState);
-  const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
-  const [notice, setNotice] = useState('집을 선택해 편집을 시작하세요.');
+  const [notice, setNotice] = useState('캐릭터를 선택해 자리를 바꿔 보세요.');
   const session = useMemo(
     () =>
       createEditorSession((value, message) => {
@@ -26,73 +27,109 @@ export function useEmosaveEditor() {
       }),
     []
   );
+  const bubbles = useEditorBubbles(hostRef, snapshot, failed);
+  const selected = snapshot.items.find(
+    (item) => item.id === snapshot.selectedId
+  );
 
   useEffect(() => {
     const host = hostRef.current;
-    if (!host) return;
+    if (!host || failed) return;
     mounted.current = true;
-    let cancelled = false;
-    let stage: EditorStage | null = null;
-    const fail = () => {
-      if (cancelled) return;
-      stageRef.current = null;
-      setFailed(true);
-      setReady(false);
+    const stage = createEditorDomStage(host, session);
+    stageRef.current = stage;
+    const dismiss = (event: MouseEvent) => {
+      if (
+        event.target instanceof Element &&
+        !event.target.closest('[data-editor-interactive]')
+      ) {
+        stage.cancel();
+        session.select(null);
+      }
     };
-    void import('@/lib/emosave-editor/create-stage')
-      .then(({ createEditorStage }) => {
-        if (cancelled) return;
-        stage = createEditorStage(host, session, fail);
-        stageRef.current = stage;
-        stage.paint(session.get());
-        setReady(true);
-      })
-      .catch(fail);
+    document.addEventListener('click', dismiss);
     return () => {
-      cancelled = true;
       mounted.current = false;
-      stage?.dispose();
+      stage.dispose();
+      document.removeEventListener('click', dismiss);
       if (stageRef.current === stage) stageRef.current = null;
     };
-  }, [session]);
+  }, [session, failed]);
 
-  const onMove = (x: number, z: number) => {
+  const onMove = (x: number, y: number) => {
+    if (failed) return;
     stageRef.current?.cancel();
-    session.move(x, z);
+    session.move(x, y);
+  };
+  const onSelect = (id: EditorItemId | null) => {
+    if (failed) return;
+    stageRef.current?.cancel();
+    session.select(id);
+  };
+  const onDelete = () => {
+    if (failed || !session.get().selectedId) return;
+    stageRef.current?.cancel();
+    session.remove();
+    hostRef.current
+      ?.closest('main')
+      ?.querySelector<HTMLButtonElement>('[data-editor-reset]')
+      ?.focus({ preventScroll: true });
   };
   return {
     hostRef,
-    ready,
+    snapshot,
     failed,
     notice,
-    front: EDITOR_FRONT[snapshot.turn],
-    selected: snapshot.selected,
+    placementDescription: selected
+      ? `돔의 왼쪽에서 ${Math.round(selected.x * 100)}%, 위쪽에서 ${Math.round(selected.y * 100)}%, 회전 ${Math.round(selected.angle)}도, 크기 ${Math.round(selected.scale * 100)}%.`
+      : '',
+    ...bubbles,
+    onSelect,
     onMove,
-    onSelect: () => {
+    onDelete,
+    onResize: (direction: number) => {
+      if (failed) return;
       stageRef.current?.cancel();
-      session.select(!session.get().selected);
+      session.resize(direction);
     },
-    onRotate: () => {
+    onAssetError: () => {
       stageRef.current?.cancel();
-      session.rotate();
+      setFailed(true);
+    },
+    onRotate: (direction: number) => {
+      if (failed) return;
+      stageRef.current?.cancel();
+      session.rotate(direction);
     },
     onReset: () => {
+      if (failed) return;
       stageRef.current?.cancel();
       session.reset();
     },
     onKeyDown: (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (failed || event.defaultPrevented) return;
+      if (event.key === 'Delete' && session.get().selectedId) {
         event.preventDefault();
+        onDelete();
+        return;
+      }
+      if (event.key === 'Escape') {
+        const id = session.get().selectedId;
+        event.preventDefault();
+        event.stopPropagation();
         stageRef.current?.cancel();
-        session.select(false);
-        event.currentTarget
-          .querySelector<HTMLButtonElement>('button[aria-pressed]')
-          ?.focus({ preventScroll: true });
+        session.select(null);
+        if (id)
+          hostRef.current
+            ?.closest('main')
+            ?.querySelector<HTMLButtonElement>(`[data-editor-choice="${id}"]`)
+            ?.focus({ preventScroll: true });
+        return;
       }
       const move = EDITOR_KEYS[event.key];
       if (
         move &&
-        session.get().selected &&
+        session.get().selectedId &&
         !event.altKey &&
         !event.metaKey &&
         !event.ctrlKey

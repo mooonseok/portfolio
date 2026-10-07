@@ -2,17 +2,39 @@ import assert from 'node:assert/strict';
 import { getEventListeners } from 'node:events';
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import * as THREE from 'three';
 import ts from 'typescript';
 
 export function dispatch(target, type, values = {}) {
   const event = new Event(type, { cancelable: true });
-  Object.assign(event, values);
+  const { target: suppliedTarget, ...properties } = values;
+  Object.assign(event, properties);
+  if (suppliedTarget)
+    Object.defineProperty(event, 'target', { value: suppliedTarget });
   target.dispatchEvent(event);
   return event;
 }
 
-export function fixture(failure) {
+export function fakeClock() {
+  const pending = new Map();
+  let next = 0;
+  return {
+    schedule(callback, delay) {
+      pending.set(++next, { callback, delay });
+      return next;
+    },
+    clear: (id) => pending.delete(id),
+    pending,
+    tick() {
+      assert.equal(pending.size, 1);
+      const [id, task] = pending.entries().next().value;
+      pending.delete(id);
+      task.callback();
+      return task.delay;
+    },
+  };
+}
+
+export function fixture() {
   class Surface extends EventTarget {
     types = new Set();
     addEventListener(type, callback, options) {
@@ -24,64 +46,48 @@ export function fixture(failure) {
       super.removeEventListener(type, callback, { capture });
     }
   }
-  const canvas = new Surface();
+  const element = new Surface();
   const document = Object.assign(new Surface(), { hidden: false });
-  const window = Object.assign(new Surface(), { devicePixelRatio: 3 });
+  const window = new Surface();
   const captures = new Set();
-  const attributes = new Map();
-  const resources = new Map();
-  const frames = new Map();
   const changes = [];
-  const error = new Error(`injected ${failure} failure`);
-  const failAt = (point) => {
-    if (failure === point) throw error;
+  const clock = fakeClock();
+  const rect = { left: 20, top: 30, width: 800, height: 800 };
+  const makeNode = (dataset) => {
+    const attributes = new Map();
+    const node = {
+      dataset,
+      style: {},
+      setAttribute: (name, value) => attributes.set(name, value),
+      getAttribute: (name) => attributes.get(name),
+      closest: (selector) =>
+        selector === `[data-editor-${dataset.editorOverlay}]` ? node : null,
+    };
+    return node;
   };
-  const counts = { renders: 0, disposed: 0, contextLost: 0, disconnected: 0 };
-  const rect = { width: 800, height: 500, left: 20, top: 30 };
-  let nextFrame = 0;
-  let observe;
-  let rendered;
-  let model;
+  const nodes = ['cloud', 'sprout', 'drop'].map((id) =>
+    makeNode({ editorItem: id })
+  );
+  const overlays = ['rotate', 'resize', 'delete'].map((mode) =>
+    makeNode({ editorOverlay: mode })
+  );
   let stage;
-  const host = {
-    children: [],
-    appendChild: (child) => host.children.push(child),
-    getBoundingClientRect: () => ({ ...rect }),
+  let failCapture = false;
+  element.style = {};
+  element.getBoundingClientRect = () => ({ ...rect });
+  element.querySelectorAll = (selector) =>
+    selector === '[data-editor-overlay]' ? overlays : nodes;
+  element.setPointerCapture = (id) => {
+    if (failCapture) throw new Error('element disconnected');
+    captures.add(id);
   };
-  canvas.style = {};
-  canvas.setAttribute = (key, value) => attributes.set(key, value);
-  canvas.getBoundingClientRect = host.getBoundingClientRect;
-  canvas.remove = () => host.children.splice(0);
-  canvas.setPointerCapture = (id) => captures.add(id);
-  canvas.hasPointerCapture = (id) => captures.has(id);
-  canvas.releasePointerCapture = (id) => {
+  element.hasPointerCapture = (id) => captures.has(id);
+  element.releasePointerCapture = (id) => {
     if (captures.delete(id))
-      dispatch(canvas, 'lostpointercapture', { pointerId: id });
+      dispatch(element, 'lostpointercapture', { pointerId: id });
   };
-  class Renderer {
-    constructor() {
-      failAt('constructor');
-    }
-    domElement = canvas;
-    setPixelRatio = (value) => (counts.pixelRatio = value);
-    setSize = () => failAt('size');
-    render(scene, camera) {
-      counts.renders += 1;
-      failAt('render');
-      scene.updateMatrixWorld(true);
-      camera.updateMatrixWorld(true);
-      rendered = { scene, camera };
-    }
-    dispose = () => counts.disposed++;
-    forceContextLoss = () => counts.contextLost++;
-  }
-  class Observer {
-    constructor(callback) {
-      observe = callback;
-    }
-    observe = () => failAt('observe');
-    disconnect = () => counts.disconnected++;
-  }
+  window.setTimeout = clock.schedule;
+  window.clearTimeout = clock.clear;
   const root = resolve(import.meta.dirname, '../../src');
   const cache = new Map();
   const load = (file) => {
@@ -90,46 +96,23 @@ export function fixture(failure) {
     const loaded = { exports: {} };
     cache.set(path, loaded);
     const compiled = ts.transpileModule(readFileSync(path, 'utf8'), {
-      compilerOptions: { module: ts.ModuleKind.CommonJS },
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2017,
+      },
     }).outputText;
-    const localRequire = (specifier) => {
-      if (specifier === 'three') return { ...THREE, WebGLRenderer: Renderer };
-      return load(
+    const localRequire = (specifier) =>
+      load(
         specifier.startsWith('@/')
           ? resolve(root, specifier.slice(2))
           : resolve(dirname(path), specifier)
       );
-    };
-    const context = {
-      require: localRequire,
-      exports: loaded.exports,
+    new Function('require', 'exports', 'document', 'window', compiled)(
+      localRequire,
+      loaded.exports,
       document,
-      window,
-      ResizeObserver: Observer,
-      requestAnimationFrame: (callback) => {
-        frames.set(++nextFrame, callback);
-        return nextFrame;
-      },
-      cancelAnimationFrame: (id) => frames.delete(id),
-    };
-    new Function(...Object.keys(context), compiled)(...Object.values(context));
-    if (loaded.exports.createEditorModel) {
-      const create = loaded.exports.createEditorModel;
-      loaded.exports.createEditorModel = () => {
-        model = create();
-        model.scene.traverse((object) => {
-          if (!object.isMesh && !object.isLineSegments) return;
-          for (const resource of [object.geometry, object.material].flat()) {
-            if (resources.has(resource)) continue;
-            resources.set(resource, 0);
-            resource.addEventListener('dispose', () =>
-              resources.set(resource, resources.get(resource) + 1)
-            );
-          }
-        });
-        return model;
-      };
-    }
+      window
+    );
     return loaded.exports;
   };
   const editor = (name) => load(resolve(root, 'lib/emosave-editor', name));
@@ -138,36 +121,36 @@ export function fixture(failure) {
     stage?.paint(value);
   });
   return {
-    canvas,
+    element,
     document,
     window,
-    host,
     captures,
-    attributes,
-    resources,
     session,
     changes,
-    counts,
-    error,
-    get model() {
-      return model;
-    },
+    clock,
+    nodes,
+    overlays,
+    makeNode,
+    rect,
+    point: (x, y) => ({
+      clientX: rect.left + rect.width * x,
+      clientY: rect.top + rect.height * y,
+    }),
     create() {
-      stage = editor('create-stage').createEditorStage(host, session, () => {
-        counts.errors = (counts.errors ?? 0) + 1;
-      });
-      stage.paint(session.get());
+      stage = editor('create-dom-stage').createEditorDomStage(element, session);
       return stage;
     },
-    bind() {
-      return editor('bind-input').bindEditorInput(
-        canvas,
+    failCapture: () => (failCapture = true),
+    bubbles: (changed, options = {}) =>
+      editor('bubbles').createEditorBubbles(changed, options),
+    bind: () =>
+      editor('bind-input').bindEditorInput(
+        element,
         session,
         (event) => event.hit ?? null
-      );
-    },
+      ),
     emit: (type, values = {}) =>
-      dispatch(canvas, type, {
+      dispatch(element, type, {
         pointerId: 1,
         pointerType: 'mouse',
         button: 0,
@@ -176,23 +159,10 @@ export function fixture(failure) {
         clientY: 100,
         ...values,
       }),
-    pending: () => frames.size,
-    flush() {
-      const pending = [...frames.values()];
-      frames.clear();
-      pending.forEach((callback) => callback(16));
-      return rendered;
-    },
-    resize(width = rect.width, height = rect.height) {
-      Object.assign(rect, { width, height });
-      observe();
-    },
     assertClean() {
-      assert.equal(host.children.length, 0);
-      assert.equal(frames.size, 0);
+      assert.equal(clock.pending.size, 0);
       assert.equal(captures.size, 0);
-      assert.ok([...resources.values()].every((count) => count === 1));
-      for (const target of [canvas, window, document])
+      for (const target of [element, window, document])
         for (const type of target.types)
           assert.equal(getEventListeners(target, type).length, 0, type);
     },

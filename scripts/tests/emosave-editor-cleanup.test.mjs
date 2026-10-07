@@ -1,82 +1,63 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { dispatch, fixture } from './emosave-editor-fixture.mjs';
+import { fixture } from './emosave-editor-fixture.mjs';
 
-for (const failure of ['constructor', 'size', 'observe']) {
-  test(`${failure} failure releases all allocated model and stage resources`, () => {
-    const f = fixture(failure);
-    assert.throws(
-      () => f.create(),
-      (error) => error === f.error
-    );
-    assert.ok(f.resources.size > 0);
-    f.assertClean();
-    assert.equal(f.counts.disposed, failure === 'constructor' ? 0 : 1);
-    assert.equal(f.counts.contextLost, failure === 'constructor' ? 0 : 1);
-  });
-}
+const hit = { point: { x: 0.29, y: 0.61 }, item: 'cloud', inside: true };
 
-test('render failure reports once and all later work is inert', () => {
-  const f = fixture('render');
-  const stage = f.create();
-  f.session.select(true);
-  f.flush();
-  assert.equal(f.counts.errors, 1);
-  f.assertClean();
-  stage.paint(f.session.get());
-  stage.cancel();
-  stage.dispose();
-  f.flush();
-  f.resize(400, 300);
-  assert.equal(f.counts.errors, 1);
-  assert.equal(f.counts.renders, 1);
-  assert.equal(f.counts.disposed, 1);
-  assert.equal(f.counts.contextLost, 1);
-  assert.equal(f.counts.disconnected, 1);
-  f.assertClean();
-});
-
-test('context loss releases resources once and detaches the failure listener', () => {
+test('repeated DOM input mount/dispose never retains listeners or capture', () => {
   const f = fixture();
-  const stage = f.create();
-  const event = dispatch(f.canvas, 'webglcontextlost');
-  assert.equal(event.defaultPrevented, true);
-  assert.equal(f.counts.errors, 1);
-  f.assertClean();
-  const ignored = dispatch(f.canvas, 'webglcontextlost');
-  assert.equal(ignored.defaultPrevented, false);
-  stage.dispose();
-  f.flush();
-  assert.equal(f.counts.errors, 1);
-  assert.equal(f.counts.disposed, 1);
-  assert.equal(f.counts.contextLost, 1);
-  assert.equal(f.counts.disconnected, 1);
+  for (let index = 0; index < 10; index++) {
+    const input = f.bind();
+    f.emit('pointerdown', { hit });
+    assert.equal(f.captures.size, 1);
+    input.dispose();
+    input.dispose();
+    f.assertClean();
+  }
+});
+
+test('pointer capture failure cancels the gesture before a stray release', () => {
+  const f = fixture();
+  const input = f.bind();
+  f.failCapture();
+  assert.doesNotThrow(() => f.emit('pointerdown', { hit }));
+  f.emit('pointerup', { hit });
+  assert.equal(f.session.get().selectedId, null);
+  assert.equal(f.captures.size, 0);
+  input.dispose();
   f.assertClean();
 });
 
-test('dispose cancels pending RAF, is repeatable and allows a fresh stage', () => {
-  const first = fixture();
-  const firstStage = first.create();
-  assert.equal(first.pending(), 1);
-  firstStage.dispose();
-  firstStage.dispose();
-  first.flush();
-  first.assertClean();
-  assert.equal(first.counts.renders, 0);
-  assert.equal(first.counts.disposed, 1);
-  assert.equal(first.counts.contextLost, 1);
-  assert.equal(first.counts.disconnected, 1);
-  const second = fixture();
-  const secondStage = second.create();
-  try {
-    second.flush();
-    assert.equal(second.counts.renders, 1);
-    assert.equal(second.host.children.length, 1);
-    assert.ok(
-      [...second.resources.keys()].every((r) => !first.resources.has(r))
-    );
-  } finally {
-    secondStage.dispose();
-    second.assertClean();
+test('bubble disposal clears browser timeout and rejects queued or future work', () => {
+  const f = fixture();
+  const changes = [];
+  const bubbles = f.bubbles((value) => changes.push(value));
+  assert.equal(f.clock.pending.size, 1);
+  const stale = f.clock.pending.values().next().value.callback;
+  const count = changes.length;
+  bubbles.dispose();
+  bubbles.dispose();
+  stale();
+  bubbles.setPaused(false);
+  bubbles.setEditing(false);
+  bubbles.setVisible(true);
+  assert.equal(changes.length, count);
+  assert.equal(bubbles.get().itemId, null);
+  f.assertClean();
+});
+
+test('recreating schedulers does not allow callbacks from prior instances', () => {
+  const f = fixture();
+  let notifications = 0;
+  const stale = [];
+  for (let index = 0; index < 10; index++) {
+    const bubbles = f.bubbles(() => notifications++);
+    stale.push(f.clock.pending.values().next().value.callback);
+    bubbles.dispose();
+    f.assertClean();
   }
+  const count = notifications;
+  stale.forEach((callback) => callback());
+  assert.equal(notifications, count);
+  f.assertClean();
 });
