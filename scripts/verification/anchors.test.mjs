@@ -38,3 +38,21 @@ for (const project of getProjects()) {
     );
   });
 }
+
+for (const page of ['work/emosave', 'preview/emosave-editor']) {
+  test(`${page}: embedded editor preserves landmarks and accessible descriptions`, () => {
+    const html = readFileSync(
+      resolve(root, `.next/server/app/${page}.html`),
+      'utf8'
+    );
+    assert.equal([...html.matchAll(/<main\b/g)].length, 1);
+    assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
+    const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+    assert.equal(ids.length, new Set(ids).size, 'duplicate rendered ids');
+    const descriptions = [
+      ...html.matchAll(/aria-describedby="([^"]+)"/g),
+    ].flatMap((m) => m[1].split(/\s+/));
+    for (const id of descriptions)
+      assert.ok(ids.includes(id), `missing accessible description: ${id}`);
+  });
+}

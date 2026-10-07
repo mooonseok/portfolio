@@ -1,0 +1,169 @@
+.editor {
+  max-width: 560px;
+  width: 100%;
+  margin-top: 16px;
+}
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+.backdrop {
+  pointer-events: none;
+}
+.character {
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1.5px solid transparent;
+  border-radius: 38%;
+  background: transparent;
+  cursor: grab;
+  touch-action: pan-y pinch-zoom;
+}
+.character img {
+  pointer-events: none;
+}
+.character[aria-pressed='true'] {
+  border-color: var(--color-signal);
+  touch-action: none;
+}
+.bubble {
+  position: absolute;
+  z-index: 12;
+  margin: 0;
+  padding: 8px 12px;
+  max-width: 55%;
+  transform: translate(-50%, -100%);
+  border: 1px solid var(--color-hairline);
+  border-radius: 14px 14px 14px 3px;
+  background: #fcfcfa;
+  color: var(--color-ink);
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.bubbleBelow {
+  transform: translate(-50%, 0);
+  border-radius: 3px 14px 14px;
+}
+.bubbleHelp {
+  min-height: 20px;
+  margin: 8px 0 0;
+  color: var(--color-subtle);
+  font-size: 12px;
+  line-height: 20px;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.choice,
+.control,
+.bubbleControl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.choice {
+  gap: 4px;
+  padding: 3px 10px 3px 4px;
+}
+.choice[aria-pressed='true'] {
+  border-color: var(--color-signal);
+  background: #fcfcfa;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.bubbleControl {
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.character:focus-visible,
+.control:focus-visible,
+.choice:focus-visible,
+.bubbleControl:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+.control:active:not(:disabled),
+.choice:active:not(:disabled) {
+  background: var(--color-hairline);
+}
+.control:disabled,
+.character:disabled,
+.choice:disabled,
+.bubbleControl:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.notice {
+  min-height: 3em;
+  margin: 14px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.failure {
+  position: absolute;
+  inset: 25% 10%;
+  z-index: 15;
+  padding: 24px;
+  background: var(--color-paper);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.fineHelp {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .fineHelp {
+    display: inline;
+  }
+  .touchHelp {
+    display: none;
+  }
+  .control:hover:not(:disabled),
+  .choice:hover:not(:disabled) {
+    border-color: var(--color-ink);
+  }
+}

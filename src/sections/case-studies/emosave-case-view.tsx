@@ -6,7 +6,7 @@ import { Box } from '@/components/atoms/box';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { FocusCardView } from './components/focus-card-view';
-import { StateComparisonView } from './components/state-comparison-view';
+import { EmosaveEditor } from '@/components/organisms/emosave-editor/emosave-editor';
 import type { EmosaveCaseViewProps } from '@/dto/case-view.dto';
 
 export function EmosaveCaseView({
@@ -31,12 +31,8 @@ export function EmosaveCaseView({
         title='편집 상태를 화면에 반영'
         layout={CASE_LAYOUT.WIDE}
       >
-        {lead ? (
-          <FocusCardView focus={lead} className='work-sheet max-w-[600px]' />
-        ) : null}
-        {c.stateExample ? (
-          <StateComparisonView example={c.stateExample} />
-        ) : null}
+        {lead ? <FocusCardView focus={lead} className='max-w-[600px]' /> : null}
+        <EmosaveEditor />
         <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2'>
           {rest.map((focus) => (
             <FocusCardView key={focus.title} focus={focus} />

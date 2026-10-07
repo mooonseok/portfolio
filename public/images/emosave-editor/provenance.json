@@ -1,0 +1,27 @@
+{
+  "source": "Built-in image_gen",
+  "date": "2026-10-07",
+  "purpose": "Original explanatory assets, not original Emosave artwork",
+  "assets": [
+    {
+      "name": "dome",
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Production asset for a small 2D emotional-village placement demo, not a screenshot of any real app. Flat hand-drawn picture-book illustration, rounded silhouette, delicate slightly irregular dark slate outlines, subtle colored-pencil texture, warm quiet colors, no 3D rendering, no text, no letters, no logos, no watermark. Create one SQUARE canvas scene asset: a front-facing tall rounded arch glass dome room, entire dome contained with 8% empty transparent margin left/right and 4% top/bottom. Arch top starts at 6%, shoulder line at 40%, pale warm cream-yellow interior down to 88%, slim warm ochre oval pedestal at 90%. Very restrained white glass reflection along upper left edge only. A small blue arched window in upper right and a small shelf with potted plant at upper left, both above halfway. One small muted sage cushion at rear right. Bottom half is spacious warm pale golden floor, completely EMPTY for placing three movable characters. No characters, animals, faces, words, grids, UI, buttons, furniture in the foreground. Flat illustration, not an isometric room. Outer background genuinely transparent."
+    },
+    {
+      "name": "cloud",
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Production asset for a small 2D emotional-village placement demo, not a screenshot of any real app. Flat hand-drawn picture-book illustration, rounded silhouette, delicate slightly irregular dark slate outlines, subtle colored-pencil texture, warm quiet colors, no 3D rendering, no text, no letters, no logos, no watermark. One original small fluffy sky-blue cloud creature, not a known character. A rounded asymmetric three-lobed cloud head and short pear-shaped body, two stubby feet, short soft arms, shy smile, two small black dot eyes, pink cheeks, one tiny crooked tuft leaning to its right. Gentle bashful mood. Front facing upright, full body centered in a SQUARE image and occupying 84% of width and height. Flat solid periwinkle-blue fill with pencil edges, no cast shadow, no floor, no environment, no props. A single isolated character with genuinely transparent background."
+    },
+    {
+      "name": "sprout",
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Production asset for a small 2D emotional-village placement demo, not a screenshot of any real app. Flat hand-drawn picture-book illustration, rounded silhouette, delicate slightly irregular dark slate outlines, subtle colored-pencil texture, warm quiet colors, no 3D rendering, no text, no letters, no logos, no watermark. One original soft apricot sprout creature, not a known character. Rounded pear-shaped body with two small oval feet and rounded arms, an off-center little pair of sage green leaves on top, curious gentle expression with two small dark dot eyes and a tiny open curved mouth, rosy cheeks. Front facing upright, full body centered in a SQUARE image and occupying 84% of width and height. Flat peach-apricot color with pencil edges, no cast shadow, no floor, no environment, no additional props. A single isolated character with genuinely transparent background."
+    },
+    {
+      "name": "drop",
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Production asset for a small 2D emotional-village placement demo, not a screenshot of any real app. Flat hand-drawn picture-book illustration, rounded silhouette, delicate slightly irregular dark slate outlines, subtle colored-pencil texture, warm quiet colors, no 3D rendering, no text, no letters, no logos, no watermark. One original small soft lavender droplet creature, not a known character. Rounded teardrop body with the pointed soft tuft tilted slightly left, two little arms and two stubby oval feet, calm content expression with two small dark dot eyes and a tiny smile, faint pink cheeks. Front facing upright, full body centered in a SQUARE image and occupying 84% of width and height. Flat muted lilac color with pencil edges, no cast shadow, no floor, no environment, no props. A single isolated character with genuinely transparent background."
+    }
+  ]
+}

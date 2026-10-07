@@ -102,12 +102,51 @@ stories, tools and footer. Its opening makes the whole home chrome and content
 inert. The unselected desktop panel lists each project and its owned areas with
 direct case links. Selected panels retain all work sentences with separators
 between areas. Stories and tools use compact section spacing only on the
-workshop home. Both home variants leave 80px below the tools table on mobile and
-96px from tablet before the footer. On page exit, the workshop saves its
-selection, explicit 3D preference and scroll position to that browser history
-entry. Returning or reloading restores the panel before scroll placement; a
-fresh entry starts unselected. Existing router history fields are preserved. The
-classic layout described below remains available through the switch.
+workshop home. Workshop stories align with the main container rather than the
+classic metadata rail. Selected notes have one case link below the work list. 3D
+loads automatically at every viewport width, with a static illustration during
+loading or failure and no user-facing 3D toggle. Both home variants leave 80px
+below the tools table on mobile and 96px from tablet before the footer. On page
+exit, the workshop saves its selection and scroll position to that browser
+history entry. Returning or reloading restores the panel before scroll
+placement; a fresh entry starts unselected. Existing router history fields are
+preserved. The classic layout described below remains available through the
+switch.
+
+The Emosave case study at `/work/emosave#interaction` replaces its static
+editing diagram with an explanatory 2D dome editor, also available independently
+at `/preview/emosave-editor`. It has three original characters, single
+selection, bounded movement, in-plane rotation, resizing, deletion and reset. It
+is not an app screenshot or a reproduction of the original Flutter
+implementation. Generated artwork and demonstration dialogue are identified as
+newly composed examples; image prompts live in the asset provenance JSON and PNG
+metadata. DOM image layers replace the former Three.js house renderer. Mouse
+dragging and touch dragging of an already selected character share state with
+keyboard controls. The separate movement, rotation and resize toolbar is
+omitted; corner handles retain their keyboard alternatives. Empty taps clear
+selection; unselected areas preserve vertical scrolling. Opposite corner handles
+rotate and resize, with a third corner button for deletion. Selection never
+enlarges an item. Handle activation and keyboard rotation use 15-degree steps;
+resizing stays within 75–160% of original size and dome bounds. Reset restores
+all three characters, including deleted ones. A character choice row allows
+selection behind overlaps. Selection temporarily raises an item without changing
+its permanent order. Rotated corners must remain inside the dome; rejected
+rotation never silently changes position. Movement released outside the dome
+keeps the bounded placement already shown; it does not roll back merely because
+the pointer left the area. Explicit cancellation and interrupted gestures
+restore the starting state. Speech bubbles alternate with timers, pause while
+editing or offscreen, and retain the user's pause across reset. Reduced motion
+starts paused. There is no idle RAF, React update per drag frame, camera
+control, persistence or API call. The shared `organisms/emosave-editor`
+component serves the case study and preview, with hooks and `lib/emosave-editor`
+modules for state and input. The preview section owns its standalone page frame;
+the case study retains its own heading and main landmark. Home does not load the
+editor or its images. The preview remains noindex without a canonical URL or
+sitemap entry. Image failure leaves an explanation and case link. Speech bubbles
+use an editor-local 14px radius with one 3px corner and the shared hairline
+border; near the top they appear below the character. Committed position,
+rotation and size changes have screen-reader-only summaries. No per-frame
+announcements are emitted.
 
 `site.headline` introduces user apps and business systems. The hero keeps a
 single introduction sentence; `site.about` describes collaboration and delivery.
@@ -202,11 +241,12 @@ label and an arrow; its decorative project number is omitted.
   highlights related systems and connections. Three options are vertically
   stacked at every width. Two examples cover input validation and coordinating
   requirements / data across app, web and API. Apple Sign-in remains omitted.
-- Emosave `case.stateExample` is a static DEFAULT / SELECTED / PLACED comparison
-  beside the interaction content, with an explanatory-example caption. The
-  drawing does not invent a drop-target indicator. Work covers emotion input,
-  editing and save / share. `editor-state` discusses Cubit and BlocBuilder
-  placement without an unmeasured performance claim.
+- Emosave shows the shared interactive dome editor instead of the old static
+  state comparison. Work covers emotion input, editing and save / share. The
+  example identifies its newly composed art and lack of persistence;
+  `editor-state` discusses the original Cubit and BlocBuilder placement without
+  an unmeasured performance claim. The old `case.stateExample` data is retained
+  but not rendered.
 
 Lines in these diagrams show connection only, not execution order, parallelism
 or transaction scope; each `note` / `caption` says so. No explorer claims a
@@ -239,21 +279,21 @@ Rules:
 
 ## 4. Content → UI mapping
 
-| Data                                   | Homepage                             | Case study                                         |
-| -------------------------------------- | ------------------------------------ | -------------------------------------------------- |
-| `summary`                              | Service introduction                 | Introduction before overview                       |
-| `period` · `status` · `surfaces`       | Project header                       | Header and overview metadata                       |
-| `home.features`                        | Three static feature summaries       | —                                                  |
-| `case.role`                            | —                                    | Overview before hero                               |
-| `work`                                 | —                                    | Broad feature scope before diagrams                |
-| `connections` · `relationMap`          | —                                    | FarmFam+ sales comparison and cancellation example |
-| `domains`                              | —                                    | APC business explorer                              |
-| `monitoringFlow` · `controlExperiment` | —                                    | Static monitoring and separate control PoC         |
-| `feature`                              | —                                    | IndianBob feature-to-system explorer               |
-| `techNotes`                            | —                                    | Representative implementation examples             |
-| `interactionFocus` · `stateExample`    | —                                    | Emosave illustrations and static state comparison  |
-| `stories[].description`                | Three text summaries with case links | —                                                  |
-| `currentState`                         | —                                    | Optional learning / result                         |
+| Data                                   | Homepage                             | Case study                                           |
+| -------------------------------------- | ------------------------------------ | ---------------------------------------------------- |
+| `summary`                              | Service introduction                 | Introduction before overview                         |
+| `period` · `status` · `surfaces`       | Project header                       | Header and overview metadata                         |
+| `home.features`                        | Three static feature summaries       | —                                                    |
+| `case.role`                            | —                                    | Overview before hero                                 |
+| `work`                                 | —                                    | Broad feature scope before diagrams                  |
+| `connections` · `relationMap`          | —                                    | FarmFam+ sales comparison and cancellation example   |
+| `domains`                              | —                                    | APC business explorer                                |
+| `monitoringFlow` · `controlExperiment` | —                                    | Static monitoring and separate control PoC           |
+| `feature`                              | —                                    | IndianBob feature-to-system explorer                 |
+| `techNotes`                            | —                                    | Representative implementation examples               |
+| `interactionFocus` · `stateExample`    | —                                    | Emosave focus copy (static comparison data retained) |
+| `stories[].description`                | Three text summaries with case links | —                                                    |
+| `currentState`                         | —                                    | Optional learning / result                           |
 
 Items from the content brief that were **not shown in the UI** because they are
 instructions to the writer, not visitor-facing text:
@@ -281,10 +321,10 @@ input and removes it on back/forward, so landing on a URL hash and history
 restoration jump straight to their position. Hash-link clicks that open
 elsewhere (modifier keys, `target`, `download`) or are cancelled are not
 remembered. The Smart Farm monitoring flow is `FLOW_ROLE.STATIC` (first-reveal
-line draw only). Stories cover IndianBob team admission policy and permission,
-Emosave editor state, and FarmFam+ secret-deal price validation. The hero CTA
-jumps to `#work`. Engineering is labeled 대표 구현 사례; IndianBob and Emosave
-retain 배운 점 without changing their current-state anchor IDs.
+line draw only). Stories cover APC app updates and kiosk restoration, Emosave
+editor state, and FarmFam+ secret-deal price validation. The hero CTA jumps to
+`#work`. Engineering is labeled 대표 구현 사례; IndianBob and Emosave retain
+배운 점 without changing their current-state anchor IDs.
 
 Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
@@ -327,8 +367,9 @@ written as CSS variables / attributes.
 - APC domains and IndianBob features: `tablist` / `tab` / `tabpanel`
   (`useTabKeys`), roving tabindex, Home/End and automatic activation. APC uses
   horizontal ←/→; IndianBob uses vertical ↑/↓ at every width. IndianBob's
-  explanation panel stays keyboard-focusable. Emosave's state examples are
-  static and do not add focus stops.
+  explanation panel stays keyboard-focusable. Emosave's editor exposes character
+  selection, corner handles, reset and speech controls with keyboard
+  alternatives.
 - Smart Farm conditions: `button[aria-pressed]` chips; the drawing is
   `aria-hidden` and the panel states "▲ 설명 위치 · …" in text.
 - Contents derives its current group from document positions on scroll, resize,

@@ -1,0 +1,30 @@
+.handle {
+  position: absolute;
+  z-index: 11;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--color-ink);
+  border-radius: 50%;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  cursor: grab;
+  touch-action: none;
+}
+.handle[hidden] {
+  display: none;
+}
+.handle[data-editor-delete] {
+  cursor: pointer;
+}
+.handle:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+.handle:active {
+  background: var(--color-hairline);
+}

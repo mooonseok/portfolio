@@ -15,23 +15,24 @@ export function readDioramaHistory(
   )
     return null;
   if (
-    !('enabled' in value) ||
-    (value.enabled !== null && typeof value.enabled !== 'boolean')
-  )
-    return null;
-  if (
     !('scrollY' in value) ||
     typeof value.scrollY !== 'number' ||
     !Number.isFinite(value.scrollY) ||
     value.scrollY < 0
   )
     return null;
-  return value as DioramaHistory;
+  return {
+    selected: value.selected as DioramaHistory['selected'],
+    scrollY: value.scrollY,
+  };
 }
 
 export function withDioramaHistory(source: unknown, value: DioramaHistory) {
   return {
     ...(source && typeof source === 'object' ? source : {}),
-    portfolioWorkshop: value,
+    portfolioWorkshop: {
+      selected: value.selected,
+      scrollY: value.scrollY,
+    },
   };
 }

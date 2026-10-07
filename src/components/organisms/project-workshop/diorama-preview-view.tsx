@@ -3,7 +3,6 @@ import { Box } from '@/components/atoms/box';
 import { Text } from '@/components/atoms/text';
 import { Heading } from '@/components/atoms/heading';
 import { Anchor } from '@/components/atoms/anchor';
-import { Button } from '@/components/atoms/button';
 import { DIORAMA } from '@/constants/diorama';
 import { HEADING, TAG } from '@/constants/tag';
 import type { DioramaPreviewProps } from '@/dto/diorama-preview.dto';
@@ -64,28 +63,17 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
         )}
         <Box className='mt-6 grid items-start gap-6 lap:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)] lap:gap-10'>
           <Box>
-            <Box className='mb-3 flex flex-wrap items-center justify-between gap-2'>
-              <Text
-                role='status'
-                aria-live='polite'
-                className='text-sm text-subtle'
-              >
-                {props.failed
-                  ? '3D를 불러오지 못해 정적 화면을 표시합니다.'
-                  : props.enabled && !props.ready
-                    ? '3D를 준비하고 있습니다.'
-                    : props.ready
-                      ? '모형이나 아래 이름표로 선택할 수 있습니다.'
-                      : '3D를 켜면 모형을 눌러 선택할 수 있습니다.'}
-              </Text>
-              <Button
-                onClick={props.onToggle}
-                aria-pressed={props.enabled}
-                className='min-h-11 px-2 text-sm underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2'
-              >
-                {props.enabled ? '3D 끄기' : '3D 켜기'}
-              </Button>
-            </Box>
+            <Text
+              role='status'
+              aria-live='polite'
+              className='mb-3 text-sm text-subtle'
+            >
+              {props.failed
+                ? '3D를 불러오지 못했습니다. 아래 이름표로 프로젝트를 선택하세요.'
+                : props.ready
+                  ? '모형이나 아래 이름표로 선택할 수 있습니다.'
+                  : '3D를 준비하고 있습니다. 이름표로 먼저 살펴볼 수 있습니다.'}
+            </Text>
             <Box as={TAG.FIGURE} className='m-0'>
               <Box className='relative aspect-[5/3] w-full overflow-hidden rounded-[20px] bg-[#e9e7df] lap:aspect-auto lap:h-[380px]'>
                 <Image

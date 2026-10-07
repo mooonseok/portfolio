@@ -48,14 +48,45 @@ FarmFam+, APC, Smart Farm의 개념 모형을 확인할 수 있습니다. 기존
 
 이름표는 데스크톱에서 모형과 같은 3+2 순서로 배치하며, 좁은 화면에서는 선택한
 이름표 바로 아래에 담당 업무를 펼칩니다. 설명은 한 곳에만 표시하고 상세 링크는
-본문 위아래에 제공합니다. 이름표는 키보드로 선택할 수 있고 Escape로 선택을
-해제합니다. 모바일은 정적 그림으로 시작하며, 3D를 사용할 수 없는 환경에서도
-설명과 상세 링크를 제공합니다. Three.js는 3D를 사용할 때만 불러옵니다. Smart
-Farm의 센서 시험과 LED 제어는 별도 실험으로 표현합니다. 첫 방문에는 1.6초
-오프닝을 표시합니다. 같은 브라우저의 방문 기록을 저장하여 재방문·새로고침·뒤로
-가기에서는 자동 재생을 생략합니다. 해시 링크나 스크롤 복원 상태, 모션 줄이기
-설정, 저장소 접근 실패에서도 생략합니다. 건너뛰기와 Escape로 즉시 닫거나 하단의
-오프닝 다시 보기로 수동 재생할 수 있습니다.
+본문 아래에 하나만 제공합니다. 이름표는 키보드로 선택할 수 있고 Escape로 선택을
+해제합니다. 모바일을 포함해 3D를 자동으로 불러오며, 로딩 중이거나 사용할 수 없는
+환경에서는 정적 그림과 이름표로 담당 업무를 확인할 수 있습니다. 별도의 3D 전환
+버튼은 표시하지 않습니다. Smart Farm의 센서 시험과 LED 제어는 별도 실험으로
+표현합니다. 첫 방문에는 1.6초 오프닝을 표시합니다. 같은 브라우저의 방문 기록을
+저장하여 재방문·새로고침·뒤로 가기에서는 자동 재생을 생략합니다. 해시 링크나
+스크롤 복원 상태, 모션 줄이기 설정, 저장소 접근 실패에서도 생략합니다.
+건너뛰기와 Escape로 즉시 닫거나 하단의 오프닝 다시 보기로 수동 재생할 수
+있습니다.
+
+## Emosave 배치 편집 예시
+
+`pnpm dev --port 3100` 실행 후 `/work/emosave#interaction`과
+`/preview/emosave-editor`에서 2D 돔 안의 캐릭터 세 개를 하나씩
+선택·이동·회전·크기 조절·삭제하고 처음 배치로 복원할 수 있습니다. 회전은 캐릭터
+중심을 기준으로 화면 안에서 기울이는 동작이며, 손잡이 드래그나 15° 간격의 버튼을
+사용합니다. 실제 앱 화면이나 Flutter 구현을 재현한 것이 아닌 설명용 예시입니다.
+배경·캐릭터·대사는 별도로 구성했으며 이미지 생성 프롬프트는
+`public/images/emosave-editor/provenance.json`에 기록합니다. PC는 캐릭터 드래그,
+터치는 선택한 캐릭터 드래그를 사용합니다. 빈 곳을 누르면 선택을 해제합니다. 이동
+중 포인터가 돔 밖으로 나가도 캐릭터는 경계 안에 머무르며, 놓으면 그 위치를
+유지합니다. Esc나 입력 취소는 드래그 시작 상태로 복원합니다. 선택해도 캐릭터
+크기는 변하지 않습니다. 반대 모서리의 회전·크기 손잡이와 삭제 버튼을 표시하며
+선택 줄과 키보드로도 조작할 수 있습니다. 방향키는 이동에, 손잡이에 초점을 둔
+방향키는 회전·크기 조절에 사용합니다. 아래쪽 이동·회전·크기 버튼은 생략합니다.
+크기는 기본의 75–160% 안에서 돔 경계를 지키도록 제한합니다. 말풍선은 남은
+캐릭터에 하나씩 주기적으로 표시하고 편집 중에는 숨깁니다. 사용자 정지는 배치
+초기화 후에도 유지하며 reduced motion에서는 정지 상태로 시작합니다. 저장·API
+호출은 하지 않으며 새로고침하면 초기 상태로 돌아옵니다.
+
+Emosave 상세의 기존 편집 도식을 이 예시로 교체했습니다. 홈에서는 편집기나 해당
+이미지를 불러오지 않습니다. 상세와 미리보기는
+`src/components/organisms/emosave-editor/`의 공통 편집기를 사용하며, 미리보기
+페이지 틀은 `src/sections/emosave-editor/`에 있습니다. 상태·입력은
+`src/lib/emosave-editor/`와 관련 훅에 분리되어 있습니다. DOM 이미지 레이어를
+사용하며 WebGL이나 상시 렌더링 루프는 없습니다. 상세 연결 커밋을 revert하면 기존
+도식으로 돌아가며 독립 미리보기는 유지됩니다. 미리보기만 검색
+색인·canonical·사이트맵에서 제외하며 이미지 로딩 실패 시 안내와 실제 구현 사례
+링크를 제공합니다.
 
 ## Requirements
 
@@ -182,8 +213,8 @@ commands above provide local verification; this repository does not currently
 provide the previously documented GitHub Actions verification matrix. Local
 checks do not confirm remote CI or deployment success.
 
-`pnpm check:metadata` also checks that both preview routes remain `noindex`,
-have no canonical URL and stay out of the sitemap, including indexable builds.
+`pnpm check:metadata` also checks that all preview routes remain `noindex`, have
+no canonical URL and stay out of the sitemap, including indexable builds.
 
 ## 홈 화면 전환
 

@@ -37,11 +37,11 @@ export const site: Site = {
 export const stories: Story[] = [
   {
     id: 'S01',
-    href: '/work/indian-bob#requirements-data',
-    linkLabel: 'IndianBob 사례 보기',
-    title: '팀 가입 정책과 설정 권한',
+    href: '/work/apc#qr-attendance-device',
+    linkLabel: 'APC 사례 보기',
+    title: '앱 업데이트와 키오스크 복구',
     description:
-      '승인 방식에 따른 회원 등록·가입 요청 처리와 정원·중복 요청, 리더의 설정 변경 권한을 다룬 사례입니다.',
+      '현장 앱의 버전 확인과 APK 설치를 연결하고, 설치 화면 실행 실패나 앱 복귀 시 키오스크를 복구한 사례입니다.',
   },
   {
     id: 'S02',

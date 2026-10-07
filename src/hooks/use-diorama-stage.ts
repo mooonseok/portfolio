@@ -17,11 +17,9 @@ export function useDioramaStage() {
   const stageRef = useRef<ReturnType<
     typeof import('@/lib/diorama/create-stage').createStage
   > | null>(null);
-  const userPreference = useRef<boolean | null>(null);
   const selectedRef = useRef<ProjectSlug | null>(null);
   const reducedRef = useRef(true);
   const [selected, setSelected] = useState<ProjectSlug | null>(null);
-  const [enabled, setEnabled] = useState(false);
   const [wide, setWide] = useState(false);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -36,7 +34,6 @@ export function useDioramaStage() {
       pendingHistory.current = saved;
       selectedRef.current = saved.selected;
       lastSelected.current = saved.selected;
-      userPreference.current = saved.enabled;
       setSelected(saved.selected);
       setWide(window.matchMedia(DIORAMA.DESKTOP).matches);
     }
@@ -45,7 +42,6 @@ export function useDioramaStage() {
         history.replaceState(
           withDioramaHistory(history.state, {
             selected: selectedRef.current,
-            enabled: userPreference.current,
             scrollY: window.scrollY,
           }),
           ''
@@ -64,7 +60,6 @@ export function useDioramaStage() {
         `#${DIORAMA.PANEL_ID}`
       );
       setWide(desktop.matches);
-      if (userPreference.current === null) setEnabled(desktop.matches);
     };
     const update = () => {
       reducedRef.current = media.matches;
@@ -83,7 +78,7 @@ export function useDioramaStage() {
 
   useEffect(() => {
     const host = hostRef.current;
-    if (!enabled || !host) return;
+    if (!host) return;
     let cancelled = false;
     let errored = false;
     let stage: typeof stageRef.current = null;
@@ -127,7 +122,7 @@ export function useDioramaStage() {
       stage?.dispose();
       if (stageRef.current === stage) stageRef.current = null;
     };
-  }, [enabled]);
+  }, []);
 
   useLayoutEffect(() => {
     const saved = pendingHistory.current;
@@ -170,9 +165,8 @@ export function useDioramaStage() {
     hostRef,
     labelRefs,
     selected,
-    enabled,
     wide,
-    ready: enabled && ready && !failed,
+    ready: ready && !failed,
     failed,
     reduced,
     onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) => {
@@ -184,12 +178,6 @@ export function useDioramaStage() {
       select(selectedRef.current === slug ? null : slug, event.detail === 0);
     },
     onClose,
-    onToggle: () => {
-      setReady(false);
-      setFailed(false);
-      userPreference.current = !enabled;
-      setEnabled(userPreference.current);
-    },
     onKeyDown: (event: KeyboardEvent) => {
       if (event.key === DIORAMA.ESCAPE && selectedRef.current) {
         event.preventDefault();

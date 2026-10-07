@@ -5,9 +5,9 @@ import {
   withDioramaHistory,
 } from '../../src/lib/diorama-history.ts';
 const slugs = ['apc', 'emosave'];
-const value = { selected: 'apc', enabled: false, scrollY: 533 };
+const value = { selected: 'apc', scrollY: 533 };
 
-test('workshop history preserves router state and user 3D preference', () => {
+test('workshop history preserves router state, selection and scroll position', () => {
   const router = { __NA: true, tree: ['home'] };
   const state = withDioramaHistory(router, value);
   assert.deepEqual(readDioramaHistory(state, slugs), value);
@@ -15,20 +15,40 @@ test('workshop history preserves router state and user 3D preference', () => {
   assert.equal(state.__NA, true);
   assert.equal(router.portfolioWorkshop, undefined);
 });
+test('legacy 3D preferences are ignored and omitted when history is saved', () => {
+  for (const selected of ['apc', null]) {
+    const expected = { ...value, selected };
+    for (const enabled of [undefined, false, null, true, 'false']) {
+      const legacy = { ...expected, enabled };
+      const source = { portfolioWorkshop: legacy };
+      assert.deepEqual(readDioramaHistory(source, slugs), expected);
+      assert.deepEqual(
+        withDioramaHistory(source, legacy).portfolioWorkshop,
+        expected
+      );
+      assert.equal(source.portfolioWorkshop, legacy);
+      assert.equal(legacy.enabled, enabled);
+    }
+  }
+});
 test('missing or invalid history is ignored', () => {
   for (const bad of [
     null,
     {},
+    { scrollY: 533 },
     { ...value, selected: 'unknown' },
+    { ...value, selected: 1 },
+    { selected: 'apc' },
+    { ...value, scrollY: '533' },
     { ...value, scrollY: -1 },
     { ...value, scrollY: Infinity },
-    { ...value, enabled: 'false' },
+    { ...value, scrollY: NaN },
   ]) {
     assert.equal(readDioramaHistory({ portfolioWorkshop: bad }, slugs), null);
   }
 });
-test('closed selection and automatic 3D mode round trip', () => {
-  const closed = { selected: null, enabled: null, scrollY: 0 };
+test('closed selection and scroll position round trip without a 3D preference', () => {
+  const closed = { selected: null, scrollY: 0 };
   assert.deepEqual(
     readDioramaHistory(withDioramaHistory(null, closed), slugs),
     closed
