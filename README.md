@@ -1,227 +1,131 @@
-# Park Moonseok — Portfolio
+# 박문석 포트폴리오
 
-Flutter 앱·관리자 웹·서버 API와 사무실 기기 실험에서 맡은 작업을 소개하는 개인
-포트폴리오입니다. 홈 화이트보드에서 5개 프로젝트의 담당 영역과 기술을 비교하고,
-이름을 선택해 영역별 작업과 사례 링크를 확인할 수 있습니다. 좁은 화면에서는
-프로젝트별 목록으로 바뀝니다. 상세 페이지는 소개와 담당 범위 목록으로 시작하고,
-기능 관계와 대표 구현 사례를 읽을 수 있습니다. 홈 소개는 사진 대신 담당 기능을
-읽는 판면으로 구성하고, 상세 목록은 담당 영역·업무·확인된 기술을 정리합니다.
+Flutter 앱·관리자 웹·서버 API와 기기 실험에서 맡은 업무를 소개하는 개인
+포트폴리오입니다. Emosave, IndianBob, FarmFam+, APC, Smart Farm의 담당 범위와
+구현 사례를 담았습니다.
 
 **이 저장소는 포트폴리오 사이트 코드입니다.** 소개한 서비스의 원본 구현은 별도
-프로젝트에 있습니다. 이미지와 도식은 설명을 위한 재구성 자료입니다. 공식 제출용
-URL은 아직 확정하지 않았습니다.
+프로젝트에 있습니다. 이미지·도식·체험 기능은 담당 업무를 설명하기 위한 재구성
+자료입니다.
 
-공개 앱 등록 페이지:
+## 주요 기능
 
-- [인디언밥 — Google Play](https://play.google.com/store/apps/details?id=com.connecto.indianbob&hl=ko)
-- [분저장 — Google Play](https://play.google.com/store/apps/details?id=com.lab254.emosave&hl=ko)
+- **3D 프로젝트 작업실**: 모형이나 이름표를 선택하면 담당 업무와 상세 링크를
+  보여 줍니다. 3D를 사용할 수 없는 환경에서는 정적 그림으로 대체합니다.
+- **프로젝트별 구현 사례**: 담당 기능, 기능 간 연결, 구현 방식과 검증 범위를
+  설명합니다.
+- **Emosave 배치 편집 예시**: 돔 안의 캐릭터를 선택·이동·회전·크기 조절·삭제하고
+  처음 배치로 복원할 수 있습니다. 실제 앱 화면이나 Flutter 구현을 그대로 재현한
+  기능은 아니며, 저장이나 API 호출은 하지 않습니다.
 
-## 빠르게 확인하기
+공개 앱 정보는
+[인디언밥](https://play.google.com/store/apps/details?id=com.connecto.indianbob&hl=ko)과
+[분저장(Emosave)](https://play.google.com/store/apps/details?id=com.lab254.emosave&hl=ko)의
+Google Play 등록 페이지에서 확인할 수 있습니다.
 
-| 확인할 내용                     | 경로                                                                     |
-| ------------------------------- | ------------------------------------------------------------------------ |
-| 5개 프로젝트의 소개와 담당 범위 | [프로젝트 콘텐츠](src/content/projects/)                                 |
-| 탭·선택·닫힘·복원의 상태 처리   | [선택 로직](src/lib/selection.ts), [선택 훅](src/hooks/use-selection.ts) |
-| 화면 구성과 콘텐츠의 분리       | [페이지 섹션](src/sections/), [공통 컴포넌트](src/components/)           |
-| 회귀 테스트와 CI                | [테스트](scripts/tests/), [검증 workflow](.github/workflows/verify.yml)  |
+## 기술 구성
 
-CMS·서버 API 없이 콘텐츠를 정적으로 렌더링합니다. 문구·도식·이미지 참조는
-`src/content`에서 관리합니다.
+Next.js 15(App Router), React 19, TypeScript, Tailwind CSS v4, Three.js를
+사용합니다. 별도 CMS나 서버 API 없이 `src/content`의 데이터로 페이지를 정적으로
+생성합니다. 웹폰트는 [public/fonts](public/fonts/README.md)에서 직접 제공합니다.
 
-Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · pnpm.
+## 로컬 실행
 
-Design and content decisions, the data model and the QA checklist are in
-[HANDOFF.md](HANDOFF.md). Visual tokens and whiteboard component rules are in
-[DESIGN.md](DESIGN.md), with preview extensions in `.impeccable/design.json`.
-Branch, commit, verification and background-process rules for anyone (or any
-agent) working in this repo are in [AGENTS.md](AGENTS.md); `CLAUDE.md` imports
-it so Claude Code loads the same rules.
-
-## 3D 미리보기
-
-`pnpm dev --port 3100` 실행 후 `/preview/diorama`에서 Emosave, IndianBob,
-FarmFam+, APC, Smart Farm의 개념 모형을 확인할 수 있습니다. 기존 홈과 상세
-페이지는 유지하며, 미리보기는 검색 색인에서 제외합니다. 감정 기록과 마을 편집,
-해빗 체크와 팀 참여, 상품 관리, 입고·결재, 센서·LED 시험을 프로젝트별 형태로
-구분합니다. 정적 그림도 같은 개념을 표현합니다. 각 모형과 이름표는 기존
-프로젝트의 담당 범위 전체 및 상세 페이지로 연결합니다.
-
-이름표는 데스크톱에서 모형과 같은 3+2 순서로 배치하며, 좁은 화면에서는 선택한
-이름표 바로 아래에 담당 업무를 펼칩니다. 설명은 한 곳에만 표시하고 상세 링크는
-본문 아래에 하나만 제공합니다. 이름표는 키보드로 선택할 수 있고 Escape로 선택을
-해제합니다. 모바일을 포함해 3D를 자동으로 불러오며, 로딩 중이거나 사용할 수 없는
-환경에서는 정적 그림과 이름표로 담당 업무를 확인할 수 있습니다. 별도의 3D 전환
-버튼은 표시하지 않습니다. Smart Farm의 센서 시험과 LED 제어는 별도 실험으로
-표현합니다. 첫 방문에는 1.6초 오프닝을 표시합니다. 같은 브라우저의 방문 기록을
-저장하여 재방문·새로고침·뒤로 가기에서는 자동 재생을 생략합니다. 해시 링크나
-스크롤 복원 상태, 모션 줄이기 설정, 저장소 접근 실패에서도 생략합니다.
-건너뛰기와 Escape로 즉시 닫거나 하단의 오프닝 다시 보기로 수동 재생할 수
-있습니다.
-
-## Emosave 배치 편집 예시
-
-`pnpm dev --port 3100` 실행 후 `/work/emosave#interaction`과
-`/preview/emosave-editor`에서 2D 돔 안의 캐릭터 세 개를 하나씩
-선택·이동·회전·크기 조절·삭제하고 처음 배치로 복원할 수 있습니다. 회전은 캐릭터
-중심을 기준으로 화면 안에서 기울이는 동작이며, 손잡이 드래그나 15° 간격의 버튼을
-사용합니다. 실제 앱 화면이나 Flutter 구현을 재현한 것이 아닌 설명용 예시입니다.
-배경·캐릭터·대사는 별도로 구성했으며 이미지 생성 프롬프트는
-`public/images/emosave-editor/provenance.json`에 기록합니다. PC는 캐릭터 드래그,
-터치는 선택한 캐릭터 드래그를 사용합니다. 빈 곳을 누르면 선택을 해제합니다. 이동
-중 포인터가 돔 밖으로 나가도 캐릭터는 경계 안에 머무르며, 놓으면 그 위치를
-유지합니다. Esc나 입력 취소는 드래그 시작 상태로 복원합니다. 선택해도 캐릭터
-크기는 변하지 않습니다. 반대 모서리의 회전·크기 손잡이와 삭제 버튼을 표시하며
-선택 줄과 키보드로도 조작할 수 있습니다. 방향키는 이동에, 손잡이에 초점을 둔
-방향키는 회전·크기 조절에 사용합니다. 아래쪽 이동·회전·크기 버튼은 생략합니다.
-크기는 기본의 75–160% 안에서 돔 경계를 지키도록 제한합니다. 말풍선은 남은
-캐릭터에 하나씩 주기적으로 표시하고 편집 중에는 숨깁니다. 사용자 정지는 배치
-초기화 후에도 유지하며 reduced motion에서는 정지 상태로 시작합니다. 저장·API
-호출은 하지 않으며 새로고침하면 초기 상태로 돌아옵니다.
-
-Emosave 상세의 기존 편집 도식을 이 예시로 교체했습니다. 홈에서는 편집기나 해당
-이미지를 불러오지 않습니다. 상세와 미리보기는
-`src/components/organisms/emosave-editor/`의 공통 편집기를 사용하며, 미리보기
-페이지 틀은 `src/sections/emosave-editor/`에 있습니다. 상태·입력은
-`src/lib/emosave-editor/`와 관련 훅에 분리되어 있습니다. DOM 이미지 레이어를
-사용하며 WebGL이나 상시 렌더링 루프는 없습니다. 상세 연결 커밋을 revert하면 기존
-도식으로 돌아가며 독립 미리보기는 유지됩니다. 미리보기만 검색
-색인·canonical·사이트맵에서 제외하며 이미지 로딩 실패 시 안내와 실제 구현 사례
-링크를 제공합니다.
-
-## Requirements
-
-- Node.js 22.18 or newer (verified on 24). `pnpm test` imports `.ts` files
-  directly, which needs Node's built-in type stripping.
-- pnpm (the repo pins `packageManager: pnpm@10.27.0`; use `corepack enable`)
-- Network access for `pnpm install`. `pnpm build` needs none: General Sans,
-  Pretendard and IBM Plex Mono are all self-hosted from `public/fonts` (see
-  [public/fonts/README.md](public/fonts/README.md)).
-
-## Commands
+Node.js 22.18 이상과 pnpm 10.27.0이 필요합니다. Node.js 24에서 검증했으며,
+패키지 관리자 버전은 `package.json`의 `packageManager`에 고정되어 있습니다.
 
 ```bash
+corepack enable
 pnpm install
-pnpm dev --port 3100    # development server (stop before pnpm build)
-pnpm build              # production build
-pnpm start --port 3100  # serve the production build locally
-
-pnpm lint               # ESLint 9; excludes installed skill folders only, fails on warnings
-pnpm typecheck          # tsc --noEmit
-pnpm test               # selection, scroll position, history and scanner regression tests
-pnpm check:anchors      # rendered IDs and content links; run after pnpm build
-pnpm check:metadata     # built metadata; use the same SITE_URL / SITE_INDEXABLE as the build
-pnpm check:boundaries   # architecture rules (scripts/check-boundaries.mjs)
-pnpm format             # Prettier + Tailwind class sorting
-pnpm format:check
+pnpm dev --port 3100
 ```
 
-## Folders
+[http://localhost:3100](http://localhost:3100)에서 확인합니다. 3000번 포트는
+다른 프로젝트에서 사용하므로 개발·검증 서버 모두 3100번을 사용합니다.
 
-| Path                     | Role                                                              |
-| ------------------------ | ----------------------------------------------------------------- |
-| `src/app`                | Routes only: layout, home, `work/[slug]`, not-found               |
-| `src/sections`           | One folder per page section: `*-container.tsx` + `*-view.tsx`     |
-| `src/components`         | Atoms / molecules / organisms / templates shared by 2+ sections   |
-| `src/hooks`              | Client-side logic (`use-*.ts`) called by containers               |
-| `src/dto`                | Object shapes (types and interfaces only)                         |
-| `src/constants`          | `as const` enumerations used instead of string-literal props      |
-| `src/content`            | **The content source of truth** — see below                       |
-| `src/lib`                | Content getters, navigation helpers, `has`, `cx`                  |
-| `src/styles`             | `globals.css` (theme, variants, base), `tokens.css`, `motion.css` |
-| `public/images/projects` | Project images, one folder per project                            |
-| `public/fonts`           | Self-hosted webfonts and their licenses                           |
-| `scripts`                | Architecture boundary checker                                     |
+| 화면                  | 경로                                                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| 프로젝트 작업실       | `/`                                                                                        |
+| 프로젝트 상세         | `/work/emosave`, `/work/indian-bob`, `/work/farmfam-plus`, `/work/apc`, `/work/smart-farm` |
+| Emosave 편집기만 보기 | `/preview/emosave-editor`                                                                  |
+| 3D 작업실만 보기      | `/preview/diorama`                                                                         |
+| 이전 홈 구성 비교     | `/preview/classic`                                                                         |
 
-Containers read content and call hooks; `*-view.tsx` files take props and render
-markup only. `pnpm check:boundaries` enforces that split, the import direction
-and the per-file limits.
+`/preview/*`는 검색 색인과 사이트맵에서 제외합니다. 빌드 결과를 실행할 때는 개발
+서버를 종료한 뒤 다음 명령을 사용합니다.
 
-## Editing content
+```bash
+pnpm build
+pnpm start --port 3100
+```
 
-| What                                                    | Where                                 |
-| ------------------------------------------------------- | ------------------------------------- |
-| Name, role, contact, story cards, experience, tools     | `src/content/site.ts`                 |
-| A project's meta, summary, home block, image references | `src/content/projects/<slug>.ts`      |
-| A project's case study body                             | `src/content/projects/<slug>-case.ts` |
-| Images                                                  | `public/images/projects/<project>/`   |
+## 검증
 
-Two rules matter when editing:
+변경 후 아래 검사를 실행합니다. `pnpm build`는 `.next`를 덮어쓰므로 실행 전에
+개발 서버를 종료해야 합니다.
 
-- **Empty means hidden.** An empty string or array removes the whole section
-  from the page. Never leave placeholder text such as `TO WRITE` in content.
-- **Status wording is load-bearing.** `PRODUCT WORK` means work implemented in a
-  real product; it does not claim a public launch. Smart Farm MONITORING is an
-  office sensor prototype and CONTROL is a separate LED experiment; neither
-  claims farm deployment. The APC OCR experiment is not displayed.
+```bash
+pnpm lint               # 코드 규칙 검사
+pnpm typecheck          # 타입 검사
+pnpm test               # 상태·입력·복원 등의 회귀 테스트
+pnpm check:boundaries   # 컴포넌트 역할과 의존성 방향 검사
+pnpm format:check       # 코드·문서 서식 검사
+pnpm build              # 배포용 빌드
+pnpm check:anchors      # 빌드된 페이지의 링크 대상·접근성 참조 검사
+pnpm check:metadata     # 검색·공유 정보와 사이트맵 검사
+```
 
-`site.contact.email` is `mspark9696@naver.com`; navigation, mobile menu and
-footer expose the contact link. `site.contact.github` points to
-[the GitHub profile](https://github.com/mooonseok), which is linked from the
-intro, footer and mobile menu. It is a profile link, not a source-code link for
-every featured service. Each contact link renders only if its own value is set.
+서식은 `pnpm format`으로 정리합니다. 화면 변경 시에는 390 / 744 / 1024 /
+1440px에서 직접 확인합니다. 현재 저장소에는 GitHub Actions 검증 워크플로가
+없으므로 검증은 로컬에서 실행합니다.
 
-## Publication metadata
+## 코드와 콘텐츠 위치
 
-The GitHub repository homepage currently points to
-[the existing Vercel address](https://portfolio-ten-umber-trj7j2b3qz.vercel.app).
-Verify that deployment before treating it as the current public site. The
-canonical origin for the next release is not confirmed yet. Metadata uses the
-following build-time environment variables:
+| 위치                                          | 용도                                |
+| --------------------------------------------- | ----------------------------------- |
+| [src/app](src/app/)                           | 페이지 경로와 홈 구성               |
+| [src/sections](src/sections/)                 | 페이지별 섹션                       |
+| [src/components](src/components/)             | 공통 UI 컴포넌트                    |
+| [src/hooks](src/hooks/), [src/lib](src/lib/)  | 브라우저 상태·입력 처리와 공통 로직 |
+| [src/content/site.ts](src/content/site.ts)    | 소개·연락처·대표 사례·기술 스택     |
+| [src/content/projects](src/content/projects/) | 프로젝트 정보와 상세 본문           |
+| [src/styles](src/styles/)                     | 공통 스타일과 디자인 토큰           |
+| [public/images](public/images/)               | 개념 이미지와 편집기 그림           |
+| [scripts](scripts/)                           | 테스트와 검증 도구                  |
 
-| Variable         | Production value                                                 | Preview / local value |
-| ---------------- | ---------------------------------------------------------------- | --------------------- |
-| `SITE_URL`       | Confirmed public HTTPS origin, without a path, query or fragment | Unset                 |
-| `SITE_INDEXABLE` | `true` when the public site is ready for indexing                | Unset or `false`      |
+프로젝트의 기본 정보는 `<slug>.ts`, 상세 본문은 `<slug>-case.ts`에서 수정합니다.
+컨테이너는 콘텐츠와 상태를 준비하고, `*-view.tsx`는 전달받은 값으로 화면을
+그립니다. 자세한 구조와 규칙은 [HANDOFF.md](HANDOFF.md)를 참고하세요.
 
-Use `.env.example` as the configuration template. Its defaults leave the URL
-empty and indexing disabled. Set the confirmed production values in the
-deployment environment; keep preview settings separate.
+빈 문자열이나 배열로 둔 콘텐츠는 화면에서 숨깁니다. 작성 전인 항목에는 임시
+문구를 넣지 않습니다.
 
-Indexing is enabled only when both a valid `SITE_URL` and the exact value
-`SITE_INDEXABLE=true` are present. Without that combination, page metadata is
-`noindex`, `robots.txt` permits crawling so search engines can read the noindex
-directive and `sitemap.xml` contains no entries. Without `SITE_URL`, canonical
-URLs are omitted. Invalid configured values raise a configuration error.
-`SITE_URL` rejects credentials, paths, queries, fragments, localhost names,
-.local names and all IP literal hosts; a trailing slash is normalized. This
-format validation does not verify public DNS resolution. These controls concern
-search discovery; they do not make a preview private.
+콘텐츠를 수정할 때는 실제 담당 범위와 실험 상태를 유지합니다. `PRODUCT WORK`는
+출시를 의미하지 않습니다. Smart Farm의 모니터링은 사무실 센서 시험이며, 제어는
+별도의 LED 실험으로 실제 농장 적용을 주장하지 않습니다. APC OCR 실험은 현재
+화면에 표시하지 않습니다.
 
-Set the production values before `pnpm build` in the deployment environment.
-Changing only the server runtime variables does not update already generated
-metadata; rebuild after changing them. Keep indexing disabled for preview
-deployments even if they inherit the public origin. A preview with a valid
-`SITE_URL` still generates canonical and social-image URLs, but remains
-`noindex` unless indexing is explicitly enabled.
+## 배포 설정
 
-Home and project pages use their own titles and descriptions, and share
-`public/social/portfolio.png` as the Open Graph / Twitter image. After the
-public URL is confirmed, verify canonical URLs, social-image URLs, robots and
-sitemap output on that deployment.
+공식 공개 URL은 아직 확정하지 않았습니다. [.env.example](.env.example)을
+기준으로 배포 환경에 다음 값을 설정합니다.
 
-Run `pnpm check:metadata` after `pnpm build`, with the same `SITE_URL` and
-`SITE_INDEXABLE` values supplied to both commands. The check compares the
-generated metadata, robots and sitemap against that configuration. Unlike the
-Next.js build, the checker does not load `.env.local` automatically: export the
-values in the shell or supply them to each command explicitly. CI provides both
-values through the job environment.
+| 변수             | 공개 배포                                         | 로컬·미리보기       |
+| ---------------- | ------------------------------------------------- | ------------------- |
+| `SITE_URL`       | 확인된 공개 HTTPS 주소. 경로·쿼리·프래그먼트 제외 | 미설정              |
+| `SITE_INDEXABLE` | 검색 색인을 허용할 때 `true`                      | 미설정 또는 `false` |
 
-## Continuous verification
+유효한 `SITE_URL`과 `SITE_INDEXABLE=true`가 모두 있어야 검색 색인을 허용합니다.
+주소를 설정하지 않거나 색인을 허용하지 않으면 `noindex`를 적용하고 사이트맵을
+비웁니다. 잘못된 설정값은 오류로 처리합니다. 이 설정은 페이지 접근을 제한하지는
+않습니다.
 
-There is currently no `.github/workflows/verify.yml` in this checkout. The
-commands above provide local verification; this repository does not currently
-provide the previously documented GitHub Actions verification matrix. Local
-checks do not confirm remote CI or deployment success.
+설정은 **빌드 시점**에 적용되므로 값을 바꾸면 다시 빌드해야 합니다.
+`pnpm check:metadata`도 빌드와 같은 환경변수로 실행하세요. 이 검사는
+`.env.local`을 자동으로 읽지 않으므로 셸 환경변수로 전달해야 합니다.
 
-`pnpm check:metadata` also checks that all preview routes remain `noindex`, have
-no canonical URL and stay out of the sitemap, including indexable builds.
+## 관련 문서
 
-## 홈 화면 전환
-
-현재 홈은 프로젝트 작업실입니다. `src/constants/home.ts`의
-`HOME.WORKSHOP_ENABLED`를 `false`로 바꾸고 다시 빌드하면 기존 홈으로 돌아갑니다.
-기존 구성은 `src/app/_home/classic-home.tsx`에 보존하며 `/preview/classic`에서
-비교할 수 있습니다. 작업실 구성은 `src/app/_home/workshop-home.tsx`, 공용 3D
-UI는 `src/components/organisms/project-workshop/`에 있습니다.
-`/preview/diorama`는 독립 작업실 미리보기로 유지합니다. 두 미리보기는 검색
-색인을 차단합니다. 화면 전환은 콘텐츠와 프로젝트 상세 페이지를 바꾸지 않습니다.
+- [HANDOFF.md](HANDOFF.md): 아키텍처, 콘텐츠 기준, 상호작용과 검증 범위
+- [DESIGN.md](DESIGN.md): 디자인 토큰과 컴포넌트 기준
+- [AGENTS.md](AGENTS.md): 브랜치·커밋·검증·프로세스 관리 규칙
