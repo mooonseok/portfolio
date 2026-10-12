@@ -5,20 +5,28 @@ import type { AiRule } from '@/dto/ai-practice.dto';
 import { TAG } from '@/constants/tag';
 
 export function AiRuleRowsView({
+  id,
+  showLabel = true,
   label,
   rules,
   note,
 }: {
+  id: string;
+  showLabel?: boolean;
   label: string;
   rules: AiRule[];
   note: string[];
 }) {
   return (
     <Column className='max-w-[56rem] gap-4 tab:gap-5'>
-      <Text as={TAG.SPAN} id='ai-rules-label' className='mono muted'>
+      <Text
+        as={TAG.SPAN}
+        id={id}
+        className={showLabel ? 'mono muted' : 'sr-only'}
+      >
         {label}
       </Text>
-      <Box as={TAG.DL} aria-labelledby='ai-rules-label' className='m-0'>
+      <Box as={TAG.DL} aria-labelledby={id} className='m-0'>
         {rules.map((rule) => (
           <Box
             key={rule.title}

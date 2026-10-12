@@ -10,12 +10,6 @@ export interface AiRule {
   example: string;
 }
 
-export interface AiDecision {
-  title: string;
-  body: string[];
-  link?: ProjectLink;
-}
-
 export interface AiPracticeHome {
   title: string;
   items: string[];
@@ -32,8 +26,9 @@ export interface AiPractice {
   rulesNote: string[];
   workTitle: string;
   work: WorkItem[];
-  decisionsTitle: string;
-  decisions: AiDecision[];
+  reviewTitle: string;
+  review: AiRule[];
+  reviewNote: string[];
   engineeringTitle: string;
   techNotes: TechNote[];
   collaborationTitle: string;
@@ -44,7 +39,7 @@ export interface AiPractice {
 
 export interface AiPracticeTags {
   work?: GroupTag;
-  decisions?: GroupTag;
+  review?: GroupTag;
   engineering?: GroupTag;
   collaboration?: GroupTag;
 }

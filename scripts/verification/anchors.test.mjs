@@ -47,12 +47,18 @@ test('ai: contents links point to rendered sections and ids stay unique', () => 
   assert.equal(ids.length, new Set(ids).size, 'duplicate rendered ids');
   const hrefs = [
     ...html.matchAll(
-      /href="#(overview|work|decisions|engineering|collaboration)"/g
+      /href="#(overview|work|review|engineering|collaboration)"/g
     ),
   ].map((m) => m[1]);
-  assert.ok(hrefs.length > 0, 'missing contents links');
+  assert.deepEqual(
+    [...new Set(hrefs)],
+    ['overview', 'work', 'review', 'engineering', 'collaboration']
+  );
   for (const id of new Set(hrefs))
     assert.ok(ids.includes(id), `missing target: ${id}`);
+  for (const match of html.matchAll(/aria-(?:labelledby|controls)="([^"]+)"/g))
+    for (const id of match[1].split(/\s+/))
+      assert.ok(ids.includes(id), `missing accessible target: ${id}`);
 });
 
 for (const page of ['work/emosave', 'preview/emosave-editor']) {

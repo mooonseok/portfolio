@@ -114,11 +114,15 @@ heading axis, with one link to `/ai`; it leaves 80px on mobile and 96px from
 tablet before the footer. The `/ai` page reuses the case-study template
 (overview, contents, sections, tech notes) with ABOUT as the active nav item, no
 back link, and a NEXT link to the home project board instead of the project
-cycle. On page exit, the workshop saves its selection and scroll position to
-that browser history entry. Returning or reloading restores the panel before
-scroll placement; a fresh entry starts unselected. Existing router history
-fields are preserved. The classic layout described below remains available
-through the switch.
+cycle. The AI page separates instruction scope, the task workflow, review roles,
+verification tooling examples and design collaboration. Its review rows describe
+how work is assigned and compared, without implying fixed roles per AI tool or
+automatic execution. Personal hooks and local checks retain their stated scope.
+On page exit, the workshop saves its selection and scroll position to that
+browser history entry. Returning or reloading restores the panel before scroll
+placement; a fresh entry starts unselected. Existing router history fields are
+preserved. The classic layout described below remains available through the
+switch.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently

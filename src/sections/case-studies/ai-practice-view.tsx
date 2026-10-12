@@ -1,9 +1,7 @@
-import { AiDecisionView } from './components/ai-decision-view';
 import { AiRuleRowsView } from './components/ai-rule-rows-view';
 import { CaseSectionView } from './components/case-section-view';
 import { ParagraphsView } from './components/paragraphs-view';
 import { WorkRowsView } from './components/work-rows-view';
-import { Box } from '@/components/atoms/box';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { CaseStudyTemplateView } from '@/components/templates/case-study-template/case-study-template-view';
 import type { AiPracticeViewProps } from '@/dto/ai-practice.dto';
@@ -16,7 +14,6 @@ export function AiPracticeView({
   groups,
   tags,
 }: AiPracticeViewProps) {
-  const [lead, ...rest] = c.decisions;
   return (
     <CaseStudyTemplateView
       header={{ title: c.title, summary: c.summary }}
@@ -28,6 +25,7 @@ export function AiPracticeView({
       nav={{ back: false, current: NAV_ID.ABOUT }}
       hero={
         <AiRuleRowsView
+          id='ai-rules-label'
           label={c.rulesLabel}
           rules={c.rules}
           note={c.rulesNote}
@@ -42,19 +40,18 @@ export function AiPracticeView({
         <WorkRowsView items={c.work} />
       </CaseSectionView>
       <CaseSectionView
-        group={tags.decisions}
+        group={tags.review}
         depth={CASE_DEPTH.L2}
-        title={c.decisionsTitle}
+        title={c.reviewTitle}
         layout={CASE_LAYOUT.WIDE}
       >
-        {lead ? (
-          <AiDecisionView decision={lead} className='max-w-[600px]' />
-        ) : null}
-        <Box className='mt-8 grid grid-cols-1 gap-8 tab:grid-cols-2'>
-          {rest.map((decision) => (
-            <AiDecisionView key={decision.title} decision={decision} />
-          ))}
-        </Box>
+        <AiRuleRowsView
+          id='ai-review-label'
+          showLabel={false}
+          label={c.reviewTitle}
+          rules={c.review}
+          note={c.reviewNote}
+        />
       </CaseSectionView>
       <CaseSectionView
         group={tags.engineering}
