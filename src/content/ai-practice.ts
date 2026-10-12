@@ -57,7 +57,7 @@ export const aiPractice: AiPractice = {
     {
       title: '구현·검사',
       body: [
-        '정한 범위 안에서 구현을 요청하고, 필요한 lint·타입 검사·테스트·빌드를 지정합니다. 실행 결과와 확인하지 못한 범위를 함께 보고받습니다.',
+        '정한 범위 안에서 구현을 요청하고, 필요한 lint·타입 검사·테스트·빌드를 지정합니다. 검사 실행 결과와 미확인 범위를 함께 확인합니다.',
       ],
     },
     {
@@ -113,7 +113,8 @@ export const aiPractice: AiPractice = {
         {
           label: '처리',
           body: [
-            '시안과 구현 화면에서 대응하는 요소의 위치·서체·색과 픽셀 차이를 비교하는 도구를 AI와 함께 추가하고, 도구 출력 없이 일치한다고 보고하지 않도록 작업 지침에 적었습니다. 설계 문서의 표와 코드의 화면 문구를 대조하는 검사는 별도로 만들어 lint 명령에 연결했습니다.',
+            '시안과 구현 화면에서 대응하는 요소의 위치·서체·색과 픽셀 차이를 비교하는 도구를 AI와 함께 추가하고, 도구 출력 없이 일치한다고 보고하지 않도록 작업 지침에 적었습니다.',
+            '설계 문서의 표와 코드의 화면 문구를 대조하는 검사는 별도로 만들어 lint 명령에 연결했습니다.',
           ],
         },
         {
@@ -134,7 +135,7 @@ export const aiPractice: AiPractice = {
 
   collaborationTitle: GROUP_LABEL[GROUP_ID.COLLABORATION],
   collaboration: [
-    '업무에서 Claude Design과 Claude Code로 MVP 목업을 만들었습니다. 결과물에 대한 긍정적인 피드백을 계기로 디자인팀에서도 도구를 사용할 수 있도록 온보딩을 진행했습니다.',
+    'Claude Design과 Claude Code로 업무용 MVP 목업을 만들고, 디자인팀의 도구 사용을 위한 온보딩을 진행했습니다.',
   ],
 
   next: {
