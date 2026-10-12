@@ -89,10 +89,13 @@ export function siteRobots(settings: SiteSettings): MetadataRoute.Robots {
 
 export function siteSitemap(
   settings: SiteSettings,
-  slugs: readonly string[]
+  slugs: readonly string[],
+  pages: readonly string[] = []
 ): MetadataRoute.Sitemap {
   if (!settings.indexable || !settings.origin) return [];
-  return ['/', ...slugs.map((slug) => `/work/${slug}`)].map((path) => ({
-    url: new URL(path, settings.origin).href,
-  }));
+  return ['/', ...pages, ...slugs.map((slug) => `/work/${slug}`)].map(
+    (path) => ({
+      url: new URL(path, settings.origin).href,
+    })
+  );
 }

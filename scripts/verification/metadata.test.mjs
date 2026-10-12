@@ -7,6 +7,7 @@ import { loadContent } from './content-loader.mjs';
 const root = resolve(import.meta.dirname, '../..');
 const { getProjects } = loadContent(resolve(root, 'src/lib/content.ts'));
 const { site } = loadContent(resolve(root, 'src/content/site.ts'));
+const { aiPractice } = loadContent(resolve(root, 'src/content/ai-practice.ts'));
 const origin = process.env.SITE_URL
   ? new URL(process.env.SITE_URL).origin
   : undefined;
@@ -33,6 +34,12 @@ const pages = [
     file: 'index.html',
     title: `${site.name} — ${site.role}`,
     description: site.headline,
+  },
+  {
+    path: '/ai',
+    file: 'ai.html',
+    title: `${aiPractice.title} · Park Moonseok`,
+    description: aiPractice.description,
   },
   ...getProjects().map((p) => ({
     path: `/work/${p.slug}`,

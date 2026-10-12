@@ -44,6 +44,8 @@ export const GROUP_ID = {
   WORK: 'work',
   ENGINEERING: 'engineering',
   CURRENT_STATE: 'current-state',
+  DECISIONS: 'decisions',
+  COLLABORATION: 'collaboration',
 } as const;
 
 export type GroupId = (typeof GROUP_ID)[keyof typeof GROUP_ID];
@@ -55,4 +57,6 @@ export const GROUP_LABEL = {
   [GROUP_ID.WORK]: '담당 기능',
   [GROUP_ID.ENGINEERING]: '대표 구현 사례',
   [GROUP_ID.CURRENT_STATE]: '결과',
+  [GROUP_ID.DECISIONS]: '직접 결정한 것',
+  [GROUP_ID.COLLABORATION]: '디자인 협업',
 } as const satisfies Record<GroupId, string>;

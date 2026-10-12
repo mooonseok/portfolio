@@ -66,6 +66,11 @@ test('explicit publication preserves per-page text and emits consistent share me
     { url: `${origin}/work/apc` },
     { url: `${origin}/work/emosave` },
   ]);
+  assert.deepEqual(siteSitemap(settings, ['apc'], ['/ai']), [
+    { url: `${origin}/` },
+    { url: `${origin}/ai` },
+    { url: `${origin}/work/apc` },
+  ]);
   assert.deepEqual(siteRobots(settings), {
     rules: { userAgent: '*', allow: '/' },
     sitemap: `${origin}/sitemap.xml`,

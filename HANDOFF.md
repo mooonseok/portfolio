@@ -33,12 +33,13 @@ Claude Code runs Prettier automatically after every file edit
 
 ```
 src/
-  app/            routes only: layout, page (home), work/[slug], not-found
+  app/            routes only: layout, page (home), work/[slug], ai, not-found
   sections/       one folder per page section
     <name>/<name>-container.tsx   reads content, builds view models
     <name>/<name>-view.tsx        props in, markup out
     <name>/components/*-view.tsx  section-only presentational parts
-    case-studies/                 <project>-case.tsx (container) + <project>-case-view.tsx
+    case-studies/                 <project>-case.tsx (container) + <project>-case-view.tsx,
+                                  ai-practice.tsx + ai-practice-view.tsx (/ai)
   components/     UI reused by 2+ sections/pages (Atomic Design)
     atoms/        layout primitives (Box Column Row Grid Text Heading List ListItem
                   Anchor NavLink Button LineBreak) + Cta, JumpLink, ChoiceDot,
@@ -48,11 +49,13 @@ src/
     organisms/    ScrollScene, ConceptFrame, ConceptArt, SiteHeader,
                   MobileMenu, SiteFooter, TechNotes, ExperimentBlock,
                   DomainExplorer (APC case study)
-    templates/    CaseStudyTemplate (frame, nav, meta, contents, next, footer only)
+    templates/    CaseStudyTemplate (frame, nav, meta, contents, next, footer only;
+                  the view takes a plain header so /ai reuses it)
   hooks/          use-<name>.ts client logic called by containers
   dto/            *.dto.ts object shapes (interfaces / types only)
   constants/      as const enumerations (TAG, HEADING, TONE, FLOW_ORIENT, …)
-  content/        projects/<slug>.ts (+ <slug>-case.ts) · site.ts — single source of truth
+  content/        projects/<slug>.ts (+ <slug>-case.ts) · site.ts · ai-practice.ts —
+                  single source of truth
   lib/            content getters, navigation, has, cx
   styles/         globals.css (Tailwind theme, variants, base) · tokens.css ·
                   motion.css · components/*.css (selector-heavy rules only)
@@ -98,20 +101,24 @@ comparison. Both preview routes remain noindex. The workshop reuses
 `components/organisms/project-workshop`, includes all project layer work in its
 selection panels and links to the unchanged case studies. It replaces the
 classic hero and repeated project rows, then renders the existing engineering
-stories, tools and footer. Its opening makes the whole home chrome and content
-inert. The unselected desktop panel lists each project and its owned areas with
-direct case links. Selected panels retain all work sentences with separators
-between areas. Stories and tools use compact section spacing only on the
-workshop home. Workshop stories align with the main container rather than the
-classic metadata rail. Selected notes have one case link below the work list. 3D
-loads automatically at every viewport width, with a static illustration during
-loading or failure and no user-facing 3D toggle. Both home variants leave 80px
-below the tools table on mobile and 96px from tablet before the footer. On page
-exit, the workshop saves its selection and scroll position to that browser
-history entry. Returning or reloading restores the panel before scroll
-placement; a fresh entry starts unselected. Existing router history fields are
-preserved. The classic layout described below remains available through the
-switch.
+stories, tools, the AI practice summary and footer. Its opening makes the whole
+home chrome and content inert. The unselected desktop panel lists each project
+and its owned areas with direct case links. Selected panels retain all work
+sentences with separators between areas. Stories and tools use compact section
+spacing only on the workshop home. Workshop stories align with the main
+container rather than the classic metadata rail. Selected notes have one case
+link below the work list. 3D loads automatically at every viewport width, with a
+static illustration during loading or failure and no user-facing 3D toggle. Both
+home variants place the AI practice summary after the tools table, on the same
+heading axis, with one link to `/ai`; it leaves 80px on mobile and 96px from
+tablet before the footer. The `/ai` page reuses the case-study template
+(overview, contents, sections, tech notes) with ABOUT as the active nav item, no
+back link, and a NEXT link to the home project board instead of the project
+cycle. On page exit, the workshop saves its selection and scroll position to
+that browser history entry. Returning or reloading restores the panel before
+scroll placement; a fresh entry starts unselected. Existing router history
+fields are preserved. The classic layout described below remains available
+through the switch.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently
@@ -411,7 +418,8 @@ written as CSS variables / attributes.
    footer and mobile menu, labeled GitHub 프로필. The README distinguishes this
    site repository from the separate service projects.
 4. **ABOUT nav:** It currently points to `#about`, which is the Tools / Scope
-   section. Change it if you add a separate About section.
+   section; the AI practice summary follows it inside the same ABOUT range.
+   Change it if you add a separate About section.
 5. **Fonts:** All three families are self-hosted from `public/fonts/`; see
    `public/fonts/README.md` for sources and licenses. Nothing is fetched from a
    third-party CDN at runtime and `pnpm build` needs no network access for
@@ -441,10 +449,10 @@ written as CSS variables / attributes.
    origin is unset; invalid configured values raise a configuration error. Leave
    indexing unset or `false` for previews. Rebuild when these settings change.
    These settings do not provide access control.
-7. **Social sharing:** Home and case pages use their own titles and descriptions
-   with the common card `public/social/portfolio.png`. Check the actual
-   deployment's canonical URLs, image URLs, robots and sitemap after its public
-   URL is confirmed. Build-time configuration details are in README.
+7. **Social sharing:** Home, case pages and `/ai` use their own titles and
+   descriptions with the common card `public/social/portfolio.png`. Check the
+   actual deployment's canonical URLs, image URLs, robots and sitemap after its
+   public URL is confirmed. Build-time configuration details are in README.
 8. **Metadata verification:** After the build, run `pnpm check:metadata` with
    the same `SITE_URL` / `SITE_INDEXABLE` values used for that build. The
    checker does not load `.env.local`; supply the values through the shell
