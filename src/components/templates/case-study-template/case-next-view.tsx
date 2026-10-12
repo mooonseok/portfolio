@@ -8,7 +8,7 @@ export function CaseNextView({ next }: { next: CaseNextLink }) {
   return (
     <Box
       as={TAG.NAV}
-      aria-label='Next project'
+      aria-label={next.navLabel ?? 'Next project'}
       className='container mt-12 border-t border-t-ink tab:mt-16 lap:mt-20'
     >
       <NavLink

@@ -67,7 +67,10 @@ export const groupIndex = (groups: ContentsGroup[], id: GroupId) => {
 };
 
 export function groupTags(p: Project) {
-  const groups = groupsFor(p);
+  return groupTagsFrom(groupsFor(p));
+}
+
+export function groupTagsFrom(groups: ContentsGroup[]) {
   return (id: GroupId): GroupTag | undefined => {
     const num = groupIndex(groups, id);
     const grp = groups.find((x) => x.id === id);
