@@ -6,6 +6,7 @@ import { FeaturedWorkContainer } from '@/sections/featured-work/featured-work-co
 import { HeroContainer } from '@/sections/hero/hero-container';
 import { SelectedWorkContainer } from '@/sections/selected-work/selected-work-container';
 import { ToolsContainer } from '@/sections/tools/tools-container';
+import { AiPracticeSummaryContainer } from '@/sections/ai-practice-summary/ai-practice-summary-container';
 import { TAG } from '@/constants/tag';
 
 export function ClassicHome() {
@@ -18,6 +19,7 @@ export function ClassicHome() {
         <SelectedWorkContainer />
         <EngineeringStoriesContainer />
         <ToolsContainer />
+        <AiPracticeSummaryContainer />
       </Box>
       <SiteFooter />
     </Box>

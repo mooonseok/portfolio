@@ -37,7 +37,8 @@ web
 ## Operating Context
 
 - 정적 사이트다. CMS와 서버 API가 없고, 모든 문구·도식·이미지 참조는
-  `src/content`에 있다. 라우트는 홈, `work/[slug]` 5개, not-found다.
+  `src/content`에 있다. 라우트는 홈, `work/[slug]` 5개, `ai`(AI 활용 방식),
+  not-found다.
 - 경력 구성: 랩이오사(2021.09–2025.09, 분저장·인디언밥 외주), 아그리코어
   (2025.10–재직 중, FarmFam+·APC·Smart Farm).
 - 배포는 Vercel로 할 예정이다. 공식 공개 URL(canonical origin)은 아직 확정되지

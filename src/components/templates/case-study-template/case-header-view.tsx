@@ -11,7 +11,7 @@ import { HEADING, TAG } from '@/constants/tag';
 import { TONE } from '@/constants/tone';
 
 export function CaseHeaderView({
-  project,
+  header,
   darkHeader,
   titleTone,
   showSummary,
@@ -29,32 +29,36 @@ export function CaseHeaderView({
           className='text-[36px] leading-[1.15] font-medium tracking-[-0.02em] text-balance wrap-anywhere tab:text-[48px] lap:text-[56px]'
           data-reveal-item='title'
         >
-          {project.title}
+          {header.title}
         </Heading>
-        <Box className='mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 mono'>
-          <Text as={TAG.SPAN} className='muted'>
-            {project.period}
-          </Text>
-          {project.status.map((st) => (
-            <StatusLabel
-              key={st.label}
-              kind={st.kind}
-              label={st.label}
-              tone={st.kind === STATUS_KIND.PRODUCT ? titleTone : TONE.INK}
-            />
-          ))}
-        </Box>
+        {header.period || header.status?.length ? (
+          <Box className='mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 mono'>
+            {header.period ? (
+              <Text as={TAG.SPAN} className='muted'>
+                {header.period}
+              </Text>
+            ) : null}
+            {header.status?.map((st) => (
+              <StatusLabel
+                key={st.label}
+                kind={st.kind}
+                label={st.label}
+                tone={st.kind === STATUS_KIND.PRODUCT ? titleTone : TONE.INK}
+              />
+            ))}
+          </Box>
+        ) : null}
         {showSummary ? (
           <Text className='mt-6 text-[18px] leading-[1.65] tab:text-[20px]'>
-            {project.summary}
+            {header.summary}
           </Text>
         ) : null}
-        {project.case.role.length ? (
+        {header.role?.length ? (
           <Column className='mt-6 gap-3'>
             <Text as={TAG.SPAN} className='mono muted'>
               담당 역할
             </Text>
-            {project.case.role.map((body) => (
+            {header.role.map((body) => (
               <Text key={body} className='text-body leading-[1.7]'>
                 {body}
               </Text>
@@ -64,9 +68,9 @@ export function CaseHeaderView({
         {meta.length ? (
           <CaseMetaView meta={meta} darkHeader={darkHeader} />
         ) : null}
-        {project.links?.length ? (
+        {header.links?.length ? (
           <Box className='mt-4 tab:mt-6'>
-            <ProjectLinks links={project.links} />
+            <ProjectLinks links={header.links} />
           </Box>
         ) : null}
       </Column>

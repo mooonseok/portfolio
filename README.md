@@ -47,6 +47,7 @@ pnpm dev --port 3100
 | --------------------- | ------------------------------------------------------------------------------------------ |
 | 프로젝트 작업실       | `/`                                                                                        |
 | 프로젝트 상세         | `/work/emosave`, `/work/indian-bob`, `/work/farmfam-plus`, `/work/apc`, `/work/smart-farm` |
+| AI 활용 방식          | `/ai`                                                                                      |
 | Emosave 편집기만 보기 | `/preview/emosave-editor`                                                                  |
 | 3D 작업실만 보기      | `/preview/diorama`                                                                         |
 | 이전 홈 구성 비교     | `/preview/classic`                                                                         |

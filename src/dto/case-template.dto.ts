@@ -2,8 +2,10 @@ import type { ReactNode, RefObject } from 'react';
 import type { SurfaceLabel } from '@/constants/case';
 import type { AccentTone } from '@/constants/tone';
 import type { StatusKind } from '@/constants/status';
+import type { NavId } from '@/constants/navigation';
 import type { ContentsGroup } from '@/dto/navigation.dto';
-import type { Project } from '@/dto/project.dto';
+import type { Project, ProjectLink } from '@/dto/project.dto';
+import type { StatusItem } from '@/dto/status.dto';
 
 export interface CaseMetaRow {
   key: string;
@@ -16,6 +18,7 @@ export interface CaseMetaRow {
 export interface CaseNextLink {
   href: string;
   title: string;
+  navLabel?: string;
 }
 
 export interface CaseStudyTemplateProps {
@@ -26,8 +29,22 @@ export interface CaseStudyTemplateProps {
   role?: string;
 }
 
+export interface CaseHeader {
+  title: string;
+  period?: string;
+  status?: StatusItem[];
+  summary?: string;
+  role?: string[];
+  links?: ProjectLink[];
+}
+
+export interface CaseNav {
+  back: boolean;
+  current?: NavId;
+}
+
 export interface CaseHeaderViewProps {
-  project: Project;
+  header: CaseHeader;
   darkHeader?: boolean;
   titleTone: AccentTone;
   showSummary: boolean;
@@ -39,6 +56,7 @@ export interface CaseStudyTemplateViewProps extends CaseHeaderViewProps {
   children: ReactNode;
   groups: ContentsGroup[];
   next: CaseNextLink;
+  nav?: CaseNav;
 }
 
 export interface CaseContentsItem {

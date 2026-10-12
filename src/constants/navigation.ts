@@ -13,3 +13,7 @@ export const NAV_LABEL = {
 } as const satisfies Record<NavId, string>;
 
 export const NAV_SPY = [NAV_ID.WORK, NAV_ID.ABOUT] as const;
+
+export const ROUTE = {
+  AI_PRACTICE: '/ai',
+} as const;

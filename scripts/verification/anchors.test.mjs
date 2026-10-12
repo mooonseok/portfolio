@@ -39,6 +39,26 @@ for (const project of getProjects()) {
   });
 }
 
+test('ai: contents links point to rendered sections and ids stay unique', () => {
+  const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
+  assert.equal([...html.matchAll(/<main\b/g)].length, 1);
+  assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
+  const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(ids.length, new Set(ids).size, 'duplicate rendered ids');
+  const hrefs = [
+    ...html.matchAll(/href="#(overview|work|engineering|collaboration)"/g),
+  ].map((m) => m[1]);
+  assert.deepEqual(
+    [...new Set(hrefs)],
+    ['overview', 'work', 'engineering', 'collaboration']
+  );
+  for (const id of new Set(hrefs))
+    assert.ok(ids.includes(id), `missing target: ${id}`);
+  for (const match of html.matchAll(/aria-(?:labelledby|controls)="([^"]+)"/g))
+    for (const id of match[1].split(/\s+/))
+      assert.ok(ids.includes(id), `missing accessible target: ${id}`);
+});
+
 for (const page of ['work/emosave', 'preview/emosave-editor']) {
   test(`${page}: embedded editor preserves landmarks and accessible descriptions`, () => {
     const html = readFileSync(

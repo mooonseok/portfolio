@@ -19,7 +19,14 @@ export function CaseStudyTemplate({
   const next = getNext(project.slug);
   return (
     <CaseStudyTemplateView
-      project={project}
+      header={{
+        title: project.title,
+        period: project.period,
+        status: project.status,
+        summary: project.summary,
+        role: project.case.role,
+        links: project.links,
+      }}
       hero={
         <ProjectScopeListView
           layers={project.layers}
