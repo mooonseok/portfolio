@@ -40,20 +40,6 @@ export function AiPracticeView({
         <WorkRowsView items={c.work} />
       </CaseSectionView>
       <CaseSectionView
-        group={tags.review}
-        depth={CASE_DEPTH.L2}
-        title={c.reviewTitle}
-        layout={CASE_LAYOUT.WIDE}
-      >
-        <AiRuleRowsView
-          id='ai-review-label'
-          showLabel={false}
-          label={c.reviewTitle}
-          rules={c.review}
-          note={c.reviewNote}
-        />
-      </CaseSectionView>
-      <CaseSectionView
         group={tags.engineering}
         depth={CASE_DEPTH.L2}
         title={c.engineeringTitle}

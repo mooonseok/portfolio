@@ -6,24 +6,18 @@ import { TAG } from '@/constants/tag';
 
 export function AiRuleRowsView({
   id,
-  showLabel = true,
   label,
   rules,
   note,
 }: {
   id: string;
-  showLabel?: boolean;
   label: string;
   rules: AiRule[];
   note: string[];
 }) {
   return (
     <Column className='max-w-[56rem] gap-4 tab:gap-5'>
-      <Text
-        as={TAG.SPAN}
-        id={id}
-        className={showLabel ? 'mono muted' : 'sr-only'}
-      >
+      <Text as={TAG.SPAN} id={id} className='mono muted'>
         {label}
       </Text>
       <Box as={TAG.DL} aria-labelledby={id} className='m-0'>

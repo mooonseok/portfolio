@@ -44,7 +44,6 @@ export const GROUP_ID = {
   WORK: 'work',
   ENGINEERING: 'engineering',
   CURRENT_STATE: 'current-state',
-  REVIEW: 'review',
   COLLABORATION: 'collaboration',
 } as const;
 
@@ -57,6 +56,5 @@ export const GROUP_LABEL = {
   [GROUP_ID.WORK]: '담당 기능',
   [GROUP_ID.ENGINEERING]: '대표 구현 사례',
   [GROUP_ID.CURRENT_STATE]: '결과',
-  [GROUP_ID.REVIEW]: '검토 역할',
   [GROUP_ID.COLLABORATION]: '디자인 협업',
 } as const satisfies Record<GroupId, string>;

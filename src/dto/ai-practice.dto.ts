@@ -26,9 +26,6 @@ export interface AiPractice {
   rulesNote: string[];
   workTitle: string;
   work: WorkItem[];
-  reviewTitle: string;
-  review: AiRule[];
-  reviewNote: string[];
   engineeringTitle: string;
   techNotes: TechNote[];
   collaborationTitle: string;
@@ -39,7 +36,6 @@ export interface AiPractice {
 
 export interface AiPracticeTags {
   work?: GroupTag;
-  review?: GroupTag;
   engineering?: GroupTag;
   collaboration?: GroupTag;
 }
