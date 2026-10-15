@@ -41,7 +41,7 @@ export function DioramaLabelsView(props: DioramaPreviewProps) {
               props.wide ? undefined : props.selected === project.slug
             }
             onClick={(event) => props.onSelect(project.slug, event)}
-            className={`flex min-h-20 w-full flex-col items-start gap-1 rounded-lg border-2 px-4 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--marker-blue)] active:scale-[0.99] motion-reduce:transform-none ${props.selected === project.slug ? 'border-[var(--marker-red)] bg-[var(--note-paper)]' : 'border-hairline bg-paper hover:bg-[var(--board-white)]'}`}
+            className={`flex min-h-20 w-full flex-col items-start gap-1 border-2 px-4 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--marker-blue)] active:scale-[0.99] motion-reduce:transform-none ${props.selected === project.slug ? 'border-[var(--marker-red)] bg-[var(--note-paper)]' : 'border-hairline bg-paper hover:bg-[var(--board-white)]'}`}
           >
             <Text
               as={TAG.SPAN}
@@ -51,7 +51,7 @@ export function DioramaLabelsView(props: DioramaPreviewProps) {
               {project.experiment && (
                 <Text
                   as={TAG.SPAN}
-                  className='rounded border border-dashed border-[var(--marker-green)] px-1.5 text-xs leading-5 text-[var(--marker-green)]'
+                  className='border border-dashed border-[var(--marker-green)] px-1.5 text-xs leading-5 text-[var(--marker-green)]'
                 >
                   실험
                 </Text>

@@ -17,6 +17,8 @@
 @import './components/board-layout.css' layer(components);
 @import './components/hero.css' layer(components);
 @import './components/work-sheet.css' layer(components);
+@import './components/ai-loop.css' layer(components);
+@import './components/ai-loop-draw.css' layer(components);
 
 @theme static {
   --breakpoint-*: initial;
