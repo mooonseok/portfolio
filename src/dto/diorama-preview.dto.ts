@@ -31,6 +31,7 @@ export interface DioramaPreviewProps {
   wide: boolean;
   ready: boolean;
   failed: boolean;
+  still: boolean;
   reduced: boolean;
   onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) => void;
   onClose: () => void;
