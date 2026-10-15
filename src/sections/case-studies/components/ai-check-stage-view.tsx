@@ -16,6 +16,19 @@ import { HEADING, TAG } from '@/constants/tag';
 
 const order = (value: number) => ({ '--order': value }) as CSSProperties;
 
+const DOT_WORD = /(\S*·\S*)/;
+
+const keepDots = (text: string) =>
+  text.split(DOT_WORD).map((part, i) =>
+    DOT_WORD.test(part) ? (
+      <Text as={TAG.SPAN} key={`${i}-${part}`} className='whitespace-nowrap'>
+        {part}
+      </Text>
+    ) : (
+      part
+    )
+  );
+
 function HeadMark({ d }: { d: string }) {
   return (
     <Box as={TAG.SPAN} className='ai-loop-tip'>
@@ -83,19 +96,19 @@ export function AiCheckStageView({
         </Box>
       ) : null}
       <Column className='ai-loop-content'>
-        <Text className='ai-loop-body'>{stage.body}</Text>
+        <Text className='ai-loop-body'>{keepDots(stage.body)}</Text>
         <Row as={TAG.SPAN} className='ai-loop-device'>
-          <Text as={TAG.SPAN} className='ai-loop-device-name'>
-            {stage.device.name}
-          </Text>
           <Text as={TAG.SPAN} className='ai-loop-kind'>
             {AI_CHECK_LABEL[stage.device.kind]}
+          </Text>
+          <Text as={TAG.SPAN} className='ai-loop-device-name'>
+            {stage.device.name}
           </Text>
         </Row>
         <List role='list' className='ai-loop-items'>
           {stage.device.items.map((item) => (
             <ListItem key={item} className='ai-loop-item'>
-              {item}
+              {keepDots(item)}
             </ListItem>
           ))}
         </List>

@@ -33,7 +33,7 @@ export function AiCheckLoopView({
           />
         ))}
       </List>
-      <Text className='ai-loop-label lap:sr-only'>{flow.loopLabel}</Text>
+      <Text className='ai-loop-label'>{flow.loopLabel}</Text>
     </ScrollScene>
   );
 }

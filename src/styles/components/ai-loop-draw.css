@@ -1,13 +1,20 @@
 @media (min-width: 1024px) {
   .ai-loop {
-    --stagger: 230ms;
+    position: relative;
+    --stagger: 200ms;
+  }
+  .ai-loop-label {
+    position: absolute;
+    top: clamp(20px, 3vw, 36px);
+    left: calc(clamp(20px, 3vw, 36px) + 4px);
+    margin: 0;
   }
   .ai-loop-list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(4, auto);
     column-gap: var(--gap-x);
-    padding: 0 40px;
+    padding: 34px 40px 0;
   }
   .ai-loop-stage {
     display: grid;
@@ -112,6 +119,9 @@
   }
   .ai-loop[data-inview='true'] .ai-loop-bend {
     --draw-dur: 400ms;
+  }
+  .ai-loop[data-inview='true'] .ai-loop-bend[data-dir='left'] {
+    transition-delay: calc(var(--order) * var(--stagger) + 150ms);
   }
   .ai-loop[data-inview='true'] .ai-loop-down {
     --draw-dur: 280ms;
