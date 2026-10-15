@@ -115,13 +115,15 @@ tablet before the footer. The `/ai` page reuses the case-study template
 (overview, contents, sections, tech notes) with ABOUT as the active nav item, no
 back link, and a NEXT link to the home project board instead of the project
 cycle. The AI page separates instruction scope, the task workflow, verification
-tooling examples and design collaboration. Cross-tool review is described within
-the task workflow. Personal hooks and local checks retain their stated scope. On
-page exit, the workshop saves its selection and scroll position to that browser
-history entry. Returning or reloading restores the panel before scroll
-placement; a fresh entry starts unselected. Existing router history fields are
-preserved. The classic layout described below remains available through the
-switch.
+tooling examples and design collaboration. The task workflow is one ordered list
+of six stages with every stage's body, check device and items visible at rest
+(3×2 clockwise loop from 1024px, a vertical list below). Cross-tool review is
+described within the task workflow. Personal hooks and local checks retain their
+stated scope. On page exit, the workshop saves its selection and scroll position
+to that browser history entry. Returning or reloading restores the panel before
+scroll placement; a fresh entry starts unselected. Existing router history
+fields are preserved. The classic layout described below remains available
+through the switch.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently
@@ -340,15 +342,16 @@ Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
 written as CSS variables / attributes.
 
-| Element            | Behavior                                                                                                                                                                                                               | Reduced motion                 |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only | first node active, no stepping |
-| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                              | complete immediately           |
-| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                            | visible, no transform          |
-| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case scope lists do not mount it                                                                                                 | none                           |
-| Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                            | same                           |
-| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                   | none                           |
-| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                | color only                     |
+| Element            | Behavior                                                                                                                                                                                                                         | Reduced motion                 |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only           | first node active, no stepping |
+| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                        | complete immediately           |
+| AI work loop       | own `ScrollScene` around the list; blue marker segments wipe in once clockwise, 320ms (bends 400ms) / 200ms stagger, +150ms before the return, ≈1.95s (≥1024); down arrows 280 / 150 (<1024); text never moves; no red, no notes | complete immediately           |
+| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                      | visible, no transform          |
+| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case scope lists do not mount it                                                                                                           | none                           |
+| Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                                      | same                           |
+| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                             | none                           |
+| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                          | color only                     |
 
 ## 6. Accessibility
 

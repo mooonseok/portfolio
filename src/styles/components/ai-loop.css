@@ -1,0 +1,129 @@
+.ai-loop {
+  --gap-x: 40px;
+  --stagger: 150ms;
+}
+.ai-loop-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ai-loop-stage {
+  position: relative;
+}
+.ai-loop-top {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+}
+.ai-loop-name {
+  margin: 0;
+  font-size: var(--fs-d4);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.ai-loop-span,
+.ai-loop-bend {
+  display: none;
+}
+.ai-loop-body {
+  max-width: 34em;
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.ai-loop-device {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-top: 16px;
+}
+.ai-loop-device-name {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.ai-loop-kind {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--subtle);
+}
+.ai-loop-items {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ai-loop-item {
+  padding: 7px 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.ai-loop-item + .ai-loop-item {
+  border-top: 1px solid var(--hairline);
+}
+.ai-loop-stroke {
+  stroke: var(--marker-blue);
+  stroke-width: 2.2px;
+}
+.ai-loop-draw .marker-svg,
+.ai-loop-tip .marker-svg {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ai-loop-mirror {
+  transform: scaleX(-1);
+}
+.ai-loop-tip {
+  position: absolute;
+  width: 12px;
+  height: 14px;
+}
+.ai-loop-down {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 34px;
+  margin: 14px 0 12px 1px;
+}
+.ai-loop-down .ai-loop-tip {
+  bottom: -6px;
+  left: 50%;
+  translate: -50% 0;
+  rotate: 90deg;
+}
+.ai-loop-label {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  color: var(--subtle);
+}
+
+@media (min-width: 744px) and (max-width: 1023px) {
+  .ai-loop-stage {
+    display: grid;
+    grid-template-columns: minmax(7.5em, 10em) minmax(0, 1fr);
+    column-gap: 24px;
+  }
+  .ai-loop-top {
+    grid-area: 1 / 1;
+    align-self: start;
+  }
+  .ai-loop-content {
+    grid-area: 1 / 2 / span 2 / 3;
+  }
+  .ai-loop-body {
+    margin-top: 8px;
+  }
+  .ai-loop-down {
+    grid-area: 2 / 1;
+    height: auto;
+    min-height: 34px;
+    margin: 8px 0 14px 1px;
+  }
+  .ai-loop-device-name {
+    font-size: 16px;
+  }
+}
