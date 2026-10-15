@@ -37,3 +37,25 @@ export function markerLoop(seed: number) {
     `C${p(-6)} ${p(70)} ${p(4)} ${p(38)} ${p(30)} ${p(16)}`,
   ].join(' ');
 }
+
+export function markerSpan(seed: number) {
+  const r = generator(seed);
+  const p = (v: number, j: number) => (v + (r() - 0.5) * j * 2).toFixed(2);
+  return `M${p(2, 1)} ${p(52, 8)} Q${p(50, 10)} ${p(38, 10)} ${p(98, 1)} ${p(50, 6)}`;
+}
+
+export function markerHead(seed: number) {
+  const r = generator(seed);
+  const p = (v: number, j: number) => (v + (r() - 0.5) * j * 2).toFixed(2);
+  return `M${p(16, 4)} ${p(12, 4)} L${p(88, 2)} ${p(50, 3)} L${p(16, 4)} ${p(88, 4)}`;
+}
+
+export function markerBend(seed: number) {
+  const r = generator(seed);
+  const p = (v: number, j: number) => (v + (r() - 0.5) * j * 2).toFixed(2);
+  return [
+    `M${p(2, 1)} ${p(1, 0.5)}`,
+    `C${p(68, 6)} ${p(1, 0.5)} ${p(97, 1)} ${p(22, 4)} ${p(97, 1)} ${p(50, 3)}`,
+    `C${p(97, 1)} ${p(78, 4)} ${p(68, 6)} ${p(99, 0.5)} ${p(2, 1)} ${p(99, 0.5)}`,
+  ].join(' ');
+}

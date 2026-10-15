@@ -1,10 +1,11 @@
+import { AiCheckLoop } from './components/ai-check-flow';
 import { AiRuleRowsView } from './components/ai-rule-rows-view';
 import { CaseSectionView } from './components/case-section-view';
 import { ParagraphsView } from './components/paragraphs-view';
-import { WorkRowsView } from './components/work-rows-view';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { CaseStudyTemplateView } from '@/components/templates/case-study-template/case-study-template-view';
 import type { AiPracticeViewProps } from '@/dto/ai-practice.dto';
+import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { NAV_ID } from '@/constants/navigation';
 import { TONE } from '@/constants/tone';
@@ -35,9 +36,11 @@ export function AiPracticeView({
       <CaseSectionView
         group={tags.work}
         depth={CASE_DEPTH.L1}
-        title={c.workTitle}
+        title={c.checks.title}
+        titleId={AI_LOOP_TITLE_ID}
+        layout={CASE_LAYOUT.WIDE}
       >
-        <WorkRowsView items={c.work} />
+        <AiCheckLoop flow={c.checks} />
       </CaseSectionView>
       <CaseSectionView
         group={tags.engineering}

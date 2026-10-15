@@ -1,6 +1,7 @@
 import type { AiPractice } from '@/dto/ai-practice.dto';
 import { GROUP_ID, GROUP_LABEL } from '@/constants/case';
 import { ROUTE } from '@/constants/navigation';
+import { aiCheckFlow } from '@/content/ai-practice-checks';
 
 export const aiPractice: AiPractice = {
   title: 'AI 활용 방식',
@@ -42,31 +43,7 @@ export const aiPractice: AiPractice = {
     '개인 Claude Code 환경에는 명령 실행 전에 자동으로 확인하는 스크립트(훅)를 등록했습니다. 현재 브랜치가 지정한 공용 브랜치이면 커밋 명령을 멈추고 작업 브랜치를 만들도록 안내합니다.',
   ],
 
-  workTitle: '요청부터 검토까지의 흐름',
-  work: [
-    {
-      title: '요청',
-      body: ['저장소 지침과 이번 작업의 지시를 함께 전달합니다.'],
-    },
-    {
-      title: '계획·진단',
-      body: [
-        '영향 범위가 큰 변경은 계획과 선택지를 먼저 요청합니다. 원인이 불분명한 문제는 수정 전에 원인과 근거부터 확인합니다.',
-      ],
-    },
-    {
-      title: '구현·검사',
-      body: [
-        '정한 범위 안에서 구현을 요청하고, 필요한 lint·타입 검사·테스트·빌드를 지정합니다. 검사 실행 결과와 미확인 범위를 함께 확인합니다.',
-      ],
-    },
-    {
-      title: '검토·지침 반영',
-      body: [
-        '다른 AI 도구의 리뷰도 실제 코드와 대조한 뒤 반영하고, 반복되는 수정 사항은 작업 지침에 추가합니다.',
-      ],
-    },
-  ],
+  checks: aiCheckFlow,
 
   engineeringTitle: '반복 확인을 검사로 옮긴 사례',
   techNotes: [
