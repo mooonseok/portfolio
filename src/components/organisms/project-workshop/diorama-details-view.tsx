@@ -17,7 +17,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       as={TAG.SECTION}
       id={DIORAMA.PANEL_ID}
       aria-labelledby='project-stage-title'
-      className={`rounded-[16px] p-6 tab:p-8 ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border border-hairline'}`}
+      className={`p-6 tab:p-8 ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border border-hairline'}`}
     >
       <Box className='flex items-start justify-between gap-4'>
         <Heading
