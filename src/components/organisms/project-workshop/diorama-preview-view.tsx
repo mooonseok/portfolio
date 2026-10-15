@@ -72,7 +72,9 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
                 ? '3D를 불러오지 못했습니다. 아래 이름표로 프로젝트를 선택하세요.'
                 : props.ready
                   ? '모형이나 아래 이름표로 선택할 수 있습니다.'
-                  : '3D를 준비하고 있습니다. 이름표로 먼저 살펴볼 수 있습니다.'}
+                  : props.still
+                    ? '아래 이름표로 프로젝트를 선택할 수 있습니다.'
+                    : '3D를 준비하고 있습니다. 이름표로 먼저 살펴볼 수 있습니다.'}
             </Text>
             <Box as={TAG.FIGURE} className='m-0'>
               <Box className='relative aspect-[5/3] w-full overflow-hidden rounded-[6px] bg-[#e9e7df] lap:aspect-auto lap:h-[380px]'>

@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, MouseEvent } from 'react';
 import { PROJECT_SLUG, type ProjectSlug } from '@/constants/project';
 import { readDioramaHistory, withDioramaHistory } from '@/lib/diorama-history';
+import { readStageLoadEnv, shouldLoadStage } from '@/lib/diorama-load';
 import type { DioramaHistory } from '@/dto/diorama-history.dto';
 import { DIORAMA } from '@/constants/diorama';
 
@@ -23,6 +24,7 @@ export function useDioramaStage() {
   const [wide, setWide] = useState(false);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [still, setStill] = useState(false);
   const [reduced, setReduced] = useState(true);
 
   useLayoutEffect(() => {
@@ -92,6 +94,10 @@ export function useDioramaStage() {
     };
     setFailed(false);
     setReady(false);
+    if (!shouldLoadStage(readStageLoadEnv(window, DIORAMA.REDUCED))) {
+      setStill(true);
+      return;
+    }
     void import('@/lib/diorama/create-stage')
       .then(({ createStage }) => {
         if (cancelled) return;
@@ -168,6 +174,7 @@ export function useDioramaStage() {
     wide,
     ready: ready && !failed,
     failed,
+    still,
     reduced,
     onSelect: (slug: ProjectSlug, event: MouseEvent<HTMLButtonElement>) => {
       if (!wide)
