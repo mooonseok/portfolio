@@ -1,16 +1,17 @@
 import * as THREE from 'three';
+import { DIORAMA_COLOR } from './create-model';
 
 export function modelParts() {
   const group = new THREE.Group();
   const paper = new THREE.MeshStandardMaterial({
-    color: '#f3f2ed',
+    color: DIORAMA_COLOR.face,
     roughness: 0.9,
   });
   const blue = new THREE.MeshStandardMaterial({
-    color: '#1f5fd6',
+    color: DIORAMA_COLOR.blue,
     roughness: 0.9,
   });
-  const ink = new THREE.LineBasicMaterial({ color: '#161817' });
+  const ink = new THREE.LineBasicMaterial({ color: DIORAMA_COLOR.line });
   const add = (
     geometry: THREE.BufferGeometry,
     x: number,
@@ -46,7 +47,7 @@ export function modelParts() {
   const ring = new THREE.Mesh(
     new THREE.TorusGeometry(2.63, 0.026, 8, 96),
     new THREE.MeshBasicMaterial({
-      color: '#d23a2e',
+      color: DIORAMA_COLOR.select,
       transparent: true,
       opacity: 0,
       depthWrite: false,

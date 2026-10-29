@@ -3,7 +3,7 @@ import type {
   DioramaStage,
   DioramaStageOptions,
 } from '@/dto/diorama-stage.dto';
-import { disposeModel } from './create-model';
+import { DIORAMA_LIGHT, disposeModel } from './create-model';
 import { createProjectScene } from './create-project-scene';
 import { createSceneMotion } from './create-scene-motion';
 
@@ -19,8 +19,14 @@ export function createStage(
     disposeModel(scene);
     throw error;
   }
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xb6b8b0, 2.2));
-  const light = new THREE.DirectionalLight(0xffffff, 2.4);
+  scene.add(
+    new THREE.HemisphereLight(
+      DIORAMA_LIGHT.sky,
+      DIORAMA_LIGHT.ground,
+      DIORAMA_LIGHT.hemisphere
+    )
+  );
+  const light = new THREE.DirectionalLight(0xffffff, DIORAMA_LIGHT.key);
   light.position.set(-3, 7, 5);
   scene.add(light);
   const camera = new THREE.OrthographicCamera(-4, 4, 3, -3, 0.1, 50);

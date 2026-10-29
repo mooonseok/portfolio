@@ -1,18 +1,33 @@
 import * as THREE from 'three';
 
+export const DIORAMA_COLOR = {
+  face: '#1b2a4a',
+  recess: '#111d38',
+  line: '#ebe3cb',
+  blue: '#8fb0e8',
+  select: '#e0664a',
+} as const;
+
+export const DIORAMA_LIGHT = {
+  sky: 0xffffff,
+  ground: 0xc3cadb,
+  hemisphere: 3,
+  key: 2.3,
+} as const;
+
 export function createModel() {
   const group = new THREE.Group();
   const paper = new THREE.MeshStandardMaterial({
-    color: '#f3f2ed',
+    color: DIORAMA_COLOR.face,
     roughness: 0.9,
   });
   const blue = new THREE.MeshStandardMaterial({
-    color: '#1f5fd6',
+    color: DIORAMA_COLOR.blue,
     roughness: 0.85,
   });
-  const ink = new THREE.LineBasicMaterial({ color: '#161817' });
+  const ink = new THREE.LineBasicMaterial({ color: DIORAMA_COLOR.line });
   const dark = new THREE.MeshStandardMaterial({
-    color: '#161817',
+    color: DIORAMA_COLOR.recess,
     roughness: 0.9,
   });
   const add = (
@@ -68,7 +83,7 @@ export function createModel() {
   const ring = new THREE.Mesh(
     new THREE.TorusGeometry(2.63, 0.026, 8, 96),
     new THREE.MeshBasicMaterial({
-      color: '#d23a2e',
+      color: DIORAMA_COLOR.select,
       transparent: true,
       opacity: 0,
       depthWrite: false,
