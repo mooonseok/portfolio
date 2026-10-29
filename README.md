@@ -95,6 +95,7 @@ pnpm check:perf         # 경로별 첫 로딩 JS 크기 예산 검사
 | [src/styles](src/styles/)                     | 공통 스타일과 디자인 토큰           |
 | [public/images](public/images/)               | 개념 이미지와 편집기 그림           |
 | [scripts](scripts/)                           | 테스트와 검증 도구                  |
+| [.claude](.claude/)                           | 에이전트 설정·진행표·검토 에이전트  |
 | [.githooks](.githooks/)                       | 커밋 메시지 검사 훅                 |
 
 프로젝트의 기본 정보는 `<slug>.ts`, 상세 본문은 `<slug>-case.ts`에서 수정합니다.
