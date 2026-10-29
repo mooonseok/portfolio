@@ -111,12 +111,16 @@
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.character:focus-visible,
 .control:focus-visible,
 .choice:focus-visible,
 .bubbleControl:focus-visible {
   outline: 2px solid var(--color-ink);
   outline-offset: 3px;
+}
+.character:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--note-ink);
 }
 .control:active:not(:disabled),
 .choice:active:not(:disabled) {
