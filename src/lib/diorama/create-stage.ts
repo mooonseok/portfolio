@@ -11,7 +11,9 @@ export function createStage(
   host: HTMLDivElement,
   options: DioramaStageOptions
 ): DioramaStage {
-  const { scene, models } = createProjectScene();
+  const { scene, models } = createProjectScene(
+    Math.min(window.devicePixelRatio || 1, 2)
+  );
   let renderer: THREE.WebGLRenderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -19,15 +21,9 @@ export function createStage(
     disposeModel(scene);
     throw error;
   }
-  scene.add(
-    new THREE.HemisphereLight(
-      DIORAMA_LIGHT.sky,
-      DIORAMA_LIGHT.ground,
-      DIORAMA_LIGHT.hemisphere
-    )
-  );
+  scene.add(new THREE.AmbientLight(0xffffff, DIORAMA_LIGHT.ambient));
   const light = new THREE.DirectionalLight(0xffffff, DIORAMA_LIGHT.key);
-  light.position.set(-3, 7, 5);
+  light.position.set(...DIORAMA_LIGHT.direction);
   scene.add(light);
   const camera = new THREE.OrthographicCamera(-4, 4, 3, -3, 0.1, 50);
   const motion = createSceneMotion(models, camera);

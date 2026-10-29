@@ -1,17 +1,9 @@
 import * as THREE from 'three';
-import { DIORAMA_COLOR } from './create-model';
+import { DIORAMA_COLOR, createMaterials } from './create-model';
 
-export function modelParts() {
+export function modelParts(pixelRatio = 1) {
   const group = new THREE.Group();
-  const paper = new THREE.MeshStandardMaterial({
-    color: DIORAMA_COLOR.face,
-    roughness: 0.9,
-  });
-  const blue = new THREE.MeshStandardMaterial({
-    color: DIORAMA_COLOR.blue,
-    roughness: 0.9,
-  });
-  const ink = new THREE.LineBasicMaterial({ color: DIORAMA_COLOR.line });
+  const { paper, accent: hatch, ink } = createMaterials(pixelRatio);
   const add = (
     geometry: THREE.BufferGeometry,
     x: number,
@@ -19,7 +11,7 @@ export function modelParts() {
     z: number,
     accent = false
   ) => {
-    const mesh = new THREE.Mesh(geometry, accent ? blue : paper);
+    const mesh = new THREE.Mesh(geometry, accent ? hatch : paper);
     mesh.position.set(x, y, z);
     mesh.add(
       new THREE.LineSegments(new THREE.EdgesGeometry(geometry, 25), ink)

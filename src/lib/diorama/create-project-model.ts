@@ -3,11 +3,11 @@ import { PROJECT_SLUG, type ProjectSlug } from '@/constants/project';
 import { createModel } from './create-model';
 import { modelParts } from './model-parts';
 
-export function createProjectModel(slug: ProjectSlug) {
+export function createProjectModel(slug: ProjectSlug, pixelRatio = 1) {
   const model =
     slug === PROJECT_SLUG.FARMFAM_PLUS
-      ? createModel()
-      : createDistinctModel(slug);
+      ? createModel(pixelRatio)
+      : createDistinctModel(slug, pixelRatio);
   model.group.userData.projectSlug = slug;
   model.group.traverse((object) => {
     if (object instanceof THREE.Mesh && object !== model.ring)
@@ -16,8 +16,8 @@ export function createProjectModel(slug: ProjectSlug) {
   return model;
 }
 
-function createDistinctModel(slug: ProjectSlug) {
-  const m = modelParts();
+function createDistinctModel(slug: ProjectSlug, pixelRatio: number) {
+  const m = modelParts(pixelRatio);
   if (slug === PROJECT_SLUG.EMOSAVE) {
     m.phone(-0.95, -0.25);
     m.add(new THREE.CircleGeometry(0.2, 24), -0.95, 1.34, -0.12);
