@@ -77,7 +77,14 @@ pnpm test
 pnpm check:boundaries
 pnpm format:check
 pnpm build
+pnpm check:anchors
+pnpm check:metadata
+pnpm check:perf
 ```
+
+- `check:perf`는 경로별 첫 로딩 JS와 가장 큰 청크를
+  `scripts/verification/perf-budget.json` 예산과 비교합니다. 새 경로의 예산
+  추가나 예산 상향은 사용자에게 확인한 뒤에 합니다.
 
 - 화면에 보이는 변경은 브라우저에서 390 / 744 / 1024 / 1440px와 관련 선택 상태를
   직접 확인합니다. 코드만 확인한 것을 브라우저에서 확인했다고 보고하지 않습니다.

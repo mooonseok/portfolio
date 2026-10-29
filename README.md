@@ -75,6 +75,7 @@ pnpm format:check       # 코드·문서 서식 검사
 pnpm build              # 배포용 빌드
 pnpm check:anchors      # 빌드된 페이지의 링크 대상·접근성 참조 검사
 pnpm check:metadata     # 검색·공유 정보와 사이트맵 검사
+pnpm check:perf         # 경로별 첫 로딩 JS 크기 예산 검사
 ```
 
 서식은 `pnpm format`으로 정리합니다. 화면 변경 시에는 390 / 744 / 1024 /
