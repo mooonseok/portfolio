@@ -129,24 +129,25 @@ makes the whole home chrome and content inert. The unselected desktop panel
 lists each project and its owned areas with direct case links. Selected panels
 retain all work sentences with separators between areas. Stories and tools use
 compact section spacing only on the workshop home. Workshop stories align with
-the main container rather than the classic metadata rail. Selected notes have
-one case link below the work list. 3D loads automatically at every viewport
-width, with a static illustration during loading or failure and no user-facing
-3D toggle. With reduced motion, Save-Data or no WebGL, the home keeps the static
-illustration and labels and never downloads the 3D module. Both home variants
-place the AI practice summary after the tools table, on the same heading axis,
-with one link to `/ai`; it leaves 80px on mobile and 96px from tablet before the
-footer. The `/ai` page reuses the case-study template (overview, contents,
-sections, tech notes) with ABOUT as the active nav item, no back link, and a
-NEXT link to the home project board instead of the project cycle. The AI page
-separates instruction scope, the task workflow, verification tooling examples
-and design collaboration. Cross-tool review is described within the task
-workflow. Personal hooks and local checks retain their stated scope. On page
-exit, the workshop saves its selection and scroll position to that browser
-history entry. Returning or reloading restores the panel before scroll
-placement; a fresh entry starts unselected. Existing router history fields are
-preserved. The classic layout described below remains available through the
-switch.
+the main container rather than the classic metadata rail. The selected work
+panel is a navy board (night-2, cream double border, vermilion top rule), not a
+cream note; only the selected name label stays cream. It has one case link below
+the work list. 3D loads automatically at every viewport width, with a static
+illustration during loading or failure and no user-facing 3D toggle. With
+reduced motion, Save-Data or no WebGL, the home keeps the static illustration
+and labels and never downloads the 3D module. Both home variants place the AI
+practice summary after the tools table, on the same heading axis, with one link
+to `/ai`; it leaves 80px on mobile and 96px from tablet before the footer. The
+`/ai` page reuses the case-study template (overview, contents, sections, tech
+notes) with ABOUT as the active nav item, no back link, and a NEXT link to the
+home project board instead of the project cycle. The AI page separates
+instruction scope, the task workflow, verification tooling examples and design
+collaboration. Cross-tool review is described within the task workflow. Personal
+hooks and local checks retain their stated scope. On page exit, the workshop
+saves its selection and scroll position to that browser history entry. Returning
+or reloading restores the panel before scroll placement; a fresh entry starts
+unselected. Existing router history fields are preserved. The classic layout
+described below remains available through the switch.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently
@@ -191,22 +192,22 @@ the owner-confirmed contribution, team size and verification scope.
 
 The hero whiteboard (`organisms/whiteboard`, data from `project.layers`) has
 five projects in start-year order and five layers (앱 / 관리자 웹 / 서버 API /
-DB / 기기). At 1024px and above each built cell is a blue marker box showing its
-technology and a dedicated `layers.summary`; layers the developer did not build
-are faint dotted outlines; vertically adjacent built cells in one project are
-joined by a short marker line (connection only, not order). Below 1024px each
-project lists its owned layers as marker chips; unbuilt layers are hidden. Each
-column header shows the service and participation period. Selecting a project
-name draws a vermilion marker loop and opens a cream note below the matrix (the
-matrix does not move) with layer-only headings and complete work sentences
-(`layers.lines`) as separate list items, plus the case link. Technology names
-are omitted from note headings consistently across projects. Period and product
-status stay outside the note. Blue solid = 직접 개발·유지보수, green dashed =
-experiment, vermilion = current selection. The loop draws in 300ms and the note
-enters in 180ms only when a pointer opens the first note; switching notes,
-keyboard and reduced-motion selection are immediate. Selecting keeps the tapped
-title at the same screen position. Experiment cells carry a screen-reader
-"(실험)" suffix.
+DB / 기기). At 1024px and above each built cell is a cream marker box showing
+its technology and a dedicated `layers.summary`; layers the developer did not
+build are faint dotted outlines; vertically adjacent built cells in one project
+are joined by a short marker line (connection only, not order). Below 1024px
+each project lists its owned layers as marker chips; unbuilt layers are hidden.
+Each column header shows the service and participation period. Selecting a
+project name draws a vermilion marker loop and opens a cream note below the
+matrix (the matrix does not move) with layer-only headings and complete work
+sentences (`layers.lines`) as separate list items, plus the case link.
+Technology names are omitted from note headings consistently across projects.
+Period and product status stay outside the note. Cream solid (`marker-blue`) =
+직접 개발·유지보수, dim cream dashed (`marker-green`) = experiment, vermilion =
+current selection. The loop draws in 300ms and the note enters in 180ms only
+when a pointer opens the first note; switching notes, keyboard and
+reduced-motion selection are immediate. Selecting keeps the tapped title at the
+same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
 
 `Project` →
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, boardService, layers[], summary, links?, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
@@ -366,18 +367,18 @@ Sections emit data attributes; the client organisms drive them. No React state
 changes per scroll frame: IntersectionObserver gates each rAF loop, values are
 written as CSS variables / attributes.
 
-| Element            | Behavior                                                                                                                                                                                                                         | Reduced motion                 |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only           | first node active, no stepping |
-| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                        | complete immediately           |
-| AI work loop       | own `ScrollScene` around the list; blue marker segments wipe in once clockwise, 320ms (bends 400ms) / 200ms stagger, +150ms before the return, ≈1.95s (≥1024); down arrows 280 / 150 (<1024); text never moves; no red, no notes | complete immediately           |
-| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                      | visible, no transform          |
-| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case scope lists do not mount it                                                                                                           | none                           |
-| Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                                      | same                           |
-| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                             | none                           |
-| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                          | color only                     |
-| Opener             | once per tab session: words drop 0.16s / 0.17s stagger with squash, hatched wipe 0.99s, 박·문·석 at 1.15/1.25/1.32 + shake 1.42, tag frame 1.7, exit 2.45, device medallions land on four orbits, total ≈3.15s, then 0.35s fade  | line and name fade only (~2s)  |
-| Orbit home         | one turn per 70s; hover or focus pauses; drag turns; label moves to the next free spot with a 0.24s ease; selected orbit and reticle in vermilion                                                                                | static frame, no spin          |
+| Element            | Behavior                                                                                                                                                                                                                                           | Reduced motion                 |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only                             | first node active, no stepping |
+| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                                          | complete immediately           |
+| AI work loop       | own `ScrollScene` around the list; straight cream segments and exact arcs wipe in once clockwise, 320ms (bends 400ms) / 200ms stagger, +150ms before the return, ≈1.95s (≥1024); down arrows 280 / 150 (<1024); text never moves; no red, no notes | complete immediately           |
+| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                                        | visible, no transform          |
+| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case scope lists do not mount it                                                                                                                             | none                           |
+| Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                                                        | same                           |
+| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                                               | none                           |
+| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                                            | color only                     |
+| Opener             | once per tab session: words drop 0.16s / 0.17s stagger with squash, hatched wipe 0.99s, 박·문·석 at 1.15/1.25/1.32 + shake 1.42, tag frame 1.7, exit 2.45, device medallions land on four orbits, total ≈3.15s, then 0.35s fade                    | line and name fade only (~2s)  |
+| Orbit home         | one turn per 70s; hover or focus pauses; drag turns; label moves to the next free spot with a 0.24s ease; selected orbit and reticle in vermilion                                                                                                  | static frame, no spin          |
 
 ## 6. Accessibility
 
@@ -468,7 +469,9 @@ written as CSS variables / attributes.
      a heavier weight on any page.
 
    Fallback stacks stay in the `@theme` block of `styles/globals.css`
-   (`--font-sans`, `--font-mono`); every face uses `font-display: swap`.
+   (`--font-sans`, `--font-mono`); `--font-mono` falls back to Pretendard
+   Variable so Korean mono labels render in Pretendard. Every face uses
+   `font-display: swap`.
 
 6. **Publication metadata:** GitHub's homepage setting points to
    `https://portfolio-ten-umber-trj7j2b3qz.vercel.app`; verify that existing

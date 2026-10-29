@@ -8,17 +8,18 @@ colors:
   dark-2: '#111d38'
   night-line: '#2a3a5c'
   dark-rule: '#3a4a6c'
+  hairline: '#3a4a6c'
   moonlight: '#ebe3cb'
   dim: '#b4ad96'
-  graphite: '#8d93a6'
+  graphite: '#9c9682'
   far: '#6a7899'
   vermilion: '#e0664a'
   board-white: '#111d38'
   board-frame: '#2a3a5c'
   board-edge: '#3a4a6c'
   board-tray: '#1b2a4a'
-  marker-blue: '#8fb0e8'
-  marker-green: '#7fc9a2'
+  marker-blue: '#ebe3cb'
+  marker-green: '#b4ad96'
   marker-red: '#e0664a'
   marker-ghost: '#6a7899'
   note-paper: '#ebe3cb'
@@ -41,7 +42,7 @@ typography:
     fontWeight: 400
     lineHeight: 1.7
   label:
-    fontFamily: 'IBM Plex Mono, monospace'
+    fontFamily: 'IBM Plex Mono, PretendardVariable, monospace'
     fontSize: '13px'
     fontWeight: 400
   body-tablet:
@@ -126,6 +127,10 @@ components:
   condition-chip-selected:
     backgroundColor: '{colors.moonlight}'
     textColor: '{colors.night}'
+  workshop-panel:
+    backgroundColor: '{colors.night-2}'
+    textColor: '{colors.moonlight}'
+    rounded: '{rounded.square}'
   workshop-label-selected:
     backgroundColor: '{colors.note-paper}'
     textColor: '{colors.note-ink}'
@@ -162,15 +167,16 @@ components:
 
 - 홈은 크림색 새김 행성과 초승달, 성도 테두리, 판독 패널로 읽습니다.
 - 이력·사례 화면의 보드·작업실 모형·사례 본문은 구조를 그대로 두고 색만 밤 테마
-  토큰으로 바꿨습니다. 화이트보드 메모와 작업실의 선택 이름표는 크림 종이로
-  남겼습니다.
+  토큰으로 바꿨습니다. 크림 종이는 화이트보드 메모와 작업실의 선택 이름표에만
+  남겼고, 작업실 담당 업무 패널은 남색 판입니다.
 - 색과 함께 실험 문구·점선·새김 무늬를 사용합니다.
 
 ## Colors
 
 `src/styles/globals.css`의 `@theme`는 밤 테마 이름과 기존 역할 이름을 같은
 값으로 함께 둡니다. 컴포넌트는 기존 이름(`paper`, `ink`, `subtle` 등)을 그대로
-쓰고, 홈 궤도와 오프닝은 밤 테마 이름을 씁니다.
+쓰고, 홈 궤도와 오프닝은 밤 테마 이름을 씁니다. `html`에는
+`color-scheme: dark`를 지정합니다.
 
 - **바탕 남색:** night = paper `#0e1830`(페이지 바탕), night-deep = dark
   `#0b1428`(홈·오프닝·푸터의 `surface-dark`), night-2 = tint = placeholder
@@ -179,25 +185,29 @@ components:
 - **크림 선·글자:** moonlight = ink `#ebe3cb`. 판면의 반투명 선은 hair
   `rgb(235 227 203 / 0.32)`입니다. 어두운 구간(`surface-dark`)과 어두운 흐름도도
   크림색 글자·선을 씁니다.
-- **보조 글자:** dim = subtle = dark-sub `#b4ad96`. graphite `#8d93a6`는 어두운
+- **보조 글자:** dim = subtle = dark-sub `#b4ad96`. graphite `#9c9682`는 어두운
   구간의 흐린 글자와 흐린 흐름도, far `#6a7899`는 홈 링크 밑줄의 기본색에
   씁니다.
-- **구분선:** night-line = hairline = dark-line `#2a3a5c`, dark-rule `#3a4a6c`.
-- **주홍:** vermilion = signal `#e0664a`. 선택·현재·신호에만 씁니다. 홈의 선택
-  궤도·조준선·패널 상단 2px 선, 보드 선택 원(marker-red), 작업실 선택
-  모형·이름표 테두리, 현재 상태 ●, CTA·푸터 링크 하단선이 해당합니다.
-  오프닝에서는 이름 끝 점 하나에만 씁니다.
+- **구분선:** hairline = dark-rule `#3a4a6c`, night-line = dark-line `#2a3a5c`.
+- **주홍:** vermilion = signal `#e0664a`. 선택·현재 위치·신호에만 씁니다. 홈의
+  선택 궤도·조준선, 보드 선택 원(marker-red), 작업실 선택 모형·이름표 테두리,
+  현재 상태 ●, 메뉴 현재 위치 점, CTA·푸터 링크 하단선이 해당합니다. 예외는 홈
+  오프닝의 이름 끝 점과 판독 패널 상단 2px 선(홈 판독 패널, 같은 모양의 작업실
+  담당 업무 패널) 두 가지입니다. 404 코드는 주홍 대신 보조 글자색입니다.
 - **보드 토큰(`tokens.css`):** board-white `#111d38`, board-frame `#2a3a5c`,
   board-edge `#3a4a6c`, board-tray `#1b2a4a`, marker-ink `#ebe3cb`, marker-blue
-  `#8fb0e8`(직접 개발·유지보수), marker-green `#7fc9a2`(실험 점선), marker-red
-  `#e0664a`(현재 선택), marker-ghost `#6a7899`(담당 범위 밖·지우개), note-paper
-  `#ebe3cb`, note-ink `#0b1428`.
-- **크림 종이:** 화이트보드 메모와 작업실의 선택 이름표는 note-paper 바탕에
+  `#ebe3cb`(직접 개발·유지보수, 크림 실선), marker-green `#b4ad96`(실험, 흐린
+  크림 점선), marker-red `#e0664a`(현재 선택), marker-ghost `#6a7899`(담당 범위
+  밖·지우개), note-paper `#ebe3cb`, note-ink `#0b1428`. 하늘색·민트색은 쓰지
+  않습니다.
+- **크림 종이:** 화이트보드 메모와 작업실의 선택 이름표만 note-paper 바탕에
   note-ink 글자를 씁니다. 그 안의 층 이름·실험 표시는 marker-blue·marker-green을
-  note-ink와 45%로 섞고, 서비스 설명은 note-ink 72%와 섞은 색입니다. 메모 안
-  키보드 초점선도 note-ink입니다.
-- **작업실 모형(`lib/diorama`):** 면 `#1b2a4a`, 홈 `#111d38`, 선 `#ebe3cb`, 담당
-  표시 `#8fb0e8`, 선택 `#e0664a`.
+  note-ink와 45%로 섞고, 이름표의 서비스 설명은 note-ink 80%와 섞은 색입니다.
+  메모 안 키보드 초점선도 note-ink입니다.
+- **작업실 모형(`lib/diorama`):** 면 `#111d38`, 홈 `#0b1428`, 모서리선
+  `#ebe3cb`, 강조면은 면 색 위의 크림 사선 빗금, 선택 `#e0664a`. 별도의 담당
+  표시 색은 없습니다. 빗금 간격은 4.5px(기기 픽셀 비율 2까지 비례)이고 빛을 받는
+  쪽 선이 굵어집니다. 조명은 주변광 2.4와 방향광 1.2입니다.
 
 ## 판화 표현
 
@@ -226,16 +236,17 @@ components:
 ## Typography
 
 영문은 General Sans, 한국어는 Pretendard Variable, 보조 메타는 IBM Plex
-Mono입니다. 모두 자체 호스팅하며 손글씨 폰트는 쓰지 않습니다. 폰트 선언의 실제
-CSS family는 GeneralSans / PretendardVariable이며 위 frontmatter에는 표시용
-이름을 기재합니다. 본문은 모바일 16px, 744px부터 17px입니다. 메모 본문은 16px /
-1.75입니다. 히어로 이름은 모바일 clamp(40px, 12vw, 60px), 중간 화면은
-clamp(40px, 4.5vw, 60px), 1440px부터 60px입니다. 소개 문장은 21px / 1.45,
-1440px부터 25px입니다. 기술 스택의 분류와 기술명은 모두 본문 크기(모바일 16px,
-744px부터 17px)로 맞추고 분류만 중간 굵기를 씁니다. 연락처 이메일은 모바일 20px,
-744px부터 24px이며 GitHub 링크는 본문 크기입니다. 상세 프로젝트 제목은 모바일
-36px, 744px부터 48px, 1024px부터 56px로 통일하고 줄바꿈을 허용합니다. 상세
-소개는 18/20px, 역할은 본문 크기를 유지합니다.
+Mono입니다. 고정폭 글꼴 스택은 IBM Plex Mono 다음에 Pretendard Variable을 두어
+한글 라벨이 Pretendard로 표시됩니다. 모두 자체 호스팅하며 손글씨 폰트는 쓰지
+않습니다. 폰트 선언의 실제 CSS family는 GeneralSans / PretendardVariable이며 위
+frontmatter에는 표시용 이름을 기재합니다. 본문은 모바일 16px, 744px부터
+17px입니다. 메모 본문은 16px / 1.75입니다. 히어로 이름은 모바일 clamp(40px,
+12vw, 60px), 중간 화면은 clamp(40px, 4.5vw, 60px), 1440px부터 60px입니다. 소개
+문장은 21px / 1.45, 1440px부터 25px입니다. 기술 스택의 분류와 기술명은 모두 본문
+크기(모바일 16px, 744px부터 17px)로 맞추고 분류만 중간 굵기를 씁니다. 연락처
+이메일은 모바일 20px, 744px부터 24px이며 GitHub 링크는 본문 크기입니다. 상세
+프로젝트 제목은 모바일 36px, 744px부터 48px, 1024px부터 56px로 통일하고 줄바꿈을
+허용합니다. 상세 소개는 18/20px, 역할은 본문 크기를 유지합니다.
 
 홈 궤도의 이름표는 14px / 500, 패널 제목은 22px / 500(휴대폰 배치 19px), 제목 옆
 태그는 13px, 사실 목록과 커밋 제목은 14px, 기준 날짜 안내는 13px, 이력 링크는
@@ -274,7 +285,8 @@ subgrid입니다. 그 아래에서는 프로젝트별 칩 목록이며, 담당�
 
 ## Elevation & Depth
 
-일반 본문은 평면입니다. 보드 프레임, 크림 메모, 홈 판독 패널에만 깊이를 줍니다.
+일반 본문은 평면입니다. 보드 프레임, 크림 메모, 홈 판독 패널, 작업실 담당 업무
+패널에만 깊이를 줍니다.
 
 - 보드 그림자:
   `inset 0 0 0 1px var(--board-edge), 0 22px 40px -28px color-mix(in srgb, var(--dark) 80%, transparent)`.
@@ -282,14 +294,18 @@ subgrid입니다. 그 아래에서는 프로젝트별 칩 목록이며, 담당�
   `0 10px 18px -14px color-mix(in srgb, var(--dark) 80%, transparent)`.
 - 판독 패널: `rgb(14 24 48 / 0.86)` 바탕과 10px 배경 흐림 위에 hair 1px, 4px
   night 간격, 크림 0.14 1px의 이중 테두리를 안쪽 그림자로 그립니다.
+- 작업실 담당 업무 패널: night-2 바탕에 hair 1px, 4px night-2 간격, 크림 0.14
+  1px의 이중 테두리를 안쪽 그림자로 그리고, 좌우 14px 안쪽에 주홍 2px 상단선을
+  둡니다.
 - 궤도 이름표: night-deep 글자 그림자 네 겹으로 장면 위에서 읽히게 합니다.
 
 ## Shapes
 
 보드 프레임은 7px 테두리, 1px 안쪽 외곽선과 6px 모서리입니다. 마커 SVG는 결정적
-seed와 non-scaling-stroke를 사용합니다. 손그림은 선에만 적용합니다. 담당 기능
-판면은 직각과 marker-blue 상단선으로 구분합니다. 홈 패널과 오프닝 태그는 직각
-이중 테두리, 오프닝 건너뛰기 버튼만 알약 모양(999px)입니다.
+seed와 non-scaling-stroke를 사용합니다. 손그림은 보드의 선에만 적용하고, `/ai`
+작업 흐름은 크림 곧은 선과 정확한 호로 그립니다. 담당 기능 판면은 직각과
+marker-blue(크림) 상단선으로 구분합니다. 홈 패널, 작업실 담당 업무 패널과 오프닝
+태그는 직각 이중 테두리, 오프닝 건너뛰기 버튼만 알약 모양(999px)입니다.
 
 ## Components
 
@@ -321,6 +337,10 @@ seed와 non-scaling-stroke를 사용합니다. 손그림은 선에만 적용합�
 - **작업실 이름표:** 선택하면 2px marker-red 테두리와 크림 종이(note-paper /
   note-ink) 바탕으로 바뀝니다. 선택하지 않은 이름표는 hairline 테두리와 paper
   바탕입니다.
+- **작업실 담당 업무 패널:** 크림 메모가 아니라 night-2 남색 판에 크림 글자를
+  씁니다. 크림 이중 테두리와 주홍 상단선을 두고, 기간은 dim, 영역 사이 구분선은
+  hair, 키보드 초점선은 크림 2px입니다. 선택 전에는 hairline 테두리의
+  목록입니다.
 - **범례:** 직접 개발·유지보수 / 실험 / 담당 범위 밖. 선은 호출 순서나 작업량이
   아닙니다.
 - **상세 담당 범위 목록:** 영역·담당 업무·확인된 기술을 정의 목록으로
@@ -354,18 +374,20 @@ seed와 non-scaling-stroke를 사용합니다. 손그림은 선에만 적용합�
   위계를 나눕니다. 지침은 적용 범위, 작업 흐름은 '요청에서 지침 반영까지' 여섯
   단계로 구분합니다. 작업 흐름은 업무 판면 위의 순서 목록이며 단계마다 하는
   일·확인 장치·항목을 처음부터 모두 보여 줍니다. 1024px부터 3×2 시계방향
-  고리(아래 줄은 오른쪽에서 왼쪽), 그 아래는 세로 목록입니다. 단계 사이
-  marker-blue 선은 처음 보일 때 한 번 그려지고 멈추며, 글자는 움직이지 않습니다.
-  이 도식에는 선택이 없으므로 주홍 원과 크림 메모를 쓰지 않습니다. 교차 검토는
-  작업 흐름 안에 설명하고, 검사 구현 사례가 앞의 작업 방식을 뒷받침합니다.
+  고리(아래 줄은 오른쪽에서 왼쪽), 그 아래는 세로 목록입니다. 단계 사이 선은
+  marker-blue(크림) 2px 곧은 선이고 꺾이는 곳은 반지름 16px의 정확한 호입니다.
+  손그림 흔들림은 없습니다. 선은 처음 보일 때 한 번 그려지고 멈추며, 글자는
+  움직이지 않습니다. 이 도식에는 선택이 없으므로 주홍 원과 크림 메모를 쓰지
+  않습니다. 교차 검토는 작업 흐름 안에 설명하고, 검사 구현 사례가 앞의 작업
+  방식을 뒷받침합니다.
 
 ## Do's and Don'ts
 
 - Do 실제 담당한 업무와 유지보수 범위를 충분한 문장으로 적습니다.
 - Do Smart Farm의 사무실 시험 모듈과 별도 LED 실험을 구분합니다.
 - Do 실험 표시, 기간, 재구성 고지를 유지합니다.
-- Do 홈 프로젝트는 새김 무늬와 이름으로 구별하고, 주홍은 선택·현재·신호에만
-  씁니다.
+- Do 홈 프로젝트는 새김 무늬와 이름으로 구별하고, 주홍은 선택·현재 위치·신호에만
+  씁니다. 예외는 오프닝 이름 끝 점과 판독 패널 상단선입니다.
 - Don't 확인되지 않은 성과·수치·담당 범위를 추가하지 않습니다.
 - Don't 회사명을 노출하지 않습니다.
 - Don't 프로젝트마다 다른 색을 주거나 행성에 채색·그라데이션·광택을 넣지
