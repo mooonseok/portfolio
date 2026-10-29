@@ -13,6 +13,7 @@ const config = [
       'out/**',
       'next-env.d.ts',
       '.claude/skills/**',
+      '.claude/worktrees/**',
       '.github/skills/**',
       '.agents/skills/**',
     ],
