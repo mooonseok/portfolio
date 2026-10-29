@@ -44,8 +44,8 @@
   transform: translate(-50%, -100%);
   border: 1px solid var(--color-hairline);
   border-radius: 14px 14px 14px 3px;
-  background: #fcfcfa;
-  color: var(--color-ink);
+  background: var(--note-paper);
+  color: var(--note-ink);
   font-size: 14px;
   line-height: 1.4;
   white-space: nowrap;
@@ -98,7 +98,7 @@
 }
 .choice[aria-pressed='true'] {
   border-color: var(--color-signal);
-  background: #fcfcfa;
+  background: var(--color-tint);
 }
 .controls {
   display: flex;

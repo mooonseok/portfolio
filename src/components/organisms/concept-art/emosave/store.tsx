@@ -1,4 +1,4 @@
-import { ArtSvg, tone } from '../art-svg';
+import { ArtSvg, artBg } from '../art-svg';
 import { c, line } from './palette';
 import { Token } from './parts';
 
@@ -15,7 +15,7 @@ export function EmosaveStore() {
     c.mauve,
   ];
   return (
-    <ArtSvg viewBox='0 0 400 400' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 400 400' bg={artBg}>
       {tints.map((t, i) => {
         const x = 50 + (i % 3) * 104;
         const y = 50 + Math.floor(i / 3) * 104;

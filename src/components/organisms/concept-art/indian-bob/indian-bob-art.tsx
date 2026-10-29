@@ -1,4 +1,4 @@
-import { ArtSvg, hair, tone } from '../art-svg';
+import { ArtSvg, artBg, hair, tone } from '../art-svg';
 import type { ArtRect } from '@/dto/art.dto';
 
 const alu = '#D3D3CE';
@@ -99,7 +99,7 @@ function Phone({ x, y, w, h }: ArtRect) {
 
 export function IndianBobHome() {
   return (
-    <ArtSvg viewBox='0 0 480 360' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 480 360' bg={artBg}>
       <g transform='translate(240 180) scale(1.2) translate(-251 -141)'>
         <g transform={TILT}>
           <g transform='translate(40 150)'>
@@ -122,7 +122,7 @@ export function IndianBobHome() {
 
 export function IndianBobApp() {
   return (
-    <ArtSvg viewBox='0 0 360 480' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 360 480' bg={artBg}>
       <g transform='translate(180 240) scale(1.15) translate(-232 -184)'>
         <g transform={TILT}>
           <g transform='translate(40 110)'>
@@ -137,7 +137,7 @@ export function IndianBobApp() {
 
 export function IndianBobAdmin() {
   return (
-    <ArtSvg viewBox='0 0 480 360' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 480 360' bg={artBg}>
       <g transform='translate(240 180) scale(0.95) translate(-325 -146)'>
         <g transform={TILT}>
           <g transform='translate(40 110)'>

@@ -1,6 +1,5 @@
 import { hair, tone } from '../art-svg';
 
-export const glass = '#ECEBE6';
 export const bed = '#D6D5CF';
 export const bedSide = '#CBCAC3';
 export const leaf = '#C4C8BE';

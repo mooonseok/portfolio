@@ -1,7 +1,7 @@
-import { ArtSvg, tone } from '../art-svg';
+import { ArtSvg, artBg, tone } from '../art-svg';
 import { Aisle } from './aisle';
 import { pts, toward } from './geometry';
-import { fine, glass, metal, white } from './palette';
+import { fine, metal, white } from './palette';
 
 function RoofVent() {
   const a = toward([40, 72], 1);
@@ -64,7 +64,7 @@ function Greenhouse() {
 
 export function SmartHome() {
   return (
-    <ArtSvg viewBox='0 0 640 420' bg={glass}>
+    <ArtSvg viewBox='0 0 640 420' bg={artBg}>
       <Greenhouse />
     </ArtSvg>
   );
@@ -72,7 +72,7 @@ export function SmartHome() {
 
 export function SmartHero() {
   return (
-    <ArtSvg viewBox='0 20 640 380' bg={glass}>
+    <ArtSvg viewBox='0 20 640 380' bg={artBg}>
       <Greenhouse />
     </ArtSvg>
   );
