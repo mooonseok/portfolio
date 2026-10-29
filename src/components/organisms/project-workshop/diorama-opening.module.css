@@ -35,7 +35,7 @@
   width: min(44%, 230px);
   height: 7px;
   margin-top: 28px;
-  background: var(--marker-red);
+  background: var(--ink);
   transform: rotate(-3deg);
 }
 

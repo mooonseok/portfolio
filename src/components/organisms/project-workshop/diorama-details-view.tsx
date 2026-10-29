@@ -17,7 +17,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       as={TAG.SECTION}
       id={DIORAMA.PANEL_ID}
       aria-labelledby='project-stage-title'
-      className={`p-6 tab:p-8 ${project ? "relative bg-night-2 text-ink shadow-[inset_0_0_0_1px_var(--color-hair),inset_0_0_0_4px_var(--color-night-2),inset_0_0_0_5px_color-mix(in_srgb,var(--color-moonlight)_14%,transparent)] before:absolute before:inset-x-3.5 before:-top-px before:h-0.5 before:bg-vermilion before:content-[''] [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-ink" : 'border border-hairline'}`}
+      className={`p-6 tab:p-8 ${project ? `relative bg-night-2 text-ink shadow-[inset_0_0_0_1px_var(--color-hair),inset_0_0_0_4px_var(--color-night-2),inset_0_0_0_5px_color-mix(in_srgb,var(--color-moonlight)_14%,transparent)] before:absolute before:inset-x-3.5 before:-top-px before:h-0.5 before:content-[''] [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-ink ${props.wide ? 'before:bg-vermilion' : 'before:bg-hair'}` : 'border border-hairline'}`}
     >
       <Box className='flex items-start justify-between gap-4'>
         <Heading

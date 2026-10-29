@@ -65,7 +65,7 @@ export function DioramaLabelsView(props: DioramaPreviewProps) {
             </Text>
           </Button>
           {!props.wide && props.selected === project.slug && (
-            <Box className='pt-2'>
+            <Box className='pt-4'>
               <DioramaDetailsView {...props} />
             </Box>
           )}
