@@ -11,6 +11,7 @@ pnpm typecheck
 pnpm test               # selection, scroll position, history and scanner regression tests
 pnpm check:anchors      # production HTML links and group IDs, after pnpm build
 pnpm check:metadata     # after build, with the same SITE_URL / SITE_INDEXABLE values
+pnpm check:perf         # after build, first-load JS per route vs perf-budget.json
 pnpm check:boundaries   # architecture rules (see §2)
 pnpm format             # Prettier + Tailwind class sorting
 pnpm format:check
@@ -25,7 +26,10 @@ directory so a lockfile in a parent folder cannot be inferred as the workspace
 root.
 
 Claude Code runs Prettier automatically after every file edit
-(`.claude/settings.json`, PostToolUse hook).
+(`.claude/settings.json`, PostToolUse hook `.claude/hooks/format-file.mjs`).
+Commit messages are checked by `.githooks/commit-msg`
+(`git config core.hooksPath .githooks`, rules in
+`scripts/harness/commit-message.mjs`).
 
 ---
 

@@ -1,0 +1,13 @@
+{
+  "baseline": "2026-10-29 develop 8bbcd8f, gzip kB, budget = baseline + 10%",
+  "routes": {
+    "/": 152,
+    "/ai": 129,
+    "/work/[slug]": 139,
+    "/_not-found": 115,
+    "/preview/classic": 127,
+    "/preview/diorama": 142,
+    "/preview/emosave-editor": 117
+  },
+  "largestChunk": 93
+}

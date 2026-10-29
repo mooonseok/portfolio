@@ -37,6 +37,7 @@ Node.js 22.18 이상과 pnpm 10.27.0이 필요합니다. Node.js 24에서 검증
 ```bash
 corepack enable
 pnpm install
+git config core.hooksPath .githooks
 pnpm dev --port 3100
 ```
 
@@ -74,6 +75,7 @@ pnpm format:check       # 코드·문서 서식 검사
 pnpm build              # 배포용 빌드
 pnpm check:anchors      # 빌드된 페이지의 링크 대상·접근성 참조 검사
 pnpm check:metadata     # 검색·공유 정보와 사이트맵 검사
+pnpm check:perf         # 경로별 첫 로딩 JS 크기 예산 검사
 ```
 
 서식은 `pnpm format`으로 정리합니다. 화면 변경 시에는 390 / 744 / 1024 /
@@ -93,6 +95,8 @@ pnpm check:metadata     # 검색·공유 정보와 사이트맵 검사
 | [src/styles](src/styles/)                     | 공통 스타일과 디자인 토큰           |
 | [public/images](public/images/)               | 개념 이미지와 편집기 그림           |
 | [scripts](scripts/)                           | 테스트와 검증 도구                  |
+| [.claude](.claude/)                           | 에이전트 설정·진행표·검토 에이전트  |
+| [.githooks](.githooks/)                       | 커밋 메시지 검사 훅                 |
 
 프로젝트의 기본 정보는 `<slug>.ts`, 상세 본문은 `<slug>-case.ts`에서 수정합니다.
 컨테이너는 콘텐츠와 상태를 준비하고, `*-view.tsx`는 전달받은 값으로 화면을

@@ -10,6 +10,8 @@
   확인합니다 (`git fetch` 후 판단).
 - 패키지 매니저는 pnpm입니다 (`packageManager` 고정). npm·yarn으로 설치하지
   않습니다.
+- 새로 받은 저장소에서는 `git config core.hooksPath .githooks`를 한 번 실행해
+  커밋 메시지 검사 훅을 켭니다.
 - 새 의존성 추가, 확인되지 않은 기술 사실·수치 추가, 기존 구조를 바꾸는 대규모
   추상화는 사용자에게 먼저 확인합니다.
 
@@ -35,6 +37,10 @@
 - **본문**: 구체적인 변경을 bullet로 쓰고 "수정했습니다·전환한다" 대신 "수정",
   "추가", "보완", "연결", "검증" 같은 명사형으로 끝냅니다. 실제로 한 일만
   씁니다.
+- 제목은 36자 이내로, 홈 화면 작업 현황 카드에 그대로 보여도 뜻이 통하게 씁니다.
+  `feat:` 같은 영어 접두어, 마침표, 서술형 끝맺음, 과장 표현, 내부 설정값을 쓰지
+  않습니다. `.githooks/commit-msg`가 `scripts/check-commit-message.mjs`로
+  검사하며 `--no-verify`로 건너뛰지 않습니다.
 - 커밋 작성자는 사용자 한 명입니다. `Co-Authored-By` 같은 에이전트 공동 작성자
   트레일러나 도구 서명을 커밋 메시지·PR 본문에 넣지 않습니다 (Claude Code는
   `.claude/settings.json`의 `attribution`으로 꺼져 있습니다).
@@ -71,7 +77,14 @@ pnpm test
 pnpm check:boundaries
 pnpm format:check
 pnpm build
+pnpm check:anchors
+pnpm check:metadata
+pnpm check:perf
 ```
+
+- `check:perf`는 경로별 첫 로딩 JS와 가장 큰 청크를
+  `scripts/verification/perf-budget.json` 예산과 비교합니다. 새 경로의 예산
+  추가나 예산 상향은 사용자에게 확인한 뒤에 합니다.
 
 - 화면에 보이는 변경은 브라우저에서 390 / 744 / 1024 / 1440px와 관련 선택 상태를
   직접 확인합니다. 코드만 확인한 것을 브라우저에서 확인했다고 보고하지 않습니다.
@@ -89,3 +102,23 @@ pnpm build
 - 스크립트가 오류로 멈춘 뒤에도 브라우저·서버가 남지 않았는지 확인합니다.
 - `pnpm build`는 `.next`를 덮어쓰므로 개발 서버를 멈춘 뒤 실행합니다.
 - 직접 띄우지 않은 프로세스(다른 프로젝트 서버, 다른 앱)는 건드리지 않습니다.
+
+## 7. 작업 파이프라인
+
+화면 하나를 한 단위로 아래 순서를 따릅니다. Claude Code에서는
+`.claude/skills/`의 진행표와 `.claude/agents/`의 검토 에이전트를 씁니다.
+
+| 순서 | 진행표      | 하는 일                                        | 게이트                |
+| ---- | ----------- | ---------------------------------------------- | --------------------- |
+| 1    | `pf-design` | 브리프, 방향 시안, 토큰, 문구, 독립 리뷰       | G1 사용자가 방향 선택 |
+| 2    | `pf-motion` | 움직임 성격, 타임시트, 구현, 대체 경로         |                       |
+| 3    | `pf-build`  | 타입 → 순수 함수와 테스트 → 서버 데이터 → 화면 | G2 자동 검사 통과     |
+| 4    | `pf-verify` | §5 검사, 4개 폭 브라우저 확인, 서버 정리       | G3 화면 확인          |
+| 5    | `pf-commit` | 목적별 분리, 제목·본문 작성, 커밋 메시지 검사  | G4 `commit-msg` 훅    |
+
+- 독립 검토는 `design-reviewer`(디자인·접근성), `perf-auditor`(빌드
+  크기·Lighthouse·3D 성능), `copy-editor`(문구·커밋 제목)가 맡습니다. 검토
+  에이전트는 파일을 고치지 않고 지적 사항만 돌려줍니다.
+- `.claude/settings.json`은 커밋·PR 서명을 끄고, 파일을 고칠 때마다 Prettier를
+  실행합니다. 개인 설정은 `.claude/settings.local.json`에 두며 레포에 올리지
+  않습니다.

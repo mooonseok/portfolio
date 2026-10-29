@@ -4,7 +4,13 @@ out
 *.tsbuildinfo
 .env*.local
 
-.claude/
+.claude/*
+!.claude/settings.json
+!.claude/launch.json
+!.claude/hooks/
+!.claude/skills/
+!.claude/agents/
+.claude/settings.local.json
 .github/
 .agents/
 skills-lock.json
