@@ -76,20 +76,25 @@
   }
   .ai-loop-bend {
     position: absolute;
-    top: 22px;
+    top: 21px;
     display: block;
     width: 26px;
-    height: 100%;
+    height: calc(100% + 2px);
+    border: 2px solid var(--marker-blue);
   }
   .ai-loop-bend[data-dir='right'] {
     right: -36px;
+    border-left: 0;
+    border-radius: 0 16px 16px 0;
   }
   .ai-loop-bend[data-dir='left'] {
-    left: -36px;
+    left: -38px;
+    border-right: 0;
+    border-radius: 16px 0 0 16px;
   }
   .ai-loop-bend[data-dir='left'] .ai-loop-tip {
-    top: -7px;
-    right: -9px;
+    top: -6px;
+    right: -1px;
   }
 }
 
