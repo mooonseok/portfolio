@@ -116,7 +116,7 @@ export const aiPractice: AiPractice = {
   ],
 
   next: {
-    href: '/#work',
+    href: '/portfolio#work',
     title: '참여 프로젝트',
     navLabel: '참여 프로젝트로 이동',
   },

@@ -18,7 +18,10 @@ export function SiteHeaderView({
       data-dark={dark || undefined}
     >
       {back ? (
-        <NavLink href='/#work' className='flex min-h-11 items-center mono'>
+        <NavLink
+          href='/portfolio#work'
+          className='flex min-h-11 items-center mono'
+        >
           <Text as={TAG.SPAN} className='inline tab:hidden'>
             ← WORK
           </Text>
