@@ -59,20 +59,13 @@
   cursor: pointer;
 }
 
-.replayBar {
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
-  background: var(--dark);
-}
-
 .replay {
-  display: block;
-  margin: 0 max(24px, calc((100% - 1440px) / 2)) 0 auto;
+  flex-shrink: 0;
   min-height: 44px;
-  padding: 8px;
+  padding: 0;
   background: transparent;
   border: 0;
   color: var(--subtle);
-  font-size: 14px;
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;

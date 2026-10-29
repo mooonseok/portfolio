@@ -6,24 +6,18 @@ import { HEADING, TAG } from '@/constants/tag';
 import type { DioramaOpeningProps } from '@/dto/diorama-opening.dto';
 import styles from './diorama-opening.module.css';
 
-export function DioramaOpeningView({
-  active,
-  onSkip,
+export function OpeningReplayView({
   onReplay,
-}: DioramaOpeningProps) {
-  if (!active) {
-    return (
-      <Box className={styles.replayBar}>
-        <Button
-          data-opening-replay
-          onClick={onReplay}
-          className={styles.replay}
-        >
-          오프닝 다시 보기
-        </Button>
-      </Box>
-    );
-  }
+}: Pick<DioramaOpeningProps, 'onReplay'>) {
+  return (
+    <Button data-opening-replay onClick={onReplay} className={styles.replay}>
+      오프닝 다시 보기
+    </Button>
+  );
+}
+
+export function DioramaOpeningView({ active, onSkip }: DioramaOpeningProps) {
+  if (!active) return null;
 
   return (
     <Box

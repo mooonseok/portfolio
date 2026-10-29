@@ -3,6 +3,7 @@ import { Box } from '@/components/atoms/box';
 import { Column } from '@/components/atoms/column';
 import { Row } from '@/components/atoms/row';
 import { Text } from '@/components/atoms/text';
+import type { PropsWithChildren } from 'react';
 import type { SiteFooterViewProps } from '@/dto/chrome.dto';
 import { TAG } from '@/constants/tag';
 
@@ -14,7 +15,8 @@ export function SiteFooterView({
   email,
   github,
   contact,
-}: SiteFooterViewProps) {
+  children,
+}: PropsWithChildren<SiteFooterViewProps>) {
   return (
     <Box
       as={TAG.FOOTER}
@@ -60,6 +62,7 @@ export function SiteFooterView({
               {name}
             </Text>
           </Text>
+          {children}
         </Row>
       </Box>
     </Box>

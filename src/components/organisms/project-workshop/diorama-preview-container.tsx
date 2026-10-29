@@ -4,6 +4,7 @@ import type { DioramaContainerProps } from '@/dto/diorama-preview.dto';
 import { Box } from '@/components/atoms/box';
 import { useDioramaOpening } from '@/hooks/use-diorama-opening';
 import { DioramaOpeningView } from './diorama-opening-view';
+import { OpeningReplayContext } from './opening-replay';
 import { farmfamPlus } from '@/content/projects/farmfam-plus';
 import { emosave } from '@/content/projects/emosave';
 import { indianBob } from '@/content/projects/indian-bob';
@@ -43,7 +44,7 @@ export function DioramaPreviewContainer({
   const stage = useDioramaStage();
   const opening = useDioramaOpening();
   return (
-    <>
+    <OpeningReplayContext value={opening.onReplay}>
       <Box inert={opening.active}>
         {header}
         <DioramaPreviewView
@@ -61,6 +62,6 @@ export function DioramaPreviewContainer({
         {footer}
       </Box>
       <DioramaOpeningView {...opening} />
-    </>
+    </OpeningReplayContext>
   );
 }
