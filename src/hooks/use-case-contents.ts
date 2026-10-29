@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { ContentsGroup } from '@/dto/navigation.dto';
-import { lastPassed } from '@/lib/scroll-position';
+import { anchorLine, lastPassed } from '@/lib/scroll-position';
 
 export function useCaseContents(groups: ContentsGroup[]) {
   const [current, setCurrent] = useState(0);
@@ -15,14 +15,19 @@ export function useCaseContents(groups: ContentsGroup[]) {
     let frame = 0;
     const update = () => {
       frame = 0;
-      const positions = groups.map(
-        (g) =>
-          document.getElementById(g.id)?.getBoundingClientRect().top ?? Infinity
+      const targets = groups.map((g) => document.getElementById(g.id));
+      const positions = targets.map(
+        (el) => el?.getBoundingClientRect().top ?? Infinity
+      );
+      const first = targets.find((el) => el);
+      const line = anchorLine(
+        parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop),
+        first ? parseFloat(getComputedStyle(first).scrollMarginTop) : 0
       );
       const bottom =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 2;
-      setCurrent(lastPassed(positions, bottom ? window.innerHeight : 80));
+      setCurrent(lastPassed(positions, bottom ? window.innerHeight : line));
       const passed =
         (listRef.current?.getBoundingClientRect().bottom ?? Infinity) <= 0;
       setStuck(passed);

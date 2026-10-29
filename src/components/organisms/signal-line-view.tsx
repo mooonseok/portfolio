@@ -33,7 +33,7 @@ export function SignalLineView({
           <Box
             as={TAG.SPAN}
             key={m.id}
-            className='absolute left-[calc(var(--rail-x)_-_4px)] z-1 size-[9px] rounded-[50%] border-[1.25px] border-ink bg-paper [transition:background-color_150ms_var(--ease),border-color_150ms_var(--ease)] data-current:border-signal data-current:bg-signal data-dark:not-data-current:border-paper data-dark:not-data-current:bg-dark'
+            className='absolute left-[calc(var(--rail-x)_-_4px)] z-1 size-[9px] rounded-[50%] border-[1.25px] border-ink bg-paper [transition:background-color_150ms_var(--ease),border-color_150ms_var(--ease)] data-current:border-signal data-current:bg-signal data-dark:not-data-current:border-ink data-dark:not-data-current:bg-dark'
             data-marker={m.id}
             data-dark={m.dark || undefined}
             style={{ top: `${m.y - 4.5}px` }}

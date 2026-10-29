@@ -17,7 +17,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       as={TAG.SECTION}
       id={DIORAMA.PANEL_ID}
       aria-labelledby='project-stage-title'
-      className={`p-6 tab:p-8 ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border border-hairline'}`}
+      className={`p-6 tab:p-8 ${project ? `relative bg-night-2 text-ink shadow-[inset_0_0_0_1px_var(--color-hair),inset_0_0_0_4px_var(--color-night-2),inset_0_0_0_5px_color-mix(in_srgb,var(--color-moonlight)_14%,transparent)] before:absolute before:inset-x-3.5 before:-top-px before:h-0.5 before:content-[''] [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-ink ${props.wide ? 'before:bg-vermilion' : 'before:bg-hair'}` : 'border border-hairline'}`}
     >
       <Box className='flex items-start justify-between gap-4'>
         <Heading
@@ -31,7 +31,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
           <Button
             onClick={props.onClose}
             aria-label='담당 업무 닫기'
-            className='fine:hover:bg-black/5 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2'
+            className='flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 fine:hover:bg-current/10'
           >
             <CloseIcon />
           </Button>
@@ -42,7 +42,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
           <Text className='mt-4 text-base leading-[1.7]'>
             {project.summary}
           </Text>
-          <Text className='mt-3 text-sm'>{project.period}</Text>
+          <Text className='mt-3 text-sm text-dim'>{project.period}</Text>
           <Text className='mt-5 text-sm font-semibold'>
             {project.experiment
               ? '센서 시험과 별도 LED 제어 실험'
@@ -50,10 +50,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
           </Text>
           <List className='mt-6 list-none space-y-7 p-0'>
             {project.layers.map((layer) => (
-              <ListItem
-                key={layer.label}
-                className='border-t border-current/15 pt-5'
-              >
+              <ListItem key={layer.label} className='border-t border-hair pt-5'>
                 <Heading level={HEADING.H3} className='text-base font-semibold'>
                   {layer.label}
                 </Heading>

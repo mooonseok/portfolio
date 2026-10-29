@@ -13,9 +13,9 @@
   color: var(--text);
 }
 .flow-diagram[data-tone='dark'] {
-  --line: var(--paper);
-  --text: var(--paper);
-  --emph: var(--paper);
+  --line: var(--ink);
+  --text: var(--ink);
+  --emph: var(--ink);
 }
 .flow-diagram[data-tone='muted'] {
   --line: var(--graphite);

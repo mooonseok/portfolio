@@ -76,9 +76,7 @@ export function AiCheckStageView({
           data-dir={LOOP_DIR.RIGHT}
           aria-hidden='true'
           style={order(mark.order + 1)}
-        >
-          <MarkerPathView d={mark.bend} className='ai-loop-stroke' />
-        </Box>
+        />
       ) : null}
       {back ? (
         <Box
@@ -88,10 +86,6 @@ export function AiCheckStageView({
           aria-hidden='true'
           style={order(back.order)}
         >
-          <MarkerPathView
-            d={back.bend}
-            className='ai-loop-stroke ai-loop-mirror'
-          />
           <HeadMark d={back.head} />
         </Box>
       ) : null}

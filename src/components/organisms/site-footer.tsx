@@ -1,8 +1,9 @@
+import type { PropsWithChildren } from 'react';
 import { SiteFooterView } from './site-footer-view';
 import { site } from '@/content/site';
 import { hasContact } from '@/lib/content';
 
-export function SiteFooter() {
+export function SiteFooter({ children }: PropsWithChildren) {
   const { email, github } = site.contact;
   return (
     <SiteFooterView
@@ -10,6 +11,8 @@ export function SiteFooter() {
       email={email}
       github={github}
       contact={hasContact()}
-    />
+    >
+      {children}
+    </SiteFooterView>
   );
 }

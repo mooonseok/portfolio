@@ -7,7 +7,11 @@ import { TAG } from '@/constants/tag';
 export function ProjectLinks({ links }: { links?: ProjectLink[] }) {
   if (!links?.length) return null;
   return (
-    <Row className='flex-wrap gap-x-5 gap-y-2' aria-label='앱 등록 페이지'>
+    <Row
+      className='flex-wrap gap-x-5 gap-y-2'
+      role='group'
+      aria-label='앱 등록 페이지'
+    >
       {links.map((link) => (
         <Anchor
           key={link.href}

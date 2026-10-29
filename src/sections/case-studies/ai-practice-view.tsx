@@ -23,7 +23,7 @@ export function AiPracticeView({
       meta={c.meta}
       groups={groups}
       next={c.next}
-      nav={{ back: false, current: NAV_ID.ABOUT }}
+      nav={{ back: false, current: NAV_ID.AI }}
       hero={
         <AiRuleRowsView
           id='ai-rules-label'

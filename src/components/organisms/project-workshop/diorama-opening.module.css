@@ -35,7 +35,7 @@
   width: min(44%, 230px);
   height: 7px;
   margin-top: 28px;
-  background: var(--marker-red);
+  background: var(--ink);
   transform: rotate(-3deg);
 }
 
@@ -60,14 +60,12 @@
 }
 
 .replay {
-  display: block;
-  margin: 0 max(24px, calc((100% - 1440px) / 2)) 24px auto;
+  flex-shrink: 0;
   min-height: 44px;
-  padding: 8px;
+  padding: 0;
   background: transparent;
   border: 0;
   color: var(--subtle);
-  font-size: 14px;
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;
@@ -86,7 +84,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .skip:hover {
-    background: var(--note-paper);
+    background: var(--tint);
   }
 
   .replay:hover {

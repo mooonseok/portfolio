@@ -19,7 +19,7 @@ export default function NotFound() {
     >
       <Box className='board w-full'>
         <Box className='board-surface flex flex-col items-start gap-6 p-6 tab:p-12'>
-          <Text as={TAG.SPAN} className='mono text-signal'>
+          <Text as={TAG.SPAN} className='mono text-subtle'>
             404
           </Text>
           <Heading

@@ -1,217 +1,301 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-06T05:24:17.570643+00:00",
+  "generatedAt": "2026-10-29T14:09:03.617Z",
   "title": "Design System: Park Moonseok",
   "extensions": {
     "colorMeta": {
-      "paper": {
+      "night": {
         "role": "neutral",
-        "displayName": "paper",
+        "displayName": "night (paper)",
         "tonalRamp": [
-          "oklch(15.0% 0.0067 97.35)",
-          "oklch(26.4% 0.0067 97.35)",
-          "oklch(37.9% 0.0067 97.35)",
-          "oklch(49.3% 0.0067 97.35)",
-          "oklch(60.7% 0.0067 97.35)",
-          "oklch(72.1% 0.0067 97.35)",
-          "oklch(83.6% 0.0067 97.35)",
-          "oklch(95.0% 0.0067 97.35)"
+          "oklch(15.0% 0.0496 265.39)",
+          "oklch(26.4% 0.0496 265.39)",
+          "oklch(37.9% 0.0496 265.39)",
+          "oklch(49.3% 0.0496 265.39)",
+          "oklch(60.7% 0.0496 265.39)",
+          "oklch(72.1% 0.0496 265.39)",
+          "oklch(83.6% 0.0496 265.39)",
+          "oklch(95.0% 0.0496 265.39)"
         ]
       },
-      "ink": {
+      "night-deep": {
         "role": "neutral",
-        "displayName": "ink",
+        "displayName": "night-deep (dark)",
         "tonalRamp": [
-          "oklch(15.0% 0.0037 164.67)",
-          "oklch(26.4% 0.0037 164.67)",
-          "oklch(37.9% 0.0037 164.67)",
-          "oklch(49.3% 0.0037 164.67)",
-          "oklch(60.7% 0.0037 164.67)",
-          "oklch(72.1% 0.0037 164.67)",
-          "oklch(83.6% 0.0037 164.67)",
-          "oklch(95.0% 0.0037 164.67)"
+          "oklch(15.0% 0.0427 264.49)",
+          "oklch(26.4% 0.0427 264.49)",
+          "oklch(37.9% 0.0427 264.49)",
+          "oklch(49.3% 0.0427 264.49)",
+          "oklch(60.7% 0.0427 264.49)",
+          "oklch(72.1% 0.0427 264.49)",
+          "oklch(83.6% 0.0427 264.49)",
+          "oklch(95.0% 0.0427 264.49)"
         ]
       },
-      "subtle": {
+      "night-2": {
         "role": "neutral",
-        "displayName": "subtle",
+        "displayName": "night-2 (tint)",
         "tonalRamp": [
-          "oklch(15.0% 0.0080 145.45)",
-          "oklch(26.4% 0.0080 145.45)",
-          "oklch(37.9% 0.0080 145.45)",
-          "oklch(49.3% 0.0080 145.45)",
-          "oklch(60.7% 0.0080 145.45)",
-          "oklch(72.1% 0.0080 145.45)",
-          "oklch(83.6% 0.0080 145.45)",
-          "oklch(95.0% 0.0080 145.45)"
+          "oklch(15.0% 0.0562 264.00)",
+          "oklch(26.4% 0.0562 264.00)",
+          "oklch(37.9% 0.0562 264.00)",
+          "oklch(49.3% 0.0562 264.00)",
+          "oklch(60.7% 0.0562 264.00)",
+          "oklch(72.1% 0.0562 264.00)",
+          "oklch(83.6% 0.0562 264.00)",
+          "oklch(95.0% 0.0562 264.00)"
         ]
       },
-      "hairline": {
+      "dark-2": {
         "role": "neutral",
-        "displayName": "hairline",
+        "displayName": "dark-2",
         "tonalRamp": [
-          "oklch(15.0% 0.0082 98.90)",
-          "oklch(26.4% 0.0082 98.90)",
-          "oklch(37.9% 0.0082 98.90)",
-          "oklch(49.3% 0.0082 98.90)",
-          "oklch(60.7% 0.0082 98.90)",
-          "oklch(72.1% 0.0082 98.90)",
-          "oklch(83.6% 0.0082 98.90)",
-          "oklch(95.0% 0.0082 98.90)"
+          "oklch(15.0% 0.0548 264.52)",
+          "oklch(26.4% 0.0548 264.52)",
+          "oklch(37.9% 0.0548 264.52)",
+          "oklch(49.3% 0.0548 264.52)",
+          "oklch(60.7% 0.0548 264.52)",
+          "oklch(72.1% 0.0548 264.52)",
+          "oklch(83.6% 0.0548 264.52)",
+          "oklch(95.0% 0.0548 264.52)"
         ]
       },
-      "dark": {
+      "night-line": {
         "role": "neutral",
-        "displayName": "dark",
+        "displayName": "night-line (dark-line)",
         "tonalRamp": [
-          "oklch(15.0% 0.0062 156.58)",
-          "oklch(26.4% 0.0062 156.58)",
-          "oklch(37.9% 0.0062 156.58)",
-          "oklch(49.3% 0.0062 156.58)",
-          "oklch(60.7% 0.0062 156.58)",
-          "oklch(72.1% 0.0062 156.58)",
-          "oklch(83.6% 0.0062 156.58)",
-          "oklch(95.0% 0.0062 156.58)"
+          "oklch(15.0% 0.0632 264.24)",
+          "oklch(26.4% 0.0632 264.24)",
+          "oklch(37.9% 0.0632 264.24)",
+          "oklch(49.3% 0.0632 264.24)",
+          "oklch(60.7% 0.0632 264.24)",
+          "oklch(72.1% 0.0632 264.24)",
+          "oklch(83.6% 0.0632 264.24)",
+          "oklch(95.0% 0.0632 264.24)"
         ]
       },
-      "dark-sub": {
+      "dark-rule": {
         "role": "neutral",
-        "displayName": "dark-sub",
+        "displayName": "dark-rule (hairline)",
         "tonalRamp": [
-          "oklch(15.0% 0.0072 145.50)",
-          "oklch(26.4% 0.0072 145.50)",
-          "oklch(37.9% 0.0072 145.50)",
-          "oklch(49.3% 0.0072 145.50)",
-          "oklch(60.7% 0.0072 145.50)",
-          "oklch(72.1% 0.0072 145.50)",
-          "oklch(83.6% 0.0072 145.50)",
-          "oklch(95.0% 0.0072 145.50)"
+          "oklch(15.0% 0.0609 264.56)",
+          "oklch(26.4% 0.0609 264.56)",
+          "oklch(37.9% 0.0609 264.56)",
+          "oklch(49.3% 0.0609 264.56)",
+          "oklch(60.7% 0.0609 264.56)",
+          "oklch(72.1% 0.0609 264.56)",
+          "oklch(83.6% 0.0609 264.56)",
+          "oklch(95.0% 0.0609 264.56)"
         ]
       },
-      "signal": {
+      "moonlight": {
+        "role": "neutral",
+        "displayName": "moonlight (ink)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0330 91.68)",
+          "oklch(26.4% 0.0330 91.68)",
+          "oklch(37.9% 0.0330 91.68)",
+          "oklch(49.3% 0.0330 91.68)",
+          "oklch(60.7% 0.0330 91.68)",
+          "oklch(72.1% 0.0330 91.68)",
+          "oklch(83.6% 0.0330 91.68)",
+          "oklch(95.0% 0.0330 91.68)"
+        ]
+      },
+      "dim": {
+        "role": "neutral",
+        "displayName": "dim (subtle)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0329 93.02)",
+          "oklch(26.4% 0.0329 93.02)",
+          "oklch(37.9% 0.0329 93.02)",
+          "oklch(49.3% 0.0329 93.02)",
+          "oklch(60.7% 0.0329 93.02)",
+          "oklch(72.1% 0.0329 93.02)",
+          "oklch(83.6% 0.0329 93.02)",
+          "oklch(95.0% 0.0329 93.02)"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "graphite",
+        "tonalRamp": [
+          "oklch(15.0% 0.0294 93.22)",
+          "oklch(26.4% 0.0294 93.22)",
+          "oklch(37.9% 0.0294 93.22)",
+          "oklch(49.3% 0.0294 93.22)",
+          "oklch(60.7% 0.0294 93.22)",
+          "oklch(72.1% 0.0294 93.22)",
+          "oklch(83.6% 0.0294 93.22)",
+          "oklch(95.0% 0.0294 93.22)"
+        ]
+      },
+      "far": {
+        "role": "neutral",
+        "displayName": "far",
+        "tonalRamp": [
+          "oklch(15.0% 0.0538 266.80)",
+          "oklch(26.4% 0.0538 266.80)",
+          "oklch(37.9% 0.0538 266.80)",
+          "oklch(49.3% 0.0538 266.80)",
+          "oklch(60.7% 0.0538 266.80)",
+          "oklch(72.1% 0.0538 266.80)",
+          "oklch(83.6% 0.0538 266.80)",
+          "oklch(95.0% 0.0538 266.80)"
+        ]
+      },
+      "vermilion": {
         "role": "primary",
-        "displayName": "signal",
+        "displayName": "vermilion (signal)",
         "tonalRamp": [
-          "oklch(15.0% 0.1908 28.94)",
-          "oklch(26.4% 0.1908 28.94)",
-          "oklch(37.9% 0.1908 28.94)",
-          "oklch(49.3% 0.1908 28.94)",
-          "oklch(60.7% 0.1908 28.94)",
-          "oklch(72.1% 0.1908 28.94)",
-          "oklch(83.6% 0.1908 28.94)",
-          "oklch(95.0% 0.1908 28.94)"
+          "oklch(15.0% 0.1588 34.29)",
+          "oklch(26.4% 0.1588 34.29)",
+          "oklch(37.9% 0.1588 34.29)",
+          "oklch(49.3% 0.1588 34.29)",
+          "oklch(60.7% 0.1588 34.29)",
+          "oklch(72.1% 0.1588 34.29)",
+          "oklch(83.6% 0.1588 34.29)",
+          "oklch(95.0% 0.1588 34.29)"
         ]
       },
       "board-white": {
         "role": "neutral",
         "displayName": "board-white",
         "tonalRamp": [
-          "oklch(15.0% 0.0026 106.45)",
-          "oklch(26.4% 0.0026 106.45)",
-          "oklch(37.9% 0.0026 106.45)",
-          "oklch(49.3% 0.0026 106.45)",
-          "oklch(60.7% 0.0026 106.45)",
-          "oklch(72.1% 0.0026 106.45)",
-          "oklch(83.6% 0.0026 106.45)",
-          "oklch(95.0% 0.0026 106.45)"
+          "oklch(15.0% 0.0548 264.52)",
+          "oklch(26.4% 0.0548 264.52)",
+          "oklch(37.9% 0.0548 264.52)",
+          "oklch(49.3% 0.0548 264.52)",
+          "oklch(60.7% 0.0548 264.52)",
+          "oklch(72.1% 0.0548 264.52)",
+          "oklch(83.6% 0.0548 264.52)",
+          "oklch(95.0% 0.0548 264.52)"
         ]
       },
       "board-frame": {
         "role": "neutral",
         "displayName": "board-frame",
         "tonalRamp": [
-          "oklch(15.0% 0.0043 236.50)",
-          "oklch(26.4% 0.0043 236.50)",
-          "oklch(37.9% 0.0043 236.50)",
-          "oklch(49.3% 0.0043 236.50)",
-          "oklch(60.7% 0.0043 236.50)",
-          "oklch(72.1% 0.0043 236.50)",
-          "oklch(83.6% 0.0043 236.50)",
-          "oklch(95.0% 0.0043 236.50)"
+          "oklch(15.0% 0.0632 264.24)",
+          "oklch(26.4% 0.0632 264.24)",
+          "oklch(37.9% 0.0632 264.24)",
+          "oklch(49.3% 0.0632 264.24)",
+          "oklch(60.7% 0.0632 264.24)",
+          "oklch(72.1% 0.0632 264.24)",
+          "oklch(83.6% 0.0632 264.24)",
+          "oklch(95.0% 0.0632 264.24)"
         ]
       },
       "board-edge": {
         "role": "neutral",
         "displayName": "board-edge",
         "tonalRamp": [
-          "oklch(15.0% 0.0072 247.92)",
-          "oklch(26.4% 0.0072 247.92)",
-          "oklch(37.9% 0.0072 247.92)",
-          "oklch(49.3% 0.0072 247.92)",
-          "oklch(60.7% 0.0072 247.92)",
-          "oklch(72.1% 0.0072 247.92)",
-          "oklch(83.6% 0.0072 247.92)",
-          "oklch(95.0% 0.0072 247.92)"
+          "oklch(15.0% 0.0609 264.56)",
+          "oklch(26.4% 0.0609 264.56)",
+          "oklch(37.9% 0.0609 264.56)",
+          "oklch(49.3% 0.0609 264.56)",
+          "oklch(60.7% 0.0609 264.56)",
+          "oklch(72.1% 0.0609 264.56)",
+          "oklch(83.6% 0.0609 264.56)",
+          "oklch(95.0% 0.0609 264.56)"
+        ]
+      },
+      "board-tray": {
+        "role": "neutral",
+        "displayName": "board-tray",
+        "tonalRamp": [
+          "oklch(15.0% 0.0622 263.95)",
+          "oklch(26.4% 0.0622 263.95)",
+          "oklch(37.9% 0.0622 263.95)",
+          "oklch(49.3% 0.0622 263.95)",
+          "oklch(60.7% 0.0622 263.95)",
+          "oklch(72.1% 0.0622 263.95)",
+          "oklch(83.6% 0.0622 263.95)",
+          "oklch(95.0% 0.0622 263.95)"
         ]
       },
       "marker-blue": {
         "role": "secondary",
         "displayName": "marker-blue",
         "tonalRamp": [
-          "oklch(15.0% 0.1943 261.46)",
-          "oklch(26.4% 0.1943 261.46)",
-          "oklch(37.9% 0.1943 261.46)",
-          "oklch(49.3% 0.1943 261.46)",
-          "oklch(60.7% 0.1943 261.46)",
-          "oklch(72.1% 0.1943 261.46)",
-          "oklch(83.6% 0.1943 261.46)",
-          "oklch(95.0% 0.1943 261.46)"
+          "oklch(15.0% 0.0330 91.68)",
+          "oklch(26.4% 0.0330 91.68)",
+          "oklch(37.9% 0.0330 91.68)",
+          "oklch(49.3% 0.0330 91.68)",
+          "oklch(60.7% 0.0330 91.68)",
+          "oklch(72.1% 0.0330 91.68)",
+          "oklch(83.6% 0.0330 91.68)",
+          "oklch(95.0% 0.0330 91.68)"
         ]
       },
       "marker-green": {
         "role": "secondary",
         "displayName": "marker-green",
         "tonalRamp": [
-          "oklch(15.0% 0.1069 157.86)",
-          "oklch(26.4% 0.1069 157.86)",
-          "oklch(37.9% 0.1069 157.86)",
-          "oklch(49.3% 0.1069 157.86)",
-          "oklch(60.7% 0.1069 157.86)",
-          "oklch(72.1% 0.1069 157.86)",
-          "oklch(83.6% 0.1069 157.86)",
-          "oklch(95.0% 0.1069 157.86)"
+          "oklch(15.0% 0.0329 93.02)",
+          "oklch(26.4% 0.0329 93.02)",
+          "oklch(37.9% 0.0329 93.02)",
+          "oklch(49.3% 0.0329 93.02)",
+          "oklch(60.7% 0.0329 93.02)",
+          "oklch(72.1% 0.0329 93.02)",
+          "oklch(83.6% 0.0329 93.02)",
+          "oklch(95.0% 0.0329 93.02)"
+        ]
+      },
+      "marker-red": {
+        "role": "secondary",
+        "displayName": "marker-red",
+        "tonalRamp": [
+          "oklch(15.0% 0.1588 34.29)",
+          "oklch(26.4% 0.1588 34.29)",
+          "oklch(37.9% 0.1588 34.29)",
+          "oklch(49.3% 0.1588 34.29)",
+          "oklch(60.7% 0.1588 34.29)",
+          "oklch(72.1% 0.1588 34.29)",
+          "oklch(83.6% 0.1588 34.29)",
+          "oklch(95.0% 0.1588 34.29)"
         ]
       },
       "marker-ghost": {
         "role": "secondary",
         "displayName": "marker-ghost",
         "tonalRamp": [
-          "oklch(15.0% 0.0072 145.50)",
-          "oklch(26.4% 0.0072 145.50)",
-          "oklch(37.9% 0.0072 145.50)",
-          "oklch(49.3% 0.0072 145.50)",
-          "oklch(60.7% 0.0072 145.50)",
-          "oklch(72.1% 0.0072 145.50)",
-          "oklch(83.6% 0.0072 145.50)",
-          "oklch(95.0% 0.0072 145.50)"
+          "oklch(15.0% 0.0538 266.80)",
+          "oklch(26.4% 0.0538 266.80)",
+          "oklch(37.9% 0.0538 266.80)",
+          "oklch(49.3% 0.0538 266.80)",
+          "oklch(60.7% 0.0538 266.80)",
+          "oklch(72.1% 0.0538 266.80)",
+          "oklch(83.6% 0.0538 266.80)",
+          "oklch(95.0% 0.0538 266.80)"
         ]
       },
       "note-paper": {
         "role": "neutral",
         "displayName": "note-paper",
         "tonalRamp": [
-          "oklch(15.0% 0.0798 98.45)",
-          "oklch(26.4% 0.0798 98.45)",
-          "oklch(37.9% 0.0798 98.45)",
-          "oklch(49.3% 0.0798 98.45)",
-          "oklch(60.7% 0.0798 98.45)",
-          "oklch(72.1% 0.0798 98.45)",
-          "oklch(83.6% 0.0798 98.45)",
-          "oklch(95.0% 0.0798 98.45)"
+          "oklch(15.0% 0.0330 91.68)",
+          "oklch(26.4% 0.0330 91.68)",
+          "oklch(37.9% 0.0330 91.68)",
+          "oklch(49.3% 0.0330 91.68)",
+          "oklch(60.7% 0.0330 91.68)",
+          "oklch(72.1% 0.0330 91.68)",
+          "oklch(83.6% 0.0330 91.68)",
+          "oklch(95.0% 0.0330 91.68)"
         ]
       },
       "note-ink": {
         "role": "neutral",
         "displayName": "note-ink",
         "tonalRamp": [
-          "oklch(15.0% 0.0396 93.56)",
-          "oklch(26.4% 0.0396 93.56)",
-          "oklch(37.9% 0.0396 93.56)",
-          "oklch(49.3% 0.0396 93.56)",
-          "oklch(60.7% 0.0396 93.56)",
-          "oklch(72.1% 0.0396 93.56)",
-          "oklch(83.6% 0.0396 93.56)",
-          "oklch(95.0% 0.0396 93.56)"
+          "oklch(15.0% 0.0427 264.49)",
+          "oklch(26.4% 0.0427 264.49)",
+          "oklch(37.9% 0.0427 264.49)",
+          "oklch(49.3% 0.0427 264.49)",
+          "oklch(60.7% 0.0427 264.49)",
+          "oklch(72.1% 0.0427 264.49)",
+          "oklch(83.6% 0.0427 264.49)",
+          "oklch(95.0% 0.0427 264.49)"
         ]
       }
     },
@@ -223,18 +307,36 @@
       "body": {
         "displayName": "본문",
         "purpose": "담당 업무와 구현 설명"
+      },
+      "orbit-label": {
+        "displayName": "궤도 이름표",
+        "purpose": "홈 행성 이름"
+      },
+      "opener-name": {
+        "displayName": "오프닝 이름",
+        "purpose": "오프닝의 세 음절 이름"
       }
     },
     "shadows": [
       {
         "name": "board",
-        "value": "inset 0 0 0 1px #eceeec, 0 22px 40px -28px rgb(27 31 36 / 0.45)",
+        "value": "inset 0 0 0 1px var(--board-edge), 0 22px 40px -28px color-mix(in srgb, var(--dark) 80%, transparent)",
         "purpose": "보드 프레임"
       },
       {
         "name": "note",
-        "value": "0 10px 18px -14px rgb(27 31 36 / 0.35)",
-        "purpose": "선택 메모"
+        "value": "0 10px 18px -14px color-mix(in srgb, var(--dark) 80%, transparent)",
+        "purpose": "화이트보드 크림 메모"
+      },
+      {
+        "name": "orbit-panel",
+        "value": "inset 0 0 0 1px rgb(235 227 203 / 0.32), inset 0 0 0 4px #0e1830, inset 0 0 0 5px rgb(235 227 203 / 0.14)",
+        "purpose": "홈 판독 패널 이중 테두리"
+      },
+      {
+        "name": "workshop-panel",
+        "value": "inset 0 0 0 1px rgb(235 227 203 / 0.32), inset 0 0 0 4px #14213d, inset 0 0 0 5px rgb(235 227 203 / 0.14)",
+        "purpose": "작업실 담당 업무 패널 이중 테두리"
       }
     ],
     "motion": [
@@ -252,6 +354,11 @@
         "name": "dur-state",
         "value": "150ms",
         "purpose": "상태 전환"
+      },
+      {
+        "name": "dur-splash",
+        "value": "3150ms",
+        "purpose": "오프닝 전체 길이"
       }
     ],
     "breakpoints": [
@@ -276,15 +383,15 @@
       "refersTo": "board",
       "description": "담당 범위 보드",
       "html": "<div class=\"ds-board\">프로젝트별 담당 범위</div>",
-      "css": ".ds-board{background:var(--board-white,#fcfcfa);color:var(--ink,#161817);border:7px solid var(--board-frame,#d7dadc);outline:1px solid var(--board-edge,#b8bcc0);outline-offset:-1px;border-radius:6px;padding:18px 16px 24px;box-shadow:inset 0 0 0 1px #eceeec,0 22px 40px -28px rgb(27 31 36 / .45)}"
+      "css": ".ds-board{background:var(--board-white,#111d38);color:var(--ink,#ebe3cb);border:7px solid var(--board-frame,#2a3a5c);outline:1px solid var(--board-edge,#3a4a6c);outline-offset:-1px;border-radius:6px;padding:18px 16px 24px;box-shadow:inset 0 0 0 1px var(--board-edge,#3a4a6c),0 22px 40px -28px color-mix(in srgb,var(--dark,#0b1428) 80%,transparent)}"
     },
     {
       "name": "담당 업무 메모",
       "kind": "card",
       "refersTo": "note",
-      "description": "담당 업무 메모",
+      "description": "화이트보드의 크림 종이 메모",
       "html": "<div class=\"ds-note\">서버 API<br>해빗 기능의 서버 API를 작업했습니다.</div>",
-      "css": ".ds-note{background:var(--note-paper,#fff3b5);color:var(--note-ink,#342d15);padding:24px;font-size:16px;line-height:1.75;transform:rotate(-.4deg);box-shadow:0 10px 18px -14px rgb(27 31 36 / .35)}"
+      "css": ".ds-note{background:var(--note-paper,#ebe3cb);color:var(--note-ink,#0b1428);padding:24px;font-size:16px;line-height:1.75;transform:rotate(-.4deg);box-shadow:0 10px 18px -14px color-mix(in srgb,var(--dark,#0b1428) 80%,transparent)}"
     },
     {
       "name": "담당 기능 판면",
@@ -292,7 +399,7 @@
       "refersTo": "work-sheet",
       "description": "담당 기능 판면",
       "html": "<div class=\"ds-sheet\"><strong>관리자 운영</strong><p>해빗 생성·수정·복제와 이벤트 관리 화면을 개발했습니다.</p></div>",
-      "css": ".ds-sheet{color:var(--ink,#161817);background:var(--board-white,#fcfcfa);border:1px solid var(--board-frame,#d7dadc);border-top:2px solid var(--marker-blue,#1f5fd6);padding:clamp(20px,3vw,36px);line-height:1.7}"
+      "css": ".ds-sheet{color:var(--ink,#ebe3cb);background:var(--board-white,#111d38);border:1px solid var(--board-frame,#2a3a5c);border-top:2px solid var(--marker-blue,#ebe3cb);padding:clamp(20px,3vw,36px);line-height:1.7}"
     },
     {
       "name": "조건 선택 칩",
@@ -300,7 +407,7 @@
       "refersTo": "condition-chip",
       "description": "조건 선택 칩",
       "html": "<button class=\"ds-chip\" aria-pressed=\"false\">명령 만료</button>",
-      "css": ".ds-chip{color:var(--ink,#161817);background:transparent;border:1px solid currentColor;padding:8px 14px;min-height:44px;font-size:15px;cursor:pointer;transition:transform 120ms cubic-bezier(.23,1,.32,1)}.ds-chip:hover{text-decoration:underline}.ds-chip:focus-visible{outline:2px solid var(--signal,#d23a2e);outline-offset:3px}.ds-chip:active{transform:translateY(1px)}@media(prefers-reduced-motion:reduce){.ds-chip:active{transform:none}}"
+      "css": ".ds-chip{color:var(--ink,#ebe3cb);background:transparent;border:1px solid currentColor;padding:8px 14px;min-height:44px;font-size:15px;cursor:pointer;transition:transform 120ms cubic-bezier(.23,1,.32,1)}.ds-chip:hover{text-decoration:underline}.ds-chip:focus-visible{outline:2px solid var(--ink,#ebe3cb);outline-offset:4px}.ds-chip:active{transform:translateY(1px)}@media(prefers-reduced-motion:reduce){.ds-chip:active{transform:none}}"
     },
     {
       "name": "선택한 조건 칩",
@@ -308,31 +415,89 @@
       "refersTo": "condition-chip-selected",
       "description": "선택한 조건 칩",
       "html": "<button class=\"ds-selected\" aria-pressed=\"true\">명령 만료</button>",
-      "css": ".ds-selected{color:var(--paper,#f3f2ed);background:var(--ink,#161817);border:1px solid var(--ink,#161817);padding:8px 14px;min-height:44px;font-size:15px;font-weight:500;cursor:pointer;transition:transform 120ms cubic-bezier(.23,1,.32,1)}.ds-selected:hover{text-decoration:underline}.ds-selected:focus-visible{outline:2px solid var(--signal,#d23a2e);outline-offset:3px}.ds-selected:active{transform:translateY(1px)}@media(prefers-reduced-motion:reduce){.ds-selected:active{transform:none}}"
+      "css": ".ds-selected{color:var(--paper,#0e1830);background:var(--ink,#ebe3cb);border:1px solid var(--ink,#ebe3cb);padding:8px 14px;min-height:44px;font-size:15px;font-weight:500;cursor:pointer;transition:transform 120ms cubic-bezier(.23,1,.32,1)}.ds-selected:hover{text-decoration:underline}.ds-selected:focus-visible{outline:2px solid var(--ink,#ebe3cb);outline-offset:4px}.ds-selected:active{transform:translateY(1px)}@media(prefers-reduced-motion:reduce){.ds-selected:active{transform:none}}"
+    },
+    {
+      "name": "작업실 담당 업무 패널",
+      "kind": "card",
+      "refersTo": "workshop-panel",
+      "description": "선택한 프로젝트의 담당 업무를 보여 주는 남색 판",
+      "html": "<section class=\"ds-work\"><strong>APC</strong><p>서비스 설명</p></section>",
+      "css": ".ds-work{position:relative;padding:24px;color:var(--color-ink,#ebe3cb);background:var(--color-night-2,#14213d);box-shadow:inset 0 0 0 1px rgb(235 227 203 / .32),inset 0 0 0 4px #14213d,inset 0 0 0 5px rgb(235 227 203 / .14)}.ds-work::before{content:\"\";position:absolute;left:14px;right:14px;top:-1px;height:2px;background:var(--color-vermilion,#e0664a)}.ds-work :focus-visible{outline:2px solid var(--color-ink,#ebe3cb)}"
+    },
+    {
+      "name": "선택한 작업실 이름표",
+      "kind": "button",
+      "refersTo": "workshop-label-selected",
+      "description": "선택한 이름표만 크림 종이",
+      "html": "<button class=\"ds-label\" aria-pressed=\"true\"><strong>APC</strong><span>서비스 설명</span></button>",
+      "css": ".ds-label{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:80px;padding:12px 16px;text-align:left;background:var(--note-paper,#ebe3cb);color:var(--note-ink,#0b1428);border:2px solid var(--marker-red,#e0664a);cursor:pointer}.ds-label span{font-size:14px;color:color-mix(in srgb,var(--note-ink,#0b1428) 80%,var(--note-paper,#ebe3cb))}"
+    },
+    {
+      "name": "궤도 이름표",
+      "kind": "label",
+      "refersTo": "orbit-label",
+      "description": "홈 행성 이름표와 새김 견본",
+      "html": "<span class=\"ds-orbit-name\"><svg viewBox=\"0 0 14 14\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\"><circle cx=\"7\" cy=\"7\" r=\"5\"/><path d=\"M2.4 5.2H11.6M2.4 8.6H11.6M5.4 2.3V11.7M8.8 2.3V11.7\"/></svg>포트폴리오</span>",
+      "css": ".ds-orbit-name{display:inline-flex;align-items:center;gap:7px;padding:6px 8px;font-size:14px;font-weight:500;line-height:1;color:var(--color-dim,#b4ad96);background:var(--color-night-deep,#0b1428);text-shadow:0 0 2px #0b1428,0 0 4px #0b1428,0 0 6px #0b1428,0 0 10px #0b1428}.ds-orbit-name[data-active]{color:var(--color-moonlight,#ebe3cb)}"
+    },
+    {
+      "name": "판독 패널",
+      "kind": "card",
+      "refersTo": "orbit-panel",
+      "description": "홈 선택 프로젝트의 작업 현황",
+      "html": "<aside class=\"ds-panel\"><strong>포트폴리오</strong><dl><dt>마지막 커밋</dt><dd>최근 날짜</dd></dl></aside>",
+      "css": ".ds-panel{position:relative;display:grid;gap:14px;width:330px;padding:20px 22px 14px;color:var(--color-moonlight,#ebe3cb);background:rgb(14 24 48 / .86);backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px rgb(235 227 203 / .32),inset 0 0 0 4px #0e1830,inset 0 0 0 5px rgb(235 227 203 / .14)}.ds-panel::before{content:\"\";position:absolute;left:14px;right:14px;top:-1px;height:2px;background:var(--color-vermilion,#e0664a)}.ds-panel strong{font-size:22px;font-weight:500;line-height:1.2}.ds-panel dl{display:grid;grid-template-columns:auto 1fr;gap:0 14px;margin:0;font-size:14px}.ds-panel dt{color:var(--color-dim,#b4ad96)}.ds-panel dd{margin:0}"
+    },
+    {
+      "name": "오프닝 건너뛰기",
+      "kind": "button",
+      "refersTo": "opener-skip",
+      "description": "오프닝 건너뛰기 버튼",
+      "html": "<button class=\"ds-skip\">건너뛰기</button>",
+      "css": ".ds-skip{min-height:44px;padding:0 18px;border:0;border-radius:999px;background:var(--color-night-2,#14213d);box-shadow:inset 0 0 0 1px var(--color-night-line,#2a3a5c);color:var(--color-dim,#b4ad96);font-size:14px;cursor:pointer}.ds-skip:focus-visible{outline:2px solid var(--color-moonlight,#ebe3cb);outline-offset:3px}"
     }
   ],
   "narrative": {
-    "northStar": "면접 화이트보드",
-    "overview": "종이 바탕과 기존 서체를 유지하며 프로젝트별 담당 영역과 구현 사례를 읽습니다. 선과 메모는 읽는 순서를 돕고 실험과 제품 개발의 경계를 표시합니다.",
+    "northStar": "성도 판화",
+    "overview": "남색 밤하늘 위에 크림색 선을 새긴 성도 판화처럼 작업을 보여 줍니다. 홈은 최근 GitHub 작업을 달 궤도의 행성으로, 이력 페이지는 프로젝트 작업실과 담당 범위를 보여 줍니다. 기존 서체와 헤더를 유지하고 실험과 제품 개발의 경계를 표시합니다.",
     "keyCharacteristics": [
-      "활자 본문과 마커 선",
-      "범위를 비교하는 보드",
+      "남색 바탕과 크림 선·글자",
+      "새김 무늬로 구별하는 행성",
+      "크림 종이는 화이트보드 메모와 선택 이름표에만",
       "충분한 기여 설명"
     ],
     "rules": [
       {
         "name": "색의 의미",
-        "body": "파랑은 직접 개발·유지보수, 초록 점선은 실험, 빨강은 현재 선택.",
+        "body": "바탕은 남색, 선과 글자는 크림, 보조 글자는 dim. 주홍은 선택·현재 위치·신호에만 쓰고, 예외는 오프닝 이름 끝 점과 판독 패널 상단선이다. 보드에서는 크림 실선이 직접 개발·유지보수, 흐린 크림 점선이 실험, 주홍이 현재 선택이다. 하늘색·민트색은 쓰지 않는다.",
         "section": "colors"
+      },
+      {
+        "name": "판화 표현",
+        "body": "행성과 달은 크림 선의 굵기와 밀도로만 명암을 낸다. 프로젝트는 격자·가로줄·점·사선 새김 무늬와 부속물로 구별하고 색으로만 구별하지 않는다.",
+        "section": "colors"
+      },
+      {
+        "name": "작업실 모형",
+        "body": "모형은 남색 면과 크림 모서리선으로 그리고, 강조면은 크림 사선 빗금으로 표시한다. 선택만 주홍이며 별도의 담당 표시 색은 없다.",
+        "section": "colors"
+      },
+      {
+        "name": "AI 작업 흐름 선",
+        "body": "/ai 작업 흐름의 단계 사이 선은 크림 2px 곧은 선과 정확한 호로 그린다. 손그림 흔들림을 넣지 않는다.",
+        "section": "shapes"
       }
     ],
     "dos": [
       "실험·유지보수·재구성 고지를 보존한다.",
-      "기여 설명은 충분한 문장으로 쓴다."
+      "기여 설명은 충분한 문장으로 쓴다.",
+      "홈 프로젝트는 새김 무늬와 이름으로 구별한다."
     ],
     "donts": [
       "미확인 성과와 회사명을 추가하지 않는다.",
-      "전체 테마를 교체하지 않는다."
+      "프로젝트마다 다른 색이나 채색·그라데이션·광택을 쓰지 않는다.",
+      "주홍을 장식에 쓰지 않는다."
     ]
   }
 }

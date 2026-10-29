@@ -1,10 +1,10 @@
-import { ArtSvg } from '../art-svg';
-import { fine, glass, metal, white } from './palette';
+import { ArtSvg, artBg } from '../art-svg';
+import { fine, metal, white } from './palette';
 import { SoftBeds } from './soft-beds';
 
 export function SmartSensor() {
   return (
-    <ArtSvg viewBox='0 0 400 400' bg={glass}>
+    <ArtSvg viewBox='0 0 400 400' bg={artBg}>
       <SoftBeds w={400} h={400} />
       <rect x={194} y={60} width={12} height={400} fill={metal} />
       {[0, 1, 2, 3, 4].map((i) => (

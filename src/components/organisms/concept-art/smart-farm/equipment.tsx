@@ -1,9 +1,9 @@
-import { ArtSvg, tone } from '../art-svg';
-import { fine, glass, metal, white } from './palette';
+import { ArtSvg, artBg, tone } from '../art-svg';
+import { fine, metal, white } from './palette';
 
 export function SmartEquipment() {
   return (
-    <ArtSvg viewBox='0 0 400 440' bg={glass}>
+    <ArtSvg viewBox='0 0 400 440' bg={artBg}>
       <rect
         x={-400}
         y={300}

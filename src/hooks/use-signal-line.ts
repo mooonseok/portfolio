@@ -97,8 +97,8 @@ export function useSignalLine() {
         if (b <= a) continue;
         stops.push(
           `var(--ink) ${a}px`,
-          `var(--paper) ${a}px`,
-          `var(--paper) ${b}px`,
+          `var(--dark-sub) ${a}px`,
+          `var(--dark-sub) ${b}px`,
           `var(--ink) ${b}px`
         );
       }

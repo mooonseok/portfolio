@@ -3,7 +3,7 @@ import type {
   DioramaStage,
   DioramaStageOptions,
 } from '@/dto/diorama-stage.dto';
-import { disposeModel } from './create-model';
+import { DIORAMA_LIGHT, disposeModel } from './create-model';
 import { createProjectScene } from './create-project-scene';
 import { createSceneMotion } from './create-scene-motion';
 
@@ -11,7 +11,9 @@ export function createStage(
   host: HTMLDivElement,
   options: DioramaStageOptions
 ): DioramaStage {
-  const { scene, models } = createProjectScene();
+  const { scene, models } = createProjectScene(
+    Math.min(window.devicePixelRatio || 1, 2)
+  );
   let renderer: THREE.WebGLRenderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -19,9 +21,9 @@ export function createStage(
     disposeModel(scene);
     throw error;
   }
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xb6b8b0, 2.2));
-  const light = new THREE.DirectionalLight(0xffffff, 2.4);
-  light.position.set(-3, 7, 5);
+  scene.add(new THREE.AmbientLight(0xffffff, DIORAMA_LIGHT.ambient));
+  const light = new THREE.DirectionalLight(0xffffff, DIORAMA_LIGHT.key);
+  light.position.set(...DIORAMA_LIGHT.direction);
   scene.add(light);
   const camera = new THREE.OrthographicCamera(-4, 4, 3, -3, 0.1, 50);
   const motion = createSceneMotion(models, camera);
@@ -64,6 +66,7 @@ export function createStage(
     camera.top = halfHeight;
     camera.bottom = -halfHeight;
     camera.updateProjectionMatrix();
+    motion.resize(height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height, false);
     wake();

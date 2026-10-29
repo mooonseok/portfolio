@@ -1,4 +1,4 @@
-import { ArtSvg, tone } from '../art-svg';
+import { ArtSvg, artBg } from '../art-svg';
 import { at, c, mid } from './palette';
 import { Bench, House, Lane, Pond, TileGrid, Token, Tree } from './parts';
 
@@ -32,7 +32,7 @@ function Village() {
 
 export function EmosaveHome() {
   return (
-    <ArtSvg viewBox='0 0 400 500' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 400 500' bg={artBg}>
       <Village />
     </ArtSvg>
   );
@@ -40,7 +40,7 @@ export function EmosaveHome() {
 
 export function EmosaveMain() {
   return (
-    <ArtSvg viewBox='0 0 400 500' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 400 500' bg={artBg}>
       <g transform='matrix(-1 0 0 1 400 -40)'>
         <Village />
       </g>
@@ -50,7 +50,7 @@ export function EmosaveMain() {
 
 export function EmosaveVillage() {
   return (
-    <ArtSvg viewBox='0 0 400 400' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 400 400' bg={artBg}>
       <TileGrid cols={6} rows={6} ox={-40} oy={-40} />
       <House x={40} y={40} />
       <House x={200} y={40} tint={c.blue} />

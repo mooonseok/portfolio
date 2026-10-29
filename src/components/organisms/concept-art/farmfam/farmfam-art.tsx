@@ -1,4 +1,4 @@
-import { ArtSvg, tone } from '../art-svg';
+import { ArtSvg, artBg } from '../art-svg';
 import { IsoBox, floor } from '../iso';
 import { ink, kraft, soft } from './palette';
 import { InventoryTag, Label } from './paper';
@@ -6,7 +6,7 @@ import { StillLife } from './still-life';
 
 export function FarmfamHome() {
   return (
-    <ArtSvg viewBox='0 0 400 500' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 400 500' bg={artBg}>
       <StillLife />
     </ArtSvg>
   );
@@ -14,7 +14,7 @@ export function FarmfamHome() {
 
 export function FarmfamHero() {
   return (
-    <ArtSvg viewBox='0 0 600 400' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 600 400' bg={artBg}>
       <g transform='translate(120 -30) scale(0.86)'>
         <StillLife />
       </g>
@@ -37,7 +37,7 @@ export function FarmfamHero() {
 
 export function FarmfamDetail() {
   return (
-    <ArtSvg viewBox='0 0 400 500' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 400 500' bg={artBg}>
       <IsoBox
         x={250}
         y={-60}

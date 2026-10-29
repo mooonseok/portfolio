@@ -33,13 +33,13 @@ export interface AiLoopMark {
   span?: string;
   head?: string;
   dir?: LoopDir;
-  bend?: string;
+  bend?: boolean;
   order: number;
 }
 
 export interface AiLoopMarks {
   stages: AiLoopMark[];
-  back: { bend: string; head: string; order: number };
+  back: { head: string; order: number };
   down: { line: string; head: string };
 }
 

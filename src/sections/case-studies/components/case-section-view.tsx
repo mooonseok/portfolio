@@ -30,7 +30,7 @@ const spaceTop = {
 
 const ruleTop = {
   ink: 'border-t border-t-ink tab:pt-6',
-  hairline: 'border-t border-t-hairline tab:pt-4.5',
+  hairline: 'border-t border-t-hair tab:pt-6',
   dashed: '[border-top:1px_dashed_var(--hairline)] tab:pt-4.5',
   dark: 'border-t border-t-dark-rule tab:pt-4.5',
   none: 'tab:pt-0',
@@ -71,7 +71,7 @@ export function CaseSectionView({
   layout = CASE_LAYOUT.SPLIT,
   space = CASE_SPACE.MD,
   loose,
-  rule = RULE.INK,
+  rule = RULE.HAIRLINE,
   railLabel,
   mark,
   className,

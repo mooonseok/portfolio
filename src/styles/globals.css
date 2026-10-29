@@ -29,20 +29,29 @@
   --spacing: 4px;
 
   --color-*: initial;
-  --color-paper: #f3f2ed;
-  --color-ink: #161817;
-  --color-graphite: #868a86;
-  --color-hairline: #d6d5cf;
-  --color-dark: #111412;
-  --color-dark-2: #181b19;
-  --color-dark-line: #2a2e2b;
-  --color-dark-rule: #3a3e3b;
-  --color-dark-sub: #a9ada9;
-  --color-signal: #d23a2e;
-  --color-placeholder: #e4e3dd;
-  --color-tint: #e9e8e2;
-  --color-dark-tint: #1f2320;
-  --color-subtle: #5f635f;
+  --color-paper: #0e1830;
+  --color-ink: #ebe3cb;
+  --color-graphite: #9c9682;
+  --color-hairline: #3a4a6c;
+  --color-dark: #0b1428;
+  --color-dark-2: #111d38;
+  --color-dark-line: #2a3a5c;
+  --color-dark-rule: #3a4a6c;
+  --color-dark-sub: #b4ad96;
+  --color-signal: #e0664a;
+  --color-placeholder: #14213d;
+  --color-tint: #14213d;
+  --color-dark-tint: #14213d;
+  --color-subtle: #b4ad96;
+  --color-night: #0e1830;
+  --color-night-2: #14213d;
+  --color-night-deep: #0b1428;
+  --color-night-line: #2a3a5c;
+  --color-moonlight: #ebe3cb;
+  --color-dim: #b4ad96;
+  --color-hair: rgb(235 227 203 / 0.32);
+  --color-vermilion: #e0664a;
+  --color-far: #6a7899;
   --color-transparent: transparent;
   --color-current: currentColor;
 
@@ -50,8 +59,8 @@
     'General Sans', 'Pretendard Variable', Pretendard, Inter, system-ui,
     -apple-system, 'Segoe UI', sans-serif;
   --font-mono:
-    var(--font-plex), 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo,
-    monospace;
+    var(--font-plex), 'IBM Plex Mono', 'Pretendard Variable', Pretendard,
+    ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --text-meta: 13px;
   --text-meta--line-height: 1.5;
@@ -76,6 +85,10 @@
   --text-lead: var(--fs-lead);
   --text-body: var(--fs-body);
   --text-small: var(--fs-small);
+  --text-opener-line: var(--fs-opener-line);
+  --text-opener-name: var(--fs-opener-name);
+  --text-opener-kicker: var(--fs-opener-kicker);
+  --text-opener-tag: var(--fs-opener-tag);
 }
 
 @custom-variant mob (@media (max-width: 743px));
@@ -109,7 +122,7 @@
 }
 @utility surface-dark {
   background: var(--dark);
-  color: var(--paper);
+  color: var(--ink);
 }
 @utility mono {
   font-family: var(--font-mono);

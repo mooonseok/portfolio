@@ -16,9 +16,11 @@ web
 
 ## Product Purpose
 
-박문석(Software Engineer, Flutter / Web / Backend)의 개인 포트폴리오다. 홈에서
-5개 프로젝트(FarmFam+, APC, Smart Farm, IndianBob, Emosave)의 서비스와 담당
-범위를 훑고, 프로젝트별 상세 페이지에서 기능 관계와 대표 구현 사례를 읽는다.
+박문석(Software Engineer, Flutter / Web / Backend)의 개인 포트폴리오다.
+홈(`/`)은 최근 30일 동안 커밋한 GitHub 레포를 주제별 프로젝트로 묶어 보여 주는
+작업 현황이다. 이력 페이지(`/portfolio`)에서 5개 프로젝트(FarmFam+, APC, Smart
+Farm, IndianBob, Emosave)의 서비스와 담당 범위를 훑고, 프로젝트별 상세
+페이지에서 기능 관계와 대표 구현 사례를 읽는다.
 
 성공은 면접관이 프로젝트마다 "어떤 서비스였고, 이 사람이 어느 부분을 어떻게
 만들었는지"를 짧은 시간에 파악하고, 면접에서 물을 질문을 정할 수 있는 상태다.
@@ -26,8 +28,9 @@ web
 ## Positioning
 
 - **앱·웹·서버·기기를 하나의 흐름으로 연결한 경험.** Flutter 앱에서 관리자 웹,
-  NestJS 서버, MQTT·ESP32 기기까지 이어지는 작업을 보여 준다. 현재 홈 헤드라인은
-  "사용자 앱과 업무 시스템을 개발해 왔습니다."다.
+  NestJS 서버, MQTT·ESP32 기기까지 이어지는 작업을 보여 준다. 현재 사이트 소개
+  문장(`site.headline`, 메타 설명)은 "사용자 앱과 업무 시스템을 개발해
+  왔습니다."다.
 - **현장 도메인 경험.** 농산물산지유통센터(APC) 현장 운영, 농산물 커머스,
   스마트팜 시험처럼 실제 업무에 맞춘 시스템을 다뤘다.
 - **구조를 보여 주는 도식.** 기능 나열 대신 관계·흐름 도식으로 무엇을 어떻게
@@ -36,9 +39,12 @@ web
 
 ## Operating Context
 
-- 정적 사이트다. CMS와 서버 API가 없고, 모든 문구·도식·이미지 참조는
-  `src/content`에 있다. 라우트는 홈, `work/[slug]` 5개, `ai`(AI 활용 방식),
-  not-found다.
+- CMS가 없고, 모든 문구·도식·이미지 참조는 `src/content`에 있다. 홈의 작업
+  현황만 GitHub GraphQL API에서 받아 1시간마다 다시 만들고,
+  `/api/github-webhook`이 서명을 확인한 요청에서 바로 갱신한다. 토큰이 없거나
+  조회에 실패하면 `src/content/activity-snapshot.ts`의 기록을 기준 날짜와 함께
+  보여 준다. 라우트는 홈(작업 현황), `portfolio`(이력), `work/[slug]` 5개,
+  `ai`(AI 활용 방식), `api/github-webhook`, not-found다.
 - 경력 구성: 랩이오사(2021.09–2025.09, 분저장·인디언밥 외주), 아그리코어
   (2025.10–재직 중, FarmFam+·APC·Smart Farm).
 - 배포는 Vercel로 할 예정이다. 공식 공개 URL(canonical origin)은 아직 확정되지
@@ -69,8 +75,8 @@ web
 - 이름 표기 `PARK MOONSEOK`, 직함 `SOFTWARE ENGINEER`, 분야
   `Flutter / Web / Backend`, 범위 `Selected Work 2022—2026`.
 - 디자인 기준(source of truth)은 Phase 1–4 **LOCKED** 캔버스다(HANDOFF.md).
-- 파비콘은 사용자가 제공한 픽셀 초승달 이미지다(`src/app/favicon.ico`,
-  `icon.png`, `apple-icon.png`).
+- 파비콘은 새김 초승달 이미지다(`src/app/favicon.ico`, `icon.png`,
+  `apple-icon.png`).
 
 ## Evidence on Hand
 

@@ -14,11 +14,14 @@ export function SiteHeaderView({
   return (
     <Box
       as={TAG.HEADER}
-      className='relative z-5 container flex min-h-14 items-center justify-between pt-[calc(12px_+_env(safe-area-inset-top))] data-dark:text-paper tab:pt-7'
+      className='relative z-5 container flex min-h-14 items-center justify-between pt-[calc(12px_+_env(safe-area-inset-top))] data-dark:text-ink tab:pt-7'
       data-dark={dark || undefined}
     >
       {back ? (
-        <NavLink href='/#work' className='flex min-h-11 items-center mono'>
+        <NavLink
+          href='/portfolio#work'
+          className='flex min-h-11 items-center mono'
+        >
           <Text as={TAG.SPAN} className='inline tab:hidden'>
             ← WORK
           </Text>

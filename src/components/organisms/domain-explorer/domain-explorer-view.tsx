@@ -26,7 +26,7 @@ export function DomainExplorerView({
       <Grid
         role='tablist'
         aria-label={label}
-        className='grid-cols-3 border-t border-b border-t-ink border-b-hairline'
+        className='grid-cols-3 border-t border-b border-t-hair border-b-hairline'
       >
         {items.map((x) => {
           const on = x.id === selected;

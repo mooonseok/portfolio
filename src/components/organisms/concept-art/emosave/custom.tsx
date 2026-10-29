@@ -1,10 +1,10 @@
-import { ArtSvg, tone } from '../art-svg';
+import { ArtSvg, artBg, tone } from '../art-svg';
 import { c, line } from './palette';
 import { House, Pond, TileGrid, Tree } from './parts';
 
 export function EmosaveCustom() {
   return (
-    <ArtSvg viewBox='0 0 400 400' bg={tone.placeholder}>
+    <ArtSvg viewBox='0 0 400 400' bg={artBg}>
       <TileGrid cols={6} rows={6} ox={-40} oy={-40} />
       <House x={40} y={40} tint={c.mauve} />
       <Tree x={280} y={80} />

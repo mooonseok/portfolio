@@ -4,11 +4,11 @@ Every typeface used by the site is served from this folder. No font is fetched
 from a third-party CDN at runtime, and the production build needs no network
 access for fonts.
 
-| Family                   | Files                                                               | Source                                                                          | License                                                             |
-| ------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| General Sans 400/500/600 | `general-sans/*.woff2`                                              | Fontshare (Indian Type Foundry), <https://www.fontshare.com/fonts/general-sans> | ITF Free Font License, <https://www.fontshare.com/licenses/itf-ffl> |
-| Pretendard Variable      | `pretendard/PretendardVariable.subset.*.woff2` (92 dynamic subsets) | orioncactus/pretendard v1.3.9 via jsDelivr                                      | SIL OFL 1.1 — `pretendard/OFL.txt`                                  |
-| IBM Plex Mono 400        | `ibm-plex-mono/*-latin.woff2` (latin subset)                        | Google Fonts distribution of IBM Plex Mono v20                                  | SIL OFL 1.1 — `ibm-plex-mono/OFL.txt`                               |
+| Family                       | Files                                                               | Source                                                                          | License                                                             |
+| ---------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| General Sans 300/400/500/600 | `general-sans/*.woff2`                                              | Fontshare (Indian Type Foundry), <https://www.fontshare.com/fonts/general-sans> | ITF Free Font License, <https://www.fontshare.com/licenses/itf-ffl> |
+| Pretendard Variable          | `pretendard/PretendardVariable.subset.*.woff2` (92 dynamic subsets) | orioncactus/pretendard v1.3.9 via jsDelivr                                      | SIL OFL 1.1 — `pretendard/OFL.txt`                                  |
+| IBM Plex Mono 400            | `ibm-plex-mono/*-latin.woff2` (latin subset)                        | Google Fonts distribution of IBM Plex Mono v20                                  | SIL OFL 1.1 — `ibm-plex-mono/OFL.txt`                               |
 
 How they are wired:
 

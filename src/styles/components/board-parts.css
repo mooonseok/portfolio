@@ -3,8 +3,11 @@
   padding: 20px 22px 18px;
   background: var(--note-paper);
   color: var(--note-ink);
-  box-shadow: 0 10px 18px -14px rgb(27 31 36 / 0.35);
+  box-shadow: 0 10px 18px -14px color-mix(in srgb, var(--dark) 80%, transparent);
   rotate: -0.4deg;
+}
+.board-note :focus-visible {
+  outline-color: var(--note-ink);
 }
 .board-note[hidden] {
   display: none;
@@ -60,10 +63,10 @@
   flex-wrap: wrap;
   gap: 2px 8px;
   font-weight: 600;
-  color: var(--marker-blue);
+  color: color-mix(in srgb, var(--marker-blue) 45%, var(--note-ink));
 }
 .note-layer[data-kind='experiment'] .note-floor {
-  color: var(--marker-green);
+  color: color-mix(in srgb, var(--marker-green) 45%, var(--note-ink));
 }
 .note-exp {
   font-size: 12.5px;
@@ -110,7 +113,7 @@
   width: 46px;
   height: 14px;
   border-radius: 3px;
-  background: #3a3f45;
+  background: var(--marker-ghost);
   transform: translateY(-7px);
 }
 .board-legend {
@@ -170,11 +173,4 @@
 .layer-chip-tech {
   font-weight: 400;
   color: var(--ink);
-}
-.surface-dark .layer-chip {
-  border-color: #8fb0ff;
-  color: #8fb0ff;
-}
-.surface-dark .layer-chip-tech {
-  color: var(--paper);
 }

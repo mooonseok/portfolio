@@ -5,9 +5,6 @@
   border-radius: 50%;
   background: var(--marker-blue);
 }
-.surface-dark .status-mark {
-  background: #8fb0ff;
-}
 .status-label[data-kind='experiment'] .status-mark {
   border-radius: 0;
   background: none;

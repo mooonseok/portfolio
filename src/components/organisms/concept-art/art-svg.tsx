@@ -12,6 +12,8 @@ export const tone = {
   darkSub: '#A9ADA9',
 } as const;
 
+export const artBg = 'var(--color-placeholder)';
+
 export const hair = {
   vectorEffect: 'non-scaling-stroke',
   fill: 'none',

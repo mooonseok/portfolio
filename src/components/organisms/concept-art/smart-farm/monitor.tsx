@@ -1,10 +1,10 @@
-import { ArtSvg, tone } from '../art-svg';
-import { glass, fine, metal } from './palette';
+import { ArtSvg, artBg, tone } from '../art-svg';
+import { fine, metal } from './palette';
 import { SoftBeds } from './soft-beds';
 
 export function SmartMonitor() {
   return (
-    <ArtSvg viewBox='0 0 400 400' bg={glass}>
+    <ArtSvg viewBox='0 0 400 400' bg={artBg}>
       <SoftBeds w={400} h={400} />
       <rect x={-400} y={300} width={1200} height={400} fill={tone.hairline} />
       <rect x={193} y={250} width={14} height={52} fill={metal} />

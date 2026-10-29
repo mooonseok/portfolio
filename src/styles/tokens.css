@@ -23,20 +23,22 @@
   --dur-exit: 120ms;
   --dur-enter: 200ms;
   --dur-height: 220ms;
+  --dur-grow: 200ms;
+  --dur-splash: 3150ms;
 
-  --board-white: #fcfcfa;
-  --board-frame: #d7dadc;
-  --board-edge: #b8bcc0;
-  --board-tray: #c9cdd0;
-  --board-tray-edge: #b3b8bc;
-  --marker-ink: #1b1f24;
-  --marker-blue: #1f5fd6;
-  --marker-red: #d23a2e;
-  --marker-green: #177349;
-  --marker-ghost: #a9ada9;
-  --marker-cap: #f4f4f2;
-  --note-paper: #fff3b5;
-  --note-ink: #342d15;
+  --board-white: #111d38;
+  --board-frame: #2a3a5c;
+  --board-edge: #3a4a6c;
+  --board-tray: #1b2a4a;
+  --board-tray-edge: #3a4a6c;
+  --marker-ink: #ebe3cb;
+  --marker-blue: #ebe3cb;
+  --marker-red: #e0664a;
+  --marker-green: #b4ad96;
+  --marker-ghost: #6a7899;
+  --marker-cap: #2a3a5c;
+  --note-paper: #ebe3cb;
+  --note-ink: #0b1428;
 
   --cols: 4;
   --margin: 20px;
@@ -62,6 +64,10 @@
   --fs-body: 16px;
   --fs-small: 14px;
   --fs-meta: 13px;
+  --fs-opener-line: clamp(30px, min(11vw, 14vh), 116px);
+  --fs-opener-name: clamp(72px, min(24vw, 30vh), 280px);
+  --fs-opener-kicker: clamp(18px, min(3.4vw, 5vh), 40px);
+  --fs-opener-tag: clamp(20px, min(4.4vw, 6vh), 52px);
 }
 
 @media (min-width: 744px) {

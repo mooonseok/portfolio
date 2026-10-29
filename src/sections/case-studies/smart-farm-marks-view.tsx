@@ -10,8 +10,8 @@ export const trackCol = (kind: StatusKind) =>
   cx(
     'flex flex-col gap-3 pt-3.5',
     kind === STATUS_KIND.EXPERIMENT
-      ? '[border-top:1px_dashed_var(--ink)]'
-      : 'border-t border-t-ink'
+      ? '[border-top:1px_dashed_var(--color-hair)]'
+      : 'border-t border-t-hair'
   );
 
 export const headTitle =

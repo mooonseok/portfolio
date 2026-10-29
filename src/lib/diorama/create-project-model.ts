@@ -1,23 +1,25 @@
 import * as THREE from 'three';
 import { PROJECT_SLUG, type ProjectSlug } from '@/constants/project';
-import { createModel } from './create-model';
+import { DIORAMA_COLOR, createModel } from './create-model';
+import { createReticle } from './selection-reticle';
 import { modelParts } from './model-parts';
 
-export function createProjectModel(slug: ProjectSlug) {
-  const model =
+export function createProjectModel(slug: ProjectSlug, pixelRatio = 1) {
+  const { group } =
     slug === PROJECT_SLUG.FARMFAM_PLUS
-      ? createModel()
-      : createDistinctModel(slug);
-  model.group.userData.projectSlug = slug;
-  model.group.traverse((object) => {
-    if (object instanceof THREE.Mesh && object !== model.ring)
-      object.userData.projectSlug = slug;
+      ? createModel(pixelRatio)
+      : createDistinctModel(slug, pixelRatio);
+  group.userData.projectSlug = slug;
+  group.traverse((object) => {
+    if (object instanceof THREE.Mesh) object.userData.projectSlug = slug;
   });
-  return model;
+  const ring = createReticle(DIORAMA_COLOR.select);
+  group.add(ring);
+  return { group, ring };
 }
 
-function createDistinctModel(slug: ProjectSlug) {
-  const m = modelParts();
+function createDistinctModel(slug: ProjectSlug, pixelRatio: number) {
+  const m = modelParts(pixelRatio);
   if (slug === PROJECT_SLUG.EMOSAVE) {
     m.phone(-0.95, -0.25);
     m.add(new THREE.CircleGeometry(0.2, 24), -0.95, 1.34, -0.12);
@@ -114,5 +116,5 @@ function createDistinctModel(slug: ProjectSlug) {
       true
     );
   }
-  return { group: m.group, ring: m.ring };
+  return { group: m.group };
 }

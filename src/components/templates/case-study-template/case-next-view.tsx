@@ -9,11 +9,11 @@ export function CaseNextView({ next }: { next: CaseNextLink }) {
     <Box
       as={TAG.NAV}
       aria-label={next.navLabel ?? 'Next project'}
-      className='container mt-12 border-t border-t-ink tab:mt-16 lap:mt-20'
+      className='container mt-12 tab:mt-16 lap:mt-20'
     >
       <NavLink
         href={next.href}
-        className='group/next grid min-h-11 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-6 gap-y-1 py-5 tab:grid-cols-[auto_minmax(0,1fr)_auto] tab:py-6'
+        className='group/next grid min-h-11 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-6 gap-y-1 border-t border-t-hair py-5 tab:grid-cols-[auto_minmax(0,1fr)_auto] tab:py-6'
       >
         <Text as={TAG.SPAN} className='col-start-1 row-start-1 mono muted'>
           NEXT
