@@ -106,19 +106,24 @@ pnpm check:perf
 ## 7. 작업 파이프라인
 
 화면 하나를 한 단위로 아래 순서를 따릅니다. Claude Code에서는
-`.claude/skills/`의 진행표와 `.claude/agents/`의 검토 에이전트를 씁니다.
+`.claude/skills/`의 진행표와 `.claude/agents/`의 담당 에이전트를 씁니다. 여러
+파일에 걸친 작업은 `pf-team` 진행표로 리드(메인 세션)가 나눠 맡깁니다.
 
-| 순서 | 진행표      | 하는 일                                        | 게이트                |
-| ---- | ----------- | ---------------------------------------------- | --------------------- |
-| 1    | `pf-design` | 브리프, 방향 시안, 토큰, 문구, 독립 리뷰       | G1 사용자가 방향 선택 |
-| 2    | `pf-motion` | 움직임 성격, 타임시트, 구현, 대체 경로         |                       |
-| 3    | `pf-build`  | 타입 → 순수 함수와 테스트 → 서버 데이터 → 화면 | G2 자동 검사 통과     |
-| 4    | `pf-verify` | §5 검사, 4개 폭 브라우저 확인, 서버 정리       | G3 화면 확인          |
-| 5    | `pf-commit` | 목적별 분리, 제목·본문 작성, 커밋 메시지 검사  | G4 `commit-msg` 훅    |
+| 순서 | 진행표      | 하는 일                                        | 맡는 담당                                     | 게이트                |
+| ---- | ----------- | ---------------------------------------------- | --------------------------------------------- | --------------------- |
+| 1    | `pf-design` | 요구 카드, 부품 시안, 프로토타입, G2·G3 관문   | 리드, design-reviewer                         | G1 방향 선택, G4 확정 |
+| 2    | `pf-team`   | 작업 지시서, 계약 고정, 병렬 구현, 합치기      | 리드, data-builder, ui-builder, scene-builder |                       |
+| 3    | `pf-motion` | 움직임 성격, 타임시트, 대체 경로               | scene-builder                                 |                       |
+| 4    | `pf-build`  | 타입 → 순수 함수와 테스트 → 서버 데이터 → 화면 | 구현 담당                                     | G2 자동 검사 통과     |
+| 5    | `pf-verify` | §5 검사, 4개 폭 브라우저 확인, 서버 정리       | qa-runner, design-reviewer, perf-auditor      | G3 화면 확인          |
+| 6    | `pf-commit` | 문서 갱신, 목적별 분리, 제목·본문 작성         | docs-keeper, copy-editor, 리드                | `commit-msg` 훅       |
 
-- 독립 검토는 `design-reviewer`(디자인·접근성), `perf-auditor`(빌드
-  크기·Lighthouse·3D 성능), `copy-editor`(문구·커밋 제목)가 맡습니다. 검토
-  에이전트는 파일을 고치지 않고 지적 사항만 돌려줍니다.
+- 구현 담당(data-builder, ui-builder, scene-builder)은 작업 지시서의 소유 파일만
+  고치고, 빌드·서버 실행·커밋은 하지 않습니다. 같은 파일을 두 담당에게 주지
+  않습니다.
+- 검증·검토 담당(qa-runner, design-reviewer, perf-auditor, copy-editor)은 파일을
+  고치지 않고 결과만 돌려줍니다. 3100번 서버는 qa-runner만 띄우고 끕니다.
+- 지적은 그 파일의 소유 담당에게만 돌려보내며, 수정 라운드는 최대 2회입니다.
 - `.claude/settings.json`은 커밋·PR 서명을 끄고, 파일을 고칠 때마다 Prettier를
   실행합니다. 개인 설정은 `.claude/settings.local.json`에 두며 레포에 올리지
   않습니다.
