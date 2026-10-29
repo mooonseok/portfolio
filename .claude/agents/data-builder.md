@@ -18,5 +18,6 @@ description:
    만들지 않고, 확인되지 않은 수치를 콘텐츠에 넣지 않습니다.
 4. 끝내기 전에 `pnpm typecheck`, `pnpm test`, `pnpm check:boundaries`,
    `pnpm lint`를 돌립니다. 빌드와 서버 실행은 하지 않습니다(qa-runner 몫).
-5. 커밋하지 않습니다. 바꾼 파일, 공개한 타입·함수 이름, 실행한 검사와 결과를
-   돌려줍니다.
+5. 작업 브랜치에는 커밋하지 않습니다. worktree로 띄워졌으면 그 worktree
+   브랜치에만 `pf-commit` 규칙으로 커밋합니다. 바꾼 파일, 공개한 타입·함수 이름,
+   실행한 검사와 결과를 돌려줍니다.

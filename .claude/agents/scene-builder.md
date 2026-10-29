@@ -19,4 +19,6 @@ description:
    `scripts/tests`에 테스트를 씁니다.
 5. 끝내기 전에 `pnpm typecheck`, `pnpm test`, `pnpm check:boundaries`,
    `pnpm lint`를 돌립니다. 빌드·서버는 하지 않습니다.
-6. 커밋하지 않습니다. 바꾼 파일, 타임시트와 다른 점, 실행한 검사를 돌려줍니다.
+6. 작업 브랜치에는 커밋하지 않습니다. worktree로 띄워졌으면 그 worktree
+   브랜치에만 `pf-commit` 규칙으로 커밋합니다. 바꾼 파일, 타임시트와 다른 점,
+   실행한 검사를 돌려줍니다.
