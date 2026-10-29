@@ -66,6 +66,7 @@ export function createStage(
     camera.top = halfHeight;
     camera.bottom = -halfHeight;
     camera.updateProjectionMatrix();
+    motion.resize(height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height, false);
     wake();

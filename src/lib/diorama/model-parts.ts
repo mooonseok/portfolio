@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { DIORAMA_COLOR, createMaterials } from './create-model';
+import { createMaterials } from './create-model';
 
 export function modelParts(pixelRatio = 1) {
   const group = new THREE.Group();
@@ -36,18 +36,5 @@ export function modelParts(pixelRatio = 1) {
     box(0.15, 0.035, 0.035, x, 0.38, z + 0.09);
   };
   add(new THREE.CylinderGeometry(2.4, 2.5, 0.18, 6), 0, 0.09, 0);
-  const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(2.63, 0.026, 8, 96),
-    new THREE.MeshBasicMaterial({
-      color: DIORAMA_COLOR.select,
-      transparent: true,
-      opacity: 0,
-      depthWrite: false,
-    })
-  );
-  ring.rotation.x = -Math.PI / 2;
-  ring.position.y = 0.025;
-  ring.visible = false;
-  group.add(ring);
-  return { group, ring, add, box, sphere, phone };
+  return { group, add, box, sphere, phone };
 }

@@ -1,19 +1,21 @@
 import * as THREE from 'three';
 import { PROJECT_SLUG, type ProjectSlug } from '@/constants/project';
-import { createModel } from './create-model';
+import { DIORAMA_COLOR, createModel } from './create-model';
+import { createReticle } from './selection-reticle';
 import { modelParts } from './model-parts';
 
 export function createProjectModel(slug: ProjectSlug, pixelRatio = 1) {
-  const model =
+  const { group } =
     slug === PROJECT_SLUG.FARMFAM_PLUS
       ? createModel(pixelRatio)
       : createDistinctModel(slug, pixelRatio);
-  model.group.userData.projectSlug = slug;
-  model.group.traverse((object) => {
-    if (object instanceof THREE.Mesh && object !== model.ring)
-      object.userData.projectSlug = slug;
+  group.userData.projectSlug = slug;
+  group.traverse((object) => {
+    if (object instanceof THREE.Mesh) object.userData.projectSlug = slug;
   });
-  return model;
+  const ring = createReticle(DIORAMA_COLOR.select);
+  group.add(ring);
+  return { group, ring };
 }
 
 function createDistinctModel(slug: ProjectSlug, pixelRatio: number) {
@@ -114,5 +116,5 @@ function createDistinctModel(slug: ProjectSlug, pixelRatio: number) {
       true
     );
   }
-  return { group: m.group, ring: m.ring };
+  return { group: m.group };
 }

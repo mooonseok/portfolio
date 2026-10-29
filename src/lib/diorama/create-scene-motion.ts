@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import type { ProjectSlug } from '@/constants/project';
 import type { createProjectScene } from './create-project-scene';
+import { reticleFrame } from './reticle-geometry';
+import { measureFrame, writeReticle } from './selection-reticle';
 
 export function createSceneMotion(
   models: ReturnType<typeof createProjectScene>['models'],
@@ -10,7 +12,29 @@ export function createSceneMotion(
   const offset = new THREE.Vector3();
   let selected: ProjectSlug | null = null;
   let snap = false;
+  let height = 0;
+  let drawn = '';
+  const frames = new Map<ProjectSlug, ReturnType<typeof measureFrame>>();
+  const frame = (active: (typeof models)[number]) => {
+    const { slug, group, ring } = active;
+    const measured =
+      frames.get(slug) ?? measureFrame(group, ring, camera.quaternion);
+    frames.set(slug, measured);
+    ring.quaternion.copy(camera.quaternion);
+    ring.position.copy(measured.center);
+    const scale =
+      ((height * camera.zoom) / (camera.top - camera.bottom)) * group.scale.x;
+    const key = `${slug}:${scale}`;
+    if (key === drawn) return;
+    const rects = reticleFrame(measured.halfWidth, measured.halfHeight, scale);
+    if (!rects) return;
+    writeReticle(ring, rects);
+    drawn = key;
+  };
   return {
+    resize(value: number) {
+      height = value;
+    },
     select(slug: ProjectSlug | null, immediate = false) {
       selected = slug;
       snap = immediate;
@@ -40,6 +64,7 @@ export function createSceneMotion(
       camera.position.set(offset.x, 9, 11 + offset.z);
       camera.lookAt(offset.x, 0.35, offset.z);
       camera.updateProjectionMatrix();
+      if (active) frame(active);
       snap = false;
       return moving || offset.distanceTo(target) > 0 || camera.zoom !== zoom;
     },

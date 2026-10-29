@@ -118,19 +118,7 @@ export function createModel(pixelRatio = 1) {
     const leaf = box(0.1, 0.025, 0.045, paper, x + 0.03, 0.89, 1.0);
     leaf.rotation.z = 0.45;
   });
-  const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(2.63, 0.026, 8, 96),
-    new THREE.MeshBasicMaterial({
-      color: DIORAMA_COLOR.select,
-      transparent: true,
-      opacity: 0,
-      depthWrite: false,
-    })
-  );
-  ring.rotation.x = -Math.PI / 2;
-  ring.position.y = 0.025;
-  group.add(ring);
-  return { group, ring };
+  return { group };
 }
 
 export function disposeModel(scene: THREE.Scene) {
