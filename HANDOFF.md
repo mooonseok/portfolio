@@ -94,7 +94,11 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 - **Styling.** Utilities in className; Preflight is off (the editorial base in
   `globals.css` replaces it); custom variants
   `mob tab-only short-land fine coarse on-dark js inview reveal-pending`;
-  breakpoints `tab` 744 · `lap` 1024 · `wide` 1440; `--spacing: 4px`.
+  breakpoints `tab` 744 · `lap` 1024 · `wide` 1440; `--spacing: 4px`. The site
+  uses the night theme: `@theme` keeps the role names (`paper`, `ink`, `subtle`,
+  `hairline`, `dark`, `signal`) and the night names (`night`, `night-deep`,
+  `moonlight`, `dim`, `vermilion`, …) on the same navy and cream values; values
+  and roles are in DESIGN.md.
 
 ## 3. Data model (summary)
 
@@ -193,15 +197,16 @@ are faint dotted outlines; vertically adjacent built cells in one project are
 joined by a short marker line (connection only, not order). Below 1024px each
 project lists its owned layers as marker chips; unbuilt layers are hidden. Each
 column header shows the service and participation period. Selecting a project
-name draws a red marker loop and opens a yellow note below the matrix (the
+name draws a vermilion marker loop and opens a cream note below the matrix (the
 matrix does not move) with layer-only headings and complete work sentences
 (`layers.lines`) as separate list items, plus the case link. Technology names
 are omitted from note headings consistently across projects. Period and product
 status stay outside the note. Blue solid = 직접 개발·유지보수, green dashed =
-experiment, red = current selection. The loop draws in 300ms and the note enters
-in 180ms only when a pointer opens the first note; switching notes, keyboard and
-reduced-motion selection are immediate. Selecting keeps the tapped title at the
-same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
+experiment, vermilion = current selection. The loop draws in 300ms and the note
+enters in 180ms only when a pointer opens the first note; switching notes,
+keyboard and reduced-motion selection are immediate. Selecting keeps the tapped
+title at the same screen position. Experiment cells carry a screen-reader
+"(실험)" suffix.
 
 `Project` →
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, boardService, layers[], summary, links?, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
@@ -213,25 +218,25 @@ Below the hero, the project order follows the board: Emosave → IndianBob →
 FarmFam+ → APC → Smart Farm. Product projects use peer-level headings without
 사용자 앱 / 업무 시스템 group titles; 센서·제어 실험 remains a separate heading.
 Each project is a full-width editorial row: built-layer chips, service summary,
-three or four static `home.features` on a light writing surface and one detail
+three or four static `home.features` on a navy writing surface and one detail
 link. Concept images, decorative section numbers, the SignalLine and footer
 `200 OK` are no longer rendered. The Experience section is removed; the board
 header carries the periods. The homepage intro includes GitHub; the former This
 Website section is removed to keep the reading path focused on project work.
 Case work rows and technical notes use 16px body text with 1.7 line height; a
-single technical note uses one column. All home projects share the light paper
-surface; APC case-study sections use the same light paper surface as the other
-cases. Smart Farm has its own experiment heading. The `work` navigation anchor
-starts at the project list and the `flutter-work` anchor remains available. Case
-pages show a definition list of owned areas (`ProjectScopeListView`) after the
-introduction. Each row pairs an area with its work summary and, when supplied,
-technology. Only separators between rows remain; there is no board frame, tinted
-box, connector or legend. Technology moves below the work summary on mobile;
-tablet and wider use three columns. Experiment rows carry a visible experiment
-label. The work sections below retain implementation detail. `VisualsNote`
-renders the unchanged `visualsNoteKo` reconstruction notice beside the actual
-diagrams in each case study. The home whiteboard and its connector explanation
-are unchanged.
+single technical note uses one column. All home projects share the navy `paper`
+surface; APC case-study sections use the same surface as the other cases. Smart
+Farm has its own experiment heading. The `work` navigation anchor starts at the
+project list and the `flutter-work` anchor remains available. Case pages show a
+definition list of owned areas (`ProjectScopeListView`) after the introduction.
+Each row pairs an area with its work summary and, when supplied, technology.
+Only separators between rows remain; there is no board frame, tinted box,
+connector or legend. Technology moves below the work summary on mobile; tablet
+and wider use three columns. Experiment rows carry a visible experiment label.
+The work sections below retain implementation detail. `VisualsNote` renders the
+unchanged `visualsNoteKo` reconstruction notice beside the actual diagrams in
+each case study. The home whiteboard and its connector explanation are
+unchanged.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs
