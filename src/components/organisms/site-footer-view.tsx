@@ -18,7 +18,7 @@ export function SiteFooterView({
   return (
     <Box
       as={TAG.FOOTER}
-      className='pt-12 pb-[calc(24px_+_env(safe-area-inset-bottom))] surface-dark tab:pt-16 tab:pb-[calc(36px_+_env(safe-area-inset-bottom))] lap:pt-20 lap:pb-[calc(48px_+_env(safe-area-inset-bottom))]'
+      className='pt-12 pb-[calc(24px_+_env(safe-area-inset-bottom))] surface-dark text-ink tab:pt-16 tab:pb-[calc(36px_+_env(safe-area-inset-bottom))] lap:pt-20 lap:pb-[calc(48px_+_env(safe-area-inset-bottom))]'
       id={contact ? 'contact' : undefined}
     >
       <Box className='container'>

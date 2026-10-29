@@ -17,7 +17,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       as={TAG.SECTION}
       id={DIORAMA.PANEL_ID}
       aria-labelledby='project-stage-title'
-      className={`p-6 tab:p-8 ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border border-hairline'}`}
+      className={`p-6 tab:p-8 ${project ? 'bg-[var(--note-paper)] text-[var(--note-ink)] [&_:focus-visible]:outline-current' : 'border border-hairline'}`}
     >
       <Box className='flex items-start justify-between gap-4'>
         <Heading
@@ -31,7 +31,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
           <Button
             onClick={props.onClose}
             aria-label='담당 업무 닫기'
-            className='fine:hover:bg-black/5 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2'
+            className='flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 fine:hover:bg-current/10'
           >
             <CloseIcon />
           </Button>
