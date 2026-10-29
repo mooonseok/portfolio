@@ -1,0 +1,44 @@
+.end {
+  grid-area: 1 / 1;
+  width: min(92vw, 1100px);
+  height: auto;
+  overflow: visible;
+}
+
+.spoke {
+  stroke: var(--color-moonlight);
+  stroke-opacity: 0.08;
+}
+
+.tick {
+  fill: none;
+  stroke: var(--color-moonlight);
+  stroke-opacity: 0.4;
+  stroke-width: 6;
+  stroke-dasharray: 1.2 9;
+}
+
+.orbit {
+  fill: none;
+  stroke: var(--color-moonlight);
+  stroke-opacity: 0.5;
+  stroke-width: 1.2;
+}
+
+.body {
+  fill: #111d38;
+  stroke: var(--color-moonlight);
+  stroke-opacity: 0.35;
+  stroke-width: 1.2;
+}
+
+.hatch {
+  stroke: var(--color-moonlight);
+  stroke-width: 1.7;
+}
+
+@media (max-aspect-ratio: 3/4) {
+  .end {
+    width: 100vw;
+  }
+}

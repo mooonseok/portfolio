@@ -1,25 +1,28 @@
 import type { ActivityCopy } from '@/dto/activity-copy.dto';
+import { ORBIT } from '@/constants/orbit';
 
 export const activity: ActivityCopy = {
-  label: 'GITHUB ACTIVITY',
-  summary: 'GitHub 레포별 최근 커밋입니다.',
-  legend:
-    '달에 가까울수록 마지막 커밋이 최근이고 크게 보일수록 최근 30일 커밋이 많은 레포입니다.',
-  asOf: '기준',
-  commitCount: '최근 30일 커밋',
-  commitUnit: '개',
+  heading: '박문석이 지금 작업 중인 프로젝트',
+  panelLabel: '선택한 프로젝트',
   lastCommit: '마지막 커밋',
+  recent: '최근 30일',
+  countPrefix: '커밋 ',
+  countSuffix: '개',
+  repo: '레포',
   open: 'GitHub에서 열기',
+  repoSuffix: '레포',
   newTab: '새 탭',
-  privateLabel: '비공개 레포',
-  privateNote: '비공개 레포라 이름과 마지막 커밋 날짜만 보여 줍니다.',
-  skip: '건너뛰기',
-  skipLabel: '인트로 건너뛰기',
-  loading: '궤도 화면을 준비하는 중입니다.',
-  stale:
-    'GitHub에서 최신 커밋을 가져오지 못했습니다. 표시된 기준 날짜의 기록입니다.',
+  privateNote: '비공개 레포라 링크가 없습니다',
+  stale: 'GitHub 기록을 새로 가져오지 못해 이 날짜 기준으로 보여 줍니다:',
   empty:
     '최근 30일 동안 올린 커밋이 없습니다. 지난 작업은 이력 페이지에서 볼 수 있습니다.',
-  listHeading: '최근 커밋한 레포',
-  history: { label: '이력 보러 가기', href: '/portfolio' },
+  history: { label: '이력 보러 가기', href: ORBIT.HISTORY_HREF },
+  opener: {
+    label: '앱부터 웹 서버까지, 개발자 박문석 포트폴리오',
+    line: ['앱부터', '웹', '서버까지,'],
+    kicker: '개발자',
+    name: ['박', '문', '석'],
+    tag: '포트폴리오',
+    skip: '건너뛰기',
+  },
 };

@@ -43,18 +43,15 @@
   --color-tint: #e9e8e2;
   --color-dark-tint: #1f2320;
   --color-subtle: #5f635f;
-  --color-night: #0d1320;
-  --color-night-2: #151d2e;
-  --color-night-deep: #090d17;
-  --color-night-line: #283247;
-  --color-moonlight: #ece6d3;
-  --color-dim: #a9a48f;
-  --color-moon: #f2e6b3;
-  --color-moon-ink: #1d1b12;
-  --color-orbit: #7ea6f2;
-  --color-trial: #6cc497;
-  --color-flare: #ff7a66;
-  --color-far: #5d6880;
+  --color-night: #0e1830;
+  --color-night-2: #14213d;
+  --color-night-deep: #0b1428;
+  --color-night-line: #2a3a5c;
+  --color-moonlight: #ebe3cb;
+  --color-dim: #b4ad96;
+  --color-hair: rgb(235 227 203 / 0.32);
+  --color-vermilion: #e0664a;
+  --color-far: #6a7899;
   --color-transparent: transparent;
   --color-current: currentColor;
 
@@ -88,7 +85,10 @@
   --text-lead: var(--fs-lead);
   --text-body: var(--fs-body);
   --text-small: var(--fs-small);
-  --text-orbit-name: var(--fs-orbit-name);
+  --text-opener-line: var(--fs-opener-line);
+  --text-opener-name: var(--fs-opener-name);
+  --text-opener-kicker: var(--fs-opener-kicker);
+  --text-opener-tag: var(--fs-opener-tag);
 }
 
 @custom-variant mob (@media (max-width: 743px));

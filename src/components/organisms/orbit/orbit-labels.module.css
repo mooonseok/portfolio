@@ -1,0 +1,103 @@
+.labels {
+  position: absolute;
+  z-index: 5;
+  left: var(--gutter);
+  top: 112px;
+  display: grid;
+  gap: 4px;
+}
+
+:global([data-ready]) .labels {
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+:global([data-ready]) .label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  --d: 48px;
+}
+
+.hit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+:global([data-ready]) .hit {
+  inset: auto;
+  left: calc(var(--d) / -2);
+  top: calc(var(--d) / -2);
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  pointer-events: auto;
+}
+
+.hit:focus-visible {
+  outline: 2px dashed var(--color-moonlight);
+  outline-offset: 6px;
+}
+
+.name {
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--color-dim);
+  padding: 6px 8px;
+  text-shadow:
+    0 0 2px var(--color-night-deep),
+    0 0 4px var(--color-night-deep),
+    0 0 6px var(--color-night-deep),
+    0 0 10px var(--color-night-deep);
+  transition:
+    color var(--dur-state) var(--ease-out),
+    opacity 200ms var(--ease-out);
+}
+
+:global([data-ready]) .name {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.label[data-active] .name {
+  color: var(--color-moonlight);
+}
+
+.label[data-dim] .name {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mark {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 7px;
+  vertical-align: -2px;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name {
+    transition: none;
+  }
+}

@@ -24,8 +24,7 @@
   --dur-enter: 200ms;
   --dur-height: 220ms;
   --dur-grow: 200ms;
-  --dur-splash: 2600ms;
-  --orbit-period: 40s;
+  --dur-splash: 3150ms;
 
   --board-white: #fcfcfa;
   --board-frame: #d7dadc;
@@ -65,7 +64,10 @@
   --fs-body: 16px;
   --fs-small: 14px;
   --fs-meta: 13px;
-  --fs-orbit-name: clamp(48px, 12.5vw, 72px);
+  --fs-opener-line: clamp(30px, min(11vw, 14vh), 116px);
+  --fs-opener-name: clamp(72px, min(24vw, 30vh), 280px);
+  --fs-opener-kicker: clamp(18px, min(3.4vw, 5vh), 40px);
+  --fs-opener-tag: clamp(20px, min(4.4vw, 6vh), 52px);
 }
 
 @media (min-width: 744px) {
@@ -117,7 +119,6 @@
     --fs-d3: 28px;
     --fs-d4: 22px;
     --fs-lead: clamp(24px, 1.8vw, 26px);
-    --fs-orbit-name: clamp(96px, 8.4vw, 140px);
   }
 }
 

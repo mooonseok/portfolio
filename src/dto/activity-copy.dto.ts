@@ -1,22 +1,28 @@
 import type { LinkItem } from '@/dto/link.dto';
 
-export interface ActivityCopy {
+export interface OpenerCopy {
   label: string;
-  summary: string;
-  legend: string;
-  asOf: string;
-  commitCount: string;
-  commitUnit: string;
-  lastCommit: string;
-  open: string;
-  newTab: string;
-  privateLabel: string;
-  privateNote: string;
+  line: string[];
+  kicker: string;
+  name: string[];
+  tag: string;
   skip: string;
-  skipLabel: string;
-  loading: string;
+}
+
+export interface ActivityCopy {
+  heading: string;
+  panelLabel: string;
+  lastCommit: string;
+  recent: string;
+  countPrefix: string;
+  countSuffix: string;
+  repo: string;
+  open: string;
+  repoSuffix: string;
+  newTab: string;
+  privateNote: string;
   stale: string;
   empty: string;
-  listHeading: string;
   history: LinkItem;
+  opener: OpenerCopy;
 }
