@@ -23,6 +23,9 @@
   --dur-exit: 120ms;
   --dur-enter: 200ms;
   --dur-height: 220ms;
+  --dur-grow: 200ms;
+  --dur-splash: 2600ms;
+  --orbit-period: 40s;
 
   --board-white: #fcfcfa;
   --board-frame: #d7dadc;
@@ -62,6 +65,7 @@
   --fs-body: 16px;
   --fs-small: 14px;
   --fs-meta: 13px;
+  --fs-orbit-name: clamp(48px, 12.5vw, 72px);
 }
 
 @media (min-width: 744px) {
@@ -113,6 +117,7 @@
     --fs-d3: 28px;
     --fs-d4: 22px;
     --fs-lead: clamp(24px, 1.8vw, 26px);
+    --fs-orbit-name: clamp(96px, 8.4vw, 140px);
   }
 }
 

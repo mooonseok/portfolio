@@ -43,6 +43,18 @@
   --color-tint: #e9e8e2;
   --color-dark-tint: #1f2320;
   --color-subtle: #5f635f;
+  --color-night: #0d1320;
+  --color-night-2: #151d2e;
+  --color-night-deep: #090d17;
+  --color-night-line: #283247;
+  --color-moonlight: #ece6d3;
+  --color-dim: #a9a48f;
+  --color-moon: #f2e6b3;
+  --color-moon-ink: #1d1b12;
+  --color-orbit: #7ea6f2;
+  --color-trial: #6cc497;
+  --color-flare: #ff7a66;
+  --color-far: #5d6880;
   --color-transparent: transparent;
   --color-current: currentColor;
 
@@ -76,6 +88,7 @@
   --text-lead: var(--fs-lead);
   --text-body: var(--fs-body);
   --text-small: var(--fs-small);
+  --text-orbit-name: var(--fs-orbit-name);
 }
 
 @custom-variant mob (@media (max-width: 743px));
