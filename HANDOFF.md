@@ -25,7 +25,10 @@ directory so a lockfile in a parent folder cannot be inferred as the workspace
 root.
 
 Claude Code runs Prettier automatically after every file edit
-(`.claude/settings.json`, PostToolUse hook).
+(`.claude/settings.json`, PostToolUse hook `.claude/hooks/format-file.mjs`).
+Commit messages are checked by `.githooks/commit-msg`
+(`git config core.hooksPath .githooks`, rules in
+`scripts/harness/commit-message.mjs`).
 
 ---
 
