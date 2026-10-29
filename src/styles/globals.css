@@ -59,8 +59,8 @@
     'General Sans', 'Pretendard Variable', Pretendard, Inter, system-ui,
     -apple-system, 'Segoe UI', sans-serif;
   --font-mono:
-    var(--font-plex), 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo,
-    monospace;
+    var(--font-plex), 'IBM Plex Mono', 'Pretendard Variable', Pretendard,
+    ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --text-meta: 13px;
   --text-meta--line-height: 1.5;
