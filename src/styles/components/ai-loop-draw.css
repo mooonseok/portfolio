@@ -93,7 +93,7 @@
     border-radius: 16px 0 0 16px;
   }
   .ai-loop-bend[data-dir='left'] .ai-loop-tip {
-    top: -6px;
+    top: -8px;
     right: -1px;
   }
 }
