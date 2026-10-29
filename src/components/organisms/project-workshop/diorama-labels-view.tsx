@@ -59,7 +59,7 @@ export function DioramaLabelsView(props: DioramaPreviewProps) {
             </Text>
             <Text
               as={TAG.SPAN}
-              className={`text-sm leading-relaxed ${props.selected === project.slug ? 'text-[color-mix(in_srgb,var(--note-ink)_72%,var(--note-paper))]' : 'text-subtle'}`}
+              className={`text-sm leading-relaxed ${props.selected === project.slug ? 'text-[color-mix(in_srgb,var(--note-ink)_80%,var(--note-paper))]' : 'text-subtle'}`}
             >
               {project.service}
             </Text>

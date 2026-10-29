@@ -59,9 +59,14 @@
   cursor: pointer;
 }
 
+.replayBar {
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  background: var(--dark);
+}
+
 .replay {
   display: block;
-  margin: 0 max(24px, calc((100% - 1440px) / 2)) 24px auto;
+  margin: 0 max(24px, calc((100% - 1440px) / 2)) 0 auto;
   min-height: 44px;
   padding: 8px;
   background: transparent;

@@ -77,7 +77,7 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
                     : '3D를 준비하고 있습니다. 이름표로 먼저 살펴볼 수 있습니다.'}
             </Text>
             <Box as={TAG.FIGURE} className='m-0'>
-              <Box className='relative aspect-[5/3] w-full overflow-hidden rounded-[6px] bg-placeholder lap:aspect-auto lap:h-[380px]'>
+              <Box className='relative aspect-[5/3] w-full overflow-hidden border border-hairline bg-paper lap:aspect-auto lap:h-[380px]'>
                 <Image
                   src={DIORAMA.POSTER}
                   alt='Emosave, IndianBob, FarmFam+, APC, Smart Farm을 표현한 다섯 개의 개념 모형'

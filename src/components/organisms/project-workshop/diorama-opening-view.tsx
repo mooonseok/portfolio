@@ -13,9 +13,15 @@ export function DioramaOpeningView({
 }: DioramaOpeningProps) {
   if (!active) {
     return (
-      <Button data-opening-replay onClick={onReplay} className={styles.replay}>
-        오프닝 다시 보기
-      </Button>
+      <Box className={styles.replayBar}>
+        <Button
+          data-opening-replay
+          onClick={onReplay}
+          className={styles.replay}
+        >
+          오프닝 다시 보기
+        </Button>
+      </Box>
     );
   }
 
