@@ -35,13 +35,19 @@ description:
    바꿔야 하면 보고합니다.
 3. **병렬 구현.** 구현 담당을 한 메시지에서 동시에 띄웁니다. 각자
    `isolation: worktree`로 따로 작업하고, 지시서·소유 목록·계약·검사 명령만
-   받습니다. 빌드와 서버 실행은 하지 않습니다.
-4. **합치기(리드).** 담당별 브랜치를 작업 브랜치에 합치고 `pnpm typecheck`,
-   `pnpm check:boundaries`로 이음매를 확인합니다.
-5. **병렬 검증.** qa-runner(§5·캡처·G2), design-reviewer(G3), 필요하면
-   perf-auditor·copy-editor를 한 메시지에서 동시에 띄웁니다. 3100번 서버는
-   qa-runner만 띄우고, 다른 검토 담당은 qa-runner가 띄운 동안 같은 주소를 보거나
-   캡처 폴더를 읽습니다.
+   받습니다. worktree는 develop 기준으로 만들어지므로 지시서에 "먼저
+   `git reset --hard <작업 브랜치>`(변경 없을 때)로 맞추고
+   `pnpm install --frozen-lockfile`을 실행"을 넣습니다. 빌드와 서버 실행은 하지
+   않고, 끝나면 worktree 브랜치에 커밋합니다.
+4. **합치기(리드).** 담당 커밋을 작업 브랜치에 fast-forward 또는 cherry-pick으로
+   올리고, 담당들이 짚은 계약 파일 문제는 리드가 고칩니다. 합친 worktree는
+   `git worktree remove`와 브랜치 삭제로 정리합니다(남겨 두면 ESLint가 그 안까지
+   읽어 실패합니다). 이어서 §5 정적 검사와 `pnpm build`를 리드가 한 번 돌립니다.
+5. **병렬 검증.** 리드가 `pnpm start --port 3100`으로 빌드 결과를 띄운 뒤,
+   qa-runner(4개 폭 캡처·G2 측정·§5 나머지), design-reviewer(G3), 필요하면
+   perf-auditor·copy-editor를 한 메시지에서 동시에 띄웁니다. 검증 담당에게는
+   "서버가 이미 떠 있으니 빌드·종료하지 말 것"을 적고, 끝나면 리드가 서버를 끄고
+   포트를 확인합니다.
 6. **수정 라운드(최대 2회).** 지적마다 그 파일의 소유 담당에게만 돌려보냅니다.
    2회 뒤에도 남으면 남은 지적과 함께 사용자에게 넘깁니다.
 7. **문서와 커밋.** docs-keeper가 문서를 맞추고, 리드가 `pf-commit`으로 목적별
