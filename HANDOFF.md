@@ -37,7 +37,8 @@ Commit messages are checked by `.githooks/commit-msg`
 
 ```
 src/
-  app/            routes only: layout, page (home), work/[slug], ai, not-found
+  app/            routes only: layout, page (activity home), portfolio (history), work/[slug], ai,
+                  api/github-webhook, not-found
   sections/       one folder per page section
     <name>/<name>-container.tsx   reads content, builds view models
     <name>/<name>-view.tsx        props in, markup out
@@ -97,36 +98,51 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 
 ## 3. Data model (summary)
 
-The active home uses the project workshop in `app/_home/workshop-home.tsx`.
-`constants/home.ts` selects it with `HOME.WORKSHOP_ENABLED`; set it to false and
-rebuild to restore the unchanged classic composition in
-`app/_home/classic-home.tsx`. `/preview/classic` preserves the old home for
-comparison. Both preview routes remain noindex. The workshop reuses
-`components/organisms/project-workshop`, includes all project layer work in its
-selection panels and links to the unchanged case studies. It replaces the
-classic hero and repeated project rows, then renders the existing engineering
-stories, tools, the AI practice summary and footer. Its opening makes the whole
-home chrome and content inert. The unselected desktop panel lists each project
-and its owned areas with direct case links. Selected panels retain all work
-sentences with separators between areas. Stories and tools use compact section
-spacing only on the workshop home. Workshop stories align with the main
-container rather than the classic metadata rail. Selected notes have one case
-link below the work list. 3D loads automatically at every viewport width, with a
-static illustration during loading or failure and no user-facing 3D toggle. With
-reduced motion, Save-Data or no WebGL, the home keeps the static illustration
-and labels and never downloads the 3D module. Both home variants place the AI
-practice summary after the tools table, on the same heading axis, with one link
-to `/ai`; it leaves 80px on mobile and 96px from tablet before the footer. The
-`/ai` page reuses the case-study template (overview, contents, sections, tech
-notes) with ABOUT as the active nav item, no back link, and a NEXT link to the
-home project board instead of the project cycle. The AI page separates
-instruction scope, the task workflow, verification tooling examples and design
-collaboration. Cross-tool review is described within the task workflow. Personal
-hooks and local checks retain their stated scope. On page exit, the workshop
-saves its selection and scroll position to that browser history entry. Returning
-or reloading restores the panel before scroll placement; a fresh entry starts
-unselected. Existing router history fields are preserved. The classic layout
-described below remains available through the switch.
+The home (`app/page.tsx`) is the GitHub activity orbit. `sections/activity`
+reads `lib/github/fetch-activity.ts` (GraphQL with `GITHUB_TOKEN`, tag
+`github-activity`, revalidate 3600s; falls back to
+`content/activity-snapshot.ts` and states its date), groups repos with
+`lib/activity/to-projects.ts` and the rules in `content/activity-topics.ts`
+(`_client`/`_server` suffixes join one topic, excluded repos, private repos get
+no link), and renders `components/organisms/orbit` (three.js stage in
+`lib/orbit`, loaded on demand; label placement in `lib/orbit/place-labels.ts`
+moves labels to free spots instead of hiding them). `app/api/github-webhook`
+revalidates the tag only for requests whose `x-hub-signature-256` matches
+`GITHUB_WEBHOOK_SECRET`. `sections/opener` plays once per tab session over the
+home (GSAP loaded on demand, skip button and Esc/Enter/Space, reduced-motion
+fades only).
+
+The history page `/portfolio` uses the project workshop in
+`app/_home/workshop-home.tsx`. `constants/home.ts` selects it with
+`HOME.WORKSHOP_ENABLED`; set it to false and rebuild to restore the unchanged
+classic composition in `app/_home/classic-home.tsx`. `/preview/classic`
+preserves the old home for comparison. Both preview routes remain noindex. The
+workshop reuses `components/organisms/project-workshop`, includes all project
+layer work in its selection panels and links to the unchanged case studies. It
+replaces the classic hero and repeated project rows, then renders the existing
+engineering stories, tools, the AI practice summary and footer. Its opening
+makes the whole home chrome and content inert. The unselected desktop panel
+lists each project and its owned areas with direct case links. Selected panels
+retain all work sentences with separators between areas. Stories and tools use
+compact section spacing only on the workshop home. Workshop stories align with
+the main container rather than the classic metadata rail. Selected notes have
+one case link below the work list. 3D loads automatically at every viewport
+width, with a static illustration during loading or failure and no user-facing
+3D toggle. With reduced motion, Save-Data or no WebGL, the home keeps the static
+illustration and labels and never downloads the 3D module. Both home variants
+place the AI practice summary after the tools table, on the same heading axis,
+with one link to `/ai`; it leaves 80px on mobile and 96px from tablet before the
+footer. The `/ai` page reuses the case-study template (overview, contents,
+sections, tech notes) with ABOUT as the active nav item, no back link, and a
+NEXT link to the home project board instead of the project cycle. The AI page
+separates instruction scope, the task workflow, verification tooling examples
+and design collaboration. Cross-tool review is described within the task
+workflow. Personal hooks and local checks retain their stated scope. On page
+exit, the workshop saves its selection and scroll position to that browser
+history entry. Returning or reloading restores the panel before scroll
+placement; a fresh entry starts unselected. Existing router history fields are
+preserved. The classic layout described below remains available through the
+switch.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently
@@ -355,6 +371,8 @@ written as CSS variables / attributes.
 | Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                                      | same                           |
 | Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                             | none                           |
 | CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                          | color only                     |
+| Opener             | once per tab session: words drop 0.16s / 0.17s stagger with squash, hatched wipe 0.99s, 박·문·석 at 1.15/1.25/1.32 + shake 1.42, tag frame 1.7, exit 2.45, device medallions land on four orbits, total ≈3.15s, then 0.35s fade  | line and name fade only (~2s)  |
+| Orbit home         | one turn per 70s; hover or focus pauses; drag turns; label moves to the next free spot with a 0.24s ease; selected orbit and reticle in vermilion                                                                                | static frame, no spin          |
 
 ## 6. Accessibility
 

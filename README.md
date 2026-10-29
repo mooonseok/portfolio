@@ -10,8 +10,13 @@ Flutter 앱·관리자 웹·서버 API와 기기 실험에서 맡은 업무를 �
 
 ## 주요 기능
 
-- **3D 프로젝트 작업실**: 모형이나 이름표를 선택하면 담당 업무와 상세 링크를
-  보여 줍니다. 3D를 사용할 수 없는 환경에서는 정적 그림으로 대체합니다.
+- **작업 현황 홈(`/`)**: 최근 30일 동안 커밋한 GitHub 레포를 주제별 프로젝트로
+  묶어 달 궤도 위 행성으로 보여 줍니다. 행성을 고르면 마지막 커밋 날짜, 커밋 수,
+  레포 링크, 최근 커밋 제목이 패널에 나옵니다. 처음 방문하면 탭 세션당 한 번
+  짧은 오프닝이 재생됩니다. 비공개 레포는 링크를 두지 않습니다.
+- **3D 프로젝트 작업실(`/portfolio`, 이력)**: 모형이나 이름표를 선택하면 담당
+  업무와 상세 링크를 보여 줍니다. 3D를 사용할 수 없는 환경에서는 정적 그림으로
+  대체합니다.
 - **프로젝트별 구현 사례**: 담당 기능, 기능 간 연결, 구현 방식과 검증 범위를
   설명합니다.
 - **Emosave 배치 편집 예시**: 돔 안의 캐릭터를 선택·이동·회전·크기 조절·삭제하고
@@ -25,9 +30,11 @@ Google Play 등록 페이지에서 확인할 수 있습니다.
 
 ## 기술 구성
 
-Next.js 15(App Router), React 19, TypeScript, Tailwind CSS v4, Three.js를
-사용합니다. 별도 CMS나 서버 API 없이 `src/content`의 데이터로 페이지를 정적으로
-생성합니다. 웹폰트는 [public/fonts](public/fonts/README.md)에서 직접 제공합니다.
+Next.js 15(App Router), React 19, TypeScript, Tailwind CSS v4, Three.js, GSAP를
+사용합니다. 별도 CMS 없이 `src/content`의 데이터로 페이지를 정적으로 생성합니다.
+홈의 작업 현황만 GitHub GraphQL API에서 가져와 1시간마다 다시 만들고, GitHub
+webhook이 오면 바로 갱신합니다. 웹폰트는
+[public/fonts](public/fonts/README.md)에서 직접 제공합니다.
 
 ## 로컬 실행
 
@@ -41,12 +48,22 @@ git config core.hooksPath .githooks
 pnpm dev --port 3100
 ```
 
-[http://localhost:3100](http://localhost:3100)에서 확인합니다. 3000번 포트는
-다른 프로젝트에서 사용하므로 개발·검증 서버 모두 3100번을 사용합니다.
+[http://localhost:3100](http://localhost:3100)에서 확인합니다. 작업 현황을
+GitHub에서 받아 오려면 `.env.local`에 아래 값을 넣습니다. 비워 두면
+`src/content/activity-snapshot.ts`의 기록을 기준 날짜와 함께 보여 줍니다.
+
+| 환경 변수               | 용도                                                                                           |
+| ----------------------- | ---------------------------------------------------------------------------------------------- |
+| `GITHUB_TOKEN`          | 레포 목록과 최근 커밋 조회. 비공개 레포를 보여 주려면 그 레포 읽기 권한(Contents: read)이 필요 |
+| `GITHUB_WEBHOOK_SECRET` | `/api/github-webhook` 서명 검증. GitHub webhook에 같은 값을 넣고 push 이벤트를 보냄            |
+
+두 값은 서버에서만 읽으며 레포에 올리지 않습니다. 3000번 포트는 다른
+프로젝트에서 사용하므로 개발·검증 서버 모두 3100번을 사용합니다.
 
 | 화면                  | 경로                                                                                       |
 | --------------------- | ------------------------------------------------------------------------------------------ |
-| 프로젝트 작업실       | `/`                                                                                        |
+| 작업 현황(홈)         | `/`                                                                                        |
+| 이력(프로젝트 작업실) | `/portfolio`                                                                               |
 | 프로젝트 상세         | `/work/emosave`, `/work/indian-bob`, `/work/farmfam-plus`, `/work/apc`, `/work/smart-farm` |
 | AI 활용 방식          | `/ai`                                                                                      |
 | Emosave 편집기만 보기 | `/preview/emosave-editor`                                                                  |
@@ -84,19 +101,20 @@ pnpm check:perf         # 경로별 첫 로딩 JS 크기 예산 검사
 
 ## 코드와 콘텐츠 위치
 
-| 위치                                          | 용도                                |
-| --------------------------------------------- | ----------------------------------- |
-| [src/app](src/app/)                           | 페이지 경로와 홈 구성               |
-| [src/sections](src/sections/)                 | 페이지별 섹션                       |
-| [src/components](src/components/)             | 공통 UI 컴포넌트                    |
-| [src/hooks](src/hooks/), [src/lib](src/lib/)  | 브라우저 상태·입력 처리와 공통 로직 |
-| [src/content/site.ts](src/content/site.ts)    | 소개·연락처·대표 사례·기술 스택     |
-| [src/content/projects](src/content/projects/) | 프로젝트 정보와 상세 본문           |
-| [src/styles](src/styles/)                     | 공통 스타일과 디자인 토큰           |
-| [public/images](public/images/)               | 개념 이미지와 편집기 그림           |
-| [scripts](scripts/)                           | 테스트와 검증 도구                  |
-| [.claude](.claude/)                           | 에이전트 설정·진행표·검토 에이전트  |
-| [.githooks](.githooks/)                       | 커밋 메시지 검사 훅                 |
+| 위치                                                             | 용도                                       |
+| ---------------------------------------------------------------- | ------------------------------------------ |
+| [src/app](src/app/)                                              | 페이지 경로와 홈 구성                      |
+| [src/sections](src/sections/)                                    | 페이지별 섹션                              |
+| [src/components](src/components/)                                | 공통 UI 컴포넌트                           |
+| [src/hooks](src/hooks/), [src/lib](src/lib/)                     | 브라우저 상태·입력 처리와 공통 로직        |
+| [src/content/site.ts](src/content/site.ts)                       | 소개·연락처·대표 사례·기술 스택            |
+| [src/content/activity-topics.ts](src/content/activity-topics.ts) | 레포를 프로젝트 주제로 묶는 규칙·제외 목록 |
+| [src/content/projects](src/content/projects/)                    | 프로젝트 정보와 상세 본문                  |
+| [src/styles](src/styles/)                                        | 공통 스타일과 디자인 토큰                  |
+| [public/images](public/images/)                                  | 개념 이미지와 편집기 그림                  |
+| [scripts](scripts/)                                              | 테스트와 검증 도구                         |
+| [.claude](.claude/)                                              | 에이전트 설정·진행표·검토 에이전트         |
+| [.githooks](.githooks/)                                          | 커밋 메시지 검사 훅                        |
 
 프로젝트의 기본 정보는 `<slug>.ts`, 상세 본문은 `<slug>-case.ts`에서 수정합니다.
 컨테이너는 콘텐츠와 상태를 준비하고, `*-view.tsx`는 전달받은 값으로 화면을
