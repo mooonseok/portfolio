@@ -25,33 +25,35 @@ export function CaseContentsView({
         as={TAG.NAV}
         ref={listRef}
         aria-label='Contents'
-        className='container mt-6 grid-page tab:mt-30 tab:border-t tab:border-t-ink tab:pt-0.5'
+        className='container mt-6 tab:mt-30'
       >
-        <Text
-          as={TAG.SPAN}
-          className='hidden mono muted tab:col-[1/3] tab:block tab:pt-3'
-        >
-          CONTENTS
-        </Text>
-        <List
-          as={LIST_TAG.OL}
-          className='col-[1/-1] flex flex-wrap gap-x-5 border-t border-b border-t-ink border-b-hairline mono tab:col-[3/-1] tab:gap-x-12 tab:[border:0]'
-        >
-          {items.map((g, i) => (
-            <ListItem key={g.id}>
-              <Anchor
-                href={`#${g.id}`}
-                className={linkClass}
-                aria-current={i === currentIndex ? 'location' : undefined}
-              >
-                <Text as={TAG.SPAN} className='muted'>
-                  {g.num}
-                </Text>
-                {g.label}
-              </Anchor>
-            </ListItem>
-          ))}
-        </List>
+        <Box className='grid-page tab:border-t tab:border-t-hair tab:pt-0.5'>
+          <Text
+            as={TAG.SPAN}
+            className='hidden mono muted tab:col-[1/3] tab:block tab:pt-3'
+          >
+            CONTENTS
+          </Text>
+          <List
+            as={LIST_TAG.OL}
+            className='col-[1/-1] flex flex-wrap gap-x-5 border-t border-b border-t-hair border-b-hairline mono tab:col-[3/-1] tab:gap-x-12 tab:[border:0]'
+          >
+            {items.map((g, i) => (
+              <ListItem key={g.id}>
+                <Anchor
+                  href={`#${g.id}`}
+                  className={linkClass}
+                  aria-current={i === currentIndex ? 'location' : undefined}
+                >
+                  <Text as={TAG.SPAN} className='muted'>
+                    {g.num}
+                  </Text>
+                  {g.label}
+                </Anchor>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       </Box>
       <Box
         as={TAG.DETAILS}

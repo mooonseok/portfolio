@@ -11,7 +11,7 @@ export function SalesPathsView({ items }: { items: WorkItem[] }) {
       className='grid grid-cols-1 gap-8 tab:grid-cols-2 tab:gap-10'
     >
       {items.map((item) => (
-        <Column key={item.title} className='gap-4 border-t border-t-ink pt-5'>
+        <Column key={item.title} className='gap-4 border-t border-t-hair pt-5'>
           <Text as={TAG.DT} className='text-[22px] font-medium'>
             {item.title}
           </Text>
