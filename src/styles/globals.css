@@ -122,7 +122,7 @@
 }
 @utility surface-dark {
   background: var(--dark);
-  color: var(--paper);
+  color: var(--ink);
 }
 @utility mono {
   font-family: var(--font-mono);
