@@ -493,11 +493,12 @@ written as CSS variables / attributes.
    checker does not load `.env.local`; supply the values through the shell
    environment. Verify both default non-indexable output and public-URL fixture
    output before release; fixture URLs are not deployment destinations.
-9. **CI:** `.github/workflows/verify.yml` runs for pull requests, pushes to
-   `develop` / `main`, and manual dispatch. Node.js 24 and pinned pnpm run the
-   six required checks plus anchors and metadata for both configurations. This
-   workflow does not deploy. Local passing results and a successful GitHub
-   Actions run are separate evidence; check the pushed commit's run.
+9. **검증 실행 환경**. 현재 저장소에는 `.github/workflows/verify.yml`이
+   없습니다. AGENTS.md §5의 검사는 로컬에서 실행하고 현재 변경 버전에 대한
+   결과를 기록합니다. 공통 작업 흐름은 사용자 전역 `engineering-workflow`,
+   프로젝트별 조건은 `pf-*` 진행표가 제공합니다. Codex의 `.agents/skills/pf-*`는
+   `.claude/skills/pf-*` 원본을 가리킵니다. 빌드·검증 서버는 QA가 관리하고 독립
+   검토 완료 후 정리합니다. 요청별 경로와 수정 한도는 AGENTS.md §7을 봅니다.
 
 ## 8. QA (same checklist as Phase 4 LOCKED)
 
