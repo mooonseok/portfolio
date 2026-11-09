@@ -73,17 +73,11 @@
 }
 
 .sub,
-.muted,
-.stale {
+.muted {
   margin: 0;
   font-size: 14px;
   line-height: 1.4;
   color: var(--color-dim);
-}
-
-.stale {
-  margin: 0 0 8px;
-  font-size: 13px;
 }
 
 .facts {
@@ -147,13 +141,6 @@
 .metadata {
   padding-top: 12px;
   border-top: 1px solid var(--color-night-line);
-}
-
-.snapshot {
-  margin: 0 0 4px;
-  color: var(--color-dim);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
 }
 
 :global([data-mode='phone']) .title {

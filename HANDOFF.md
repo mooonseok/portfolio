@@ -105,25 +105,25 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
 The home (`app/page.tsx`) is the GitHub activity orbit. `sections/activity`
 reads `lib/github/fetch-activity.ts` (GraphQL with `GITHUB_TOKEN`, tag
 `github-activity`, revalidate 3600s; falls back to
-`content/activity-snapshot.ts` and states its date), groups repos with
-`lib/activity/to-projects.ts` and the rules in `content/activity-topics.ts`
-(`_client`/`_server` suffixes join one topic, excluded repos, private repos get
-no link), and renders `components/organisms/orbit` (three.js stage in
-`lib/orbit`, loaded on demand; label placement in `lib/orbit/place-labels.ts`
-moves labels to free spots instead of hiding them). `app/api/github-webhook`
-revalidates the tag only for requests whose `x-hub-signature-256` matches
-`GITHUB_WEBHOOK_SECRET`. `sections/opener` plays once per tab session over the
-home (GSAP loaded on demand, skip button and Esc/Enter/Space, reduced-motion
-fades only).
+`content/activity-snapshot.ts`), groups repos with `lib/activity/to-projects.ts`
+and the rules in `content/activity-topics.ts` (`_client`/`_server` suffixes join
+one topic, excluded repos, private repos get no link), and renders
+`components/organisms/orbit` (three.js stage in `lib/orbit`, loaded on demand;
+label placement in `lib/orbit/place-labels.ts` moves labels to free spots
+instead of hiding them). `app/api/github-webhook` revalidates the tag only for
+requests whose `x-hub-signature-256` matches `GITHUB_WEBHOOK_SECRET`.
+`sections/opener` plays once per tab session over the home (GSAP loaded on
+demand, skip button and Esc/Enter/Space, reduced-motion fades only).
 
-홈 최근 작업은 `content/activity-summaries.ts`의 저장소별 원문→방문자용 요약을
-사용합니다. 실시간·저장 기록 모두 `toProjects`에서 등록된 기능 변화만 선별한 뒤
-최신 세 개로 제한합니다. GitHub에서 조회한 여섯 개의 원문은 선별 전까지
-보존하며, 커밋 수·날짜·원본 저장 기록은 바꾸지 않습니다. 새 기능도 표시 요약을
-등록해야 목록에 나오고, 내부 작업·미등록 제목은 제외합니다.
+홈 최근 작업은 별도 등록 없이 커밋 제목 원문을 표시합니다. 실시간·저장 기록 모두
+`toProjects`에서 내부 개발 작업을 규칙으로 제외한 뒤 최신 세 개로 제한합니다.
+GitHub에서 조회한 여섯 개의 제목은 선별 전까지 보존하며, 커밋 수·날짜·원본 저장
+기록은 바꾸지 않습니다. 명확한 개발 접두어·설정·검사·배포 작업과 내부 표현이
+섞인 제목을 제외하고, 제품의 알림 설정·입력 검증 같은 기능은 유지합니다. 의미를
+해석하는 AI 요약이 아니므로 규칙에 없는 내부 표현은 남을 수 있습니다.
 
-홈 판독 패널은 최근 작업을 메타 정보보다 먼저 보여 줍니다. 저장 기록의 기준일과
-조회 실패 안내는 메타 위에 함께 표시합니다. 휴대폰 배치의 최근 작업은 한 개를
+홈 판독 패널은 최근 작업을 메타 정보보다 먼저 보여 줍니다. 저장 기록 기준일과
+조회 실패 안내는 화면에 표시하지 않습니다. 휴대폰 배치의 최근 작업은 한 개를
 먼저 표시하고 `details`/`summary`로 나머지를 펼칩니다. 3D 준비 전·미지원·데이터
 절약 환경에서는 프로젝트 목록과 패널을 문서 흐름으로 배치하고 페이지 스크롤을
 허용합니다. 일반 궤도 화면의 긴 패널은 내부 스크롤을 사용합니다.

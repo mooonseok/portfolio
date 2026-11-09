@@ -17,7 +17,6 @@ export interface ActivityCopy {
   recentWork: string;
   moreWork: string;
   lessWork: string;
-  snapshotSuffix: string;
   lastCommit: string;
   recent: string;
   countPrefix: string;
@@ -27,7 +26,6 @@ export interface ActivityCopy {
   repoSuffix: string;
   newTab: string;
   privateNote: string;
-  stale: string;
   empty: string;
   history: LinkItem;
   opener: OpenerCopy;

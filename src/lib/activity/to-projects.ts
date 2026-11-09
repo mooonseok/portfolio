@@ -6,6 +6,37 @@ import type {
 
 const SPLIT = /^(.*?)[_-](client|web|app|server|api|admin)$/i;
 
+const INTERNAL_ACTIVITY = [
+  /^(?:chore|ci|build|test|docs|refactor|style)(?:\([^)]*\))?!?:/i,
+  /^merge\b|^initial commit$|^revert\b/i,
+  /\b(?:ci|cd|eslint|prettier|typecheck|lint|pnpm|npm|yarn|tsconfig|webpack|turbopack|husky)\b/i,
+  /\b(?:pre-push|pre-commit|commit-msg|github actions|dependabot|renovate)\b/i,
+  /\b(?:AGENTS|SKILL|HANDOFF|README)(?:\.md)?\b|package(?:-lock)?\.json|pnpm-lock|\.github\//i,
+  /(?:검토|개발|코딩|서브)\s*에이전트|진행표|작업 지시서|하네스|권장안/,
+  /(?:^|[\s·,(])(?:[A-Z]안|G[1-4])(?:[\s·,)]|$)/,
+  /(?:개발(?:\s*서버)?|빌드|배포|프로젝트|로컬|환경|내부|도구)\s*(?:환경\s*)?설정|환경\s*변수/,
+  /^(?:(?:feat|fix|perf)(?:\([^)]*\))?!?:\s*)?(?:설정|검증|테스트)\s*(?:추가|수정|변경|정리|보완|개선)/i,
+  /커밋\s*(?:메시지|규칙|훅)|(?:품질|예산|경계|타입|자동)\s*(?:검사|검증)/,
+  /(?:단위|통합|회귀|유닛|E2E)\s*테스트|테스트\s*(?:추가|수정|정리|보완)|테스트\s*커버리지/i,
+  /(?:의존성|패키지)\s*(?:추가|업데이트|갱신|업그레이드)|리팩[터토]링/,
+  /배포\s*(?:설정|자동화|파이프라인|시\s)|(?:터미널|서버|운영|프로덕션)\s*배포/,
+  /^(?:빌드|배포)\s*(?:오류|실패)\s*(?:수정|해결|복구)/,
+  /^(?:update|upgrade|bump|fix|configure|setup|add|remove)\s+(?:the\s+)?(?:dependencies|dev(?:elopment)?\s+server|build\s+(?:errors?|config)|deployment\s+(?:errors?|config)|test\s+(?:coverage|config))\b/i,
+  /(?:저장소|레포|프로젝트)\s*(?:초기화|초기 설정|생성|시작)/,
+] as const;
+
+export function isPublicActivity(title: string): boolean {
+  const subject = title
+    .trim()
+    .replace(/^(?:feat|fix|perf)(?:\([^)]*\))?!?:\s*/i, '');
+  return (
+    Boolean(subject) &&
+    !INTERNAL_ACTIVITY.some(
+      (rule) => rule.test(title.trim()) || rule.test(subject)
+    )
+  );
+}
+
 const titleCase = (key: string) =>
   key
     .split(/[-_]/)
@@ -54,16 +85,10 @@ export function toProjects(
     if (repo.last > project.last) project.last = repo.last;
     project.private = project.private && repo.private;
     if (!config.hideCommits.includes(repo.name)) {
-      const summaries = Object.hasOwn(config.commitSummaries, repo.name)
-        ? config.commitSummaries[repo.name]
-        : {};
       project.commits.push(
-        ...repo.commits.flatMap((item) => {
-          const title = Object.hasOwn(summaries, item.title)
-            ? summaries[item.title].trim()
-            : '';
-          return title ? [{ ...item, title, part }] : [];
-        })
+        ...repo.commits
+          .filter((item) => isPublicActivity(item.title))
+          .map((item) => ({ ...item, part }))
       );
     }
   }

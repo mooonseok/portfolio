@@ -13,10 +13,6 @@ const config = {
   owner: 'owner',
   exclude: ['pair'],
   hideCommits: ['secret'],
-  commitSummaries: {
-    woori_client: { 'woori_client 커밋': '앨범 화면 추가' },
-    woori_server: { 'woori_server 커밋': '사진 저장 기능 추가' },
-  },
   parts: { client: '웹', server: '서버' },
   topics: { woori: { title: '우리 앨범', sub: '앨범 앱', skin: 'album' } },
   fallbackSkin: 'site',

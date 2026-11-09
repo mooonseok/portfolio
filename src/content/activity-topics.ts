@@ -1,12 +1,10 @@
 import type { ActivityConfig } from '@/dto/activity.dto';
 import { ORBIT_SKIN } from '@/constants/orbit';
-import { activitySummaries } from '@/content/activity-summaries';
 
 export const activityConfig: ActivityConfig = {
   owner: 'mooonseok',
   exclude: ['pair'],
   hideCommits: [],
-  commitSummaries: activitySummaries,
   parts: {
     client: '웹',
     web: '웹',

@@ -71,14 +71,10 @@ export async function ActivityContainer() {
         recentWork: activity.recentWork,
         moreWork: activity.moreWork,
         lessWork: activity.lessWork,
-        snapshotLabel: snapshot.live
-          ? null
-          : `${fullDate(snapshot.asOf)} ${activity.snapshotSuffix}`,
         lastCommit: activity.lastCommit,
         recent: activity.recent,
         repo: activity.repo,
         empty: activity.empty,
-        stale: snapshot.live ? null : activity.stale,
         history: activity.history,
       }}
     />

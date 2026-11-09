@@ -35,12 +35,10 @@ export interface OrbitCopy {
   recentWork: string;
   moreWork: string;
   lessWork: string;
-  snapshotLabel: string | null;
   lastCommit: string;
   recent: string;
   repo: string;
   empty: string;
-  stale: string | null;
   history: LinkItem;
 }
 

@@ -9,7 +9,6 @@ export const activity: ActivityCopy = {
   recentWork: '최근 작업',
   moreWork: '최근 작업 더 보기',
   lessWork: '최근 작업 접기',
-  snapshotSuffix: '기준 기록',
   lastCommit: '마지막 커밋',
   recent: '최근 30일',
   countPrefix: '커밋 ',
@@ -19,7 +18,6 @@ export const activity: ActivityCopy = {
   repoSuffix: '레포',
   newTab: '새 탭',
   privateNote: '비공개 레포라 링크가 없습니다',
-  stale: 'GitHub 최신 기록을 가져오지 못해 저장된 기록을 보여 줍니다',
   empty:
     '최근 30일 동안 올린 커밋이 없습니다. 지난 작업은 이력 페이지에서 볼 수 있습니다.',
   history: { label: '이력 보러 가기', href: ORBIT.HISTORY_HREF },

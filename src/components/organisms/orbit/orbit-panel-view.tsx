@@ -54,12 +54,6 @@ export function OrbitPanelView({
           </Box>
           <OrbitCommitsView project={project} copy={copy} />
           <Box className={styles.metadata}>
-            {copy.snapshotLabel ? (
-              <Text className={styles.snapshot}>{copy.snapshotLabel}</Text>
-            ) : null}
-            {copy.stale ? (
-              <Text className={styles.stale}>{copy.stale}</Text>
-            ) : null}
             <Box as={TAG.DL} className={styles.facts}>
               <Text as={TAG.DT}>{copy.lastCommit}</Text>
               <Text as={TAG.DD}>{project.last}</Text>
