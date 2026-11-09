@@ -17,15 +17,15 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
       as={TAG.SECTION}
       id={DIORAMA.PANEL_ID}
       aria-labelledby='project-stage-title'
-      className={`p-6 tab:p-8 ${project ? `relative bg-night-2 text-ink shadow-[inset_0_0_0_1px_var(--color-hair),inset_0_0_0_4px_var(--color-night-2),inset_0_0_0_5px_color-mix(in_srgb,var(--color-moonlight)_14%,transparent)] before:absolute before:inset-x-3.5 before:-top-px before:h-0.5 before:content-[''] [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-ink ${props.wide ? 'before:bg-vermilion' : 'before:bg-hair'}` : 'border border-hairline'}`}
+      className={`[&_:focus-visible]:outline-2 [&_:focus-visible]:outline-ink ${project ? 'border border-night-line bg-night-2 p-5 text-ink tab:p-8' : 'py-4 lap:px-8'}`}
     >
       <Box className='flex items-start justify-between gap-4'>
         <Heading
           id='project-stage-title'
           level={HEADING.H2}
-          className='text-2xl font-semibold'
+          className='text-2xl font-medium'
         >
-          {project?.title ?? '담당 영역 한눈에'}
+          {project?.title ?? '프로젝트별 담당 업무'}
         </Heading>
         {project && (
           <Button
@@ -72,7 +72,7 @@ export function DioramaDetailsView(props: DioramaPreviewProps) {
           </Anchor>
         </Box>
       ) : (
-        <DioramaOverviewView projects={props.projects} />
+        <DioramaOverviewView />
       )}
     </Box>
   );

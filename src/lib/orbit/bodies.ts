@@ -95,20 +95,14 @@ export function createPlate() {
   const plate = new THREE.Group();
   plate.add(
     segments(
-      Array.from({ length: 12 }, (_, k) => [(k / 12) * Math.PI * 2, 1, 5.05]),
-      0.07
-    )
-  );
-  plate.add(
-    segments(
-      Array.from({ length: 120 }, (_, k) => [
-        (k / 120) * Math.PI * 2,
+      Array.from({ length: 24 }, (_, k) => [
+        (k / 24) * Math.PI * 2,
         5.2,
-        k % 10 === 0 ? 5.42 : k % 5 === 0 ? 5.34 : 5.28,
+        k % 6 === 0 ? 5.38 : 5.3,
       ]),
-      0.28
+      0.12
     )
   );
-  plate.add(lineLoop(5.2, 240, 0.28));
+  plate.add(lineLoop(5.2, 240, 0.1));
   return plate;
 }

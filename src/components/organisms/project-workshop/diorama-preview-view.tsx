@@ -61,23 +61,11 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
             GitHub ↗
           </Anchor>
         )}
-        <Box className='mt-6 grid items-start gap-6 lap:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)] lap:gap-10'>
+        <Box className='mt-8 grid items-start gap-8 lap:grid-cols-[minmax(280px,360px)_minmax(0,1fr)] lap:gap-12'>
           <Box>
-            <Text
-              role='status'
-              aria-live='polite'
-              className='mb-3 text-sm text-subtle'
-            >
-              {props.failed
-                ? '3D를 불러오지 못했습니다. 아래 이름표로 프로젝트를 선택하세요.'
-                : props.ready
-                  ? '모형이나 아래 이름표로 선택할 수 있습니다.'
-                  : props.still
-                    ? '아래 이름표로 프로젝트를 선택할 수 있습니다.'
-                    : '3D를 준비하고 있습니다. 이름표로 먼저 살펴볼 수 있습니다.'}
-            </Text>
-            <Box as={TAG.FIGURE} className='m-0'>
-              <Box className='relative aspect-[5/3] w-full overflow-hidden border border-hairline bg-paper lap:aspect-auto lap:h-[380px]'>
+            <DioramaLabelsView {...props} />
+            <Box as={TAG.FIGURE} className='m-0 mt-8'>
+              <Box className='relative h-[220px] w-full overflow-hidden bg-paper'>
                 <Image
                   src={DIORAMA.POSTER}
                   alt='Emosave, IndianBob, FarmFam+, APC, Smart Farm을 표현한 다섯 개의 개념 모형'
@@ -96,13 +84,18 @@ export function DioramaPreviewView(props: DioramaPreviewProps) {
               </Box>
               <Text
                 as={TAG.FIGCAPTION}
-                className='mt-3 text-sm leading-relaxed text-subtle'
+                className='mt-2 text-xs leading-relaxed text-subtle'
               >
                 프로젝트별 개념 모형입니다. 실제 화면이나 프로젝트 사이의 연결을
                 나타내지 않습니다.
               </Text>
             </Box>
-            <DioramaLabelsView {...props} />
+            {props.failed && (
+              <Text role='status' className='mt-2 text-xs text-subtle'>
+                3D 대신 개념 그림을 표시합니다. 프로젝트 목록은 계속 사용할 수
+                있습니다.
+              </Text>
+            )}
           </Box>
           {props.wide && <DioramaDetailsView {...props} />}
         </Box>

@@ -11,7 +11,7 @@
   right: var(--gutter-r);
   width: auto;
   max-height: max(240px, calc(100svh - 340px));
-  padding: 16px 18px 12px;
+  padding: 20px;
 }
 
 @media (min-width: 744px) {
@@ -27,7 +27,7 @@
   top: calc(env(safe-area-inset-top) + 86px);
   width: 280px;
   max-height: calc(100svh - env(safe-area-inset-top) - 102px);
-  padding: 12px 14px;
+  padding: 16px;
 }
 
 :global([data-orbit-home]:not([data-ready])) .panel {

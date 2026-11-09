@@ -137,29 +137,32 @@ workshop reuses `components/organisms/project-workshop`, includes all project
 layer work in its selection panels and links to the unchanged case studies. It
 replaces the classic hero and repeated project rows, then renders the existing
 engineering stories, tools, the AI practice summary and footer. Its opening
-makes the whole home chrome and content inert. The unselected desktop panel
-lists each project and its owned areas with direct case links. Selected panels
-retain all work sentences with separators between areas. Stories and tools use
-compact section spacing only on the workshop home. Workshop stories align with
-the main container rather than the classic metadata rail. The selected work
-panel is a navy board (night-2, cream double border, vermilion top rule), not a
-cream note; only the selected name label stays cream. It has one case link below
-the work list. 3D loads automatically at every viewport width, with a static
-illustration during loading or failure and no user-facing 3D toggle. With
-reduced motion, Save-Data or no WebGL, the home keeps the static illustration
-and labels and never downloads the 3D module. Both home variants place the AI
-practice summary after the tools table, on the same heading axis, with one link
-to `/ai`; it leaves 80px on mobile and 96px from tablet before the footer. The
-`/ai` page reuses the case-study template (overview, contents, sections, tech
-notes) with ABOUT as the active nav item, no back link, and a NEXT link to the
-home project board instead of the project cycle. The AI page separates
-instruction scope, the task workflow, verification tooling examples and design
-collaboration. Cross-tool review is described within the task workflow. Personal
-hooks and local checks retain their stated scope. On page exit, the workshop
-saves its selection and scroll position to that browser history entry. Returning
-or reloading restores the panel before scroll placement; a fresh entry starts
-unselected. Existing router history fields are preserved. The classic layout
-described below remains available through the switch.
+makes the whole home chrome and content inert. The project selector is one
+column, before the 220px auxiliary model. Desktop uses a left column up to 360px
+and a wider work panel on the right; mobile keeps the selected work inline
+beneath its label. The unselected desktop panel has a short instruction without
+duplicate project links. Selected panels retain all work sentences with
+separators between areas. Stories and tools use compact section spacing only on
+the workshop home. Workshop stories align with the main container rather than
+the classic metadata rail. The selected work panel uses night-2 and a single
+night-line border. Selected labels use a night-2 surface, a vermilion left rule
+and a minus sign. It has one case link below the work list. 3D loads
+automatically at every viewport width, with a static illustration during loading
+or failure and no user-facing 3D toggle. With reduced motion, Save-Data or no
+WebGL, the home keeps the static illustration and labels and never downloads the
+3D module. Both home variants place the AI practice summary after the tools
+table, on the same heading axis, with one link to `/ai`; it leaves 80px on
+mobile and 96px from tablet before the footer. The `/ai` page reuses the
+case-study template (overview, contents, sections, tech notes) with ABOUT as the
+active nav item, no back link, and a NEXT link to the home project board instead
+of the project cycle. The AI page separates instruction scope, the task
+workflow, verification tooling examples and design collaboration. Cross-tool
+review is described within the task workflow. Personal hooks and local checks
+retain their stated scope. On page exit, the workshop saves its selection and
+scroll position to that browser history entry. Returning or reloading restores
+the panel before scroll placement; a fresh entry starts unselected. Existing
+router history fields are preserved. The classic layout described below remains
+available through the switch.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently

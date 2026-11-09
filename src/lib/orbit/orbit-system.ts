@@ -45,7 +45,7 @@ export function createSystem(bodies: OrbitBody[], pixelRatio: number) {
     const baseMaterial = new THREE.LineDashedMaterial({
       color: INK,
       transparent: true,
-      opacity: 0.12,
+      opacity: 0.07,
       dashSize: 0.06,
       gapSize: 0.07,
     });
@@ -59,10 +59,10 @@ export function createSystem(bodies: OrbitBody[], pixelRatio: number) {
     const arcMaterial = new THREE.MeshBasicMaterial({
       color: INK,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.22,
     });
     const arcMesh = new THREE.Mesh(
-      new THREE.TorusGeometry(RADII[i], 0.012, 6, 200, share),
+      new THREE.TorusGeometry(RADII[i], 0.008, 6, 200, share),
       arcMaterial
     );
     arcMesh.rotation.x = Math.PI / 2;
@@ -123,6 +123,6 @@ export function poseOrbit(
   });
   orbit.arc.rotation.y = orbit.share - angle;
   orbit.arcMaterial.color.copy(active ? vermilion : ink);
-  orbit.arcMaterial.opacity = active ? 1 : 0.45;
-  orbit.baseMaterial.opacity = active ? 0.22 : 0.1;
+  orbit.arcMaterial.opacity = active ? 0.36 : 0.22;
+  orbit.baseMaterial.opacity = active ? 0.12 : 0.07;
 }
