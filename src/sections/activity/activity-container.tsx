@@ -66,13 +66,19 @@ export async function ActivityContainer() {
       copy={{
         heading: activity.heading,
         panelLabel: activity.panelLabel,
+        instruction: activity.instruction,
+        fallbackInstruction: activity.fallbackInstruction,
+        recentWork: activity.recentWork,
+        moreWork: activity.moreWork,
+        lessWork: activity.lessWork,
+        snapshotLabel: snapshot.live
+          ? null
+          : `${fullDate(snapshot.asOf)} ${activity.snapshotSuffix}`,
         lastCommit: activity.lastCommit,
         recent: activity.recent,
         repo: activity.repo,
         empty: activity.empty,
-        stale: snapshot.live
-          ? null
-          : `${activity.stale} ${fullDate(snapshot.asOf)}`,
+        stale: snapshot.live ? null : activity.stale,
         history: activity.history,
       }}
     />

@@ -118,3 +118,26 @@
   top: calc(env(safe-area-inset-top) + 64px);
   font-size: 14px;
 }
+
+.root:not([data-ready]) {
+  height: auto;
+  min-height: 100svh;
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  padding: calc(env(safe-area-inset-top) + 112px) var(--gutter-r)
+    calc(env(safe-area-inset-bottom) + 24px) var(--gutter);
+  overflow: visible;
+}
+
+.root:not([data-ready]) .scene,
+.root:not([data-ready]) .hud {
+  visibility: hidden;
+}
+
+.root:not([data-ready]) .history,
+.root:not([data-ready]) .empty {
+  position: relative;
+  inset: auto;
+  width: fit-content;
+}

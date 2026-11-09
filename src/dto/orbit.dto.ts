@@ -30,6 +30,12 @@ export interface OrbitProjectView {
 export interface OrbitCopy {
   heading: string;
   panelLabel: string;
+  instruction: string;
+  fallbackInstruction: string;
+  recentWork: string;
+  moreWork: string;
+  lessWork: string;
+  snapshotLabel: string | null;
   lastCommit: string;
   recent: string;
   repo: string;
@@ -76,4 +82,9 @@ export interface OrbitPanelViewProps {
   active: number;
   copy: OrbitCopy;
   panelRef: Ref<HTMLElement>;
+}
+
+export interface OrbitCommitsViewProps {
+  project: OrbitProjectView;
+  copy: OrbitCopy;
 }

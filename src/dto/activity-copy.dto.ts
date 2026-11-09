@@ -12,6 +12,12 @@ export interface OpenerCopy {
 export interface ActivityCopy {
   heading: string;
   panelLabel: string;
+  instruction: string;
+  fallbackInstruction: string;
+  recentWork: string;
+  moreWork: string;
+  lessWork: string;
+  snapshotSuffix: string;
   lastCommit: string;
   recent: string;
   countPrefix: string;

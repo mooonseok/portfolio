@@ -1,13 +1,12 @@
 .labels {
-  position: absolute;
+  position: relative;
   z-index: 5;
-  left: var(--gutter);
-  top: 112px;
   display: grid;
   gap: 4px;
 }
 
 :global([data-ready]) .labels {
+  position: absolute;
   inset: 0;
   display: block;
   pointer-events: none;

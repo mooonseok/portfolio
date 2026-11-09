@@ -116,6 +116,12 @@ revalidates the tag only for requests whose `x-hub-signature-256` matches
 home (GSAP loaded on demand, skip button and Esc/Enter/Space, reduced-motion
 fades only).
 
+홈 판독 패널은 최근 작업을 메타 정보보다 먼저 보여 줍니다. 저장 기록의 기준일과
+조회 실패 안내는 메타 위에 함께 표시합니다. 휴대폰 배치의 최근 작업은 한 개를
+먼저 표시하고 `details`/`summary`로 나머지를 펼칩니다. 3D 준비 전·미지원·데이터
+절약 환경에서는 프로젝트 목록과 패널을 문서 흐름으로 배치하고 페이지 스크롤을
+허용합니다. 일반 궤도 화면의 긴 패널은 내부 스크롤을 사용합니다.
+
 The history page `/portfolio` uses the project workshop in
 `app/_home/workshop-home.tsx`. `constants/home.ts` selects it with
 `HOME.WORKSHOP_ENABLED`; set it to false and rebuild to restore the unchanged
