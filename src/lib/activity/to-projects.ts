@@ -53,8 +53,19 @@ export function toProjects(
     project.count += repo.count;
     if (repo.last > project.last) project.last = repo.last;
     project.private = project.private && repo.private;
-    if (!config.hideCommits.includes(repo.name))
-      project.commits.push(...repo.commits.map((item) => ({ ...item, part })));
+    if (!config.hideCommits.includes(repo.name)) {
+      const summaries = Object.hasOwn(config.commitSummaries, repo.name)
+        ? config.commitSummaries[repo.name]
+        : {};
+      project.commits.push(
+        ...repo.commits.flatMap((item) => {
+          const title = Object.hasOwn(summaries, item.title)
+            ? summaries[item.title].trim()
+            : '';
+          return title ? [{ ...item, title, part }] : [];
+        })
+      );
+    }
   }
   return [...map.values()]
     .map((project) => ({

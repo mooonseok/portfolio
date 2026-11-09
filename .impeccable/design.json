@@ -437,8 +437,8 @@
       "name": "궤도 이름표",
       "kind": "label",
       "refersTo": "orbit-label",
-      "description": "홈 행성 이름표와 새김 견본",
-      "html": "<span class=\"ds-orbit-name\"><svg viewBox=\"0 0 14 14\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\"><circle cx=\"7\" cy=\"7\" r=\"5\"/><path d=\"M2.4 5.2H11.6M2.4 8.6H11.6M5.4 2.3V11.7M8.8 2.3V11.7\"/></svg>포트폴리오</span>",
+      "description": "홈 행성 이름표와 고리·위성 견본",
+      "html": "<span class=\"ds-orbit-name\"><svg viewBox=\"0 0 14 14\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\"><circle cx=\"7\" cy=\"7\" r=\"4\"/><ellipse cx=\"7\" cy=\"7\" rx=\"6.5\" ry=\"1.7\" transform=\"rotate(-24 7 7)\"/></svg>포트폴리오</span>",
       "css": ".ds-orbit-name{display:inline-flex;align-items:center;gap:7px;padding:6px 8px;font-size:14px;font-weight:500;line-height:1;color:var(--color-dim,#b4ad96);background:var(--color-night-deep,#0b1428);text-shadow:0 0 2px #0b1428,0 0 4px #0b1428,0 0 6px #0b1428,0 0 10px #0b1428}.ds-orbit-name[data-active]{color:var(--color-moonlight,#ebe3cb)}"
     },
     {

@@ -30,6 +30,7 @@ export interface ActivityConfig {
   owner: string;
   exclude: string[];
   hideCommits: string[];
+  commitSummaries: Record<string, Record<string, string>>;
   parts: Record<string, string>;
   topics: Record<string, ActivityTopic>;
   fallbackSkin: OrbitSkin;

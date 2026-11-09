@@ -116,6 +116,12 @@ revalidates the tag only for requests whose `x-hub-signature-256` matches
 home (GSAP loaded on demand, skip button and Esc/Enter/Space, reduced-motion
 fades only).
 
+홈 최근 작업은 `content/activity-summaries.ts`의 저장소별 원문→방문자용 요약을
+사용합니다. 실시간·저장 기록 모두 `toProjects`에서 등록된 기능 변화만 선별한 뒤
+최신 세 개로 제한합니다. GitHub에서 조회한 여섯 개의 원문은 선별 전까지
+보존하며, 커밋 수·날짜·원본 저장 기록은 바꾸지 않습니다. 새 기능도 표시 요약을
+등록해야 목록에 나오고, 내부 작업·미등록 제목은 제외합니다.
+
 홈 판독 패널은 최근 작업을 메타 정보보다 먼저 보여 줍니다. 저장 기록의 기준일과
 조회 실패 안내는 메타 위에 함께 표시합니다. 휴대폰 배치의 최근 작업은 한 개를
 먼저 표시하고 `details`/`summary`로 나머지를 펼칩니다. 3D 준비 전·미지원·데이터
