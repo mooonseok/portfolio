@@ -11,7 +11,7 @@ import type {
   AiLoopMark,
   AiLoopMarks,
 } from '@/dto/ai-practice.dto';
-import { AI_CHECK_LABEL, LOOP_DIR } from '@/constants/ai-practice';
+import { LOOP_DIR } from '@/constants/ai-practice';
 import { HEADING, TAG } from '@/constants/tag';
 
 const order = (value: number) => ({ '--order': value }) as CSSProperties;
@@ -91,21 +91,15 @@ export function AiCheckStageView({
       ) : null}
       <Column className='ai-loop-content'>
         <Text className='ai-loop-body'>{keepDots(stage.body)}</Text>
-        <Row as={TAG.SPAN} className='ai-loop-device'>
-          <Text as={TAG.SPAN} className='ai-loop-kind'>
-            {AI_CHECK_LABEL[stage.device.kind]}
-          </Text>
-          <Text as={TAG.SPAN} className='ai-loop-device-name'>
-            {stage.device.name}
-          </Text>
-        </Row>
-        <List role='list' className='ai-loop-items'>
-          {stage.device.items.map((item) => (
-            <ListItem key={item} className='ai-loop-item'>
-              {keepDots(item)}
-            </ListItem>
-          ))}
-        </List>
+        {stage.evidence.length ? (
+          <List role='list' className='ai-loop-items'>
+            {stage.evidence.map((item) => (
+              <ListItem key={item} className='ai-loop-item'>
+                {keepDots(item)}
+              </ListItem>
+            ))}
+          </List>
+        ) : null}
       </Column>
       {down ? (
         <Box

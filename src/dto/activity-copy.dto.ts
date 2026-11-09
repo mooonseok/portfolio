@@ -18,9 +18,6 @@ export interface ActivityCopy {
   moreWork: string;
   lessWork: string;
   lastCommit: string;
-  recent: string;
-  countPrefix: string;
-  countSuffix: string;
   repo: string;
   open: string;
   repoSuffix: string;

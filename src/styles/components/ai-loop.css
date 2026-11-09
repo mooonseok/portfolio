@@ -29,40 +29,21 @@
 .ai-loop-body {
   max-width: 34em;
   margin: 4px 0 0;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--ink);
 }
-.ai-loop-device {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
-  margin-top: 16px;
-}
-.ai-loop-device-name {
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.4;
-}
-.ai-loop-kind {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  color: var(--subtle);
-}
 .ai-loop-items {
-  margin: 6px 0 0;
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
 }
 .ai-loop-item {
-  padding: 7px 0;
-  font-size: 14.5px;
-  line-height: 1.55;
-}
-.ai-loop-item + .ai-loop-item {
-  border-top: 1px solid var(--hairline);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--subtle);
 }
 .ai-loop-stroke {
   stroke: var(--marker-blue);
@@ -121,8 +102,5 @@
     height: auto;
     min-height: 34px;
     margin: 8px 0 14px 1px;
-  }
-  .ai-loop-device-name {
-    font-size: 16px;
   }
 }

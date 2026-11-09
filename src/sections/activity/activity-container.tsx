@@ -4,11 +4,10 @@ import { activity } from '@/content/activity';
 import { activityConfig } from '@/content/activity-topics';
 import type { ActivityProject } from '@/dto/activity.dto';
 import type { OrbitProjectView } from '@/dto/orbit.dto';
-import { fullDate, shortDate, toProjects } from '@/lib/activity/to-projects';
+import { fullDate, toProjects } from '@/lib/activity/to-projects';
 import { fetchActivity } from '@/lib/github/fetch-activity';
 
 function toView(project: ActivityProject): OrbitProjectView {
-  const count = `${activity.countPrefix}${project.count}${activity.countSuffix}`;
   return {
     key: project.key,
     title: project.title,
@@ -16,7 +15,6 @@ function toView(project: ActivityProject): OrbitProjectView {
     skin: project.skin,
     tag: project.tag,
     last: fullDate(project.last),
-    count,
     repos: project.repos.flatMap((repo) =>
       repo.href
         ? [
@@ -33,18 +31,8 @@ function toView(project: ActivityProject): OrbitProjectView {
         : []
     ),
     privateNote: project.private ? activity.privateNote : null,
-    commits: project.commits.map(
-      (commit) =>
-        `${shortDate(commit.date)}  ${commit.part ? `[${commit.part}] ` : ''}${commit.title}`
-    ),
-    aria: [
-      project.title,
-      project.tag,
-      project.sub,
-      `${activity.recent} ${count}`,
-    ]
-      .filter(Boolean)
-      .join(', '),
+    commits: project.commits.map((commit) => commit.title),
+    aria: [project.title, project.tag, project.sub].filter(Boolean).join(', '),
   };
 }
 
@@ -72,7 +60,6 @@ export async function ActivityContainer() {
         moreWork: activity.moreWork,
         lessWork: activity.lessWork,
         lastCommit: activity.lastCommit,
-        recent: activity.recent,
         repo: activity.repo,
         empty: activity.empty,
         history: activity.history,

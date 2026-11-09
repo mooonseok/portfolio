@@ -57,8 +57,6 @@ export function OrbitPanelView({
             <Box as={TAG.DL} className={styles.facts}>
               <Text as={TAG.DT}>{copy.lastCommit}</Text>
               <Text as={TAG.DD}>{project.last}</Text>
-              <Text as={TAG.DT}>{copy.recent}</Text>
-              <Text as={TAG.DD}>{project.count}</Text>
               <Text as={TAG.DT}>{copy.repo}</Text>
               <Text as={TAG.DD}>
                 {project.privateNote ? (

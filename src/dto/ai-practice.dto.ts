@@ -2,7 +2,7 @@ import type { CaseMetaRow, CaseNextLink } from '@/dto/case-template.dto';
 import type { TechNote } from '@/dto/field.dto';
 import type { ContentsGroup, GroupTag } from '@/dto/navigation.dto';
 import type { ProjectLink } from '@/dto/project.dto';
-import type { AiCheckKind, LoopDir } from '@/constants/ai-practice';
+import type { LoopDir } from '@/constants/ai-practice';
 
 export interface AiRule {
   title: string;
@@ -10,17 +10,11 @@ export interface AiRule {
   example: string;
 }
 
-export interface AiCheckDevice {
-  kind: AiCheckKind;
-  name: string;
-  items: string[];
-}
-
 export interface AiCheckStage {
   id: string;
   label: string;
   body: string;
-  device: AiCheckDevice;
+  evidence: string[];
 }
 
 export interface AiCheckFlow {

@@ -20,7 +20,6 @@ export interface OrbitProjectView {
   skin: OrbitSkin;
   tag: string | null;
   last: string;
-  count: string;
   repos: OrbitRepoLink[];
   privateNote: string | null;
   commits: string[];
@@ -36,7 +35,6 @@ export interface OrbitCopy {
   moreWork: string;
   lessWork: string;
   lastCommit: string;
-  recent: string;
   repo: string;
   empty: string;
   history: LinkItem;
