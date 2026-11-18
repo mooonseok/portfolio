@@ -4,52 +4,61 @@ import { List, ListItem } from '@/components/atoms/list';
 import { Text } from '@/components/atoms/text';
 import { HEADING, LIST_TAG, TAG } from '@/constants/tag';
 import type { WorkflowRequest } from '@/dto/ai-workflow.dto';
-import styles from './ai-check-flow.module.css';
+import styles from './ai-review-console.module.css';
+
+interface Props {
+  requests: WorkflowRequest[];
+  selected: string;
+  title: string;
+  escalation: string;
+}
 
 export function WorkflowTextView({
   requests,
-}: {
-  requests: WorkflowRequest[];
-}) {
+  selected,
+  title,
+  escalation,
+}: Props) {
   return (
-    <Box className={styles.static}>
+    <Box className={styles.details}>
       {requests.map((request) => (
         <Box
-          as={TAG.ARTICLE}
+          as={TAG.DETAILS}
           key={request.id}
+          data-selected={request.id === selected}
           id={'workflow-' + request.id}
-          className='border-t border-hairline p-5'
         >
-          <Heading level={HEADING.H3} className='text-2xl'>
-            {request.label}
-          </Heading>
-          <List as={LIST_TAG.OL} className='mt-4 grid list-decimal gap-3 pl-5'>
+          <Text as={TAG.SUMMARY}>
+            {request.label} {title}
+          </Text>
+          <List as={LIST_TAG.OL} className={styles.stages}>
             {request.stages.map((stage, index) => (
               <ListItem
                 key={stage.label}
                 id={'workflow-' + request.id + '-' + index}
               >
-                <Text>
-                  {stage.label} · {stage.owner}
+                <Heading level={HEADING.H3}>{stage.label}</Heading>
+                <Text as={TAG.SPAN} className={styles.owner}>
+                  {stage.owner}
                 </Text>
-                <Text className='text-subtle'>{stage.body}</Text>
+                <Text>{stage.body}</Text>
               </ListItem>
             ))}
           </List>
-          <Heading level={HEADING.H4} className='mt-5'>
-            검토 결과
-          </Heading>
-          <Text className='mt-2'>
-            통과하면 {request.stages[4].label} 단계로 넘어갑니다.
-          </Text>
-          <List className='mt-2 grid gap-2'>
+          <List className={styles.issues}>
             {request.issues.map((issue) => (
               <ListItem key={issue.id}>
-                {issue.label} → {request.stages[issue.target].label}.{' '}
-                {issue.reason} 수정한 뒤 다시 검토합니다.
+                <Text as={TAG.SPAN} className={styles.stage}>
+                  {issue.label}
+                </Text>
+                <Text>
+                  {request.stages[issue.source].label} →{' '}
+                  {request.stages[issue.target].label}. {issue.reason}
+                </Text>
               </ListItem>
             ))}
           </List>
+          <Text className={styles.limit}>{escalation}</Text>
         </Box>
       ))}
     </Box>

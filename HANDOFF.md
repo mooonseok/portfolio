@@ -125,13 +125,13 @@ SVG와 좌표를 사용해 바닥 타일의 가로세로 대각선 비율 2:1을
 클래식 구성은 `/preview/classic`, 3D 작업실은 `/preview/diorama`에서 따로
 확인합니다. 두 프리뷰는 noindex입니다.
 
-AI 활용 `/ai#work`는 디자인과 개발 경로를 나란히 보여줍니다. 요청과 검토 결과를
-고르면 점이 해당 경로를 따라갑니다. 검토에서 발견한 문제에 따라 담당 단계로
-돌아가 수정하고 다시 확인합니다. 경로별 단계와 검토 조건은
-`content/ai-workflow.ts`에서 관리합니다. 바로 아래 `#plaza-case`에는 광장
-이름표를 고친 실제 사례의 재현 조건, 수정 전후 그림과 재검사 결과를 둡니다.
-목차는 작업 흐름, 광장 수정 사례, 작업 지침, 검사 사례, 디자인 협업으로
-연결됩니다.
+AI 활용 `/ai#work`는 공통 요청 확인에서 갈라지는 디자인·개발의 여섯 단계를
+나란히 보여줍니다. 검토 결과 버튼을 고르면 문제가 발견된 검사에서 해당 단계로
+점이 돌아갑니다. 각 요청의 상세 목록을 펼치면 담당과 작업, 재검토 조건을 읽을 수
+있습니다. 경로별 단계와 검토 조건은 `content/ai-workflow.ts`에서 관리합니다.
+바로 아래 `#plaza-case`에는 광장 이름표를 고친 실제 사례의 재현 조건, 수정 전후
+그림과 재검사 결과를 둡니다. 목차는 작업 흐름, 광장 수정 사례, 작업 지침, 검사
+사례, 디자인 협업으로 연결됩니다.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently

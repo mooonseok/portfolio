@@ -7,19 +7,14 @@ export interface WorkflowStage {
 export interface WorkflowIssue {
   id: string;
   label: string;
-  target: 0 | 1 | 2;
+  source: number;
+  target: number;
   reason: string;
 }
 
 export interface WorkflowRequest {
   id: string;
   label: string;
-  stages: [
-    WorkflowStage,
-    WorkflowStage,
-    WorkflowStage,
-    WorkflowStage,
-    WorkflowStage,
-  ];
+  stages: WorkflowStage[];
   issues: WorkflowIssue[];
 }

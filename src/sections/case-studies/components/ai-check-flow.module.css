@@ -5,7 +5,7 @@
   --circuit-ground: #12101b;
   --track: var(--circuit-design);
   display: grid;
-  grid-template-areas: 'heading' 'diagram' 'console';
+  grid-template-areas: 'heading' 'decisions' 'diagram' 'console' 'details';
   gap: 22px;
   color: var(--ink);
 }
@@ -35,9 +35,7 @@
   border: 1px solid var(--hairline);
   border-radius: 7px;
 }
-.tab,
-.control,
-.controls select {
+.tab {
   font: inherit;
   font-size: 14px;
   min-height: 44px;
@@ -77,100 +75,23 @@
   border: 1px solid var(--dark-line);
   border-radius: 10px;
 }
-.console {
-  grid-area: console;
-  min-width: 0;
-}
-.controls {
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-.controls label {
-  display: grid;
-  gap: 5px;
-  font-size: 13px;
-  color: var(--subtle);
-}
-.controls select,
-.control {
-  border-radius: 5px;
-  border: 1px solid var(--hairline);
-  background: var(--dark-2);
-  color: var(--ink);
-}
-.controls select {
-  min-width: 135px;
-  padding: 0 12px;
-}
-.control {
-  padding: 0 12px;
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  min-width: 99px;
-}
-.control::before {
-  content: '';
-  border-style: solid;
-  border-width: 5px 0 5px 8px;
-  border-color: transparent transparent transparent currentColor;
-}
-.control[data-playing='true']::before {
-  width: 8px;
-  height: 10px;
-  border: 0;
-  border-inline: 2px solid currentColor;
-}
-.flow :is(select, button):focus-visible {
+.flow :is(button, summary):focus-visible {
   outline: 2px solid var(--track);
   outline-offset: 3px;
-}
-.note {
-  margin-top: 18px;
-  border-inline-start: 2px solid var(--track);
-  padding-left: 12px;
-  min-height: 3.6em;
-  font-size: 15px;
-  line-height: 1.58;
-  color: var(--subtle);
-}
-.note[data-returning='true'] {
-  border-color: var(--circuit-return);
-}
-.stage {
-  display: block;
-  margin-bottom: 2px;
-  font-weight: 600;
-  color: var(--ink);
-}
-.static {
-  grid-column: 1/-1;
-  display: grid;
-  gap: 12px;
 }
 @media (min-width: 860px) {
   .flow {
     grid-template-columns: var(--ai-columns);
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 'heading diagram' 'console diagram';
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas: 'heading diagram' 'decisions diagram' 'console diagram' 'details details';
     column-gap: var(--ai-gap);
-    row-gap: 30px;
+    row-gap: 22px;
   }
   .heading {
     padding-top: 18px;
   }
   .introduction {
     margin: 18px 0 24px;
-  }
-  .console {
-    border-top: 1px solid var(--hairline);
-    padding-top: 19px;
-  }
-  .note {
-    min-height: 5em;
   }
   .diagram {
     padding-block: 23px;
@@ -186,13 +107,9 @@
   .diagram {
     padding-block: 8px;
   }
-  .note {
-    margin-top: 12px;
-  }
 }
 @media (scripting: none) {
-  .tabs,
-  .console {
+  .tabs {
     display: none;
   }
 }

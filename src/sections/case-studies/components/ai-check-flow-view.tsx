@@ -2,7 +2,6 @@ import type { RefCallback } from 'react';
 import { Box } from '@/components/atoms/box';
 import { Button } from '@/components/atoms/button';
 import { Heading } from '@/components/atoms/heading';
-import { SelectField } from '@/components/atoms/select-field';
 import { Text } from '@/components/atoms/text';
 import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
 import { HEADING, TAG } from '@/constants/tag';
@@ -10,6 +9,7 @@ import type { WorkflowRequest } from '@/dto/ai-workflow.dto';
 import { AiCircuitCanvas } from './ai-circuit-canvas';
 import { WorkflowTextView } from './ai-check-flow-static-view';
 import styles from './ai-check-flow.module.css';
+import consoleStyles from './ai-review-console.module.css';
 
 interface Props {
   lanes: WorkflowRequest[];
@@ -21,14 +21,17 @@ interface Props {
     request: string;
     result: string;
     pass: string;
+    detailsTitle: string;
+    escalation: string;
   };
   result: number;
   active: number;
   returning: boolean;
+  source?: number;
   target?: number;
   note: string;
   playLabel: string;
-  playing: boolean;
+  finished: boolean;
   pathRef: RefCallback<SVGPathElement>;
   dotRef: RefCallback<SVGGElement>;
   onRequest: (request: WorkflowRequest) => void;
@@ -43,16 +46,14 @@ export function AiCheckFlowView({
   result,
   note,
   playLabel,
-  playing,
+  finished,
   onRequest,
   onResult,
   onPlay,
   ...map
 }: Props) {
-  const choices = [
-    ...request.issues.map((issue) => issue.label),
-    copy.pass,
-  ].map((label, index) => ({ label, value: String(index) }));
+  const choices = [...request.issues.map((issue) => issue.label), copy.pass];
+  const stage = request.stages[map.active];
   return (
     <Box
       as={TAG.SECTION}
@@ -79,41 +80,64 @@ export function AiCheckFlowView({
           ))}
         </Box>
       </Box>
+      <Box className={consoleStyles.decisions}>
+        <Text
+          as={TAG.SPAN}
+          id='review-outcome-label'
+          className={consoleStyles.label}
+        >
+          {copy.result}
+        </Text>
+        <Box
+          role='group'
+          aria-labelledby='review-outcome-label'
+          className={consoleStyles.outcomes}
+        >
+          {choices.map((label, index) => (
+            <Button
+              key={index}
+              aria-pressed={index === result}
+              onClick={() => onResult(index)}
+            >
+              {label}
+            </Button>
+          ))}
+        </Box>
+      </Box>
       <Box className={styles.diagram}>
         <AiCircuitCanvas lanes={lanes} lane={request.id} {...map} />
       </Box>
-      <Box className={styles.console}>
-        <Box className={styles.controls}>
-          <SelectField
-            label={copy.result}
-            choices={choices}
-            value={result}
-            onChange={(event) => onResult(Number(event.currentTarget.value))}
-          />
-          <Button
-            className={styles.control}
-            data-playing={playing}
-            onClick={onPlay}
-          >
-            {playLabel}
-          </Button>
-        </Box>
+      <Box className={consoleStyles.console}>
         <Box
-          className={styles.note}
-          data-returning={map.returning}
+          className={consoleStyles.note}
           role='status'
           aria-live='polite'
           aria-atomic='true'
         >
-          <Text as={TAG.SPAN} className={styles.stage}>
-            {request.stages[map.active].label}
-          </Text>
-          <Text>{note}</Text>
+          <Box className={consoleStyles.byline}>
+            <Text as={TAG.SPAN} className={consoleStyles.stage}>
+              {stage.label}
+            </Text>
+            <Text as={TAG.SPAN} className={consoleStyles.owner}>
+              {stage.owner}
+            </Text>
+          </Box>
+          <Text className={consoleStyles.description}>{note}</Text>
         </Box>
+        <Button
+          className={consoleStyles.play}
+          onClick={onPlay}
+          data-finished={finished}
+        >
+          {playLabel}
+        </Button>
       </Box>
-      <noscript>
-        <WorkflowTextView requests={lanes} />
-      </noscript>
+      <WorkflowTextView
+        requests={lanes}
+        selected={request.id}
+        title={copy.detailsTitle}
+        escalation={copy.escalation}
+      />
     </Box>
   );
 }

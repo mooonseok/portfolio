@@ -18,9 +18,10 @@ export function AiCheckLoop() {
   const issue = request.issues[result];
   const route = useMemo(
     () =>
-      workflowRoute(selection.request.issues[selection.result]?.target).slice(
-        1
-      ),
+      workflowRoute(
+        selection.request,
+        selection.request.issues[selection.result]
+      ).slice(1),
     [selection]
   );
   const { index, playing, finished, toggle, pathRef, dotRef } =
@@ -30,7 +31,7 @@ export function AiCheckLoop() {
   const note =
     returning && issue
       ? issue.label + ' 발견 · ' + issue.reason
-      : active === 3 && index > 2
+      : issue && active === issue.source && index > route.indexOf(active)
         ? circuitCopy.review
         : request.stages[active].body;
   const playLabel = finished
@@ -54,9 +55,10 @@ export function AiCheckLoop() {
         note,
         active,
         returning,
+        source: issue?.source,
         target: issue?.target,
         playLabel,
-        playing,
+        finished,
         pathRef,
         dotRef,
       }}

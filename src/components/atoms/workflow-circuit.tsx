@@ -5,6 +5,7 @@ import styles from './workflow-circuit.module.css';
 export interface WorkflowCircuitProps {
   lanes: { id: string; label: string; stages: { label: string }[] }[];
   lane: string;
+  source?: number;
   target?: number;
   active: number;
   returning: boolean;
@@ -15,6 +16,7 @@ export interface WorkflowCircuitProps {
 export function WorkflowCircuit({
   lanes,
   lane,
+  source,
   target,
   active,
   returning,
@@ -25,18 +27,16 @@ export function WorkflowCircuit({
   const center = width / 2;
   const density = Math.max(0, Math.min(1, (width - 275) / 325));
   const compact = Math.max(0, Math.min(1, (440 - width) / 80));
-  const firstRow = 119 - 4 * compact;
-  const rowGap = 75 - 14 * compact;
-  const levels = [
-    firstRow,
-    firstRow + rowGap,
-    firstRow + 2 * rowGap,
-    firstRow + 3 * rowGap,
-  ];
-  const height = levels[3] + 44 - 2 * compact;
+  const firstRow = 107 - 10 * compact;
+  const rowGap = 68 - 11 * compact;
+  const rowY = (stage: number) => firstRow + (stage - 1) * rowGap;
+  const lastRow = rowY(
+    Math.max(...lanes.map((item) => item.stages.length - 1))
+  );
   const nodeWidth = Math.min(182, width * 0.415);
   const halfWidth = nodeWidth / 2;
   const halfHeight = 22 + 4 * density;
+  const height = lastRow + halfHeight + 12;
   const iconScale = 0.76 + density * 0.46;
   const iconX = -halfWidth + 7 + 10 * density + 16 * iconScale;
   const labelX = iconX + 16 * iconScale + 6 + 7 * density;
@@ -61,7 +61,7 @@ export function WorkflowCircuit({
         돌아가 수정하고 다시 검토합니다.
       </desc>
       <path
-        d={`M${center} ${firstRow - 30}V${levels[3] + 25}`}
+        d={`M${center} ${firstRow - 30}V${lastRow + halfHeight}`}
         className={styles.divider}
       />
       {lanes.map((item, i) => {
@@ -73,18 +73,20 @@ export function WorkflowCircuit({
         const gutter = Math.min(34, outerSpace);
         const bend = Math.min(gutter / 2, 9);
         const edge = side + sign * gutter;
-        const reviewY = levels[2];
-        const targetY = target === undefined ? undefined : levels[target - 1];
+        const stages = item.stages.slice(1);
+        const reviewY = rowY(source ?? stages.length - 1);
+        const targetY = target === undefined ? undefined : rowY(target);
         return (
           <g key={item.id} data-lane={item.id} data-selected={selected}>
-            {levels.map((y, j) => {
+            {stages.map((stage, j) => {
+              const y = rowY(j + 1);
               const route =
                 j === 0
-                  ? `M${center} 40C${center} 70 ${x} 45 ${x} ${y - halfHeight}`
-                  : `M${x} ${levels[j - 1] + halfHeight}V${y - halfHeight}`;
+                  ? `M${center} 40C${center} 65 ${x} 42 ${x} ${y - halfHeight}`
+                  : `M${x} ${rowY(j) + halfHeight}V${y - halfHeight}`;
               return (
                 <path
-                  key={y}
+                  key={stage.label}
                   d={route}
                   className={styles.route}
                   ref={
@@ -116,13 +118,13 @@ export function WorkflowCircuit({
             >
               {item.label}
             </text>
-            {item.stages.slice(1).map((stage, j) => (
+            {stages.map((stage, j) => (
               <g
                 key={stage.label}
                 data-stage={j + 1}
                 data-active={selected && active === j + 1}
                 data-returning={selected && returning && active === j + 1}
-                transform={`translate(${x} ${levels[j]})`}
+                transform={`translate(${x} ${rowY(j + 1)})`}
               >
                 <rect
                   data-rim

@@ -1,8 +1,14 @@
-import type { WorkflowIssue } from '@/dto/ai-workflow.dto';
+import type { WorkflowIssue, WorkflowRequest } from '@/dto/ai-workflow.dto';
 
-const forward = [0, 1, 2, 3, 4] as const;
+export function workflowRoute(
+  request: WorkflowRequest,
+  issue?: WorkflowIssue
+): number[] {
+  const forward = request.stages.map((_, index) => index);
+  if (!issue) return forward;
 
-export function workflowRoute(target?: WorkflowIssue['target']): number[] {
-  if (target === undefined) return [...forward];
-  return [...forward.slice(0, 4), ...forward.slice(target)];
+  return [
+    ...forward.slice(0, issue.source + 1),
+    ...forward.slice(issue.target),
+  ];
 }
