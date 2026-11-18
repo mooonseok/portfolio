@@ -5,6 +5,7 @@ import type { StatusKind } from '@/constants/status';
 import type { NavId } from '@/constants/navigation';
 import type { ContentsGroup } from '@/dto/navigation.dto';
 import type { Project, ProjectLink } from '@/dto/project.dto';
+import type { Visual } from '@/dto/visual.dto';
 import type { StatusItem } from '@/dto/status.dto';
 
 export interface CaseMetaRow {
@@ -30,6 +31,7 @@ export interface CaseStudyTemplateProps {
 }
 
 export interface CaseHeader {
+  visual?: Visual;
   title: string;
   period?: string;
   status?: StatusItem[];

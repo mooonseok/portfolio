@@ -4,6 +4,7 @@ import type { Story } from '@/dto/story.dto';
 
 export const site: Site = {
   name: 'PARK MOONSEOK',
+  handle: 'mooonseok',
   role: 'SOFTWARE ENGINEER',
   disciplines: 'Flutter / Web / Backend',
   range: { label: 'Selected Work', years: '2022—2026' },

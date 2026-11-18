@@ -26,19 +26,19 @@
   --dur-grow: 200ms;
   --dur-splash: 3150ms;
 
-  --board-white: #111d38;
-  --board-frame: #2a3a5c;
-  --board-edge: #3a4a6c;
-  --board-tray: #1b2a4a;
-  --board-tray-edge: #3a4a6c;
-  --marker-ink: #ebe3cb;
-  --marker-blue: #ebe3cb;
-  --marker-red: #e0664a;
-  --marker-green: #b4ad96;
-  --marker-ghost: #6a7899;
-  --marker-cap: #2a3a5c;
-  --note-paper: #ebe3cb;
-  --note-ink: #0b1428;
+  --board-white: #141122;
+  --board-frame: #302945;
+  --board-edge: #463952;
+  --board-tray: #211a36;
+  --board-tray-edge: #463952;
+  --marker-ink: #f2eeff;
+  --marker-blue: #f2eeff;
+  --marker-red: #ac8bf9;
+  --marker-green: #bbb4d0;
+  --marker-ghost: #9486a8;
+  --marker-cap: #302945;
+  --note-paper: #f2eeff;
+  --note-ink: #060513;
 
   --cols: 4;
   --margin: 20px;

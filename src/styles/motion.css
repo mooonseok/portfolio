@@ -47,8 +47,4 @@
     transform: none !important;
     transition: none !important;
   }
-  .ai-loop .ai-loop-draw {
-    clip-path: none !important;
-    transition: none !important;
-  }
 }

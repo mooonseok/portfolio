@@ -17,7 +17,7 @@ export function AiRuleRowsView({
 }) {
   return (
     <Column className='max-w-[56rem] gap-4 tab:gap-5'>
-      <Text as={TAG.SPAN} id={id} className='mono muted'>
+      <Text as={TAG.SPAN} id={id} className='sr-only'>
         {label}
       </Text>
       <Box as={TAG.DL} aria-labelledby={id} className='m-0'>

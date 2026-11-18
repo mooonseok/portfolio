@@ -12,11 +12,9 @@ export interface SiteHeaderProps {
 }
 
 export interface SiteHeaderViewProps {
-  dark: boolean;
-  back?: boolean;
-  name: string;
+  handle: string;
+  github: string;
   nav: ReactNode;
-  menu: ReactNode;
 }
 
 export interface SiteHeaderNavProps {

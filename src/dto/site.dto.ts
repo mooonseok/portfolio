@@ -12,6 +12,7 @@ import type { BoardCopy } from '@/dto/board.dto';
 
 export interface Site {
   name: string;
+  handle: string;
   role: string;
   disciplines: string;
   headline: string;

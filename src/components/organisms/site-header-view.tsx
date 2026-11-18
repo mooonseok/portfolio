@@ -1,41 +1,19 @@
+import { Anchor } from '@/components/atoms/anchor';
 import { Box } from '@/components/atoms/box';
 import { NavLink } from '@/components/atoms/nav-link';
-import { Text } from '@/components/atoms/text';
 import type { SiteHeaderViewProps } from '@/dto/chrome.dto';
 import { TAG } from '@/constants/tag';
 
-export function SiteHeaderView({
-  dark,
-  back,
-  name,
-  nav,
-  menu,
-}: SiteHeaderViewProps) {
+export function SiteHeaderView({ handle, nav, github }: SiteHeaderViewProps) {
   return (
-    <Box
-      as={TAG.HEADER}
-      className='relative z-5 container flex min-h-14 items-center justify-between pt-[calc(12px_+_env(safe-area-inset-top))] data-dark:text-ink tab:pt-7'
-      data-dark={dark || undefined}
-    >
-      {back ? (
-        <NavLink
-          href='/portfolio#work'
-          className='flex min-h-11 items-center mono'
-        >
-          <Text as={TAG.SPAN} className='inline tab:hidden'>
-            ← WORK
-          </Text>
-          <Text as={TAG.SPAN} className='hidden tab:inline'>
-            {name}
-          </Text>
-        </NavLink>
-      ) : (
-        <NavLink href='/' className='flex min-h-11 items-center mono'>
-          {name}
-        </NavLink>
-      )}
+    <Box as={TAG.HEADER} className='site-masthead'>
+      <NavLink href='/' className='site-signature' aria-label={`${handle} 홈`}>
+        {handle}
+      </NavLink>
       {nav}
-      {menu}
+      <Anchor href={github} className='site-profile'>
+        GitHub ↗
+      </Anchor>
     </Box>
   );
 }

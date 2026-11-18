@@ -74,7 +74,8 @@ Farm, IndianBob, Emosave)의 서비스와 담당 범위를 훑고, 프로젝트�
 
 - 이름 표기 `PARK MOONSEOK`, 직함 `SOFTWARE ENGINEER`, 분야
   `Flutter / Web / Backend`, 범위 `Selected Work 2022—2026`.
-- 디자인 기준(source of truth)은 Phase 1–4 **LOCKED** 캔버스다(HANDOFF.md).
+- 공통 헤더는 `mooonseok`을 표시한다. 홈 디자인 기준은 모바일 투영을 보정한
+  프로젝트 광장이다(DESIGN.md).
 - 파비콘은 새김 초승달 이미지다(`src/app/favicon.ico`, `icon.png`,
   `apple-icon.png`).
 

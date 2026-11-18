@@ -21,6 +21,7 @@ export function CaseStudyTemplate({
     <CaseStudyTemplateView
       header={{
         title: project.title,
+        visual: project.visuals.home,
         period: project.period,
         status: project.status,
         summary: project.summary,

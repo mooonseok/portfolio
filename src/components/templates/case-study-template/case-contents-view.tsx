@@ -25,7 +25,7 @@ export function CaseContentsView({
         as={TAG.NAV}
         ref={listRef}
         aria-label='Contents'
-        className='container mt-6 tab:mt-30'
+        className='container mt-5 tab:mt-8'
       >
         <Box className='grid-page tab:border-t tab:border-t-hair tab:pt-0.5'>
           <Text

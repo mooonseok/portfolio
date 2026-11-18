@@ -3,6 +3,7 @@ import { ORBIT } from '@/constants/orbit';
 
 export const activity: ActivityCopy = {
   heading: '박문석이 지금 작업 중인 프로젝트',
+  close: '닫기',
   panelLabel: '선택한 프로젝트',
   instruction: '행성을 선택해 최근 작업 보기',
   fallbackInstruction: '프로젝트를 선택해 최근 작업 보기',

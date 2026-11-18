@@ -2,7 +2,6 @@ import type { CaseMetaRow, CaseNextLink } from '@/dto/case-template.dto';
 import type { TechNote } from '@/dto/field.dto';
 import type { ContentsGroup, GroupTag } from '@/dto/navigation.dto';
 import type { ProjectLink } from '@/dto/project.dto';
-import type { LoopDir } from '@/constants/ai-practice';
 
 export interface AiRule {
   title: string;
@@ -21,20 +20,6 @@ export interface AiCheckFlow {
   title: string;
   loopLabel: string;
   stages: AiCheckStage[];
-}
-
-export interface AiLoopMark {
-  span?: string;
-  head?: string;
-  dir?: LoopDir;
-  bend?: boolean;
-  order: number;
-}
-
-export interface AiLoopMarks {
-  stages: AiLoopMark[];
-  back: { head: string; order: number };
-  down: { line: string; head: string };
 }
 
 export interface AiPracticeHome {

@@ -5,7 +5,7 @@ import { ParagraphsView } from './components/paragraphs-view';
 import { TechNotes } from '@/components/organisms/tech-notes';
 import { CaseStudyTemplateView } from '@/components/templates/case-study-template/case-study-template-view';
 import type { AiPracticeViewProps } from '@/dto/ai-practice.dto';
-import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
+import { CaseMetaView } from '@/components/templates/case-study-template/case-meta-view';
 import { CASE_DEPTH, CASE_LAYOUT, TECH_COLS } from '@/constants/case';
 import { NAV_ID } from '@/constants/navigation';
 import { TONE } from '@/constants/tone';
@@ -20,27 +20,24 @@ export function AiPracticeView({
       header={{ title: c.title, summary: c.summary }}
       titleTone={TONE.INK}
       showSummary
-      meta={c.meta}
+      meta={[]}
       groups={groups}
       next={c.next}
       nav={{ back: false, current: NAV_ID.AI }}
-      hero={
+      hero={<AiCheckLoop flow={c.checks} />}
+    >
+      <CaseSectionView
+        depth={CASE_DEPTH.L2}
+        title={c.rulesLabel}
+        layout={CASE_LAYOUT.WIDE}
+      >
         <AiRuleRowsView
           id='ai-rules-label'
           label={c.rulesLabel}
           rules={c.rules}
           note={c.rulesNote}
         />
-      }
-    >
-      <CaseSectionView
-        group={tags.work}
-        depth={CASE_DEPTH.L1}
-        title={c.checks.title}
-        titleId={AI_LOOP_TITLE_ID}
-        layout={CASE_LAYOUT.WIDE}
-      >
-        <AiCheckLoop flow={c.checks} />
+        <CaseMetaView meta={c.meta} />
       </CaseSectionView>
       <CaseSectionView
         group={tags.engineering}

@@ -1,5 +1,5 @@
-import { OrbitHome } from '@/components/organisms/orbit/orbit-home';
-import { ACTIVITY } from '@/constants/orbit';
+import { ProjectPlaza } from './components/plaza/project-plaza';
+import { ORBIT_SKIN, ACTIVITY } from '@/constants/orbit';
 import { activity } from '@/content/activity';
 import { activityConfig } from '@/content/activity-topics';
 import type { ActivityProject } from '@/dto/activity.dto';
@@ -44,23 +44,21 @@ export async function ActivityContainer() {
     ACTIVITY.PROJECTS,
     ACTIVITY.COMMITS
   );
+  const order = [
+    ORBIT_SKIN.SITE,
+    ORBIT_SKIN.ALBUM,
+    ORBIT_SKIN.TEXT,
+    ORBIT_SKIN.CANDLE,
+  ];
   return (
-    <OrbitHome
-      projects={projects.map(toView)}
-      bodies={projects.map((project) => ({
-        skin: project.skin,
-        count: project.count,
-      }))}
+    <ProjectPlaza
+      projects={projects
+        .map(toView)
+        .sort((a, b) => order.indexOf(a.skin) - order.indexOf(b.skin))}
       copy={{
         heading: activity.heading,
-        panelLabel: activity.panelLabel,
-        instruction: activity.instruction,
-        fallbackInstruction: activity.fallbackInstruction,
-        recentWork: activity.recentWork,
-        moreWork: activity.moreWork,
-        lessWork: activity.lessWork,
+        close: activity.close,
         lastCommit: activity.lastCommit,
-        repo: activity.repo,
         empty: activity.empty,
         history: activity.history,
       }}

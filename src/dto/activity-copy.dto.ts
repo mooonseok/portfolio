@@ -11,6 +11,7 @@ export interface OpenerCopy {
 
 export interface ActivityCopy {
   heading: string;
+  close: string;
   panelLabel: string;
   instruction: string;
   fallbackInstruction: string;
