@@ -24,7 +24,7 @@
   border-radius: 6px;
 }
 .outcomes button,
-.play,
+.next,
 .details summary {
   font: inherit;
   font-size: 14px;
@@ -42,7 +42,7 @@
   font-weight: 600;
 }
 .console {
-  --play-width: 98px;
+  --next-width: 98px;
   grid-area: console;
   min-width: 0;
   display: grid;
@@ -50,7 +50,7 @@
   align-items: start;
 }
 .note,
-.play {
+.next {
   grid-area: 1 / 1;
 }
 .note {
@@ -62,8 +62,13 @@
   align-content: center;
   flex-wrap: wrap;
   gap: 0 8px;
+}
+.description {
+  margin-top: 4px;
+}
+.console:has(.next) .byline {
   min-height: 44px;
-  padding-inline-end: calc(var(--play-width) + 10px);
+  padding-inline-end: calc(var(--next-width) + 10px);
 }
 .stage {
   color: var(--ink);
@@ -80,13 +85,12 @@
   font-size: 15px;
   line-height: 1.65;
 }
-.play {
+.next {
   justify-self: end;
-  width: var(--play-width);
+  width: var(--next-width);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
   padding: 0 11px;
   border: 1px solid var(--hairline);
   border-radius: 5px;

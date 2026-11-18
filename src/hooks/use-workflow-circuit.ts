@@ -5,7 +5,7 @@ import { MEDIA } from '@/constants/breakpoint';
 import { workflowFrame, workflowTravelMs } from '@/lib/workflow-timing';
 
 function initialPlayback(route: number[], reduced: boolean) {
-  return { route, reduced, index: 0, playing: !reduced };
+  return { route, reduced, index: 0 };
 }
 
 function createTrack() {
@@ -65,7 +65,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
     playback = initialPlayback(route, reduced);
     setSnapshot(playback);
   }
-  const { index, playing } = playback;
+  const { index } = playback;
   const lastIndex = route.length - 1;
   const elapsed = useRef(0);
   const previous = useRef<number | null>(null);
@@ -101,11 +101,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
       return remaining;
     }
     paint();
-    if (
-      !playing ||
-      reduced ||
-      window.matchMedia(MEDIA.REDUCED_MOTION).matches
-    ) {
+    if (reduced || window.matchMedia(MEDIA.REDUCED_MOTION).matches) {
       previous.current = null;
       return;
     }
@@ -123,7 +119,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
         if (
           current.route !== route ||
           current.index !== index ||
-          !current.playing
+          current.reduced
         )
           return current;
         return { ...current, index: (index + 1) % route.length };
@@ -140,14 +136,14 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
       cancelAnimationFrame(frame);
       document.removeEventListener('visibilitychange', visibility);
     };
-  }, [tracks, index, lastIndex, playing, reduced, route]);
+  }, [tracks, index, lastIndex, reduced, route]);
 
-  function toggle() {
-    setSnapshot((current) => {
-      if (!reduced) return { ...current, playing: !current.playing };
-      return { ...current, index: (current.index + 1) % route.length };
-    });
+  function nextStage() {
+    setSnapshot((current) => ({
+      ...current,
+      index: (current.index + 1) % current.route.length,
+    }));
   }
 
-  return { index, playing, toggle, tracks };
+  return { index, tracks, onNext: reduced ? nextStage : undefined };
 }

@@ -1,5 +1,4 @@
 import type { CaseMetaRow, CaseNextLink } from '@/dto/case-template.dto';
-import type { TechNote } from '@/dto/field.dto';
 import type { ContentsGroup } from '@/dto/navigation.dto';
 import type { ProjectLink } from '@/dto/project.dto';
 
@@ -23,8 +22,6 @@ export interface AiPractice {
   rulesLabel: string;
   rules: AiRule[];
   rulesNote: string[];
-  engineeringTitle: string;
-  techNotes: TechNote[];
   collaborationTitle: string;
   collaboration: string[];
   next: CaseNextLink;

@@ -24,7 +24,7 @@ export function AiCheckLoop() {
       ).slice(1),
     [selection]
   );
-  const { index, playing, toggle, tracks } = useWorkflowCircuit(route, reduced);
+  const { index, tracks, onNext } = useWorkflowCircuit(route, reduced);
   const active = route[index];
   const returning = active < route[index - 1];
   const repair = Boolean(issue && index > route.indexOf(issue.source));
@@ -38,12 +38,6 @@ export function AiCheckLoop() {
         : issue && active === issue.source && index > route.indexOf(active)
           ? circuitCopy.review
           : request.stages[active].body;
-  const playLabel = reduced
-    ? circuitCopy.next
-    : playing
-      ? circuitCopy.pause
-      : circuitCopy.resume;
-
   return (
     <AiCheckFlowView
       lanes={workflows}
@@ -58,7 +52,7 @@ export function AiCheckLoop() {
         })
       }
       onResult={(next) => setSelection({ request, result: next })}
-      onPlay={toggle}
+      onNext={onNext}
       {...{
         copy: circuitCopy,
         note,
@@ -70,8 +64,6 @@ export function AiCheckLoop() {
         repair,
         source: issue?.source,
         target: issue?.target,
-        playLabel,
-        playing,
         pathRef: tracks[0].pathRef,
         dotRef: tracks[0].dotRef,
         extraTracks: tracks.slice(1),

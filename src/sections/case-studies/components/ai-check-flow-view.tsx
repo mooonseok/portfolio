@@ -21,6 +21,7 @@ interface Props extends Omit<WorkflowCircuitProps, 'lane' | 'lanes'> {
     request: string;
     result: string;
     pass: string;
+    next: string;
     detailsTitle: string;
     escalation: string;
   };
@@ -28,11 +29,9 @@ interface Props extends Omit<WorkflowCircuitProps, 'lane' | 'lanes'> {
   statusTitle?: string;
   statusOwner?: string;
   note: string;
-  playLabel: string;
-  playing: boolean;
   onRequest: (request: WorkflowRequest) => void;
   onResult: (result: number) => void;
-  onPlay: () => void;
+  onNext?: () => void;
 }
 
 export function AiCheckFlowView({
@@ -43,11 +42,9 @@ export function AiCheckFlowView({
   note,
   statusTitle,
   statusOwner,
-  playLabel,
-  playing,
   onRequest,
   onResult,
-  onPlay,
+  onNext,
   ...map
 }: Props) {
   const choices = [...request.issues.map((issue) => issue.label), copy.pass];
@@ -109,7 +106,7 @@ export function AiCheckFlowView({
         <Box
           className={consoleStyles.note}
           role='status'
-          aria-live={playing ? 'off' : 'polite'}
+          aria-live={onNext ? 'polite' : 'off'}
           aria-atomic='true'
         >
           <Box className={consoleStyles.byline}>
@@ -122,9 +119,11 @@ export function AiCheckFlowView({
           </Box>
           <Text className={consoleStyles.description}>{note}</Text>
         </Box>
-        <Button className={consoleStyles.play} onClick={onPlay}>
-          {playLabel}
-        </Button>
+        {onNext && (
+          <Button className={consoleStyles.next} onClick={onNext}>
+            {copy.next}
+          </Button>
+        )}
       </Box>
       <WorkflowTextView
         requests={lanes}

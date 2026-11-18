@@ -52,9 +52,13 @@ test('ai: contents links point to rendered sections and ids stay unique', () => 
   ].map((m) => m[1]);
   assert.deepEqual(
     [...new Set(hrefs)],
-    ['work', 'plaza-case', 'guidelines', 'engineering', 'collaboration']
+    ['work', 'plaza-case', 'guidelines', 'collaboration']
   );
   assert.ok(ids.includes('overview'), 'preserve existing overview links');
+  assert.ok(
+    ids.includes('engineering'),
+    'preserve links to the verification example'
+  );
   for (const id of new Set(hrefs))
     assert.ok(ids.includes(id), `missing target: ${id}`);
   for (const match of html.matchAll(/aria-(?:labelledby|controls)="([^"]+)"/g))

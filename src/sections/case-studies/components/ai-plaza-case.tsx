@@ -1,6 +1,7 @@
 import { Box } from '@/components/atoms/box';
 import { Heading } from '@/components/atoms/heading';
 import { Text } from '@/components/atoms/text';
+import { GROUP_ID } from '@/constants/case';
 import { PLAZA_EXAMPLE } from '@/constants/ai-practice';
 import { HEADING, TAG } from '@/constants/tag';
 import { plazaCase } from '@/content/ai-plaza-case';
@@ -15,7 +16,7 @@ export function AiPlazaCase() {
       aria-labelledby='plaza-case-title'
       className={styles.case}
     >
-      <Box>
+      <Box id={GROUP_ID.ENGINEERING}>
         <Text className={styles.caseLabel}>{plazaCase.category}</Text>
         <Heading
           level={HEADING.H2}

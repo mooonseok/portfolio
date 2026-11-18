@@ -9,8 +9,6 @@ export const circuitCopy = {
   result: '검토 결과',
   pass: '바로 통과',
   next: '다음 단계',
-  pause: '일시정지',
-  resume: '계속 재생',
   review: '문제를 발견했던 조건으로 다시 검사해 수정 결과를 확인합니다.',
   detailsTitle: '단계별 담당과 작업',
   escalation:

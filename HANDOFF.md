@@ -133,7 +133,8 @@ AI 활용 `/ai#work`는 디자인 요청의 시안 제작·검토와 개발 요�
 조건을 읽을 수 있습니다. 경로별 단계와 검토 조건은 `content/ai-workflow.ts`에서
 관리합니다. 바로 아래 `#plaza-case`에는 광장 이름표를 고친 실제 사례의 재현
 조건, 수정 전후 그림과 재검사 결과를 둡니다. 목차는 작업 흐름, 광장 수정 사례,
-작업 지침, 검사 사례, 디자인 협업으로 연결됩니다.
+작업 지침, 디자인 협업으로 연결됩니다. 기존 `/ai#engineering` 링크는 광장 수정
+사례로 이어집니다.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently
@@ -287,8 +288,7 @@ deployment. The LED control experiment remains a separate scope.
 다음 이동이 바로 이어집니다. 세 담당으로 갈라질 때는 같은 시계로 움직이고,
 오류가 생기면 해당 담당의 점만 돌아와 다시 합류합니다. 마지막 단계에서는 점이
 720ms 머물고 220ms에 걸쳐 사라집니다. 첫 단계에서는 다시 움직이면서 220ms에 걸쳐
-나타납니다. 일시정지하면 점과 설명을 함께 멈추고 같은 위치에서 이어 볼 수
-있습니다. 움직임 줄이기에서는 ‘다음 단계’를 누를 때만 이동하며 마지막 단계
+나타납니다. 움직임 줄이기에서는 ‘다음 단계’를 누를 때만 이동하며 마지막 단계
 다음은 첫 단계입니다. 자바스크립트가 꺼져 있으면 두 경로와 복귀 사유를 글로 읽을
 수 있습니다.
 
@@ -422,7 +422,8 @@ deployment. The LED control experiment remains a separate scope.
 - [ ] 광장을 리사이즈해도 바닥 타일의 대각선 비율과 모형 비율이 유지됨
 - [ ] 이름표 선택 후 상세 읽기, Escape와 닫기에서 초점 복귀
 - [ ] 이력의 프로젝트 선택·해시 복원과 사례 링크가 같은 프로젝트를 가리킴
-- [ ] AI 도식의 자동 반복·일시정지·이어 보기와 수동 선택, 모션 감소 상태를 확인
+- [ ] AI 도식의 자동 반복과 요청·검토 결과 선택, 모션 감소 상태의 수동 진행를
+      확인
 - [ ] 743/744와 1023/1024에서 목록·목차·사례 도식 전환이 자연스러움
 
 - [ ] Accordion defaults to only the first item open

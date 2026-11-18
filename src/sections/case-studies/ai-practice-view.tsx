@@ -1,6 +1,5 @@
 import { Box } from '@/components/atoms/box';
 import { Heading } from '@/components/atoms/heading';
-import { TechNotes } from '@/components/organisms/tech-notes';
 import { CaseMetaView } from '@/components/templates/case-study-template/case-meta-view';
 import { CaseStudyTemplateView } from '@/components/templates/case-study-template/case-study-template-view';
 import { GROUP_ID } from '@/constants/case';
@@ -50,16 +49,6 @@ export function AiPracticeView({ content: c, groups }: AiPracticeViewProps) {
               />
               <CaseMetaView meta={c.meta} />
             </Box>
-          </Box>
-          <Box
-            as={TAG.SECTION}
-            id={GROUP_ID.ENGINEERING}
-            className={styles.chapter}
-          >
-            <Heading level={HEADING.H2} className={styles.subheading}>
-              {c.engineeringTitle}
-            </Heading>
-            <TechNotes notes={c.techNotes} />
           </Box>
           <Box
             as={TAG.SECTION}
