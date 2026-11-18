@@ -46,7 +46,7 @@ export function RequestRoutingBoard({
   boardRef,
 }: Props) {
   const branches = targets[lane].filter(({ id }) => request.jobs[id]);
-  const done = phase === 'done' || reduced;
+  const done = phase === 'done' || phase === 'restart' || reduced;
   const judged = done || !['request', 'entry'].includes(phase);
   const assigned = judged && phase !== 'judge';
   const working = assigned && phase !== 'route';
@@ -58,6 +58,12 @@ export function RequestRoutingBoard({
   const state = activity[phase];
   const status = (stage: string) =>
     state?.[0] === stage ? state[1] : undefined;
+  const resultStatus =
+    phase === 'restart'
+      ? '다음 요청으로'
+      : lane === 'design'
+        ? '확인 대기'
+        : '검증 완료';
   const destination = lane === 'design' ? '시안 확인' : '결과 전달';
   return (
     <div className={styles.board} data-circuit data-phase={phase}>
@@ -143,9 +149,7 @@ export function RequestRoutingBoard({
         </RequestRoutingRow>
         <RequestRoutingRow
           label='결과'
-          status={
-            done ? (lane === 'design' ? '확인 대기' : '검증 완료') : undefined
-          }
+          status={done ? resultStatus : undefined}
         >
           <RequestRoutingNode
             id='result'

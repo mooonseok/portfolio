@@ -30,3 +30,12 @@
 .dots[data-repair='true'] {
   fill: var(--circuit-return);
 }
+
+.rail {
+  stroke: var(--hairline);
+  stroke-opacity: 0.45;
+}
+.cycle {
+  stroke-opacity: 0.55;
+  stroke-dasharray: 2 4;
+}

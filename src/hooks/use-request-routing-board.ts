@@ -1,19 +1,12 @@
 import { useLayoutEffect, useRef, type RefObject } from 'react';
 import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
-import { routingPacket, routingPacketOpacity } from '@/lib/request-routing';
+import { routingPacket } from '@/lib/request-routing';
+import {
+  routingTrackPaths,
+  type RoutingAnchor,
+} from '@/lib/request-routing-geometry';
 
 type Paint = (phase: RoutingPhase, fraction: number) => void;
-
-interface Anchor {
-  x: number;
-  top: number;
-  bottom: number;
-}
-
-function bridge(from: Anchor, to: Anchor) {
-  const middle = (from.bottom + to.top) / 2;
-  return `C${from.x} ${middle} ${to.x} ${middle} ${to.x} ${to.top}`;
-}
 
 export function useRequestRoutingBoard(
   request: RoutingRequest,
@@ -65,10 +58,6 @@ export function useRequestRoutingBoard(
         if (!path || !length) return;
         const point = path.getPointAtLength(length * at);
         dot.setAttribute('transform', `translate(${point.x} ${point.y})`);
-        dot.setAttribute(
-          'opacity',
-          String(routingPacketOpacity(phase, fraction, Boolean(request.issue)))
-        );
         dot.removeAttribute('display');
       });
     }
@@ -82,31 +71,23 @@ export function useRequestRoutingBoard(
 
     function measure() {
       const origin = svg!.getBoundingClientRect();
-      const anchors = new Map<string, Anchor>();
+      const anchors = new Map<string, RoutingAnchor>();
       for (const node of nodes) {
         const box = node.getBoundingClientRect();
         anchors.set(node.dataset.node!, {
-          x: box.left - origin.left + box.width / 2,
+          x: box.left - origin.left + 10,
+          rowTop: node.closest('li')!.getBoundingClientRect().top - origin.top,
           top: box.top - origin.top,
           bottom: box.bottom - origin.top,
         });
       }
-      const judge = anchors.get('judge')!;
-      const review = anchors.get('review')!;
-      const result = anchors.get('result')!;
-      setPath('entry', `M${judge.x} 0V${judge.top}`);
-      for (const id of Object.keys(request.jobs)) {
-        const node = anchors.get(id)!;
-        setPath(
-          `in-${id}`,
-          `M${judge.x} ${judge.bottom}` + bridge(judge, node)
-        );
-        setPath(
-          `join-${id}`,
-          `M${node.x} ${node.bottom}` + bridge(node, review)
-        );
-      }
-      setPath('exit', `M${review.x} ${review.bottom}` + bridge(review, result));
+      const geometry = routingTrackPaths(
+        anchors,
+        Object.keys(request.jobs),
+        origin.width,
+        origin.height
+      );
+      for (const [id, path] of geometry) setPath(id, path);
       paint(lastPhase, lastFraction);
     }
 

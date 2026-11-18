@@ -17,23 +17,16 @@ export function useRequestRouting(request: RoutingRequest) {
   const reduced = useMediaQuery(MEDIA.REDUCED_MOTION);
   const paintRef = useRef<PaintFrame | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const finished = useRef<RoutingRequest | null>(null);
 
   useLayoutEffect(() => {
     const target = viewportRef.current;
     if (!target) return;
-    if (
-      reduced ||
-      window.matchMedia(MEDIA.REDUCED_MOTION).matches ||
-      finished.current === request
-    ) {
-      finished.current = request;
+    if (reduced || window.matchMedia(MEDIA.REDUCED_MOTION).matches) {
       setPhase('done');
       paintRef.current?.('done', 1);
       return;
     }
 
-    finished.current = null;
     const timeline = routingTimeline(request);
     let elapsed = 0;
     let last: number | null = null;
@@ -52,18 +45,13 @@ export function useRequestRouting(request: RoutingRequest) {
         setPhase(current.phase);
       }
       paintRef.current?.(current.phase, current.fraction);
-      if (current.phase === 'done' && current.fraction === 1) {
-        finished.current = request;
-      } else {
-        frame = requestAnimationFrame(tick);
-      }
+      frame = requestAnimationFrame(tick);
     }
 
     function refresh() {
       cancelAnimationFrame(frame);
       last = null;
-      if (inView && !document.hidden && finished.current !== request)
-        frame = requestAnimationFrame(tick);
+      if (inView && !document.hidden) frame = requestAnimationFrame(tick);
     }
 
     const observer = new IntersectionObserver(([entry]) => {

@@ -36,4 +36,5 @@ export type RoutingPhase =
   | 'retry'
   | 'recheck'
   | 'exit'
-  | 'done';
+  | 'done'
+  | 'restart';

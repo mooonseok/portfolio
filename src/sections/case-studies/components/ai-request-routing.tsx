@@ -67,9 +67,6 @@ export function AiRequestRouting({ lane }: { lane: RoutingLane }) {
             reduced={reduced}
           />
         </Box>
-        <Text className='sr-only' role='status' aria-atomic='true'>
-          {phase === 'done' && request.finish}
-        </Text>
       </Box>
       <Box className={styles.transcript}>
         {[developmentFlow, designFlow].map((item) => (

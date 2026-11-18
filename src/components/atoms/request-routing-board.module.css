@@ -49,7 +49,7 @@
   border: 1px solid var(--hairline);
   border-radius: 6px;
   background: var(--node-fill);
-  padding: 8px 12px;
+  padding: 8px 20px;
   color: var(--ink);
   text-align: center;
   word-break: keep-all;
@@ -106,7 +106,7 @@
 .workers .node {
   width: 100%;
   min-height: 59px;
-  padding-inline: 6px;
+  padding-inline: 20px;
 }
 .workers[data-count='1'] .node {
   max-width: 390px;
@@ -147,13 +147,18 @@
     align-items: center;
     gap: 6px;
     justify-self: start;
+    margin-inline-start: 22px;
     background: var(--node-fill);
   }
   .workers {
     gap: 5px;
   }
   .node {
-    padding: 7px 8px;
+    width: 100%;
+    padding: 7px 20px;
+  }
+  .workers[data-count='1'] .node {
+    max-width: none;
   }
   .nodeTitle {
     font-size: 14px;

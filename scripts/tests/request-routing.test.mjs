@@ -6,7 +6,6 @@ import {
   advanceRoutingTime,
   routingFrame,
   routingPacket,
-  routingPacketOpacity,
   routingTimeline,
 } from '../../src/lib/request-routing.ts';
 
@@ -37,43 +36,65 @@ test('개발과 디자인 유형별 한 흐름에 작업과 검토 근거 및 �
   }
 });
 
-test('직접 통과와 수정 경로는 모든 검토를 읽은 뒤 결과에 도착한다', () => {
-  for (const source of workflows) {
-    for (const issue of [undefined, source.issue]) {
-      const timeline = routingTimeline({ ...source, issue });
-      const phases = timeline.map(([phase]) => phase);
-      assert.deepEqual(phases, [
+function* routes() {
+  for (const request of workflows) {
+    yield { ...request, issue: undefined };
+    yield request;
+    for (const id of Object.keys(request.jobs)) {
+      if (id !== request.issue.owner) {
+        yield { ...request, issue: { ...request.issue, owner: id } };
+      }
+      yield { ...request, jobs: { [id]: request.jobs[id] }, issue: undefined };
+    }
+  }
+}
+
+test('직접 통과와 수정 경로 모두 결과를 거쳐 다음 회차의 정확한 위치로 이어진다', () => {
+  for (const request of routes()) {
+    const timeline = routingTimeline(request);
+    assert.deepEqual(
+      timeline.steps.map(([phase]) => phase),
+      [
         ...assigned,
-        ...(issue ? correction : []),
+        ...(request.issue ? correction : []),
         'exit',
-      ]);
-      let elapsed = 0;
-      for (const [phase, duration] of timeline) {
-        assert.equal(routingFrame(timeline, elapsed).phase, phase);
+        'done',
+        'restart',
+      ]
+    );
+    for (const cycle of [0, 1, 2, 1000]) {
+      let elapsed = cycle * timeline.duration;
+      for (const [phase, duration] of timeline.steps) {
+        assert.deepEqual(routingFrame(timeline, elapsed), {
+          phase,
+          fraction: 0,
+        });
+        assert.deepEqual(routingFrame(timeline, elapsed + duration / 2), {
+          phase,
+          fraction: 0.5,
+        });
         assert.equal(
           routingFrame(timeline, elapsed + duration - 1).phase,
           phase
         );
         elapsed += duration;
       }
-      assert.deepEqual(routingFrame(timeline, elapsed), {
-        phase: 'done',
-        fraction: 1,
-      });
-      assert.deepEqual(routingFrame(timeline, elapsed + 31000), {
-        phase: 'done',
-        fraction: 1,
+      assert.deepEqual(routingFrame(timeline, elapsed + 70), {
+        phase: 'request',
+        fraction: 70 / timeline.steps[0][1],
       });
     }
   }
 });
 
-test('이동은 반 초 안에 끝나고 읽는 카드는 2.4초 이상 안정적으로 머문다', () => {
+test('카드를 읽는 시간과 짧은 연결 이동 및 회차 간 이동 시간을 분리한다', () => {
   const moving = new Set(['entry', 'route', 'join', 'back', 'retry', 'exit']);
-  for (const request of workflows) {
-    for (const [phase, duration] of routingTimeline(request)) {
+  for (const request of routes()) {
+    for (const [phase, duration] of routingTimeline(request).steps) {
       if (moving.has(phase)) {
         assert.ok(duration >= 250 && duration <= 500, phase);
+      } else if (phase === 'restart') {
+        assert.ok(duration >= 900 && duration <= 1500);
       } else {
         assert.ok(duration >= (phase === 'request' ? 3000 : 2400), phase);
       }
@@ -81,68 +102,88 @@ test('이동은 반 초 안에 끝나고 읽는 카드는 2.4초 이상 안정�
   }
 });
 
-test('점은 표시된 연결선 위에서만 이동하고 카드에 머무는 동안 위치가 고정된다', () => {
-  for (const request of workflows) {
-    const owners = Object.keys(request.jobs);
-    const failed = request.issue.owner;
-    const at = (phase, fraction, id) =>
-      routingPacket(phase, fraction, id, id === owners[0], failed);
-    for (const id of owners) {
-      assert.deepEqual(at('route', 0.5, id), [`in-${id}`, 0.5]);
-      assert.deepEqual(at('join', 0.5, id), [`join-${id}`, 0.5]);
-      for (const phase of [
-        'request',
-        'judge',
-        'work',
-        'review',
-        'issue',
-        'fix',
-        'recheck',
-        'done',
-      ]) {
-        assert.deepEqual(at(phase, 0.1, id), at(phase, 0.9, id), phase);
-      }
-      if (id === failed) {
-        assert.deepEqual(at('back', 0.25, id), [`join-${id}`, 0.75]);
-        assert.deepEqual(at('fix', 0.5, id), [`join-${id}`, 0]);
-        assert.deepEqual(at('retry', 0.25, id), [`join-${id}`, 0.25]);
-      } else {
-        assert.equal(at('back', 0.25, id), undefined);
-        assert.equal(at('fix', 0.5, id), undefined);
-        assert.equal(at('retry', 0.25, id), undefined);
+test('모든 단계에서 점이 이동하고 수정 구간은 검토에서 지목한 담당에게만 보인다', () => {
+  for (const request of routes()) {
+    const ids = Object.keys(request.jobs);
+    for (const [phase] of routingTimeline(request).steps) {
+      const expected = ['route', 'work', 'join'].includes(phase)
+        ? ids
+        : correction.includes(phase)
+          ? [request.issue.owner]
+          : [ids[0]];
+      for (const id of ids) {
+        const point = (fraction) =>
+          routingPacket(
+            phase,
+            fraction,
+            id,
+            id === ids[0],
+            request.issue?.owner
+          );
+        if (!expected.includes(id)) {
+          assert.equal(point(0.5), undefined, phase);
+          continue;
+        }
+        const [edge, start] = point(0.1);
+        const [finishEdge, finish] = point(0.9);
+        assert.equal(edge, finishEdge);
+        assert.notEqual(start, finish, phase);
       }
     }
-    assert.deepEqual(at('entry', 0.5, owners[0]), ['entry', 0.5]);
-    assert.deepEqual(at('exit', 0.5, owners[0]), ['exit', 0.5]);
-    assert.deepEqual(at('done', 1, owners[0]), ['exit', 1]);
   }
 });
 
-test('다른 포트에서 출발하기 전 완전히 투명한 프레임이 낮은 프레임률에서도 남는다', () => {
-  for (const source of workflows) {
-    for (const issue of [undefined, source.issue]) {
-      const timeline = routingTimeline({ ...source, issue });
-      for (const [index, [phase, duration]] of timeline.entries()) {
-        const nextPhase = timeline[index + 1]?.[0];
-        if (!['route', 'join', 'exit'].includes(nextPhase)) continue;
-        const opacity = (ms) =>
-          routingPacketOpacity(phase, ms / duration, Boolean(issue));
-        assert.equal(opacity(duration * 0.8), 1);
-        assert.ok(opacity(duration * 0.88) < 1 && opacity(duration * 0.88) > 0);
-        assert.equal(opacity(duration - 150), 0);
-        let elapsed = duration * 0.8;
-        const samples = [];
-        while (elapsed < duration) {
-          samples.push(opacity(elapsed));
-          elapsed = advanceRoutingTime(elapsed, 250);
-        }
-        assert.ok(samples.includes(0), phase);
-        assert.equal(routingPacketOpacity(nextPhase, 0, Boolean(issue)), 0);
-        assert.equal(routingPacketOpacity(nextPhase, 0.3, Boolean(issue)), 1);
-      }
+function junction([edge, position]) {
+  const ends = {
+    request: ['cycle-origin', 'entry-origin'],
+    entry: ['entry-origin', 'judge-top'],
+    judge: ['judge-top', 'judge-bottom'],
+    review: ['review-top', 'review-bottom'],
+    exit: ['review-bottom', 'result-top'],
+    result: ['result-top', 'result-bottom'],
+    restart: ['result-bottom', 'cycle-origin'],
+  };
+  const [kind, id] = edge.split('-');
+  if (id) {
+    const ports = {
+      in: ['judge-bottom', id + '-top'],
+      work: [id + '-top', id + '-bottom'],
+      join: [id + '-bottom', 'review-top'],
+      fix: [id + '-bottom', id + '-bottom'],
+    };
+    return ports[kind][position];
+  }
+  if (edge === 'review' && position === 0.5) return 'review-mid';
+  return ends[edge][position];
+}
+
+test('단일 경로·분기·합류·수정·재시작의 전환에서 점의 끝점과 다음 시작점이 일치한다', () => {
+  for (const request of routes()) {
+    const ids = Object.keys(request.jobs);
+    const { steps } = routingTimeline(request);
+    const ports = (phase, fraction) =>
+      new Set(
+        ids.flatMap((id, index) => {
+          const packet = routingPacket(
+            phase,
+            fraction,
+            id,
+            index === 0,
+            request.issue?.owner
+          );
+          return packet ? [junction(packet)] : [];
+        })
+      );
+    for (const [index, [phase]] of steps.entries()) {
+      const [next] = steps[(index + 1) % steps.length];
+      const end = ports(phase, 1);
+      assert.ok(end.size > 0 && !end.has(undefined), phase);
+      assert.deepEqual(end, ports(next, 0), phase + ' → ' + next);
     }
   }
-  for (const phase of ['review', 'issue', 'back', 'fix', 'retry'])
-    assert.equal(routingPacketOpacity(phase, 0.99, true), 1);
+});
+
+test('프레임 지연으로 한 번에 여러 단계를 건너뛰지 않는다', () => {
   assert.equal(advanceRoutingTime(1000, 16), 1016);
+  assert.equal(advanceRoutingTime(1000, 250), 1080);
 });

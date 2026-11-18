@@ -42,7 +42,9 @@ export function RequestRoutingWires({
           />
         </marker>
       </defs>
+      <path data-edge='request' className={styles.cycle} />
       <path data-edge='entry' />
+      <path data-edge='judge' className={styles.rail} />
       {branches.map(({ id }) => (
         <g
           key={id}
@@ -50,6 +52,8 @@ export function RequestRoutingWires({
           data-repair={returning && id === issueOwner}
         >
           <path data-edge={`in-${id}`} />
+          <path data-edge={`work-${id}`} className={styles.rail} />
+          {id === issueOwner && <path data-edge={`fix-${id}`} stroke='none' />}
           <path
             data-edge={`join-${id}`}
             markerStart={
@@ -60,7 +64,10 @@ export function RequestRoutingWires({
           />
         </g>
       ))}
+      <path data-edge='review' className={styles.rail} />
       <path data-edge='exit' />
+      <path data-edge='result' className={styles.rail} />
+      <path data-edge='restart' className={styles.cycle} />
       <g className={styles.dots} data-repair={returning}>
         {branches.map(({ id }) => (
           <g key={id} data-packet={id} display='none'>
