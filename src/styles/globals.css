@@ -17,8 +17,6 @@
 @import './components/board-layout.css' layer(components);
 @import './components/hero.css' layer(components);
 @import './components/work-sheet.css' layer(components);
-@import './components/ai-loop.css' layer(components);
-@import './components/ai-loop-draw.css' layer(components);
 
 @theme static {
   --breakpoint-*: initial;
@@ -29,29 +27,32 @@
   --spacing: 4px;
 
   --color-*: initial;
-  --color-paper: #0e1830;
-  --color-ink: #ebe3cb;
-  --color-graphite: #9c9682;
-  --color-hairline: #3a4a6c;
-  --color-dark: #0b1428;
-  --color-dark-2: #111d38;
-  --color-dark-line: #2a3a5c;
-  --color-dark-rule: #3a4a6c;
-  --color-dark-sub: #b4ad96;
-  --color-signal: #e0664a;
-  --color-placeholder: #14213d;
-  --color-tint: #14213d;
-  --color-dark-tint: #14213d;
-  --color-subtle: #b4ad96;
-  --color-night: #0e1830;
-  --color-night-2: #14213d;
-  --color-night-deep: #0b1428;
-  --color-night-line: #2a3a5c;
-  --color-moonlight: #ebe3cb;
-  --color-dim: #b4ad96;
-  --color-hair: rgb(235 227 203 / 0.32);
-  --color-vermilion: #e0664a;
-  --color-far: #6a7899;
+  --color-paper: #080613;
+  --color-ink: #f2eeff;
+  --color-graphite: #aaa1bb;
+  --color-hairline: #463952;
+  --color-dark: #060513;
+  --color-dark-2: #141122;
+  --color-dark-line: #302945;
+  --color-dark-rule: #463952;
+  --color-dark-sub: #bbb4d0;
+  --color-signal: #ac8bf9;
+  --color-action: #6639ce;
+  --color-board-glow: #24133e;
+  --color-board-active: #432b72;
+  --color-placeholder: #1c172d;
+  --color-tint: #1c172d;
+  --color-dark-tint: #1c172d;
+  --color-subtle: #bbb4d0;
+  --color-night: #080613;
+  --color-night-2: #1c172d;
+  --color-night-deep: #060513;
+  --color-night-line: #302945;
+  --color-moonlight: #f2eeff;
+  --color-dim: #bbb4d0;
+  --color-hair: rgb(242 238 255 / 0.32);
+  --color-vermilion: #ac8bf9;
+  --color-far: #9486a8;
   --color-transparent: transparent;
   --color-current: currentColor;
 

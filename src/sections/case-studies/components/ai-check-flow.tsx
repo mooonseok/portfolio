@@ -1,29 +1,46 @@
-import { AiCheckLoopView } from './ai-check-flow-view';
-import type { AiCheckFlow, AiLoopMarks } from '@/dto/ai-practice.dto';
-import { AI_LOOP_COLS, LOOP_DIR } from '@/constants/ai-practice';
+'use client';
 
-const SPAN = 'M0 50 H100';
-const HEAD = 'M16 12 L88 50 L16 88';
-const DOWN = 'M50 0 V100';
+import { useState } from 'react';
+import { Box } from '@/components/atoms/box';
+import { Button } from '@/components/atoms/button';
+import { Heading } from '@/components/atoms/heading';
+import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
+import { HEADING, TAG } from '@/constants/tag';
+import type { RoutingLane } from '@/dto/request-routing.dto';
+import { AiRequestRouting } from './ai-request-routing';
+import styles from './ai-check-flow.module.css';
 
-const marksOf = (flow: AiCheckFlow): AiLoopMarks => {
-  const turn = AI_LOOP_COLS - 1;
-  return {
-    stages: flow.stages.map((_, i) => {
-      const returning = i > turn;
-      return {
-        span: SPAN,
-        head: i === turn ? undefined : HEAD,
-        dir: returning ? LOOP_DIR.LEFT : LOOP_DIR.RIGHT,
-        bend: i === turn,
-        order: returning ? i + 1 : i,
-      };
-    }),
-    back: { head: HEAD, order: flow.stages.length + 1 },
-    down: { line: DOWN, head: HEAD },
-  };
-};
-
-export function AiCheckLoop({ flow }: { flow: AiCheckFlow }) {
-  return <AiCheckLoopView flow={flow} marks={marksOf(flow)} />;
+export function AiCheckLoop() {
+  const [lane, setLane] = useState<RoutingLane>('development');
+  return (
+    <Box
+      as={TAG.SECTION}
+      id='work'
+      aria-labelledby={AI_LOOP_TITLE_ID}
+      className={styles.flow}
+    >
+      <Box className={styles.heading}>
+        <Heading id={AI_LOOP_TITLE_ID} level={HEADING.H1}>
+          AI 작업 지침
+        </Heading>
+        <Box className={styles.tabs} role='group' aria-label='요청 유형'>
+          <Button
+            className={styles.tab}
+            aria-pressed={lane === 'development'}
+            onClick={() => setLane('development')}
+          >
+            개발 요청
+          </Button>
+          <Button
+            className={styles.tab}
+            aria-pressed={lane === 'design'}
+            onClick={() => setLane('design')}
+          >
+            디자인 요청
+          </Button>
+        </Box>
+      </Box>
+      <AiRequestRouting key={lane} lane={lane} />
+    </Box>
+  );
 }

@@ -12,5 +12,13 @@ out
 !.claude/agents/
 .claude/settings.local.json
 .github/
-.agents/
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/pf-build
+!.agents/skills/pf-commit
+!.agents/skills/pf-design
+!.agents/skills/pf-motion
+!.agents/skills/pf-team
+!.agents/skills/pf-verify
 skills-lock.json

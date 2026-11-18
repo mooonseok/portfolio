@@ -19,7 +19,7 @@ export function OrbitView({
   refs,
 }: OrbitViewProps) {
   return (
-    <Box ref={refs.root} className={styles.root}>
+    <Box ref={refs.root} className={styles.root} data-orbit-home>
       <Heading level={HEADING.H1} className='sr-only'>
         {copy.heading}
       </Heading>

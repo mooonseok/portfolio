@@ -70,3 +70,42 @@ test('the active label is never hidden even with no free spot', () => {
   assert.equal(spots[0].clash, false);
   assert.equal(spots[1].clash, true);
 });
+
+test('좁은 화면의 강제 표시된 선택 이름표를 다른 이름표가 피한다', () => {
+  const compact = [
+    [156.5, 178.6, 98],
+    [211.7, 193.7, 113],
+    [168.1, 248.2, 113],
+    [70.4, 200.4, 88],
+  ].map(([sx, sy, width], index) => ({
+    sx,
+    sy,
+    width,
+    height: 26,
+    reach: 8,
+    depth: -index,
+    active: index === 1,
+    previous: null,
+  }));
+  const spots = placeLabels(compact, {
+    width: 320,
+    height: 568,
+    vertical: true,
+    moon: { x: 160, y: 204, r: 14 },
+    blocks: [
+      [12, 312, 308, 552],
+      [12, 56, 106, 116],
+      [0, 0, 320, 64],
+    ],
+    margin: 8,
+  });
+  assert.equal(spots[1].clash, false);
+  const visible = spots.flatMap((spot, index) =>
+    spot.clash
+      ? []
+      : [[spot.x, spot.y, spot.x + compact[index].width, spot.y + 26]]
+  );
+  for (let a = 0; a < visible.length; a += 1)
+    for (let b = a + 1; b < visible.length; b += 1)
+      assert.equal(overlaps(visible[a], visible[b]), false);
+});

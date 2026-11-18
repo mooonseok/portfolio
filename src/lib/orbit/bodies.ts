@@ -1,12 +1,14 @@
 import * as THREE from 'three';
 import { ORBIT_SKIN, type OrbitSkin } from '@/constants/orbit';
-import { INK, PATTERN, engraveMaterial } from './engrave';
+import { INK } from './engrave';
+import { SURFACE, matteMaterial } from './matte-material';
+import { createFineRing, createSatinRing } from './planet-ring';
 
-const SKIN_PATTERN: Record<OrbitSkin, number> = {
-  [ORBIT_SKIN.SITE]: PATTERN.GRID,
-  [ORBIT_SKIN.TEXT]: PATTERN.LINES,
-  [ORBIT_SKIN.ALBUM]: PATTERN.DOTS,
-  [ORBIT_SKIN.CANDLE]: PATTERN.DIAGONAL,
+const SKIN_SURFACE: Record<OrbitSkin, [number, number, number]> = {
+  [ORBIT_SKIN.SITE]: [SURFACE.CHALK, 0xd8d2bf, 0x283344],
+  [ORBIT_SKIN.TEXT]: [SURFACE.LAYERED, 0xcbbfa8, 0x303744],
+  [ORBIT_SKIN.ALBUM]: [SURFACE.STONE, 0xc3cbd0, 0x273547],
+  [ORBIT_SKIN.CANDLE]: [SURFACE.PORCELAIN, 0xe1d9ca, 0x2a3446],
 };
 
 export const SKIN_OUTER: Record<OrbitSkin, number> = {
@@ -55,31 +57,16 @@ export function createPlanet(skin: OrbitSkin, size: number): PlanetParts {
   const group = new THREE.Group();
   const core = new THREE.Mesh(
     new THREE.SphereGeometry(size, 48, 32),
-    engraveMaterial(SKIN_PATTERN[skin], 2.6)
+    matteMaterial(...SKIN_SURFACE[skin])
   );
   group.add(core);
   let spin: THREE.Object3D | null = null;
   const moons: THREE.Mesh[] = [];
   if (skin === ORBIT_SKIN.SITE) {
-    [
-      [1.7, 0.9],
-      [1.85, 0.4],
-    ].forEach(([scale, opacity]) => {
-      const ring = lineLoop(size * scale, 96, opacity);
-      ring.rotation.set(0.42, 0, -0.32);
-      group.add(ring);
-    });
+    group.add(createSatinRing(size));
   }
   if (skin === ORBIT_SKIN.CANDLE) {
-    spin = segments(
-      Array.from({ length: 36 }, (_, k) => [
-        (k / 36) * Math.PI * 2,
-        size * 1.45,
-        size * (k % 3 === 0 ? 1.75 : 1.6),
-      ]),
-      0.9
-    );
-    spin.rotation.set(0.38, 0, 0.22);
+    spin = createFineRing(size);
     group.add(spin);
   }
   if (skin === ORBIT_SKIN.TEXT || skin === ORBIT_SKIN.ALBUM) {
@@ -87,7 +74,7 @@ export function createPlanet(skin: OrbitSkin, size: number): PlanetParts {
     for (let k = 0; k < count; k += 1) {
       const moon = new THREE.Mesh(
         new THREE.SphereGeometry(size * 0.17, 16, 12),
-        new THREE.MeshBasicMaterial({ color: INK })
+        matteMaterial(SURFACE.CHALK, 0xbdb9ad, 0x303a4b)
       );
       moon.userData.angle =
         (k / 3) * Math.PI * 2 + (skin === ORBIT_SKIN.TEXT ? 0.6 : 0);
@@ -99,30 +86,23 @@ export function createPlanet(skin: OrbitSkin, size: number): PlanetParts {
 }
 
 export function createMoon(pixelRatio: number) {
-  return new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 64, 48),
-    engraveMaterial(PATTERN.HATCH, 4.5 * Math.min(2, pixelRatio), 1)
-  );
+  const material = matteMaterial(SURFACE.STONE, 0xc8c6bc, 0x273246);
+  material.uniforms.uF.value = 2.6 * Math.min(2, pixelRatio);
+  return new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 48), material);
 }
 
 export function createPlate() {
   const plate = new THREE.Group();
   plate.add(
     segments(
-      Array.from({ length: 12 }, (_, k) => [(k / 12) * Math.PI * 2, 1, 5.05]),
-      0.07
-    )
-  );
-  plate.add(
-    segments(
-      Array.from({ length: 120 }, (_, k) => [
-        (k / 120) * Math.PI * 2,
+      Array.from({ length: 24 }, (_, k) => [
+        (k / 24) * Math.PI * 2,
         5.2,
-        k % 10 === 0 ? 5.42 : k % 5 === 0 ? 5.34 : 5.28,
+        k % 6 === 0 ? 5.38 : 5.3,
       ]),
-      0.28
+      0.12
     )
   );
-  plate.add(lineLoop(5.2, 240, 0.28));
+  plate.add(lineLoop(5.2, 240, 0.1));
   return plate;
 }

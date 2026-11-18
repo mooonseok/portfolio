@@ -1,0 +1,65 @@
+.panel {
+  width: 100%;
+  max-width: 736px;
+  margin-inline: auto;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--circuit-ground);
+  color: var(--ink);
+  word-break: keep-all;
+  --panel-inset: clamp(16px, 4%, 30px);
+  --routing-accent: var(--circuit-development);
+}
+.panel[data-lane='design'] {
+  --routing-accent: var(--circuit-design);
+}
+.transcript {
+  display: none;
+}
+@media (scripting: none) {
+  .player {
+    display: none;
+  }
+  .transcript {
+    display: grid;
+    gap: 12px;
+    padding: var(--panel-inset);
+  }
+  .transcript summary {
+    cursor: pointer;
+    padding-block: 12px;
+  }
+  .transcript ol {
+    display: grid;
+    gap: 8px;
+    list-style: decimal;
+    padding-inline-start: 1.25rem;
+    margin-top: 10px;
+  }
+}
+.controls {
+  margin: 0 var(--panel-inset);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 12px;
+}
+.switch {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--subtle);
+  cursor: pointer;
+}
+.switch::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+}
+.switch[aria-checked='true']::before {
+  background: var(--routing-accent);
+  box-shadow: inset 0 0 0 2px var(--circuit-ground);
+}

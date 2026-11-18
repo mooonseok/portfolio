@@ -7,11 +7,10 @@ import { TAG } from '@/constants/tag';
 import { pageMetadata, siteSettings } from '@/lib/site-metadata';
 import { ActivityContainer } from '@/sections/activity/activity-container';
 import { ActivityFooter } from '@/sections/activity/activity-footer';
-import { OpenerContainer } from '@/sections/opener/opener-container';
 
 export const revalidate = 3600;
 
-export const viewport: Viewport = { themeColor: '#0B1428' };
+export const viewport: Viewport = { themeColor: '#060513' };
 
 export const metadata: Metadata = pageMetadata(
   siteSettings(process.env.SITE_URL, process.env.SITE_INDEXABLE),
@@ -26,14 +25,11 @@ export const metadata: Metadata = pageMetadata(
 export default function HomePage() {
   return (
     <Box className='relative bg-night-deep text-moonlight'>
-      <Box className='absolute inset-x-0 top-0 z-20'>
-        <SiteHeader dark current={NAV_ID.ACTIVITY} />
-      </Box>
+      <SiteHeader dark current={NAV_ID.ACTIVITY} />
       <Box as={TAG.MAIN} id='main-content' tabIndex={-1}>
         <ActivityContainer />
       </Box>
       <ActivityFooter />
-      <OpenerContainer />
     </Box>
   );
 }

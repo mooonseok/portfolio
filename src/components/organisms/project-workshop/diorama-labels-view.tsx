@@ -8,23 +8,11 @@ import { DioramaDetailsView } from './diorama-details-view';
 
 export function DioramaLabelsView(props: DioramaPreviewProps) {
   return (
-    <Box
-      role='group'
-      aria-label='프로젝트 선택'
-      className={
-        props.wide
-          ? 'mt-4 grid grid-cols-6 gap-2'
-          : 'mt-4 grid grid-cols-1 gap-2'
-      }
-    >
-      {props.projects.map((project, index) => (
+    <Box role='group' aria-label='프로젝트 선택' className='grid grid-cols-1'>
+      {props.projects.map((project) => (
         <Box
           key={project.slug}
-          className={
-            props.wide
-              ? `col-span-2 ${index === 3 ? 'col-start-2' : index === 4 ? 'col-start-4' : ''}`
-              : undefined
-          }
+          className='border-t border-night-line last:border-b'
         >
           <Button
             ref={(node) => {
@@ -41,31 +29,33 @@ export function DioramaLabelsView(props: DioramaPreviewProps) {
               props.wide ? undefined : props.selected === project.slug
             }
             onClick={(event) => props.onSelect(project.slug, event)}
-            className={`flex min-h-20 w-full flex-col items-start gap-1 border-2 px-4 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--marker-blue)] active:scale-[0.99] motion-reduce:transform-none ${props.selected === project.slug ? 'border-[var(--marker-red)] bg-[var(--note-paper)] text-[var(--note-ink)]' : 'border-hairline bg-paper hover:bg-[var(--board-white)]'}`}
+            className={`flex min-h-20 w-full items-center justify-between gap-4 border-l-2 px-4 py-4 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--marker-blue)] active:scale-[0.99] motion-reduce:transform-none ${props.selected === project.slug ? 'border-l-signal bg-night-2' : 'border-l-transparent hover:bg-night-2'}`}
           >
-            <Text
-              as={TAG.SPAN}
-              className='flex flex-wrap items-center gap-2 text-lg font-semibold'
-            >
-              {project.title}
-              {project.experiment && (
-                <Text
-                  as={TAG.SPAN}
-                  className={`border border-dashed px-1.5 text-xs leading-5 ${props.selected === project.slug ? 'border-[color-mix(in_srgb,var(--marker-green)_45%,var(--note-ink))] text-[color-mix(in_srgb,var(--marker-green)_45%,var(--note-ink))]' : 'border-[var(--marker-green)] text-[var(--marker-green)]'}`}
-                >
-                  실험
-                </Text>
-              )}
-            </Text>
-            <Text
-              as={TAG.SPAN}
-              className={`text-sm leading-relaxed ${props.selected === project.slug ? 'text-[color-mix(in_srgb,var(--note-ink)_80%,var(--note-paper))]' : 'text-subtle'}`}
-            >
-              {project.service}
+            <Box as={TAG.SPAN} className='flex min-w-0 flex-col gap-1'>
+              <Text
+                as={TAG.SPAN}
+                className='flex flex-wrap items-center gap-2 text-lg font-medium'
+              >
+                {project.title}
+                {project.experiment && (
+                  <Text as={TAG.SPAN} className='text-xs text-subtle'>
+                    실험
+                  </Text>
+                )}
+              </Text>
+              <Text
+                as={TAG.SPAN}
+                className='text-sm leading-relaxed text-subtle'
+              >
+                {project.service}
+              </Text>
+            </Box>
+            <Text as={TAG.SPAN} aria-hidden className='shrink-0 text-lg'>
+              {props.selected === project.slug ? '−' : '+'}
             </Text>
           </Button>
           {!props.wide && props.selected === project.slug && (
-            <Box className='pt-4'>
+            <Box className='pb-6'>
               <DioramaDetailsView {...props} />
             </Box>
           )}

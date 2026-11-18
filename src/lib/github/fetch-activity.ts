@@ -52,7 +52,7 @@ export async function fetchActivity(
     if (!response.ok) return { ...activitySnapshot, live: false };
     const repos = readActivity(
       (await response.json()) as ActivityResponse,
-      ACTIVITY.COMMITS
+      ACTIVITY.FETCH_COMMITS
     );
     return {
       asOf: new Date(now).toISOString().slice(0, 10),

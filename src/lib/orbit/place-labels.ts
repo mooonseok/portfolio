@@ -111,7 +111,8 @@ export function placeLabels(
       Math.max(scene.margin, rawY),
       scene.height - item.height - scene.margin
     );
-    if (!clash) placed.push([x, y, x + item.width, y + item.height]);
+    if (!clash || item.active)
+      placed.push([x, y, x + item.width, y + item.height]);
     spots[index] = { x, y, candidate, clash: clash && !item.active };
   }
   return spots;

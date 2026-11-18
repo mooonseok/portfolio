@@ -42,9 +42,9 @@ Farm, IndianBob, Emosave)의 서비스와 담당 범위를 훑고, 프로젝트�
 - CMS가 없고, 모든 문구·도식·이미지 참조는 `src/content`에 있다. 홈의 작업
   현황만 GitHub GraphQL API에서 받아 1시간마다 다시 만들고,
   `/api/github-webhook`이 서명을 확인한 요청에서 바로 갱신한다. 토큰이 없거나
-  조회에 실패하면 `src/content/activity-snapshot.ts`의 기록을 기준 날짜와 함께
-  보여 준다. 라우트는 홈(작업 현황), `portfolio`(이력), `work/[slug]` 5개,
-  `ai`(AI 활용 방식), `api/github-webhook`, not-found다.
+  조회에 실패하면 `src/content/activity-snapshot.ts`의 기록을 사용한다. 라우트는
+  홈(작업 현황), `portfolio`(이력), `work/[slug]` 5개, `ai`(AI 활용 방식),
+  `api/github-webhook`, not-found다.
 - 경력 구성: 랩이오사(2021.09–2025.09, 분저장·인디언밥 외주), 아그리코어
   (2025.10–재직 중, FarmFam+·APC·Smart Farm).
 - 배포는 Vercel로 할 예정이다. 공식 공개 URL(canonical origin)은 아직 확정되지
@@ -74,7 +74,8 @@ Farm, IndianBob, Emosave)의 서비스와 담당 범위를 훑고, 프로젝트�
 
 - 이름 표기 `PARK MOONSEOK`, 직함 `SOFTWARE ENGINEER`, 분야
   `Flutter / Web / Backend`, 범위 `Selected Work 2022—2026`.
-- 디자인 기준(source of truth)은 Phase 1–4 **LOCKED** 캔버스다(HANDOFF.md).
+- 공통 헤더는 `mooonseok`을 표시한다. 홈 디자인 기준은 모바일 투영을 보정한
+  프로젝트 광장이다(DESIGN.md).
 - 파비콘은 새김 초승달 이미지다(`src/app/favicon.ico`, `icon.png`,
   `apple-icon.png`).
 

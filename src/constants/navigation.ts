@@ -10,7 +10,7 @@ export const NAV_ID = {
 export type NavId = (typeof NAV_ID)[keyof typeof NAV_ID];
 
 export const NAV_LABEL = {
-  [NAV_ID.ACTIVITY]: '작업 현황',
+  [NAV_ID.ACTIVITY]: '작업',
   [NAV_ID.HISTORY]: '이력',
   [NAV_ID.WORK]: '프로젝트',
   [NAV_ID.ABOUT]: '소개',

@@ -1,7 +1,7 @@
 # Park Moonseok Portfolio — Handoff
 
-Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · pnpm. The
-design source of truth is the Phase 1–4 **LOCKED** canvases.
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · pnpm. 현재
+공개 경로와 공통 디자인 토큰은 DESIGN.md에서 확인합니다.
 
 ```bash
 pnpm install
@@ -87,7 +87,7 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
   exceptions go in `scripts/boundaries/config.mjs` (`LINE_ALLOW`), currently
   only the generated `src/styles/fonts.css`.
 - **Server components by default.** `'use client'` only on containers that own
-  browser state (MobileMenu, SiteHeaderNav, TechNotes, CaseContents,
+  browser state (ProjectPlaza, HistoryPicker, TechNotes, CaseContents,
   ScrollScene, MotionLayer, HistoryScroll, DomainExplorer and the explorer
   section components: FarmFam+ `RelationMap`, Smart Farm `ControlConditions`,
   IndianBob `HabitExplorer`).
@@ -95,59 +95,44 @@ comments, ≤200 lines per file, no string-literal enumerated props (use
   `globals.css` replaces it); custom variants
   `mob tab-only short-land fine coarse on-dark js inview reveal-pending`;
   breakpoints `tab` 744 · `lap` 1024 · `wide` 1440; `--spacing: 4px`. The site
-  uses the night theme: `@theme` keeps the role names (`paper`, `ink`, `subtle`,
-  `hairline`, `dark`, `signal`) and the night names (`night`, `night-deep`,
-  `moonlight`, `dim`, `vermilion`, …) on the same navy and cream values; values
-  and roles are in DESIGN.md.
+  uses the plaza palette. The public surfaces, text and selection colors come
+  from the role tokens in `src/styles/globals.css` and `src/styles/tokens.css`.
 
 ## 3. Data model (summary)
 
-The home (`app/page.tsx`) is the GitHub activity orbit. `sections/activity`
-reads `lib/github/fetch-activity.ts` (GraphQL with `GITHUB_TOKEN`, tag
-`github-activity`, revalidate 3600s; falls back to
-`content/activity-snapshot.ts` and states its date), groups repos with
-`lib/activity/to-projects.ts` and the rules in `content/activity-topics.ts`
-(`_client`/`_server` suffixes join one topic, excluded repos, private repos get
-no link), and renders `components/organisms/orbit` (three.js stage in
-`lib/orbit`, loaded on demand; label placement in `lib/orbit/place-labels.ts`
-moves labels to free spots instead of hiding them). `app/api/github-webhook`
-revalidates the tag only for requests whose `x-hub-signature-256` matches
-`GITHUB_WEBHOOK_SECRET`. `sections/opener` plays once per tab session over the
-home (GSAP loaded on demand, skip button and Esc/Enter/Space, reduced-motion
-fades only).
+홈 `/`의 ActivityContainer는 GitHub GraphQL 결과를 활동 주제별로 묶어
+ProjectPlaza에 전달합니다. `GITHUB_TOKEN`과 `github-activity` 캐시 태그, 3600초
+갱신 및 `content/activity-snapshot.ts` 대체 경로를 사용합니다.
+`app/api/github-webhook`은 `GITHUB_WEBHOOK_SECRET`으로 서명을 확인한 뒤 캐시를
+갱신합니다. `content/activity-topics.ts`의 저장소 제외·그룹 규칙과 비공개 링크
+처리도 두 데이터 경로에 동일하게 적용됩니다.
 
-The history page `/portfolio` uses the project workshop in
-`app/_home/workshop-home.tsx`. `constants/home.ts` selects it with
-`HOME.WORKSHOP_ENABLED`; set it to false and rebuild to restore the unchanged
-classic composition in `app/_home/classic-home.tsx`. `/preview/classic`
-preserves the old home for comparison. Both preview routes remain noindex. The
-workshop reuses `components/organisms/project-workshop`, includes all project
-layer work in its selection panels and links to the unchanged case studies. It
-replaces the classic hero and repeated project rows, then renders the existing
-engineering stories, tools, the AI practice summary and footer. Its opening
-makes the whole home chrome and content inert. The unselected desktop panel
-lists each project and its owned areas with direct case links. Selected panels
-retain all work sentences with separators between areas. Stories and tools use
-compact section spacing only on the workshop home. Workshop stories align with
-the main container rather than the classic metadata rail. The selected work
-panel is a navy board (night-2, cream double border, vermilion top rule), not a
-cream note; only the selected name label stays cream. It has one case link below
-the work list. 3D loads automatically at every viewport width, with a static
-illustration during loading or failure and no user-facing 3D toggle. With
-reduced motion, Save-Data or no WebGL, the home keeps the static illustration
-and labels and never downloads the 3D module. Both home variants place the AI
-practice summary after the tools table, on the same heading axis, with one link
-to `/ai`; it leaves 80px on mobile and 96px from tablet before the footer. The
-`/ai` page reuses the case-study template (overview, contents, sections, tech
-notes) with ABOUT as the active nav item, no back link, and a NEXT link to the
-home project board instead of the project cycle. The AI page separates
-instruction scope, the task workflow, verification tooling examples and design
-collaboration. Cross-tool review is described within the task workflow. Personal
-hooks and local checks retain their stated scope. On page exit, the workshop
-saves its selection and scroll position to that browser history entry. Returning
-or reloading restores the panel before scroll placement; a fresh entry starts
-unselected. Existing router history fields are preserved. The classic layout
-described below remains available through the switch.
+최근 작업은 별도 등록 없이 커밋 제목에서 가져옵니다.
+`lib/activity/to-projects.ts`의 규칙으로 설정·검사·배포 등 내부 작업을
+제외합니다. 제품의 알림 설정·입력 검증은 유지합니다. 패널에는 변경내역을 최대 세
+개까지 표시하고 마지막 커밋 날짜를 한 번 적습니다. 공개 저장소에만 링크를
+제공합니다.
+
+광장의 고정 SVG 배경과 프로젝트 모형은 `public/plaza`에 있습니다. 모형은 실제
+HTML 버튼으로 선택합니다. 공개 홈의 첫 화면은 프로젝트 광장입니다. 모바일은 별도
+SVG와 좌표를 사용해 바닥 타일의 가로세로 대각선 비율 2:1을 유지합니다.
+프로젝트가 없으면 이력 링크를 제공합니다.
+
+이력 `/portfolio`는 `app/_home/workshop-home.tsx`에서 다섯 개 프로젝트의 선택
+목록과 선택한 프로젝트의 이미지·소개·기간·담당 업무 링크를 표시합니다. 첫 항목이
+기본 선택이며 `HistoryPicker`는 기존 프로젝트 앵커를 읽고 선택 시 현재 URL
+해시를 갱신합니다. 아래에는 구현 사례·기술·AI 활용 소개와 푸터가 이어집니다.
+클래식 구성은 `/preview/classic`, 3D 작업실은 `/preview/diorama`에서 따로
+확인합니다. 두 프리뷰는 noindex입니다.
+
+AI 활용 `/ai#work`에서는 전역 작업 지침과 프로젝트 진행표에 따른 개발·디자인
+절차를 고릅니다. 개발은 범위 확정, 담당 파일·입출력 합의, 구현, 통합, 자동
+검사와 화면 검증, 커밋으로 이어집니다. 독립 작업이 있을 때 병렬 담당이
+추가됩니다. 디자인은 사용자 방향 선택, 시안 제작, 기능 검증, Unslop 보완, 영향
+범위 재검증, 독립 검토, 사용자 확정으로 이어집니다. 검토 결과는 회차마다 통과,
+작업 보완, 합의·방향 변경 순서로 자동 전환합니다. `/ai#engineering`은 검토로
+이어집니다. 두 흐름의 문구는 `content/request-routing.ts`와
+`content/design-routing.ts`에서 관리합니다.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently
@@ -184,30 +169,17 @@ border; near the top they appear below the character. Committed position,
 rotation and size changes have screen-reader-only summaries. No per-frame
 announcements are emitted.
 
-`site.headline` introduces user apps and business systems. The hero keeps a
-single introduction sentence; `site.about` describes collaboration and delivery.
-Project summaries describe the service; three or four feature descriptions
-explain concrete work. Device experiments stay in Smart Farm. Content follows
-the owner-confirmed contribution, team size and verification scope.
+`site.headline` introduces user apps and business systems. The classic preview
+hero keeps a single introduction sentence; `site.about` describes collaboration
+and delivery. Project summaries describe the service; three or four feature
+descriptions explain concrete work. Device experiments stay in Smart Farm.
+Content follows the owner-confirmed contribution, team size and verification
+scope.
 
-The hero whiteboard (`organisms/whiteboard`, data from `project.layers`) has
-five projects in start-year order and five layers (앱 / 관리자 웹 / 서버 API /
-DB / 기기). At 1024px and above each built cell is a cream marker box showing
-its technology and a dedicated `layers.summary`; layers the developer did not
-build are faint dotted outlines; vertically adjacent built cells in one project
-are joined by a short marker line (connection only, not order). Below 1024px
-each project lists its owned layers as marker chips; unbuilt layers are hidden.
-Each column header shows the service and participation period. Selecting a
-project name draws a vermilion marker loop and opens a cream note below the
-matrix (the matrix does not move) with layer-only headings and complete work
-sentences (`layers.lines`) as separate list items, plus the case link.
-Technology names are omitted from note headings consistently across projects.
-Period and product status stay outside the note. Cream solid (`marker-blue`) =
-직접 개발·유지보수, dim cream dashed (`marker-green`) = experiment, vermilion =
-current selection. The loop draws in 300ms and the note enters in 180ms only
-when a pointer opens the first note; switching notes, keyboard and
-reduced-motion selection are immediate. Selecting keeps the tapped title at the
-same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
+`/preview/classic`의 화이트보드는 다섯 프로젝트를 앱·관리자 웹·서버
+API·DB·기기별로 보여 줍니다. 각 행은 `project.layers`에서 담당 여부, 기술, 업무
+요약을 가져옵니다. 프로젝트를 선택하면 전체 담당 업무와 사례 링크를 엽니다.
+1024px 미만에는 담당 영역을 칩으로 표시합니다.
 
 `Project` →
 `slug, num, title, category, period, tier, caseLength, status[], surfaces, boardService, layers[], summary, links?, home{features[], scope, scopeMobile, flows, areas?, zones?, cta}, visuals{}, case{…}`
@@ -215,29 +187,11 @@ same screen position. Experiment cells carry a screen-reader "(실험)" suffix.
 `case`:
 `role, roleSurfaces?, roleTracks?, stateScope?, contextProblem, systemFlows, domainsTitle?, domains?, monitoringFlow?, feature?, surfaceRelation?, controlExperiment?, work[], connections?, workParagraphs?, decisions[] (0–2), techIntro?, techNotes[] (flexible fields), relationMap?, engineeringNote?, experiment?, currentState, currentStateTracks?, interactionFocus? (withStates?), stateExample?`
 
-Below the hero, the project order follows the board: Emosave → IndianBob →
-FarmFam+ → APC → Smart Farm. Product projects use peer-level headings without
-사용자 앱 / 업무 시스템 group titles; 센서·제어 실험 remains a separate heading.
-Each project is a full-width editorial row: built-layer chips, service summary,
-three or four static `home.features` on a navy writing surface and one detail
-link. Concept images, decorative section numbers, the SignalLine and footer
-`200 OK` are no longer rendered. The Experience section is removed; the board
-header carries the periods. The homepage intro includes GitHub; the former This
-Website section is removed to keep the reading path focused on project work.
-Case work rows and technical notes use 16px body text with 1.7 line height; a
-single technical note uses one column. All home projects share the navy `paper`
-surface; APC case-study sections use the same surface as the other cases. Smart
-Farm has its own experiment heading. The `work` navigation anchor starts at the
-project list and the `flutter-work` anchor remains available. Case pages show a
-definition list of owned areas (`ProjectScopeListView`) after the introduction.
-Each row pairs an area with its work summary and, when supplied, technology.
-Only separators between rows remain; there is no board frame, tinted box,
-connector or legend. Technology moves below the work summary on mobile; tablet
-and wider use three columns. Experiment rows carry a visible experiment label.
-The work sections below retain implementation detail. `VisualsNote` renders the
-unchanged `visualsNoteKo` reconstruction notice beside the actual diagrams in
-each case study. The home whiteboard and its connector explanation are
-unchanged.
+공개 사례 페이지의 `ProjectScopeListView`는 업무 영역별 요약·구체적인
+작업·기술을 한 카드에서 보여 줍니다. 실험에는 글자 표시가 붙습니다.
+`VisualsNote`는 도식에 `visualsNoteKo` 고지를 표시합니다. 클래식 프리뷰에는
+서비스 소개, 기능 요약, 참여 기간, 사례 링크와 구현 사례·기술 목록이 남아
+있습니다.
 
 IndianBob and Emosave include verified Google Play links in `project.links`,
 shown beside the home detail action and below the case overview. The package IDs
@@ -246,17 +200,11 @@ do not establish current backend availability or authorship of every feature.
 Emosave is also identified by its public Korean name, 분저장. App Store links
 are omitted until their direct availability is confirmed.
 
-Case studies start at `#overview` with the project title, one period/status row,
-service introduction, full role text and any store links on one reading axis.
-Titles use 36/48/56px at mobile/tablet/laptop sizes; summary text uses 18/20px
-and role text keeps the body scale. The standalone overview number and duplicate
-period sidebar are removed. Unique role metadata and scope limits remain. The
-scope list follows after 32px on mobile and 48px from tablet. The reading order
-is overview → work → connections / interaction → implementation examples →
-optional learning / result. Duplicate Role / Scope and Context sections are
-removed. Contents labels and numbers follow the actual section order. NEXT is a
-single full-row link with a 20/24px project name, persistent underline, the NEXT
-label and an arrow; its decorative project number is omitted.
+상세 사례의 `#overview`에는 이력으로 돌아가기, 프로젝트명·기간·상태·서비스
+소개와 개념 이미지, 담당 역할·메타 정보·해당 스토어 링크가 있습니다. 이미지 바로
+아래에 재구성 캡션을 표시합니다. 담당 업무 카드와 목차 뒤에는 각 사례의 업무,
+관계·상호작용, 구현 사례, 해당하는 배운 점이 이어집니다. 다음 프로젝트 링크로
+이어서 탐색할 수 있습니다.
 
 - FarmFam+ `case.connections` compares group purchase and secret deal as
   separate sales paths. Work includes sales settings and order changes.
@@ -290,15 +238,11 @@ or transaction scope; each `note` / `caption` says so. No explorer claims a
 sequence the content does not state.
 
 Project flows use `FLOW_ROLE.STATIC`; scrolling does not change their selected
-node. Stories are text-and-link summaries without repeated flow diagrams.
-Representative homepage images use `visual.caption` for an always-visible
-figcaption below the image. The aspect ratio applies to the media box; captions
-stay in normal flow (11px label / 13px description). APC, IndianBob, Smart Farm
-and Emosave use `main-restored.png` clarity-restored concept assets, not
-higher-resolution upscales; original JPGs are retained. Images use quality 85
-with responsive Next.js WebP optimization. AVIF is disabled after the 750px
-Smart Farm conversion stalled during local production-browser verification.
-Spatial pins and hover metadata overlays are removed.
+node. Stories are text-and-link summaries without repeated flow diagrams. 이력
+및 사례 상단은 `ProjectConceptImage`로 각 프로젝트의 `visuals.home`을
+렌더링합니다. 이미지가 있으면 `visual.alt`와 `visual.caption`을 제공하고
+배포·운영 사진과 구분합니다. APC, IndianBob, Smart Farm, Emosave의 복원된 개념
+이미지와 원본 파일은 `public/images/projects`에 있습니다.
 
 Rules:
 
@@ -306,31 +250,23 @@ Rules:
   at all (`has()`). No TO WRITE text ever appears in the UI.
 - **Decisions:** Empty for all five projects, so no Decisions section renders
   anywhere.
-- **Periods:** Read from `content/projects` only. The homepage and case studies
-  use the same value. Emosave is 2022–2023; IndianBob is 2024–2025. The other
-  projects say "2025—2026 중 참여" rather than asserting individual start/end
-  years. The home board header shows these participation periods.
-- **Contact:** `site.contact.email` is `mspark9696@naver.com`; CONTACT
-  navigation, mobile-menu email and footer email are visible. GitHub remains
-  empty.
+- **기간**은 이력과 사례 모두 `content/projects`에서 읽습니다. Emosave는
+  2022–2023, IndianBob은 2024–2025이며 다른 세 프로젝트는 “2025—2026 중
+  참여”입니다.
+- **연락처**는 `site.contact`에서 읽습니다. 이메일과 GitHub 프로필은 푸터에서
+  접근할 수 있습니다.
 
 ## 4. Content → UI mapping
 
-| Data                                   | Homepage                             | Case study                                           |
-| -------------------------------------- | ------------------------------------ | ---------------------------------------------------- |
-| `summary`                              | Service introduction                 | Introduction before overview                         |
-| `period` · `status` · `surfaces`       | Project header                       | Header and overview metadata                         |
-| `home.features`                        | Three static feature summaries       | —                                                    |
-| `case.role`                            | —                                    | Overview before hero                                 |
-| `work`                                 | —                                    | Broad feature scope before diagrams                  |
-| `connections` · `relationMap`          | —                                    | FarmFam+ sales comparison and cancellation example   |
-| `domains`                              | —                                    | APC business explorer                                |
-| `monitoringFlow` · `controlExperiment` | —                                    | Static monitoring and separate control PoC           |
-| `feature`                              | —                                    | IndianBob feature-to-system explorer                 |
-| `techNotes`                            | —                                    | Representative implementation examples               |
-| `interactionFocus` · `stateExample`    | —                                    | Emosave focus copy (static comparison data retained) |
-| `stories[].description`                | Three text summaries with case links | —                                                    |
-| `currentState`                         | —                                    | Optional learning / result                           |
+| 데이터                                                                                    | 표시 위치                                         |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| GitHub activity / snapshot                                                                | 홈 광장의 프로젝트·최근 변경내역·마지막 커밋 날짜 |
+| `summary`, `period`, `surfaces`, `visuals.home`                                           | 이력의 프로젝트 목록·선택 카드, 상세 소개         |
+| `layers`, `case.role`, `work`                                                             | 상세 페이지의 담당 업무와 구현 설명               |
+| `connections`, `relationMap`, `domains`, `monitoringFlow`, `controlExperiment`, `feature` | 해당 프로젝트 사례의 관계 및 동작 설명            |
+| `techNotes`, `currentState`                                                               | 구현 사례와 해당하는 배운 점                      |
+| `stories[].description`                                                                   | 이력의 대표 구현 사례                             |
+| `home.features`                                                                           | 클래식 프리뷰의 서비스 기능 요약                  |
 
 Items from the content brief that were **not shown in the UI** because they are
 instructions to the writer, not visitor-facing text:
@@ -343,57 +279,35 @@ deployment. The LED control experiment remains a separate scope.
 
 ## 5. Motion (scroll-driven, CSS-variable based)
 
-The five project blocks and case sections render `ScrollScene steps={false}` and
-none of the new diagrams carry `[data-flow]`, so scrolling never changes a
-selection or lights a node. Selections change only on click, tap or keyboard,
-live in component state (no storage) and survive scrolling and breakpoint
-changes. Emphasis (background, border, connector 1px → 2px) changes in 150ms;
-panel content changes immediately without remount fades. APC domain panels and
-Smart Farm condition panels reserve the tallest content with a grid stack,
-including mobile. Inactive content is hidden and inactive links are inert. Tabs
-and condition chips use `--dur-press` / `--ease-out` press feedback. Board
-keyboard selection reveals its note without smooth animation. For in-page links:
-`HistoryScroll` sets `html[data-smooth-scroll]` on the first pointer or key
-input and removes it on back/forward, so landing on a URL hash and history
-restoration jump straight to their position. Hash-link clicks that open
-elsewhere (modifier keys, `target`, `download`) or are cancelled are not
-remembered. The Smart Farm monitoring flow is `FLOW_ROLE.STATIC` (first-reveal
-line draw only). Stories cover APC app updates and kiosk restoration, Emosave
-editor state, and FarmFam+ secret-deal price validation. The hero CTA jumps to
-`#work`. Engineering is labeled 대표 구현 사례; IndianBob and Emosave retain
-배운 점 without changing their current-state anchor IDs.
+홈 광장은 정지 장면입니다. 포인터 호버와 키보드 초점에서 모형만 3px 올라갑니다.
+모션 감소 설정에서는 이동과 전환을 해제합니다. 이력의 프로젝트 선택은
+수동입니다. AI 도식은 아홉 줄로 전체 경로를 표시합니다. 각 카드는 1.5초간
+강조하고 점은 숨깁니다. 점은 연결선을 따라 초당 90 CSS 픽셀로 이동합니다. 작업
+보완은 해당 담당으로, 합의·방향 변경은 준비 단계로 되돌아갑니다. 영향을 받는
+작업과 검증을 거친 뒤 결과에서 처음으로 이어집니다. 화면이나 탭을 벗어나면 진행
+위치를 보존하고, 모션 감소 설정에서는 도식을 정지 상태로 보여줍니다.
 
-Sections emit data attributes; the client organisms drive them. No React state
-changes per scroll frame: IntersectionObserver gates each rAF loop, values are
-written as CSS variables / attributes.
-
-| Element            | Behavior                                                                                                                                                                                                                                           | Reduced motion                 |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `ScrollScene`      | `data-ready` after hydration, `data-inview` once (30% of min(height, viewport)); optional step mode moves `data-active` along `[data-flow="primary"] [data-step]`; secondary flows follow later with ink emphasis only                             | first node active, no stepping |
-| Flow diagram       | segments draw 600ms / 80ms stagger (≥1024), 400 / 60 (<1024), nodes fade in order; active ● signal, experiment ◇ ink-filled (never green)                                                                                                          | complete immediately           |
-| AI work loop       | own `ScrollScene` around the list; straight cream segments and exact arcs wipe in once clockwise, 320ms (bends 400ms) / 200ms stagger, +150ms before the return, ≈1.95s (≥1024); down arrows 280 / 150 (<1024); text never moves; no red, no notes | complete immediately           |
-| Reveal             | `data-reveal-item="title"` 8px / 400ms, `visual` 12px / 600ms, `meta` opacity 250ms +150ms — titles, visuals and rails only                                                                                                                        | visible, no transform          |
-| Parallax / pointer | Retained ConceptFrame supports pointer shift ≤6px / 300ms; current home summaries and case scope lists do not mount it                                                                                                                             | none                           |
-| Image caption      | static figcaption below representative images, visible on touch and desktop                                                                                                                                                                        | same                           |
-| Status pulse       | ● ring once on first reveal (border ring, no shadow)                                                                                                                                                                                               | none                           |
-| CTA                | arrow +4px, underline → signal, 150ms; focus offset 6px                                                                                                                                                                                            | color only                     |
-| Opener             | once per tab session: words drop 0.16s / 0.17s stagger with squash, hatched wipe 0.99s, 박·문·석 at 1.15/1.25/1.32 + shake 1.42, tag frame 1.7, exit 2.45, device medallions land on four orbits, total ≈3.15s, then 0.35s fade                    | line and name fade only (~2s)  |
-| Orbit home         | one turn per 70s; hover or focus pauses; drag turns; label moves to the next free spot with a 0.24s ease; selected orbit and reticle in vermilion                                                                                                  | static frame, no spin          |
+상세 사례에서는 클릭·터치·키보드로 업무·조건을 고릅니다. 선택을 바꾸면 설명이
+즉시 바뀌며 스크롤은 선택에 영향을 주지 않습니다. 기존 도식 첫 노출과 스크롤
+효과는 `ScrollScene`과 CSS 변수가 관리합니다. 모션 감소 시 도식은 완성된 상태를
+보여 줍니다. 콘텐츠의 해시 이동과 뒤로가기는 `HistoryScroll`이 처리합니다.
 
 ## 6. Accessibility
 
-- One site banner per page, main includes h1 and Overview, and a keyboard skip
-  link targets main.
-- Semantic headings: the hero or project name is h1; sections are h2.
+- One site banner per page, main includes h1, and a keyboard skip link targets
+  main.
+- Semantic headings: the page or project name is h1; sections are h2.
 - Status is never color-only: symbol plus text, and screen readers also read
   "(experiment)" / "(current)".
-- Mobile menu:
-  - `role="dialog"`, `aria-modal`, `aria-expanded` / `aria-controls`.
-  - Background siblings are inert while open; Tab/Shift+Tab stay in the dialog.
-  - ESC/close restore the menu button, same-page links focus their section, and
-    resizing focuses a visible primary navigation link. Scroll unlock is
-    instant.
-  - Closes when a link is selected, and closes automatically at ≥744px.
+- 공통 헤더에 작업·이력·AI 활용 링크가 직접 노출됩니다. 현재 경로는
+  `aria-current`로 표시합니다.
+- 광장의 프로젝트 버튼은 `aria-expanded`로 선택을 전달합니다. 열면 닫기 버튼에
+  초점이 가고, Escape 또는 닫기 버튼으로 선택했던 모형에 돌아옵니다. 넓은
+  화면에서는 오른쪽 칸에 패널 폭을 확보하고 모바일 세로 화면에서는 광장 아래에
+  놓습니다.
+- 이력의 선택 버튼은 `aria-pressed`와 `aria-controls`로 연결한 소개 카드를
+  갱신합니다.
+
 - Tech-note keyboard focus moves between the mobile toggle and desktop heading
   when crossing 744px; pointer users do not receive automatic focus.
 - Accordion (<744):
@@ -421,14 +335,12 @@ written as CSS variables / attributes.
 - Reveal hiding is enabled per mounted scene, so failed hydration keeps server
   content visible; print always shows reveal items, diagram lines and every tech
   note.
-- Case boards retain `visualsNoteKo` and the connector explanation. Concept
-  photos are not mounted in home summaries, Emosave focus cards or Smart Farm
-  monitoring; remaining explanatory diagrams retain their local captions.
-- The 404 page uses Korean copy, the board surface and a home return link.
-- No panel is `aria-live`; the tab / pressed relationship announces changes.
-- Touch targets are at least 44×44px (MENU, CLOSE, CTA, menu links 64px,
-  accordion 52px, Contents links, WORK AREAS rows 60px, relation nodes 60px+,
-  tabs and condition chips 44px+).
+- 이력과 상세의 개념 이미지에는 캡션을 표시하고, 사례 도식에는 재구성 안내를
+  유지합니다.
+- 404는 한국어 문구와 홈 링크를 제공합니다.
+- 선택 패널의 상태는 버튼과 접근성 속성으로 전달합니다. 주요 조작 대상은 44×44px
+  이상입니다.
+
 - Safe areas are handled with `env(safe-area-inset-*)` and `svh`. There is no
   `100vh`.
 
@@ -445,14 +357,11 @@ written as CSS variables / attributes.
 2. **Image captions:** Keep `visual.caption` concise and explicit about
    conceptual imagery; do not imply that an image documents an actual
    deployment.
-3. **Contact:** Email is already configured in `site.contact.email`; the CONTACT
-   nav item and footer email are visible. GitHub is configured as
-   `https://github.com/mooonseok` and appears in the homepage intro and every
-   footer and mobile menu, labeled GitHub 프로필. The README distinguishes this
-   site repository from the separate service projects.
-4. **ABOUT nav:** It currently points to `#about`, which is the Tools / Scope
-   section; the AI practice summary follows it inside the same ABOUT range.
-   Change it if you add a separate About section.
+3. **연락처.** 이메일과 GitHub 프로필의 원본은 `content/site.ts`입니다. 모든
+   공개 경로의 푸터에서 확인할 수 있습니다.
+4. **탐색.** 작업은 `/`, 이력은 `/portfolio`, AI 활용은 `/ai`입니다. 프로젝트
+   상세의 상위 메뉴는 이력입니다.
+
 5. **Fonts:** All three families are self-hosted from `public/fonts/`; see
    `public/fonts/README.md` for sources and licenses. Nothing is fetched from a
    third-party CDN at runtime and `pnpm build` needs no network access for
@@ -493,28 +402,30 @@ written as CSS variables / attributes.
    checker does not load `.env.local`; supply the values through the shell
    environment. Verify both default non-indexable output and public-URL fixture
    output before release; fixture URLs are not deployment destinations.
-9. **CI:** `.github/workflows/verify.yml` runs for pull requests, pushes to
-   `develop` / `main`, and manual dispatch. Node.js 24 and pinned pnpm run the
-   six required checks plus anchors and metadata for both configurations. This
-   workflow does not deploy. Local passing results and a successful GitHub
-   Actions run are separate evidence; check the pushed commit's run.
+9. **검증 실행 환경**. 현재 저장소에는 `.github/workflows/verify.yml`이
+   없습니다. AGENTS.md §5의 검사는 로컬에서 실행하고 현재 변경 버전에 대한
+   결과를 기록합니다. 공통 작업 흐름은 사용자 전역 `engineering-workflow`,
+   프로젝트별 조건은 `pf-*` 진행표가 제공합니다. Codex의 `.agents/skills/pf-*`는
+   `.claude/skills/pf-*` 원본을 가리킵니다. 빌드·검증 서버는 QA가 관리하고 독립
+   검토 완료 후 정리합니다. 요청별 경로와 수정 한도는 AGENTS.md §7을 봅니다.
 
-## 8. QA (same checklist as Phase 4 LOCKED)
+## 8. 화면 검증
 
-Widths: 320 · 360 · 375 · 390 · 430 · 743 · 744 · 834 · 1023 · 1024 · 1280 ·
-1440
+390 · 744 · 1024 · 1440px에서 기본 및 선택 상태를 확인합니다. 광장의 모바일 경계
+700px와 가로 모드도 확인합니다.
 
-- [ ] Date ranges (2022—2026) never break
-- [ ] No mobile → sequences; small flows become vertical
-- [ ] No title line with only one word
-- [ ] Portrait menu is a single vertical list; landscape (height ≤500) is 2
-      columns
-- [ ] At 743/744 and 1023/1024: nav, meta rail, board, Featured, Tools, diagrams
-      and case-study layout all transition cleanly
+- [ ] 광장을 리사이즈해도 바닥 타일의 대각선 비율과 모형 비율이 유지됨
+- [ ] 이름표 선택 후 상세 읽기, Escape와 닫기에서 초점 복귀
+- [ ] 이력의 프로젝트 선택·해시 복원과 사례 링크가 같은 프로젝트를 가리킴
+- [ ] AI 요청 유형을 선택하고, 전체 단계가 즉시 보이고 점이 일정한 속도로
+      분기·합류·수정 후 처음으로 돌아오는지 확인. 모션 감소 상태에서도 전체
+      내용을 확인
+- [ ] 743/744와 1023/1024에서 목록·목차·사례 도식 전환이 자연스러움
+
 - [ ] Accordion defaults to only the first item open
 - [ ] No important content depends on hover
 - [ ] No overflow or clipping
 - [ ] ● PRODUCT WORK / ◇ EXPERIMENT distinction is clear
 - [ ] No TO WRITE, fake contact details or unverified numbers anywhere
-- [ ] Keyboard only: menu, accordion, Contents and CTAs all work; focus rings
-      are visible
+- [ ] Keyboard only: navigation, plaza, accordion, Contents and CTAs all work;
+      focus rings are visible

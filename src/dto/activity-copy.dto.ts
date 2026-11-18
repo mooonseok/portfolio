@@ -11,17 +11,19 @@ export interface OpenerCopy {
 
 export interface ActivityCopy {
   heading: string;
+  close: string;
   panelLabel: string;
+  instruction: string;
+  fallbackInstruction: string;
+  recentWork: string;
+  moreWork: string;
+  lessWork: string;
   lastCommit: string;
-  recent: string;
-  countPrefix: string;
-  countSuffix: string;
   repo: string;
   open: string;
   repoSuffix: string;
   newTab: string;
   privateNote: string;
-  stale: string;
   empty: string;
   history: LinkItem;
   opener: OpenerCopy;

@@ -1,0 +1,53 @@
+.flow {
+  --circuit-design: #c7a6ff;
+  --circuit-development: #9adecc;
+  --circuit-return: #ffae8d;
+  --circuit-ground: #12101b;
+  display: grid;
+  gap: clamp(18px, 3vw, 30px);
+  color: var(--ink);
+}
+.heading {
+  width: min(100%, 736px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px 22px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.heading h1 {
+  font-size: clamp(27px, 3vw, 38px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+.tabs {
+  display: inline-flex;
+  gap: 3px;
+}
+.tab {
+  min-height: 44px;
+  padding: 0 9px;
+  font-size: 14px;
+  color: var(--subtle);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.tab[aria-pressed='true'] {
+  border-color: var(--circuit-development);
+  color: var(--ink);
+  font-weight: 600;
+}
+.tab:last-child[aria-pressed='true'] {
+  border-color: var(--circuit-design);
+}
+.flow :is(button, summary):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+@media (scripting: none) {
+  .tabs {
+    display: none;
+  }
+}

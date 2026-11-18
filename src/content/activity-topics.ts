@@ -21,7 +21,7 @@ export const activityConfig: ActivityConfig = {
     },
     'blog-automation': {
       title: '블로그 자동화',
-      sub: '유튜브 링크로 블로그 글을 만드는 파이프라인',
+      sub: '유튜브 영상으로 블로그 글 작성',
       skin: ORBIT_SKIN.TEXT,
     },
     woori: {

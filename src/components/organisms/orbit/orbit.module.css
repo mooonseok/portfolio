@@ -10,16 +10,6 @@
   color: var(--color-moonlight);
 }
 
-.root::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 @media (min-width: 744px) {
   .root {
     --gutter: max(40px, env(safe-area-inset-left));
@@ -73,7 +63,7 @@
 .ticks {
   fill: none;
   stroke: var(--color-dim);
-  stroke-opacity: 0.6;
+  stroke-opacity: 0.24;
 }
 
 .reticle {
@@ -117,4 +107,27 @@
   bottom: auto;
   top: calc(env(safe-area-inset-top) + 64px);
   font-size: 14px;
+}
+
+.root:not([data-ready]) {
+  height: auto;
+  min-height: 100svh;
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  padding: calc(env(safe-area-inset-top) + 112px) var(--gutter-r)
+    calc(env(safe-area-inset-bottom) + 24px) var(--gutter);
+  overflow: visible;
+}
+
+.root:not([data-ready]) .scene,
+.root:not([data-ready]) .hud {
+  visibility: hidden;
+}
+
+.root:not([data-ready]) .history,
+.root:not([data-ready]) .empty {
+  position: relative;
+  inset: auto;
+  width: fit-content;
 }

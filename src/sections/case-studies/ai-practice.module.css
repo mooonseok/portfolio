@@ -1,0 +1,16 @@
+.page {
+  --ai-width: 1080px;
+  --ai-columns: minmax(260px, 0.9fr) minmax(0, 1.65fr);
+  --ai-gap: clamp(36px, 5vw, 78px);
+  --ai-gutter: clamp(16px, 4vw, 60px);
+}
+.intro {
+  width: min(calc(100% - var(--ai-gutter) * 2), var(--ai-width));
+  margin-inline: auto;
+  padding-top: clamp(30px, 5.5vw, 84px);
+}
+@media (max-width: 480px) {
+  .intro {
+    padding-top: 22px;
+  }
+}

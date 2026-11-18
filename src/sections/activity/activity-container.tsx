@@ -1,14 +1,13 @@
-import { OrbitHome } from '@/components/organisms/orbit/orbit-home';
-import { ACTIVITY } from '@/constants/orbit';
+import { ProjectPlaza } from './components/plaza/project-plaza';
+import { ORBIT_SKIN, ACTIVITY } from '@/constants/orbit';
 import { activity } from '@/content/activity';
 import { activityConfig } from '@/content/activity-topics';
 import type { ActivityProject } from '@/dto/activity.dto';
 import type { OrbitProjectView } from '@/dto/orbit.dto';
-import { fullDate, shortDate, toProjects } from '@/lib/activity/to-projects';
+import { fullDate, toProjects } from '@/lib/activity/to-projects';
 import { fetchActivity } from '@/lib/github/fetch-activity';
 
 function toView(project: ActivityProject): OrbitProjectView {
-  const count = `${activity.countPrefix}${project.count}${activity.countSuffix}`;
   return {
     key: project.key,
     title: project.title,
@@ -16,7 +15,6 @@ function toView(project: ActivityProject): OrbitProjectView {
     skin: project.skin,
     tag: project.tag,
     last: fullDate(project.last),
-    count,
     repos: project.repos.flatMap((repo) =>
       repo.href
         ? [
@@ -33,18 +31,8 @@ function toView(project: ActivityProject): OrbitProjectView {
         : []
     ),
     privateNote: project.private ? activity.privateNote : null,
-    commits: project.commits.map(
-      (commit) =>
-        `${shortDate(commit.date)}  ${commit.part ? `[${commit.part}] ` : ''}${commit.title}`
-    ),
-    aria: [
-      project.title,
-      project.tag,
-      project.sub,
-      `${activity.recent} ${count}`,
-    ]
-      .filter(Boolean)
-      .join(', '),
+    commits: project.commits.map((commit) => commit.title),
+    aria: [project.title, project.tag, project.sub].filter(Boolean).join(', '),
   };
 }
 
@@ -56,23 +44,22 @@ export async function ActivityContainer() {
     ACTIVITY.PROJECTS,
     ACTIVITY.COMMITS
   );
+  const order = [
+    ORBIT_SKIN.SITE,
+    ORBIT_SKIN.ALBUM,
+    ORBIT_SKIN.TEXT,
+    ORBIT_SKIN.CANDLE,
+  ];
   return (
-    <OrbitHome
-      projects={projects.map(toView)}
-      bodies={projects.map((project) => ({
-        skin: project.skin,
-        count: project.count,
-      }))}
+    <ProjectPlaza
+      projects={projects
+        .map(toView)
+        .sort((a, b) => order.indexOf(a.skin) - order.indexOf(b.skin))}
       copy={{
         heading: activity.heading,
-        panelLabel: activity.panelLabel,
+        close: activity.close,
         lastCommit: activity.lastCommit,
-        recent: activity.recent,
-        repo: activity.repo,
         empty: activity.empty,
-        stale: snapshot.live
-          ? null
-          : `${activity.stale} ${fullDate(snapshot.asOf)}`,
         history: activity.history,
       }}
     />

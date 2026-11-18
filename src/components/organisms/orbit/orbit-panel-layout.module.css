@@ -1,0 +1,40 @@
+.panel {
+  max-height: calc(100svh - max(108px, 20svh) - 24px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-far) transparent;
+  scroll-padding-block: 16px;
+}
+
+:global([data-mode='phone']) .panel {
+  left: var(--gutter);
+  right: var(--gutter-r);
+  width: auto;
+  max-height: max(240px, calc(100svh - 340px));
+  padding: 20px;
+}
+
+@media (min-width: 744px) {
+  :global([data-mode='phone']) .panel {
+    left: 50%;
+    right: auto;
+    width: min(460px, 70vw);
+    transform: translateX(-50%);
+  }
+}
+
+:global([data-mode='land']) .panel {
+  top: calc(env(safe-area-inset-top) + 86px);
+  width: 280px;
+  max-height: calc(100svh - env(safe-area-inset-top) - 102px);
+  padding: 16px;
+}
+
+:global([data-orbit-home]:not([data-ready])) .panel {
+  position: relative;
+  inset: auto;
+  width: min(100%, 460px);
+  max-height: none;
+  transform: none;
+  overflow: visible;
+}
