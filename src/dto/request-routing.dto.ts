@@ -1,6 +1,4 @@
-import type { WorkflowOwner } from './ai-workflow.dto';
-
-export type RoutingTarget = WorkflowOwner | 'hierarchy' | 'layout' | 'copy';
+export type RoutingTarget = 'primary' | 'support';
 export type RoutingLane = 'development' | 'design';
 
 export interface RoutingRequest {
@@ -11,18 +9,14 @@ export interface RoutingRequest {
   reason: string;
   decision: string;
   jobs: Partial<Record<RoutingTarget, string>>;
-  route: string;
   work: string;
   proof: string;
-  sample?: { before: string; after: string; input: string };
   review: string;
   issue?: {
     owner: RoutingTarget;
     label: string;
     fix: string;
-    finding?: string;
     back: string;
-    repair: string;
     retry: string;
   };
   finish: string;
@@ -30,13 +24,16 @@ export interface RoutingRequest {
 
 export type RoutingPhase =
   | 'request'
+  | 'entry'
   | 'judge'
-  | 'outlet'
   | 'route'
   | 'work'
   | 'join'
+  | 'review'
   | 'issue'
   | 'back'
   | 'fix'
   | 'retry'
+  | 'recheck'
+  | 'exit'
   | 'done';

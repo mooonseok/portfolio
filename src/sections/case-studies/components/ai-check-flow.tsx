@@ -6,7 +6,6 @@ import { Button } from '@/components/atoms/button';
 import { Heading } from '@/components/atoms/heading';
 import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
 import { HEADING, TAG } from '@/constants/tag';
-import { circuitCopy } from '@/content/ai-workflow';
 import type { RoutingLane } from '@/dto/request-routing.dto';
 import { AiRequestRouting } from './ai-request-routing';
 import styles from './ai-check-flow.module.css';
@@ -22,13 +21,9 @@ export function AiCheckLoop() {
     >
       <Box className={styles.heading}>
         <Heading id={AI_LOOP_TITLE_ID} level={HEADING.H1}>
-          {circuitCopy.title}
+          AI와 일하는 방식
         </Heading>
-        <Box
-          className={styles.tabs}
-          role='group'
-          aria-label={circuitCopy.controls}
-        >
+        <Box className={styles.tabs} role='group' aria-label='요청 유형'>
           <Button
             className={styles.tab}
             aria-pressed={lane === 'development'}

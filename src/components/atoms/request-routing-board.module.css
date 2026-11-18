@@ -41,7 +41,8 @@
 .node {
   position: relative;
   display: grid;
-  place-content: center;
+  align-items: center;
+  justify-items: stretch;
   justify-self: center;
   width: min(100%, 390px);
   min-height: 46px;
@@ -64,7 +65,7 @@
 .node[data-node='result'] {
   min-height: 60px;
 }
-.row[aria-current='step'] .node:not(:has(.taskState)),
+.row[aria-current='step']:not([data-correction]) .node,
 .row[aria-current='step'] .node[data-correction='true'] {
   border-color: var(--routing-accent);
 }
@@ -110,18 +111,24 @@
 .workers[data-count='1'] .node {
   max-width: 390px;
 }
-.sample del {
-  color: var(--subtle);
-  margin-right: 0.5em;
+.standby,
+.nodeContent,
+.layers > * {
+  grid-area: 1 / 1;
 }
-.input {
-  display: inline-block;
-  border: 1px solid var(--hairline);
-  padding: 0 6px;
-  margin-right: 4px;
-  border-radius: 3px;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
+.standby {
+  color: var(--subtle);
+  font-size: 14px;
+}
+.nodeContent,
+.layers {
+  display: grid;
+}
+.node [aria-hidden='true'] {
+  visibility: hidden;
+}
+.line {
+  display: block;
 }
 .finding {
   display: block;
@@ -168,4 +175,8 @@
 }
 .workers[aria-hidden='true'] {
   visibility: hidden;
+}
+
+.row[aria-current='step'][data-correction] .node[data-node='review'] {
+  border-color: var(--circuit-return);
 }

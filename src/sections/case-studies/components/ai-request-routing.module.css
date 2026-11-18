@@ -13,30 +13,6 @@
 .panel[data-lane='design'] {
   --routing-accent: var(--circuit-design);
 }
-.picker {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 14px var(--panel-inset);
-  border-bottom: 1px solid var(--hairline);
-}
-.choice {
-  min-height: 44px;
-  padding: 0 14px;
-  border: 1px solid transparent;
-  border-radius: 5px;
-  color: var(--subtle);
-  font-size: 14px;
-  cursor: pointer;
-}
-.choice[aria-pressed='true'] {
-  border-color: var(--hairline);
-  color: var(--ink);
-  background: color-mix(in srgb, var(--ink) 8%, var(--circuit-ground));
-}
-.choice:hover {
-  color: var(--ink);
-}
 .header {
   padding: clamp(19px, 4%, 28px) var(--panel-inset) 16px;
 }

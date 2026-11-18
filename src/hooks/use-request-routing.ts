@@ -3,7 +3,11 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { MEDIA } from '@/constants/breakpoint';
 import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
-import { routingFrame } from '@/lib/request-routing';
+import {
+  advanceRoutingTime,
+  routingFrame,
+  routingTimeline,
+} from '@/lib/request-routing';
 import { useMediaQuery } from './use-media-query';
 
 type PaintFrame = (phase: RoutingPhase, fraction: number) => void;
@@ -30,6 +34,7 @@ export function useRequestRouting(request: RoutingRequest) {
     }
 
     finished.current = null;
+    const timeline = routingTimeline(request);
     let elapsed = 0;
     let last: number | null = null;
     let currentPhase: RoutingPhase = 'request';
@@ -39,9 +44,9 @@ export function useRequestRouting(request: RoutingRequest) {
     paintRef.current?.('request', 0);
 
     function tick(now: number) {
-      if (last !== null) elapsed += now - last;
+      if (last !== null) elapsed = advanceRoutingTime(elapsed, now - last);
       last = now;
-      const current = routingFrame(request, elapsed);
+      const current = routingFrame(timeline, elapsed);
       if (currentPhase !== current.phase) {
         currentPhase = current.phase;
         setPhase(current.phase);

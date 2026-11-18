@@ -39,7 +39,7 @@ for (const project of getProjects()) {
   });
 }
 
-test('ai: only the workflow and actual cases appear in the main landmark', () => {
+test('ai: the workflow overview is the only section in the main landmark', () => {
   const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
   assert.equal([...html.matchAll(/<main\b/g)].length, 1);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
@@ -49,14 +49,11 @@ test('ai: only the workflow and actual cases appear in the main landmark', () =>
   const sections = [...main.matchAll(/<section\b[^>]*\bid="([^"]+)"/g)];
   assert.deepEqual(
     sections.map((match) => match[1]),
-    ['work', 'plaza-case']
+    ['work']
   );
   assert.doesNotMatch(main, /aria-label="Contents"|#guidelines|#collaboration/);
   assert.ok(ids.includes('overview'), 'preserve existing overview links');
-  assert.ok(
-    ids.includes('engineering'),
-    'preserve links to the verification example'
-  );
+  assert.ok(ids.includes('engineering'), 'keep links to the review step');
   for (const [, id] of html.matchAll(/href="#([^"]+)"/g))
     assert.ok(ids.includes(id), `missing target: ${id}`);
   for (const match of html.matchAll(/aria-(?:labelledby|controls)="([^"]+)"/g))
@@ -64,25 +61,20 @@ test('ai: only the workflow and actual cases appear in the main landmark', () =>
       assert.ok(ids.includes(id), `missing accessible target: ${id}`);
 });
 
-test('ai: the workflow precedes the selectable real cases', () => {
+test('ai: the two request types lead directly to the overview', () => {
   const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
   const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)[1];
-  const workflow = main.indexOf('id="work"');
-  const gallery = main.indexOf('id="plaza-case"');
-  assert.ok(workflow >= 0 && gallery > workflow);
-  assert.ok(!main.slice(workflow, gallery).includes('블로그 자동화'));
-  const cases = main.slice(gallery);
-  const plaza = cases.indexOf('data-case="plaza"');
-  const blog = cases.indexOf('data-case="blog"');
-  assert.ok(plaza >= 0 && blog > plaza);
-  const comparison = cases.slice(plaza, blog);
-  for (const label of ['수정 전', '수정 후', '44가지 조건', '5건', '0건'])
-    assert.ok(comparison.includes(label), label);
-  for (const piece of ['label', 'panel'])
-    assert.ok(comparison.includes(`data-piece="${piece}"`), piece);
-  const automation = cases.slice(blog);
-  for (const label of ['독자', '교정', '초안', '발행'])
-    assert.ok(automation.includes(label), label);
+  const buttons = [...main.matchAll(/<button\b[^>]*>([\s\S]*?)<\/button>/g)];
+  assert.deepEqual(
+    buttons.map((m) => m[1].replace(/<[^>]+>/g, '').trim()),
+    ['개발 요청', '디자인 요청']
+  );
+  for (const node of ['judge', 'review', 'result'])
+    assert.ok(main.includes(`data-node="${node}"`), node);
+  assert.doesNotMatch(
+    main,
+    /우편번호|배송지|블로그 초안|광장 이름표|결제 금액/
+  );
 });
 
 for (const page of ['work/emosave', 'preview/emosave-editor']) {

@@ -1,37 +1,102 @@
 import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
 
-type Beat = readonly [RoutingPhase, number];
+type Beat = readonly [phase: RoutingPhase, duration: number];
 
-const assignment: readonly Beat[] = [
-  ['request', 2000],
-  ['judge', 4800],
-  ['outlet', 5600],
-  ['route', 7000],
-  ['work', 8450],
-  ['join', 10000],
-];
+export function routingTimeline(request: RoutingRequest): readonly Beat[] {
+  const branches = Object.keys(request.jobs).length;
+  const branchTravel = branches > 1 ? 460 : 320;
+  const steps: Beat[] = [
+    ['request', request.quote.length > 40 ? 4200 : 3200],
+    ['entry', 320],
+    ['judge', 3400],
+    ['route', branchTravel],
+    ['work', branches > 1 ? 3400 : 2800],
+    ['join', branchTravel],
+    ['review', 3200],
+  ];
+  if (request.issue) {
+    steps.push(
+      ['issue', 2800],
+      ['back', 400],
+      ['fix', 3200],
+      ['retry', 400],
+      ['recheck', 3200]
+    );
+  }
+  steps.push(['exit', 320]);
+  return steps;
+}
 
-const direct: readonly Beat[] = [...assignment, ['done', 12200]];
-const correction: readonly Beat[] = [
-  ...assignment,
-  ['issue', 11800],
-  ['back', 13250],
-  ['fix', 14650],
-  ['retry', 16100],
-  ['done', 18500],
-];
+export function advanceRoutingTime(elapsed: number, frameDelta: number) {
+  return elapsed + Math.min(frameDelta, 80);
+}
 
-export function routingFrame(request: RoutingRequest, elapsed: number) {
-  let start = 0;
-  for (const [phase, end] of request.issue ? correction : direct) {
-    if (elapsed < end) {
-      let fraction = (elapsed - start) / (end - start);
-      if (phase === 'request')
-        fraction = Math.min(1, Math.max(0, (elapsed - 450) / 1350));
-      if (phase === 'judge') fraction = 1;
-      return { phase, fraction };
-    }
-    start = end;
+export function routingPacketOpacity(
+  phase: RoutingPhase,
+  fraction: number,
+  hasIssue: boolean
+) {
+  switch (phase) {
+    case 'review':
+      if (hasIssue) return 1;
+      break;
+    case 'judge':
+    case 'work':
+    case 'recheck':
+      break;
+    case 'route':
+    case 'join':
+    case 'exit':
+      return Math.min(1, fraction / 0.22);
+    default:
+      return 1;
+  }
+  return Math.max(0, Math.min(1, (0.94 - fraction) / 0.13));
+}
+
+export function routingFrame(timeline: readonly Beat[], elapsed: number) {
+  let remaining = Math.max(0, elapsed);
+  for (const [phase, duration] of timeline) {
+    if (remaining < duration) return { phase, fraction: remaining / duration };
+    remaining -= duration;
   }
   return { phase: 'done' as const, fraction: 1 };
+}
+
+export function routingPacket(
+  phase: RoutingPhase,
+  fraction: number,
+  id: string,
+  first: boolean,
+  owner?: string
+): readonly [edge: string, position: number] | undefined {
+  switch (phase) {
+    case 'request':
+      return first ? ['entry', 0] : undefined;
+    case 'entry':
+      return first ? ['entry', fraction] : undefined;
+    case 'judge':
+      return first ? ['entry', 1] : undefined;
+    case 'route':
+      return [`in-${id}`, fraction];
+    case 'work':
+      return [`in-${id}`, 1];
+    case 'join':
+      return [`join-${id}`, fraction];
+    case 'review':
+      return first ? [`join-${id}`, 1] : undefined;
+    case 'issue':
+    case 'recheck':
+      return owner === id ? [`join-${id}`, 1] : undefined;
+    case 'back':
+      return owner === id ? [`join-${id}`, 1 - fraction] : undefined;
+    case 'fix':
+      return owner === id ? [`join-${id}`, 0] : undefined;
+    case 'retry':
+      return owner === id ? [`join-${id}`, fraction] : undefined;
+    case 'exit':
+      return first ? ['exit', fraction] : undefined;
+    case 'done':
+      return first ? ['exit', 1] : undefined;
+  }
 }

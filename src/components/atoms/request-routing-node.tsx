@@ -4,18 +4,21 @@ import styles from './request-routing-board.module.css';
 interface RowProps {
   label: string;
   status?: string;
+  anchor?: string;
   correction?: boolean;
   children: ReactNode;
 }
 
 export function RequestRoutingRow({
   label,
+  anchor,
   status,
   correction,
   children,
 }: RowProps) {
   return (
     <li
+      id={anchor}
       className={styles.row}
       aria-current={status ? 'step' : undefined}
       data-correction={correction || undefined}
@@ -32,16 +35,20 @@ export function RequestRoutingRow({
 interface NodeProps {
   id: string;
   heading: string;
+  standby?: string;
   children?: ReactNode;
   status?: string;
+  showStatus?: boolean;
   correction?: boolean;
 }
 
 export function RequestRoutingNode({
   id,
   heading,
+  standby,
   children,
   status,
+  showStatus,
   correction,
 }: NodeProps) {
   return (
@@ -50,9 +57,19 @@ export function RequestRoutingNode({
       className={styles.node}
       data-correction={correction || undefined}
     >
-      <strong className={styles.nodeTitle}>{heading}</strong>
-      {children && <div className={styles.detail}>{children}</div>}
-      {status && <span className={styles.taskState}>{status}</span>}
+      {standby && <span className={styles.standby}>{standby}</span>}
+      <div
+        className={styles.nodeContent}
+        aria-hidden={standby ? true : undefined}
+      >
+        <strong className={styles.nodeTitle}>{heading}</strong>
+        {children && <div className={styles.detail}>{children}</div>}
+        {status && (
+          <span className={styles.taskState} aria-hidden={!showStatus}>
+            {status}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

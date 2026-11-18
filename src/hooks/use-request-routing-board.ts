@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, type RefObject } from 'react';
 import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
+import { routingPacket, routingPacketOpacity } from '@/lib/request-routing';
 
 type Paint = (phase: RoutingPhase, fraction: number) => void;
 
@@ -7,49 +8,11 @@ interface Anchor {
   x: number;
   top: number;
   bottom: number;
-  right: number;
-}
-
-function rim({ x, top, bottom, right }: Anchor) {
-  return `M${x} ${top} H${right - 6} q6 0 6 6 V${bottom - 6} q0 6 -6 6 H${x}`;
 }
 
 function bridge(from: Anchor, to: Anchor) {
   const middle = (from.bottom + to.top) / 2;
   return `C${from.x} ${middle} ${to.x} ${middle} ${to.x} ${to.top}`;
-}
-
-function pathFor(
-  phase: RoutingPhase,
-  fraction: number,
-  id: string,
-  first: boolean,
-  issue?: string
-): [string, number] | undefined {
-  switch (phase) {
-    case 'request':
-      return first ? ['entry', fraction] : undefined;
-    case 'judge':
-      return first ? ['entry', 1] : undefined;
-    case 'outlet':
-      return first ? ['rim', fraction] : undefined;
-    case 'route':
-      return [`in-${id}`, fraction];
-    case 'work':
-      return [`in-${id}`, 1];
-    case 'join':
-      return [`out-${id}`, fraction];
-    case 'issue':
-      return issue === id ? [`out-${id}`, 1] : undefined;
-    case 'back':
-      return issue === id ? [`out-${id}`, 1 - fraction] : undefined;
-    case 'fix':
-      return issue === id ? [`in-${id}`, 1] : undefined;
-    case 'retry':
-      return issue === id ? [`out-${id}`, fraction] : undefined;
-    case 'done':
-      return first ? ['finish', Math.min(1, fraction * 2)] : undefined;
-  }
 }
 
 export function useRequestRoutingBoard(
@@ -75,8 +38,9 @@ export function useRequestRoutingBoard(
       )
     );
     const lengths = new Map<string, number>();
-    let lastPhase: RoutingPhase = 'request';
-    let lastFraction = 0;
+    let lastPhase: RoutingPhase =
+      board.dataset.phase === 'done' ? 'done' : 'request';
+    let lastFraction = lastPhase === 'done' ? 1 : 0;
 
     function paint(phase: RoutingPhase, fraction: number) {
       lastPhase = phase;
@@ -84,7 +48,7 @@ export function useRequestRoutingBoard(
       dots.forEach((dot, index) => {
         const location =
           !reduced &&
-          pathFor(
+          routingPacket(
             phase,
             fraction,
             dot.dataset.packet!,
@@ -101,6 +65,10 @@ export function useRequestRoutingBoard(
         if (!path || !length) return;
         const point = path.getPointAtLength(length * at);
         dot.setAttribute('transform', `translate(${point.x} ${point.y})`);
+        dot.setAttribute(
+          'opacity',
+          String(routingPacketOpacity(phase, fraction, Boolean(request.issue)))
+        );
         dot.removeAttribute('display');
       });
     }
@@ -119,7 +87,6 @@ export function useRequestRoutingBoard(
         const box = node.getBoundingClientRect();
         anchors.set(node.dataset.node!, {
           x: box.left - origin.left + box.width / 2,
-          right: box.right - origin.left,
           top: box.top - origin.top,
           bottom: box.bottom - origin.top,
         });
@@ -128,7 +95,6 @@ export function useRequestRoutingBoard(
       const review = anchors.get('review')!;
       const result = anchors.get('result')!;
       setPath('entry', `M${judge.x} 0V${judge.top}`);
-      setPath('rim', rim(judge));
       for (const id of Object.keys(request.jobs)) {
         const node = anchors.get(id)!;
         setPath(
@@ -139,10 +105,8 @@ export function useRequestRoutingBoard(
           `join-${id}`,
           `M${node.x} ${node.bottom}` + bridge(node, review)
         );
-        setPath(`out-${id}`, rim(node) + bridge(node, review));
       }
       setPath('exit', `M${review.x} ${review.bottom}` + bridge(review, result));
-      setPath('finish', rim(review) + bridge(review, result));
       paint(lastPhase, lastFraction);
     }
 
