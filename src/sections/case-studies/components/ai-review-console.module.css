@@ -1,5 +1,6 @@
 .decisions {
   grid-area: decisions;
+  container-type: inline-size;
   min-width: 0;
 }
 .label,
@@ -171,6 +172,12 @@
   .stages {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 32px;
+  }
+}
+@container (max-width: 340px) {
+  .outcomes:has(> :nth-child(4)) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 480px) {

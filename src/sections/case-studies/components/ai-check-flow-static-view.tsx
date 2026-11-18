@@ -53,7 +53,12 @@ export function WorkflowTextView({
                 </Text>
                 <Text>
                   {request.stages[issue.source].label} →{' '}
-                  {request.stages[issue.target].label}. {issue.reason}
+                  {issue.owner
+                    ? request.workers?.find(
+                        (worker) => worker.id === issue.owner
+                      )?.label + ' 담당'
+                    : request.stages[issue.target].label}
+                  . {issue.reason}
                 </Text>
               </ListItem>
             ))}

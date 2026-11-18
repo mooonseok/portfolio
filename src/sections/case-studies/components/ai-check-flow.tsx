@@ -24,16 +24,23 @@ export function AiCheckLoop() {
       ).slice(1),
     [selection]
   );
-  const { index, playing, finished, toggle, pathRef, dotRef } =
-    useWorkflowCircuit(route, reduced);
+  const { index, playing, finished, toggle, tracks } = useWorkflowCircuit(
+    route,
+    reduced
+  );
   const active = route[index];
   const returning = active < route[index - 1];
+  const repair = Boolean(issue && index > route.indexOf(issue.source));
+  const worker = request.workers?.find((item) => item.id === issue?.owner);
+  const fixing = returning && worker;
   const note =
     returning && issue
       ? issue.label + ' 발견 · ' + issue.reason
-      : issue && active === issue.source && index > route.indexOf(active)
-        ? circuitCopy.review
-        : request.stages[active].body;
+      : repair && worker && issue && active === issue.target + 1
+        ? `${worker.label} 담당의 수정본을 합칩니다. 다른 두 담당의 작업은 완료된 상태로 이어집니다.`
+        : issue && active === issue.source && index > route.indexOf(active)
+          ? circuitCopy.review
+          : request.stages[active].body;
   const playLabel = finished
     ? circuitCopy.replay
     : reduced
@@ -47,7 +54,14 @@ export function AiCheckLoop() {
       lanes={workflows}
       request={request}
       result={result}
-      onRequest={(next) => setSelection({ request: next, result })}
+      onRequest={(next) =>
+        setSelection({
+          request: next,
+          result: issue
+            ? Math.min(result, next.issues.length - 1)
+            : next.issues.length,
+        })
+      }
       onResult={(next) => setSelection({ request, result: next })}
       onPlay={toggle}
       {...{
@@ -55,12 +69,17 @@ export function AiCheckLoop() {
         note,
         active,
         returning,
+        statusTitle: fixing ? issue?.label : undefined,
+        statusOwner: fixing ? `${worker.label} 담당 수정 중` : undefined,
+        owner: issue?.owner,
+        repair,
         source: issue?.source,
         target: issue?.target,
         playLabel,
         finished,
-        pathRef,
-        dotRef,
+        pathRef: tracks[0].pathRef,
+        dotRef: tracks[0].dotRef,
+        extraTracks: tracks.slice(1),
       }}
     />
   );

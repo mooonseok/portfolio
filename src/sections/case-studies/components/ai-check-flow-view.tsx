@@ -1,4 +1,4 @@
-import type { RefCallback } from 'react';
+import type { WorkflowCircuitProps } from '@/components/atoms/workflow-circuit';
 import { Box } from '@/components/atoms/box';
 import { Button } from '@/components/atoms/button';
 import { Heading } from '@/components/atoms/heading';
@@ -11,7 +11,7 @@ import { WorkflowTextView } from './ai-check-flow-static-view';
 import styles from './ai-check-flow.module.css';
 import consoleStyles from './ai-review-console.module.css';
 
-interface Props {
+interface Props extends Omit<WorkflowCircuitProps, 'lane' | 'lanes'> {
   lanes: WorkflowRequest[];
   request: WorkflowRequest;
   copy: {
@@ -25,15 +25,11 @@ interface Props {
     escalation: string;
   };
   result: number;
-  active: number;
-  returning: boolean;
-  source?: number;
-  target?: number;
+  statusTitle?: string;
+  statusOwner?: string;
   note: string;
   playLabel: string;
   finished: boolean;
-  pathRef: RefCallback<SVGPathElement>;
-  dotRef: RefCallback<SVGGElement>;
   onRequest: (request: WorkflowRequest) => void;
   onResult: (result: number) => void;
   onPlay: () => void;
@@ -45,6 +41,8 @@ export function AiCheckFlowView({
   copy,
   result,
   note,
+  statusTitle,
+  statusOwner,
   playLabel,
   finished,
   onRequest,
@@ -95,7 +93,7 @@ export function AiCheckFlowView({
         >
           {choices.map((label, index) => (
             <Button
-              key={index}
+              key={label}
               aria-pressed={index === result}
               onClick={() => onResult(index)}
             >
@@ -116,10 +114,10 @@ export function AiCheckFlowView({
         >
           <Box className={consoleStyles.byline}>
             <Text as={TAG.SPAN} className={consoleStyles.stage}>
-              {stage.label}
+              {statusTitle ?? stage.label}
             </Text>
             <Text as={TAG.SPAN} className={consoleStyles.owner}>
-              {stage.owner}
+              {statusOwner ?? stage.owner}
             </Text>
           </Box>
           <Text className={consoleStyles.description}>{note}</Text>

@@ -50,6 +50,10 @@ const developmentIcons = [
     <rect x='-15' y='-10' width='30' height='20' rx='2' />
     <path d='m-6-3-4 4 4 4m12-8 4 4-4 4M2-4-2 6' fill='none' />
   </>,
+  <g key='join' fill='none'>
+    <path d='M-12-10v4L0 1l12-7v-4M0-10v20' />
+    <circle cy='2' r='2.4' />
+  </g>,
   <>
     <rect x='-15' y='-10' width='30' height='20' rx='2' />
     <path d='m-11-4 2 2 3-4M-3-4h13m-21 8 2 2 3-4M-3 4h10' fill='none' />

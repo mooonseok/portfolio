@@ -81,6 +81,11 @@ export const workflows: WorkflowRequest[] = [
   {
     id: 'feature',
     label: '개발',
+    workers: [
+      { id: 'screen', label: '화면' },
+      { id: 'data', label: '데이터' },
+      { id: 'motion', label: '모션' },
+    ],
     stages: [
       {
         label: '요청 확인',
@@ -98,9 +103,14 @@ export const workflows: WorkflowRequest[] = [
         body: '화면과 데이터가 주고받을 값부터 맞춥니다. 필요한 일만 화면·데이터·모션 담당으로 나누고 각자 고칠 파일을 정합니다.',
       },
       {
-        label: '구현·연결',
-        owner: '구현 담당',
-        body: '서로 기다릴 필요가 없는 작업은 동시에 진행합니다. 담당별로 확인한 결과를 모아 한 화면에서 연결합니다.',
+        label: '병렬 작업',
+        owner: '화면·데이터·모션 담당',
+        body: '화면 담당은 버튼과 배치를, 데이터 담당은 화면에 보낼 값을, 모션 담당은 선택할 때의 움직임을 만듭니다. 세 담당이 동시에 작업합니다.',
+      },
+      {
+        label: '결과 합류',
+        owner: '작업을 취합하는 담당',
+        body: '세 작업이 모두 끝나면 한 화면에 연결해 검사합니다. 문제가 생기면 해당 담당만 고칩니다. 나머지 두 작업은 완료 상태로 두고 수정본을 합쳐 다시 검사합니다.',
       },
       {
         label: '자동 검사',
@@ -121,19 +131,30 @@ export const workflows: WorkflowRequest[] = [
     issues: [
       {
         id: 'implementation',
-        label: '동작 오류',
-        source: 5,
+        label: '화면 오류',
+        source: 6,
         target: 3,
+        owner: 'screen',
         reason:
-          '누른 버튼과 다른 결과가 나왔습니다. 재현 순서를 구현 담당에게 넘기고 수정한 버전에서 다시 눌러봅니다.',
+          '버튼을 눌러도 상세 화면이 열리지 않았습니다. 화면 담당이 버튼 동작을 고치면 같은 버튼을 다시 눌러 봅니다.',
       },
       {
         id: 'contract',
-        label: '연결 불일치',
-        source: 4,
-        target: 2,
+        label: '데이터 오류',
+        source: 5,
+        target: 3,
+        owner: 'data',
         reason:
-          '데이터가 보내는 값과 화면이 기대하는 값의 형식이 다릅니다. 두 담당이 형식을 다시 맞춘 뒤 연결합니다.',
+          '응답에서 화면에 필요한 값이 빠졌습니다. 데이터 담당이 응답을 고치면 같은 입력으로 값을 다시 확인합니다.',
+      },
+      {
+        id: 'animation',
+        label: '모션 오류',
+        source: 6,
+        target: 3,
+        owner: 'motion',
+        reason:
+          '움직임 줄이기를 켜도 전환 효과가 재생됐습니다. 모션 담당이 재생 조건을 고치면 같은 설정에서 다시 확인합니다.',
       },
     ],
   },

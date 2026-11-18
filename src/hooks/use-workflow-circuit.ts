@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { MEDIA } from '@/constants/breakpoint';
 
 const forwardMs = 830;
@@ -9,6 +9,43 @@ const arrivalMs = 740;
 
 function initialPlayback(route: number[], reduced: boolean) {
   return { route, reduced, index: 0, playing: !reduced, finished: false };
+}
+
+function createTrack() {
+  let path: SVGPathElement | null = null;
+  let dot: SVGGElement | null = null;
+  let observer: MutationObserver | undefined;
+  let length = 0;
+  let progress = 0;
+
+  function position() {
+    if (!path || !dot || !length) return;
+    const { x, y } = path.getPointAtLength(length * progress);
+    dot.setAttribute('transform', `translate(${x} ${y})`);
+  }
+
+  return {
+    pathRef(node: SVGPathElement | null) {
+      observer?.disconnect();
+      path = node;
+      if (!node) return;
+      const measure = () => {
+        length = node.getTotalLength();
+        position();
+      };
+      measure();
+      observer = new MutationObserver(measure);
+      observer.observe(node, { attributes: true, attributeFilter: ['d'] });
+    },
+    dotRef(node: SVGGElement | null) {
+      dot = node;
+      position();
+    },
+    draw(fraction: number) {
+      progress = fraction;
+      position();
+    },
+  };
 }
 
 export function useWorkflowCircuit(route: number[], reduced: boolean) {
@@ -25,51 +62,17 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
   const travelMs = route[index] < route[index - 1] ? returnMs : forwardMs;
   const elapsed = useRef(0);
   const progress = useRef(0);
-  const path = useRef<SVGPathElement | null>(null);
-  const length = useRef(0);
-  const dot = useRef<SVGGElement | null>(null);
-  const observer = useRef<MutationObserver | null>(null);
-
-  const draw = useCallback(() => {
-    if (!path.current || !dot.current || !length.current) return;
-    const { x, y } = path.current.getPointAtLength(
-      length.current * progress.current
-    );
-    dot.current.setAttribute('transform', `translate(${x} ${y})`);
-  }, []);
-
-  const pathRef = useCallback(
-    (node: SVGPathElement | null) => {
-      observer.current?.disconnect();
-      path.current = node;
-      if (!node) return;
-      const measure = () => {
-        length.current = node.getTotalLength();
-        draw();
-      };
-      measure();
-      observer.current = new MutationObserver(measure);
-      observer.current.observe(node, {
-        attributes: true,
-        attributeFilter: ['d'],
-      });
-    },
-    [draw]
-  );
-
-  const dotRef = useCallback(
-    (node: SVGGElement | null) => {
-      dot.current = node;
-      draw();
-    },
-    [draw]
-  );
+  const [tracks] = useState(() => [
+    createTrack(),
+    createTrack(),
+    createTrack(),
+  ]);
 
   useLayoutEffect(() => {
     elapsed.current = 0;
     progress.current = reduced ? 1 : 0;
-    draw();
-  }, [draw, index, reduced, route]);
+    tracks.forEach((track) => track.draw(progress.current));
+  }, [tracks, index, reduced, route]);
 
   useLayoutEffect(() => {
     if (!playing || reduced || window.matchMedia(MEDIA.REDUCED_MOTION).matches)
@@ -82,7 +85,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
       const fraction = Math.min(1, elapsed.current / travelMs);
       if (progress.current !== fraction) {
         progress.current = fraction;
-        draw();
+        tracks.forEach((track) => track.draw(fraction));
       }
       if (elapsed.current < travelMs + arrivalMs) {
         frame = requestAnimationFrame(tick);
@@ -111,7 +114,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
       cancelAnimationFrame(frame);
       document.removeEventListener('visibilitychange', visibility);
     };
-  }, [draw, index, lastIndex, playing, reduced, route, travelMs]);
+  }, [tracks, index, lastIndex, playing, reduced, route, travelMs]);
 
   function toggle() {
     setSnapshot((current) => {
@@ -122,5 +125,5 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
     });
   }
 
-  return { index, playing, finished, toggle, pathRef, dotRef };
+  return { index, playing, finished, toggle, tracks };
 }

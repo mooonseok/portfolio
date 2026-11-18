@@ -1,3 +1,5 @@
+export type WorkflowOwner = 'screen' | 'data' | 'motion';
+
 export interface WorkflowStage {
   label: string;
   owner: string;
@@ -9,6 +11,7 @@ export interface WorkflowIssue {
   label: string;
   source: number;
   target: number;
+  owner?: WorkflowOwner;
   reason: string;
 }
 
@@ -16,5 +19,6 @@ export interface WorkflowRequest {
   id: string;
   label: string;
   stages: WorkflowStage[];
+  workers?: { id: WorkflowOwner; label: string }[];
   issues: WorkflowIssue[];
 }

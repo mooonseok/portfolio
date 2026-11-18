@@ -1,19 +1,36 @@
 import type { RefCallback } from 'react';
+import type { WorkflowOwner, WorkflowRequest } from '@/dto/ai-workflow.dto';
+import { DevelopmentCircuit } from './development-circuit';
 import { WorkflowCircuitIcon } from './workflow-circuit-icons';
 import styles from './workflow-circuit.module.css';
 
-export interface WorkflowCircuitProps {
-  lanes: { id: string; label: string; stages: { label: string }[] }[];
+export interface CircuitTrack {
+  pathRef: RefCallback<SVGPathElement>;
+  dotRef: RefCallback<SVGGElement>;
+}
+
+export interface WorkflowCircuitProps extends CircuitTrack {
+  lanes: WorkflowRequest[];
+  owner?: WorkflowOwner;
+  repair: boolean;
+  extraTracks: readonly CircuitTrack[];
   lane: string;
   source?: number;
   target?: number;
   active: number;
   returning: boolean;
-  pathRef: RefCallback<SVGPathElement>;
-  dotRef: RefCallback<SVGGElement>;
 }
 
-export function WorkflowCircuit({
+export function WorkflowCircuit(
+  props: WorkflowCircuitProps & { width: number }
+) {
+  const selected = props.lanes.find((request) => request.id === props.lane);
+  if (selected?.workers?.length)
+    return <DevelopmentCircuit {...props} request={selected} />;
+  return <DesignCircuit {...props} />;
+}
+
+function DesignCircuit({
   lanes,
   lane,
   source,

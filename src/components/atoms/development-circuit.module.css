@@ -1,0 +1,99 @@
+.chart {
+  display: block;
+  width: 100%;
+  color: var(--circuit-development);
+  text-rendering: optimizeLegibility;
+}
+
+.track,
+.feedback {
+  fill: none;
+  stroke: color-mix(in srgb, currentColor 40%, var(--circuit-ground));
+  stroke-width: 1.4px;
+  stroke-linejoin: round;
+}
+
+.track[data-current='true'],
+.track [data-current='true'] {
+  stroke: currentColor;
+  stroke-width: 1.8px;
+}
+
+.feedback {
+  stroke: var(--circuit-return);
+  stroke-opacity: 0.56;
+  stroke-dasharray: 3 4;
+}
+
+.feedback[data-current='true'] {
+  stroke-opacity: 1;
+}
+
+.originText {
+  fill: var(--subtle);
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.origin,
+.stage rect[data-rim],
+.worker rect {
+  fill: var(--circuit-ground);
+  stroke: var(--hairline);
+}
+
+.origin {
+  stroke: currentColor;
+}
+
+.stage text,
+.workerName {
+  fill: var(--ink);
+  font-size: 14px;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+.icon {
+  fill: var(--circuit-ground);
+  stroke: currentColor;
+}
+
+.stage[data-active='true'] rect[data-rim],
+.worker[data-active='true'] rect {
+  fill: color-mix(in srgb, currentColor 9%, var(--circuit-ground));
+  stroke: currentColor;
+  stroke-width: 1.8px;
+}
+
+.worker rect {
+  stroke: color-mix(in srgb, currentColor 34%, var(--circuit-ground));
+}
+
+.workerName {
+  font-size: 16px;
+}
+
+.workerState {
+  fill: var(--subtle);
+  font-size: 12px;
+}
+
+.worker[data-state='working'] .workerState,
+.worker[data-state='repairing'] .workerState,
+.worker[data-state='done'] .workerState {
+  fill: currentColor;
+}
+
+.worker[data-state='repairing'] {
+  color: var(--circuit-return);
+}
+
+.packet {
+  fill: currentColor;
+  pointer-events: none;
+}
+
+.packet[data-returning='true'] {
+  fill: var(--circuit-return);
+}
