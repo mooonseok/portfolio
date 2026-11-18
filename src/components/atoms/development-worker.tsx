@@ -4,6 +4,7 @@ import styles from './development-circuit.module.css';
 interface Props {
   id: WorkflowOwner;
   label: string;
+  task: string;
   x: number;
   y: number;
   width: number;
@@ -23,6 +24,7 @@ const stateNames = {
 export function DevelopmentWorker({
   id,
   label,
+  task,
   x,
   y,
   width,
@@ -58,10 +60,13 @@ export function DevelopmentWorker({
         height={height}
         rx='6'
       />
-      <text className={styles.workerName} y='-2'>
+      <text className={styles.workerName} y='-12'>
         {label}
       </text>
-      <text className={styles.workerState} y='15'>
+      <text className={styles.workerTask} y='6'>
+        {task}
+      </text>
+      <text className={styles.workerState} y='23'>
         {stateNames[state]}
       </text>
     </g>

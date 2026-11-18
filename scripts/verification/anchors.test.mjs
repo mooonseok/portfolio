@@ -70,6 +70,13 @@ test('ai: the request workflow precedes the illustrated plaza case', () => {
   const example = html.indexOf('id="plaza-case"');
   assert.ok(workflow >= 0 && example > workflow);
   assert.ok(!html.slice(workflow, example).includes('블로그 자동화'));
+  const visibleCase = html.slice(example, html.indexOf('<details', example));
+  const steps = [...visibleCase.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)];
+  assert.equal(steps.length, 4);
+  for (const [index, label] of ['발견', '수정', '재검사', '종료'].entries())
+    assert.ok(steps[index][1].includes(label));
+  assert.match(steps[0][1], /겹침 5건/);
+  assert.match(steps[2][1], /겹침 0건/);
   for (const state of ['overlap', 'fixed']) {
     assert.ok(html.indexOf(`data-state="${state}"`) > example);
   }

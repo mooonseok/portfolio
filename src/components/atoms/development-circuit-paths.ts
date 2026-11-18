@@ -12,7 +12,7 @@ export function developmentPaths(
     : [34, 79, 141, 245, 347, 413, 479, 545];
   const radius = compact ? 16 : 19;
   const half = compact ? 56 : 69;
-  const workerHeight = compact ? 24 : 29;
+  const workerHeight = compact ? 34 : 37;
   const spread = Math.min(194, (width - 20) / 3);
   const workerWidth = Math.min(spread - 12, 138);
   const side = ownerIndex === 0 ? -1 : 1;

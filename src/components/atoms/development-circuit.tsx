@@ -51,8 +51,11 @@ export function DevelopmentCircuit({
     >
       <title id='development-title'>개발 요청의 분담과 합류</title>
       <desc id='development-description'>
-        화면, 데이터, 모션 담당이 동시에 작업합니다. 세 결과를 모아 검사하고,
-        문제가 나오면 해당 담당만 수정해 다시 합류합니다.
+        {workers
+          .map((worker) => worker.label + ' 담당은 ' + worker.task)
+          .join(', ')}
+        . 세 결과를 모아 검사하고, 문제가 나오면 해당 담당만 수정해 다시
+        합류합니다.
       </desc>
       {plainStages.map(({ i, label }) => {
         if (i === 4) return null;
@@ -139,6 +142,7 @@ export function DevelopmentCircuit({
           key={worker.id}
           id={worker.id}
           label={worker.label}
+          task={worker.task}
           x={paths.xFor(i)}
           y={rows[3]}
           width={workerWidth}

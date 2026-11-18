@@ -18,7 +18,8 @@ export interface WorkflowIssue {
 export interface WorkflowRequest {
   id: string;
   label: string;
+  example?: string;
   stages: WorkflowStage[];
-  workers?: { id: WorkflowOwner; label: string }[];
+  workers?: { id: WorkflowOwner; label: string; task: string }[];
   issues: WorkflowIssue[];
 }

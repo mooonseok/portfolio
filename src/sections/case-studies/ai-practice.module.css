@@ -30,11 +30,35 @@
   line-height: 1.32;
   letter-spacing: -0.035em;
 }
-.caseCopy {
-  max-width: 44em;
+.caseSteps {
+  display: grid;
+  list-style: none;
+  word-break: keep-all;
+}
+.caseStep {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  padding-block: 12px;
+  border-top: 1px solid var(--dark-line);
+}
+.stepLabel {
   color: var(--subtle);
-  font-size: clamp(15px, 1.25vw, 17px);
-  line-height: 1.75;
+  font-size: 13px;
+  font-weight: 550;
+}
+.stepResult {
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.35;
+}
+.stepDetail {
+  margin-top: 4px;
+  color: var(--subtle);
+  font-size: 15px;
+  line-height: 1.55;
 }
 .disclosure {
   display: inline-flex;
@@ -60,16 +84,14 @@
   transform: rotate(225deg) translate(-1px, -1px);
 }
 @media (min-width: 744px) {
-  .case {
-    grid-template-columns: minmax(170px, 0.78fr) minmax(0, 1.65fr);
-    column-gap: clamp(24px, 5vw, 70px);
+  .caseSteps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 32px);
   }
-}
-
-@media (min-width: 860px) {
-  .case {
-    grid-template-columns: var(--ai-columns);
-    column-gap: var(--ai-gap);
+  .caseStep {
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: 8px;
   }
 }
 @media (max-width: 480px) {

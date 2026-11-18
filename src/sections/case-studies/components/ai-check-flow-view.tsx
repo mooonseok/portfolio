@@ -61,7 +61,9 @@ export function AiCheckFlowView({
         <Heading id={AI_LOOP_TITLE_ID} level={HEADING.H1}>
           {copy.title}
         </Heading>
-        <Text className={styles.introduction}>{copy.introduction}</Text>
+        <Text className={styles.introduction}>
+          {request.example ?? copy.introduction}
+        </Text>
         <Box className={styles.tabs} role='group' aria-label={copy.controls}>
           {lanes.map((item) => (
             <Button

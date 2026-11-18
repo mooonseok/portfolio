@@ -1,9 +1,10 @@
 import { Box } from '@/components/atoms/box';
 import { Heading } from '@/components/atoms/heading';
+import { List, ListItem } from '@/components/atoms/list';
 import { Text } from '@/components/atoms/text';
 import { GROUP_ID } from '@/constants/case';
 import { PLAZA_EXAMPLE } from '@/constants/ai-practice';
-import { HEADING, TAG } from '@/constants/tag';
+import { HEADING, LIST_TAG, TAG } from '@/constants/tag';
 import { plazaCase } from '@/content/ai-plaza-case';
 import styles from '../ai-practice.module.css';
 import { AiPlazaExample } from './ai-plaza-example';
@@ -27,7 +28,19 @@ export function AiPlazaCase() {
         </Heading>
       </Box>
       <Box>
-        <Text className={styles.caseCopy}>{plazaCase.summary}</Text>
+        <List as={LIST_TAG.OL} role='list' className={styles.caseSteps}>
+          {plazaCase.steps.map((step) => (
+            <ListItem key={step.label} className={styles.caseStep}>
+              <Text as={TAG.SPAN} className={styles.stepLabel}>
+                {step.label}
+              </Text>
+              <Box>
+                <Text className={styles.stepResult}>{step.result}</Text>
+                <Text className={styles.stepDetail}>{step.detail}</Text>
+              </Box>
+            </ListItem>
+          ))}
+        </List>
         <Box as={TAG.DETAILS} className='mt-3'>
           <Text as={TAG.SUMMARY} className={styles.disclosure}>
             {plazaCase.evidence}
