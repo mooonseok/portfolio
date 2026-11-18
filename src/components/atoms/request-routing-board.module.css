@@ -1,58 +1,171 @@
 .board {
-  display: block;
-  width: 100%;
-  height: 367px;
-  font-family: inherit;
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  margin: 0 var(--panel-inset);
+  --node-fill: var(--circuit-ground);
 }
-.wires {
-  fill: none;
-  stroke: var(--hairline);
-  stroke-width: 1.2;
-  stroke-linecap: round;
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 20px 0 16px;
+  display: grid;
+  gap: 24px;
 }
-.wires [data-active='true'] {
-  stroke: var(--routing-accent);
-  stroke-width: 1.65;
+.row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
 }
-.wires [data-repair='true'] {
-  stroke: var(--circuit-return);
-  stroke-width: 1.8;
-  stroke-dasharray: 3 5;
+.stageName {
+  color: var(--subtle);
+  font-size: 13px;
+  font-weight: 480;
+  display: grid;
+  justify-items: start;
+  gap: 2px;
 }
-.node rect {
-  fill: var(--circuit-ground);
-  stroke: var(--hairline);
-}
-.node[data-state='active'] rect,
-.node[data-state='repair'] rect {
-  stroke: currentColor;
-  fill: color-mix(in srgb, currentColor 7%, var(--circuit-ground));
-}
-.node[data-state='active'] {
+.stageName strong {
   color: var(--routing-accent);
+  font-size: 12px;
 }
-.node[data-state='repair'] {
+.row[aria-current='step'] .stageName > span {
+  color: var(--ink);
+}
+.body {
+  display: grid;
+  justify-items: stretch;
+  min-width: 0;
+}
+.node {
+  position: relative;
+  display: grid;
+  place-content: center;
+  justify-self: center;
+  width: min(100%, 390px);
+  min-height: 46px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--node-fill);
+  padding: 8px 12px;
+  color: var(--ink);
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.nodeTitle {
+  font-size: 15px;
+  font-weight: 620;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+.node[data-node='judge'],
+.node[data-node='result'] {
+  min-height: 60px;
+}
+.row[aria-current='step'] .node:not(:has(.taskState)),
+.row[aria-current='step'] .node[data-correction='true'] {
+  border-color: var(--routing-accent);
+}
+.node[data-node='result'] {
+  border-style: dashed;
+}
+.row[aria-current='step'] .node[data-node='result'] {
+  border-style: solid;
+  background: color-mix(in srgb, var(--routing-accent) 5%, var(--node-fill));
+}
+.detail,
+.taskState {
+  font-size: 13px;
+  color: var(--subtle);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+.detail:empty {
+  display: none;
+}
+.taskState {
+  font-size: 12px;
+}
+.node[data-correction='true'] .taskState,
+.row[data-correction='true'] .stageName strong,
+.finding {
   color: var(--circuit-return);
 }
-.label {
-  fill: var(--ink);
-  font-size: 17px;
-  font-weight: 580;
-  letter-spacing: -0.04em;
+.row[aria-current='step'] .node[data-correction='true'] {
+  border-color: var(--circuit-return);
 }
-.detail {
-  fill: var(--subtle);
-  font-size: 12px;
-  letter-spacing: -0.025em;
+.workers {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 8px;
 }
-.node[data-state='active'] .detail,
-.node[data-state='repair'] .detail {
-  fill: currentColor;
+.workers .node {
+  width: 100%;
+  min-height: 59px;
+  padding-inline: 6px;
 }
-.dots {
-  fill: var(--routing-accent);
-  pointer-events: none;
+.workers[data-count='1'] .node {
+  max-width: 390px;
 }
-.dots[data-repair='true'] {
-  fill: var(--circuit-return);
+.sample del {
+  color: var(--subtle);
+  margin-right: 0.5em;
+}
+.input {
+  display: inline-block;
+  border: 1px solid var(--hairline);
+  padding: 0 6px;
+  margin-right: 4px;
+  border-radius: 3px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.finding {
+  display: block;
+}
+@container (max-width: 520px) {
+  .rows {
+    gap: 15px;
+    padding-top: 9px;
+  }
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+  }
+  .stageName {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-self: start;
+    background: var(--node-fill);
+  }
+  .workers {
+    gap: 5px;
+  }
+  .node {
+    padding: 7px 8px;
+  }
+  .nodeTitle {
+    font-size: 14px;
+  }
+  .detail {
+    font-size: 12.5px;
+  }
+}
+.workSlot {
+  position: relative;
+}
+.pending {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--subtle);
+  font-size: 13px;
+}
+.workers[aria-hidden='true'] {
+  visibility: hidden;
 }

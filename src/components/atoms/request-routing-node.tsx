@@ -1,41 +1,58 @@
-import type { RoutingTarget } from '@/dto/request-routing.dto';
+import type { ReactNode } from 'react';
 import styles from './request-routing-board.module.css';
 
-interface Props {
-  x: number;
-  y: number;
-  width: number;
-  title: string;
-  detail: string;
-  active: boolean;
-  repair?: boolean;
-  worker?: RoutingTarget;
+interface RowProps {
+  label: string;
+  status?: string;
+  correction?: boolean;
+  children: ReactNode;
+}
+
+export function RequestRoutingRow({
+  label,
+  status,
+  correction,
+  children,
+}: RowProps) {
+  return (
+    <li
+      className={styles.row}
+      aria-current={status ? 'step' : undefined}
+      data-correction={correction || undefined}
+    >
+      <div className={styles.stageName}>
+        <span>{label}</span>
+        {status && <strong>{status}</strong>}
+      </div>
+      <div className={styles.body}>{children}</div>
+    </li>
+  );
+}
+
+interface NodeProps {
+  id: string;
+  heading: string;
+  children?: ReactNode;
+  status?: string;
+  correction?: boolean;
 }
 
 export function RequestRoutingNode({
-  x,
-  y,
-  width,
-  title,
-  detail,
-  active,
-  repair,
-  worker,
-}: Props) {
+  id,
+  heading,
+  children,
+  status,
+  correction,
+}: NodeProps) {
   return (
-    <g
+    <div
+      data-node={id}
       className={styles.node}
-      transform={`translate(${x} ${y})`}
-      data-worker={worker}
-      data-state={repair ? 'repair' : active ? 'active' : 'waiting'}
+      data-correction={correction || undefined}
     >
-      <rect x={-width / 2} width={width} height={worker ? 58 : 56} rx='7' />
-      <text className={styles.label} y='23'>
-        {title}
-      </text>
-      <text className={styles.detail} y='43'>
-        {detail}
-      </text>
-    </g>
+      <strong className={styles.nodeTitle}>{heading}</strong>
+      {children && <div className={styles.detail}>{children}</div>}
+      {status && <span className={styles.taskState}>{status}</span>}
+    </div>
   );
 }

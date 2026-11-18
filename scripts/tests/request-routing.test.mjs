@@ -1,13 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { designRoutingRequests } from '../../src/content/design-routing.ts';
-import {
-  routingCaption,
-  routingRequests,
-} from '../../src/content/request-routing.ts';
+import { routingRequests } from '../../src/content/request-routing.ts';
 import { routingFrame } from '../../src/lib/request-routing.ts';
 
-const [button, panel] = routingRequests;
+const [panel, button] = routingRequests;
+const [postal, checkout] = designRoutingRequests;
 
 test('요청에서 바꿀 내용에 따라 한 담당 또는 세 담당에게 작업을 보낸다', () => {
   assert.equal(
@@ -58,7 +56,6 @@ test('점이 판단 지점에 도착해 머무른 뒤 담당 쪽으로 출발한
 });
 
 test('결제 금액은 위계와 배치를 고친 뒤 위계만 다시 보고 우편번호는 안내 문구만 검토한다', () => {
-  const [checkout, postal] = designRoutingRequests;
   assert.deepEqual(checkout.jobs, {
     hierarchy: '금액 강조',
     layout: '버튼 위 배치',
@@ -68,28 +65,28 @@ test('결제 금액은 위계와 배치를 고친 뒤 위계만 다시 보고 �
     phase: 'back',
     fraction: 0,
   });
-  assert.match(
-    routingCaption(checkout, 'fix', false),
-    /배치는 그대로 두고 할인액의 굵기를/
-  );
-  assert.match(routingCaption(checkout, 'retry', false), /같은 쿠폰/);
+  assert.match(checkout.issue.repair, /할인액의 굵기/);
+  assert.match(checkout.issue.retry, /같은 쿠폰/);
   assert.deepEqual(postal.jobs, { copy: '입력 예시 작성' });
   assert.equal(postal.issue, undefined);
   assert.equal(routingFrame(postal, 10000).phase, 'done');
 });
 
-test('디자인 예시를 정지한 상태에서도 변경 이유와 구체적인 수정 내용을 읽는다', () => {
-  const [checkout, postal] = designRoutingRequests;
-  const summary = routingCaption(checkout, 'work', true);
-  assert.ok(summary.includes(checkout.decision));
-  assert.ok(summary.includes(checkout.issue.repair));
-  assert.match(routingCaption(postal, 'work', true), /우편번호 다섯 자리/);
+test('우편번호 안내는 입력값과 변경 전후의 문구로 확인한다', () => {
+  assert.deepEqual(postal.sample, {
+    input: '1234',
+    before: '형식 오류',
+    after: '우편번호 다섯 자리를 입력해 주세요',
+  });
+  assert.ok(postal.review.includes(postal.sample.input));
+  assert.ok(postal.work.includes(postal.sample.after));
+  assert.match(postal.proof, /네 자리/);
 });
 
 test('문제가 없는 요청은 검토에서 끝나고, 데이터 오류는 데이터 담당에게만 돌아간다', () => {
   assert.equal(button.issue, undefined);
   assert.equal(routingFrame(button, 10000).phase, 'done');
-  assert.equal(routingFrame(button, 12200), null);
+  assert.deepEqual(routingFrame(button, 12200), { phase: 'done', fraction: 1 });
   assert.equal(panel.issue.owner, 'data');
   assert.ok(panel.jobs[panel.issue.owner]);
   for (const [at, phase] of [
@@ -100,13 +97,29 @@ test('문제가 없는 요청은 검토에서 끝나고, 데이터 오류는 데
     [16100, 'done'],
   ])
     assert.deepEqual(routingFrame(panel, at), { phase, fraction: 0 });
-  assert.equal(routingFrame(panel, 18500), null);
+  assert.deepEqual(routingFrame(panel, 18500), { phase: 'done', fraction: 1 });
 });
 
-test('움직임 줄이기에서도 분담 이유와 오류를 고칠 담당을 읽을 수 있다', () => {
-  assert.equal(routingCaption(button, 'work', true), button.decision);
-  const summary = routingCaption(panel, 'work', true);
-  assert.ok(summary.includes(panel.decision));
-  assert.ok(summary.includes(panel.issue.back));
-  assert.ok(summary.includes(panel.issue.retry));
+test('정지 상태에서도 모든 예시의 경로와 검사 결과를 읽고 다른 요청을 직접 선택할 수 있다', () => {
+  assert.deepEqual(
+    routingRequests.map((item) => item.label),
+    ['상세 패널', '저장 버튼 위치']
+  );
+  assert.deepEqual(
+    designRoutingRequests.map((item) => item.label),
+    ['우편번호 안내', '결제 금액 강조']
+  );
+  for (const request of [...routingRequests, ...designRoutingRequests]) {
+    assert.deepEqual(routingFrame(request, 60000), {
+      phase: 'done',
+      fraction: 1,
+    });
+    assert.ok(
+      request.decision && request.proof && request.review && request.finish
+    );
+    if (request.issue) {
+      assert.ok(request.jobs[request.issue.owner]);
+      assert.ok(request.issue.back && request.issue.retry);
+    }
+  }
 });

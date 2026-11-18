@@ -5,6 +5,7 @@ export type RoutingLane = 'development' | 'design';
 
 export interface RoutingRequest {
   id: string;
+  label: string;
   lane: RoutingLane;
   quote: string;
   reason: string;
@@ -12,6 +13,8 @@ export interface RoutingRequest {
   jobs: Partial<Record<RoutingTarget, string>>;
   route: string;
   work: string;
+  proof: string;
+  sample?: { before: string; after: string; input: string };
   review: string;
   issue?: {
     owner: RoutingTarget;

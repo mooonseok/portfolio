@@ -33,5 +33,5 @@ export function routingFrame(request: RoutingRequest, elapsed: number) {
     }
     start = end;
   }
-  return null;
+  return { phase: 'done' as const, fraction: 1 };
 }
