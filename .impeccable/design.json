@@ -296,8 +296,8 @@
       "kind": "card",
       "refersTo": "stage-node",
       "description": "선택된 요청에서 검토할 행동",
-      "html": "<div class=\"ds-stage-node\">합친 결과 검토</div>",
-      "css": ".ds-stage-node{min-height:62px;color:var(--color-ink,#f2eeff);background:#12101b;border:1px solid var(--color-hairline,#463952);border-radius:8px;padding:9px 16px;text-align:center}"
+      "html": "<div class=\"ds-stage-node\">담당별 변경을 합치고 연결 확인</div>",
+      "css": ".ds-stage-node{min-height:38px;color:var(--color-ink,#f2eeff);background:#12101b;border:1px solid var(--color-hairline,#463952);border-radius:8px;padding:6px 14px;text-align:center}"
     },
     {
       "name": "담당 업무 보기",

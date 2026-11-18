@@ -1,38 +1,106 @@
 import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
 
 export const ROUTING_PIXELS_PER_SECOND = 90;
+const CARD_HIGHLIGHT_MS = 1500;
 
 interface RoutingPosition {
+  stepIndex?: number;
   phase: RoutingPhase;
   fraction: number;
 }
 
 interface RoutingTrack {
-  steps: { phase: RoutingPhase; length: number }[];
-  length: number;
+  steps: { phase: RoutingPhase; duration: number }[];
+  duration: number;
+}
+
+function connection(phase: RoutingPhase, id: string) {
+  switch (phase) {
+    case 'prepareLink':
+      return 'prepare-link';
+    case 'route':
+      return `in-${id}`;
+    case 'handoff':
+      return `task-${id}`;
+    case 'join':
+    case 'retry':
+      return `join-${id}`;
+    case 'back':
+      return `back-${id}`;
+    case 'verifyLink':
+    case 'reverifyLink':
+      return 'verify-link';
+    case 'inspectLink':
+    case 'reinspectLink':
+      return 'inspect-link';
+    case 'decideLink':
+    case 'redecideLink':
+      return 'decide-link';
+    case 'exit':
+    case 'restart':
+      return phase;
+  }
 }
 
 export function routingTrack(
   request: RoutingRequest,
   lengths: ReadonlyMap<string, number>
 ): RoutingTrack | undefined {
-  const ids = Object.keys(request.jobs);
   const owner = request.issue?.owner;
-  const phases: RoutingPhase[] = ['judge', 'route', 'work', 'join', 'review'];
-  if (owner) phases.push('issue', 'back', 'fix', 'retry', 'recheck');
+  const id = owner ?? Object.keys(request.jobs)[0];
+  const workAndReview: RoutingPhase[] = [
+    'route',
+    'work',
+    'handoff',
+    'implement',
+    'join',
+    'gather',
+    'verifyLink',
+    'review',
+    'inspectLink',
+    'inspect',
+    'decideLink',
+  ];
+  const phases: RoutingPhase[] = [
+    'judge',
+    'prepareLink',
+    'prepare',
+    ...workAndReview,
+    'decide',
+  ];
+  if (owner) {
+    phases.push('issue', 'back', 'fix');
+    if (request.issue?.scope === 'plan') {
+      phases.push(...workAndReview);
+    } else {
+      phases.push(
+        'retry',
+        'regather',
+        'reverifyLink',
+        'recheck',
+        'reinspectLink',
+        'reinspect',
+        'redecideLink'
+      );
+    }
+    phases.push('passed');
+  }
   phases.push('exit', 'done', 'restart');
 
   const steps: RoutingTrack['steps'] = [];
   let total = 0;
   for (const phase of phases) {
-    const [edge, start, end] = routingSegment(phase, owner ?? ids[0], owner);
-    const edgeLength = lengths.get(edge);
-    if (edgeLength === undefined) return;
-    const length = edgeLength * Math.abs(end - start);
-    steps.push({ phase, length });
-    total += length;
+    const edge = connection(phase, id);
+    let duration = CARD_HIGHLIGHT_MS;
+    if (edge) {
+      const distance = lengths.get(edge);
+      if (distance === undefined || distance <= 0) return;
+      duration = (distance * 1000) / ROUTING_PIXELS_PER_SECOND;
+    }
+    steps.push({ phase, duration });
+    total += duration;
   }
-  if (total > 0) return { steps, length: total };
+  return { steps, duration: total };
 }
 
 export function advanceRoutingFrame(
@@ -40,48 +108,21 @@ export function advanceRoutingFrame(
   current: RoutingPosition,
   elapsedMs: number
 ): RoutingPosition {
-  let index = track.steps.findIndex((step) => step.phase === current.phase);
+  let index =
+    current.stepIndex ??
+    track.steps.findIndex((step) => step.phase === current.phase);
   let step = track.steps[index];
-  const travelled = (elapsedMs * ROUTING_PIXELS_PER_SECOND) / 1000;
-  let distance = current.fraction * step.length + (travelled % track.length);
-  while (distance >= step.length) {
-    distance -= step.length;
+  let elapsed = current.fraction * step.duration + (elapsedMs % track.duration);
+  while (elapsed >= step.duration) {
+    elapsed -= step.duration;
     index = (index + 1) % track.steps.length;
     step = track.steps[index];
   }
-  return { phase: step.phase, fraction: distance / step.length };
-}
-
-function routingSegment(
-  phase: RoutingPhase,
-  id: string,
-  owner?: string
-): readonly [edge: string, start: number, end: number] {
-  switch (phase) {
-    case 'judge':
-    case 'exit':
-    case 'restart':
-      return [phase, 0, 1];
-    case 'route':
-      return [`in-${id}`, 0, 1];
-    case 'work':
-      return [`work-${id}`, 0, 1];
-    case 'join':
-    case 'retry':
-      return [`join-${id}`, 0, 1];
-    case 'review':
-      return ['review', 0, owner ? 0.5 : 1];
-    case 'issue':
-      return ['review', 0.5, 0];
-    case 'back':
-      return [`join-${id}`, 1, 0];
-    case 'fix':
-      return [`fix-${id}`, 0, 1];
-    case 'recheck':
-      return ['review', 0, 1];
-    case 'done':
-      return ['result', 0, 1];
-  }
+  return {
+    stepIndex: index,
+    phase: step.phase,
+    fraction: elapsed / step.duration,
+  };
 }
 
 export function routingPacket(
@@ -91,21 +132,19 @@ export function routingPacket(
   first: boolean,
   owner?: string
 ): readonly [edge: string, position: number] | undefined {
+  const edge = connection(phase, id);
+  if (!edge) return;
   switch (phase) {
     case 'route':
-    case 'work':
+    case 'handoff':
     case 'join':
       break;
-    case 'issue':
     case 'back':
-    case 'fix':
     case 'retry':
-    case 'recheck':
       if (id !== owner) return;
       break;
     default:
       if (!first) return;
   }
-  const [edge, start, end] = routingSegment(phase, id, owner);
-  return [edge, start + fraction * (end - start)];
+  return [edge, fraction];
 }

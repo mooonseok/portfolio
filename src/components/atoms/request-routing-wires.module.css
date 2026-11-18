@@ -16,9 +16,22 @@
   stroke: var(--hairline);
   stroke-dasharray: 2 5;
 }
-.wires [data-repair='true'] [data-edge^='join-'] {
+.correction {
   stroke: var(--circuit-return);
-  stroke-dasharray: 3 3;
+  opacity: 0.67;
+  stroke-dasharray: 6 3;
+}
+.correction[data-active='true'] {
+  opacity: 1;
+  stroke-width: 2;
+}
+.source {
+  fill: var(--circuit-ground);
+  stroke: var(--circuit-return);
+}
+.arrow {
+  fill: var(--circuit-return);
+  stroke: none;
 }
 .wires[data-ended='true'] [data-edge='exit'] {
   stroke: var(--routing-accent);

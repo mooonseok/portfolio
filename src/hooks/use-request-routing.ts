@@ -1,6 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { MEDIA } from '@/constants/breakpoint';
 import type {
   RoutingPainter,
@@ -43,7 +44,7 @@ export function useRequestRouting(request: RoutingRequest) {
       if (painter && track) {
         const elapsed = last === null ? 0 : now - last;
         const next = advanceRoutingFrame(track, current, elapsed);
-        if (current.phase !== next.phase) setPhase(next.phase);
+        if (current.phase !== next.phase) flushSync(() => setPhase(next.phase));
         current = next;
         painter.paint(current.phase, current.fraction);
       }

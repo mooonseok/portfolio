@@ -64,16 +64,49 @@ test('ai: the workflow overview is the only section in the main landmark', () =>
 test('ai: the two request types lead directly to the overview', () => {
   const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
   const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)[1];
-  const buttons = [...main.matchAll(/<button\b[^>]*>([\s\S]*?)<\/button>/g)];
-  assert.deepEqual(
-    buttons.map((m) => m[1].replace(/<[^>]+>/g, '').trim()),
-    ['개발 요청', '디자인 요청']
-  );
-  for (const node of ['judge', 'review', 'result'])
+  const buttonNames = (fragment) =>
+    [...fragment.matchAll(/<button\b[^>]*>([\s\S]*?)<\/button>/g)].map(
+      (match) => match[1].replace(/<[^>]+>/g, '').trim()
+    );
+  const group = (name) =>
+    main.match(
+      new RegExp('aria-label="' + name + '"[^>]*>([\\s\\S]*?)</div>')
+    )[1];
+  assert.deepEqual(buttonNames(group('요청 유형')), [
+    '개발 요청',
+    '디자인 요청',
+  ]);
+  assert.deepEqual(buttonNames(group('검토 결과')), [
+    '통과',
+    '담당 보완',
+    '합의 변경',
+  ]);
+  assert.match(main, /<button[^>]*role="switch"[^>]*>독립 작업 있음<\/button>/);
+  assert.deepEqual(buttonNames(main), [
+    '개발 요청',
+    '디자인 요청',
+    '독립 작업 있음',
+    '통과',
+    '담당 보완',
+    '합의 변경',
+  ]);
+  for (const node of [
+    'judge',
+    'prepare',
+    'primary',
+    'support',
+    'finish-primary',
+    'finish-support',
+    'gather',
+    'review',
+    'inspect',
+    'decision',
+    'result',
+  ])
     assert.ok(main.includes(`data-node="${node}"`), node);
   assert.doesNotMatch(
     main,
-    /우편번호|배송지|블로그 초안|광장 이름표|결제 금액/
+    /우편번호|배송지|블로그 초안|광장 이름표|결제 금액|저장값|저장 버튼|버튼 가림/
   );
 });
 

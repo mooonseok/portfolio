@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import styles from './request-routing-board.module.css';
 
 interface RowProps {
-  label: string;
+  label?: string;
   status?: string;
   anchor?: string;
   correction?: boolean;
@@ -24,7 +24,7 @@ export function RequestRoutingRow({
       data-correction={correction || undefined}
     >
       <div className={styles.stageName}>
-        <span>{label}</span>
+        {label && <span>{label}</span>}
         {status && <strong>{status}</strong>}
       </div>
       <div className={styles.body}>{children}</div>
@@ -35,13 +35,17 @@ export function RequestRoutingRow({
 interface NodeProps {
   id: string;
   heading: string;
-  children: ReactNode;
+  eyebrow?: string;
+  incoming?: string;
+  children?: ReactNode;
   correction?: boolean;
 }
 
 export function RequestRoutingNode({
   id,
   heading,
+  eyebrow,
+  incoming,
   children,
   correction,
 }: NodeProps) {
@@ -51,8 +55,10 @@ export function RequestRoutingNode({
       className={styles.node}
       data-correction={correction || undefined}
     >
+      {incoming && <span className={styles.passLabel}>{incoming}</span>}
+      {eyebrow && <span className={styles.roleLabel}>{eyebrow}</span>}
       <strong className={styles.nodeTitle}>{heading}</strong>
-      <div className={styles.detail}>{children}</div>
+      {children && <div className={styles.detail}>{children}</div>}
     </div>
   );
 }

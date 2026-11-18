@@ -18,51 +18,73 @@ function connector(from: RoutingAnchor, to: RoutingAnchor) {
   );
 }
 
-function cardSide(node: RoutingAnchor, side: number, upwards = false) {
-  const { x, top, bottom, halfWidth } = node;
-  const edge = x + side * halfWidth;
-  const end = upwards ? top : bottom;
-  const radius = Math.min(7.5, halfWidth, (bottom - top) / 2);
-  const dx = side * radius;
-  const dy = upwards ? -radius : radius;
-  return (
-    `H${edge - dx}q${dx} 0 ${dx} ${dy}V${end - dy}` +
-    `Q${edge} ${end} ${edge - dx} ${end}H${x}`
+function correctionPath(
+  decision: RoutingAnchor,
+  target: RoutingAnchor,
+  side: number,
+  anchors: Iterable<RoutingAnchor>
+) {
+  const from = decision.x + side * decision.halfWidth;
+  const to = target.x + side * target.halfWidth;
+  const start = (decision.top + decision.bottom) / 2;
+  const end = (target.top + target.bottom) / 2;
+  const between = Array.from(anchors).filter(
+    (node) => node.top >= target.bottom && node.bottom <= decision.top
   );
-}
-
-function through(node: RoutingAnchor, side = -1) {
-  return `M${node.x} ${node.top}${cardSide(node, side)}`;
+  const edges = [
+    from,
+    to,
+    ...between.map((node) => node.x + side * node.halfWidth),
+  ];
+  const outside = side > 0 ? Math.max(...edges) : Math.min(...edges);
+  const rail = outside + side * 14;
+  const radius = Math.min(6, (start - end) / 2);
+  const dx = side * radius;
+  return (
+    `M${from} ${start}H${rail - dx}q${dx} 0 ${dx} ${-radius}V${end + radius}` +
+    `q0 ${-radius} ${-dx} ${-radius}H${to}`
+  );
 }
 
 export function routingTrackPaths(
   anchors: Map<string, RoutingAnchor>,
   owners: string[],
   width: number,
-  height: number
+  height: number,
+  issueOwner?: string,
+  issueScope?: 'plan' | 'work'
 ) {
   const workers = owners.map((id) => anchors.get(id)!);
   const center = (workers[0].x + workers[workers.length - 1].x) / 2;
   const judge = { ...anchors.get('judge')!, x: center };
+  const prepare = { ...anchors.get('prepare')!, x: center };
+  const gather = { ...anchors.get('gather')!, x: center };
   const review = { ...anchors.get('review')!, x: center };
+  const inspect = { ...anchors.get('inspect')!, x: center };
+  const decision = { ...anchors.get('decision')!, x: center };
   const result = { ...anchors.get('result')!, x: center };
   const paths = new Map<string, string>();
-  paths.set('judge', through(judge));
-  const halfWidth = Math.min(...workers.map((node) => node.halfWidth));
+  paths.set('prepare-link', connector(judge, prepare));
   for (const [index, id] of owners.entries()) {
-    const worker = { ...workers[index], halfWidth };
-    const side = index === 0 ? -1 : 1;
-    paths.set(`in-${id}`, connector(judge, worker));
-    paths.set(`work-${id}`, through(worker, side));
-    paths.set(`join-${id}`, connector(worker, review));
-    paths.set(
-      `fix-${id}`,
-      `M${worker.x} ${worker.bottom}${cardSide(worker, side, true)}${cardSide(worker, -side)}`
-    );
+    const worker = workers[index];
+    const finish = anchors.get(`finish-${id}`)!;
+    paths.set(`in-${id}`, connector(prepare, worker));
+    paths.set(`task-${id}`, connector(worker, finish));
+    paths.set(`join-${id}`, connector(finish, gather));
+    if (id === issueOwner) {
+      const target = issueScope === 'plan' ? prepare : finish;
+      const side =
+        issueScope !== 'plan' && workers.length > 1 && index === 0 ? -1 : 1;
+      paths.set(
+        `back-${id}`,
+        correctionPath(decision, target, side, anchors.values())
+      );
+    }
   }
-  paths.set('review', through(review));
-  paths.set('exit', connector(review, result));
-  paths.set('result', through(result));
+  paths.set('verify-link', connector(gather, review));
+  paths.set('inspect-link', connector(review, inspect));
+  paths.set('decide-link', connector(inspect, decision));
+  paths.set('exit', connector(decision, result));
 
   const top = 6;
   const bottom = height - 6;

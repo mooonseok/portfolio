@@ -21,7 +21,7 @@ export function AiCheckLoop() {
     >
       <Box className={styles.heading}>
         <Heading id={AI_LOOP_TITLE_ID} level={HEADING.H1}>
-          AI와 일하는 방식
+          AI 작업 지침
         </Heading>
         <Box className={styles.tabs} role='group' aria-label='요청 유형'>
           <Button

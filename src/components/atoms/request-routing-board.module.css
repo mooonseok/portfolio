@@ -8,28 +8,43 @@
 .rows {
   list-style: none;
   margin: 0;
-  padding: 26px 22px 26px 0;
+  padding: 22px 32px 22px 0;
   display: grid;
-  gap: 30px;
+  gap: 10px;
 }
 .row {
   display: grid;
   grid-template-columns: 84px minmax(0, 1fr);
-  gap: 10px;
+  gap: 20px;
   align-items: center;
+}
+.row:has([data-node='primary']),
+.row:has([data-node='gather']),
+.row:has([data-node='review']),
+.row:has([data-node='result']) {
+  margin-top: 10px;
 }
 .stageName {
   color: var(--subtle);
   font-size: 13px;
   font-weight: 500;
   display: grid;
+  grid-template-rows: 16px 14px;
   align-content: center;
   justify-items: start;
-  gap: 2px;
+  gap: 1px;
+  line-height: 16px;
 }
 .stageName strong {
+  grid-row: 2;
   color: var(--routing-accent);
   font-size: 12px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.stageName strong:only-child {
+  grid-row: 1 / 3;
+  align-self: center;
 }
 .row[aria-current='step'] .stageName > span {
   color: var(--routing-accent);
@@ -44,15 +59,29 @@
   align-content: center;
   justify-self: center;
   width: min(100%, 326px);
-  min-height: 62px;
+  min-height: 38px;
   border: 1px solid var(--hairline);
   border-radius: 8px;
   background: var(--node-fill);
-  padding: 9px 16px;
+  padding: 6px 14px;
   color: var(--ink);
   text-align: center;
   word-break: keep-all;
   overflow-wrap: anywhere;
+}
+.roleLabel {
+  color: var(--subtle);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.passLabel {
+  position: absolute;
+  left: calc(50% + 8px);
+  bottom: calc(100% + 2px);
+  color: var(--routing-accent);
+  font-size: 11px;
+  line-height: 16px;
 }
 .nodeTitle {
   font-size: 15px;
@@ -63,20 +92,28 @@
 .row[aria-current='step']:not([data-correction]) .node,
 .row[aria-current='step'] .node[data-correction='true'] {
   border-color: var(--routing-accent);
+  background: color-mix(in srgb, var(--routing-accent) 7%, var(--node-fill));
 }
 .row[data-correction='true'] .stageName strong,
 .row[data-correction='true'] .stageName > span {
   color: var(--circuit-return);
 }
 .row[aria-current='step'] .node[data-correction='true'],
-.row[aria-current='step'][data-correction] .node[data-node='review'] {
+.row[aria-current='step'][data-correction] .node[data-node='decision'] {
   border-color: var(--circuit-return);
+  background: color-mix(in srgb, var(--circuit-return) 7%, var(--node-fill));
 }
 .detail {
   font-size: 13px;
   color: var(--subtle);
   line-height: 1.5;
   margin-top: 2px;
+}
+.returnNote {
+  margin-top: 2px;
+  color: var(--circuit-return);
+  font-size: 12px;
+  line-height: 1.45;
 }
 .workers {
   display: grid;
@@ -92,14 +129,15 @@
 }
 @container (max-width: 520px) {
   .rows {
-    padding: 22px 14px 22px 0;
-    gap: 22px;
+    padding: 20px 30px 20px 0;
+    gap: 9px;
   }
   .row {
     grid-template-columns: 28px minmax(0, 1fr);
-    gap: 6px;
+    gap: 17px;
   }
   .stageName {
+    grid-template-rows: auto;
     font-size: 12px;
   }
   .stageName strong {
@@ -113,7 +151,7 @@
     gap: 8px;
   }
   .node {
-    padding: 8px;
+    padding: 5px 8px;
   }
   .nodeTitle {
     font-size: 14px;

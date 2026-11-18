@@ -78,9 +78,11 @@ export function useRequestRoutingBoard(
       }
       const geometry = routingTrackPaths(
         anchors,
-        Object.keys(request.jobs),
+        dots.map((dot) => dot.dataset.packet!),
         origin.width,
-        origin.height
+        origin.height,
+        request.issue?.owner,
+        request.issue?.scope
       );
       lengths = new Map();
       for (const [id, d] of geometry) {
