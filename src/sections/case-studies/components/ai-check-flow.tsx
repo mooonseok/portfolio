@@ -1,49 +1,65 @@
-import { Box } from '@/components/atoms/box';
-import { Heading } from '@/components/atoms/heading';
-import { List, ListItem } from '@/components/atoms/list';
-import { Text } from '@/components/atoms/text';
-import { HEADING, LIST_TAG, TAG } from '@/constants/tag';
-import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
+'use client';
+
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import { AiCheckFlowView } from './ai-check-flow-view';
+import { MEDIA } from '@/constants/breakpoint';
 import type { AiCheckFlow } from '@/dto/ai-practice.dto';
+import { useMediaQuery } from '@/hooks/use-media-query';
+
+const subscribeHydration = () => () => {};
+const browserReady = () => true;
+const serverReady = () => false;
 
 export function AiCheckLoop({ flow }: { flow: AiCheckFlow }) {
+  const enhanced = useSyncExternalStore(
+    subscribeHydration,
+    browserReady,
+    serverReady
+  );
+  const reduced = useMediaQuery(MEDIA.REDUCED_MOTION);
+  const [active, setActive] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const end = flow.stages.length - 1;
+
+  useEffect(() => {
+    if (!playing || reduced) return;
+    const timer = window.setTimeout(() => {
+      const next = Math.min(active + 1, end);
+      setActive(next);
+      if (next === end) setPlaying(false);
+    }, 3000);
+    return () => window.clearTimeout(timer);
+  }, [active, end, playing, reduced]);
+
+  useEffect(() => {
+    const media = window.matchMedia(MEDIA.REDUCED_MOTION);
+    const stop = () => {
+      if (media.matches) setPlaying(false);
+    };
+    media.addEventListener('change', stop);
+    return () => media.removeEventListener('change', stop);
+  }, []);
+
+  function select(index: number) {
+    setActive(index);
+    setPlaying(false);
+  }
+
+  function replay() {
+    setActive(0);
+    setPlaying(!reduced);
+  }
+
   return (
-    <Box as={TAG.SECTION} id='work' aria-labelledby={AI_LOOP_TITLE_ID}>
-      <Heading level={HEADING.H2} id={AI_LOOP_TITLE_ID} className='sr-only'>
-        {flow.title}
-      </Heading>
-      <List
-        as={LIST_TAG.OL}
-        className='m-0 grid list-none gap-4 p-0 tab:grid-cols-3'
-      >
-        {flow.stages.map((stage, i) => (
-          <ListItem
-            key={stage.id}
-            className='min-w-0 rounded-[22px] border border-hairline bg-dark-2 p-[clamp(20px,3vw,40px)]'
-          >
-            <Text
-              as={TAG.SPAN}
-              aria-hidden
-              className='font-mono text-base text-[var(--marker-green)]'
-            >
-              {String(i + 1).padStart(2, '0')}
-            </Text>
-            <Heading level={HEADING.H3} className='mt-4 text-2xl font-medium'>
-              {stage.label}
-            </Heading>
-            <Text className='mt-3 leading-relaxed text-subtle'>
-              {stage.body}
-            </Text>
-            {stage.evidence.length > 0 && (
-              <List className='mt-4 grid list-none gap-2 border-t border-hairline pt-3 text-sm text-subtle'>
-                {stage.evidence.map((item) => (
-                  <ListItem key={item}>{item}</ListItem>
-                ))}
-              </List>
-            )}
-          </ListItem>
-        ))}
-      </List>
-    </Box>
+    <AiCheckFlowView
+      flow={flow}
+      active={active}
+      enhanced={enhanced}
+      playing={playing}
+      reduced={reduced}
+      onSelect={select}
+      onReplay={replay}
+      onPlay={() => setPlaying(!playing)}
+    />
   );
 }

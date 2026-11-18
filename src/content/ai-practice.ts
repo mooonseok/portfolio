@@ -6,9 +6,9 @@ import { aiCheckFlow } from '@/content/ai-practice-checks';
 export const aiPractice: AiPractice = {
   title: 'AI 활용 방식',
   description:
-    '저장소 지침으로 AI에 작업 범위를 전달하고, lint 기준선과 화면 비교 도구로 작업 결과를 확인합니다.',
+    '포트폴리오 광장을 만든 과정을 따라가며 AI에 작업을 나누어 맡기고, 화면에서 발견한 문제를 수정하고 다시 확인한 사례를 살펴봅니다.',
   summary:
-    '저장소 지침으로 AI에 코딩 규칙과 작업 범위를 전달합니다. lint 기준선과 화면 비교 도구로 AI와 진행한 작업의 결과를 확인합니다.',
+    '저는 무엇을 만들고 어떻게 확인할지 정합니다. AI에게는 구현과 검토를 나눠 맡깁니다. 이 포트폴리오의 광장을 만들 때도 그렇게 작업했습니다.',
   meta: [
     { key: 'TOOLS', value: 'Claude Code, Codex, Claude Design' },
     {
@@ -25,8 +25,10 @@ export const aiPractice: AiPractice = {
   rules: [
     {
       title: '개인 공통',
-      summary: '여러 저장소에 함께 적용할 작업 습관을 정합니다.',
-      example: '예: 계획 문서는 저장소 밖에 두기',
+      summary:
+        '여러 프로젝트에서 작업을 나누고 결과를 검토하는 순서를 정합니다.',
+      example:
+        '예: 검토에서 문제가 나오면 재현 조건과 함께 담당자에게 돌려보내기',
     },
     {
       title: '저장소',
@@ -124,8 +126,8 @@ export const aiPractice: AiPractice = {
   home: {
     title: 'AI 활용 방식',
     items: [
-      '개인 공통·저장소·작업별 지침으로 AI에 전달할 맥락과 변경 범위를 정합니다.',
-      '필요한 검사를 지정하고, 다른 AI 도구의 리뷰도 실제 코드와 대조합니다.',
+      '공통 작업 순서에 프로젝트별 검사 기준을 더합니다.',
+      '화면 구현과 검토를 나눠 맡기고 문제가 나온 조건에서 다시 확인합니다.',
       '반복되는 확인은 검사 스크립트와 개인 환경의 훅으로 보완합니다.',
     ],
     link: { label: 'AI 활용 방식 보기', href: ROUTE.AI_PRACTICE },

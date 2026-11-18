@@ -69,11 +69,11 @@ components:
     textColor: '{colors.ink}'
     rounded: '{rounded.card}'
     padding: 'clamp(20px, 3vw, 40px)'
-  stage-card:
+  stage-node:
     backgroundColor: '{colors.dark-2}'
     textColor: '{colors.ink}'
-    rounded: '{rounded.card}'
-    padding: 'clamp(20px, 3vw, 40px)'
+    rounded: '8px'
+    padding: '3px clamp(7px, 1.25vw, 17px)'
   case-link:
     backgroundColor: '{colors.action}'
     textColor: '{colors.ink}'
@@ -142,9 +142,10 @@ components:
   줍니다. 서비스 상태, 참여 기간, 실험 범위, 개념 이미지 고지는 확인된 내용
   그대로 유지합니다. 개별 도식의 관계와 기술 사례는 기존 앵커에서 읽을 수
   있습니다.
-- **AI 활용**은 요청부터 지침 반영까지 여섯 단계의 행동과 근거를 목록으로 보여
-  줍니다. 휴대폰에서는 한 열, 744px부터 세 열로 배열합니다. 지침의 적용 범위와
-  실제 검사 사례, 디자인 협업이 뒤에 이어집니다.
+- **AI 활용**은 광장 이름표 가림을 고친 과정을 여섯 개의 단계 버튼과 연결선으로
+  보여줍니다. 홈과 내부 화면의 병렬 작업, 검사와 수정 뒤 재확인 경로를
+  표시합니다. 선택한 단계의 설명과 단말 그림을 함께 보여줍니다. 재생은 사용자가
+  시작하고 마지막 단계에서 멈춥니다. 움직임 줄이기에서는 직접 단계를 고릅니다.
 - **프리뷰**는 별도 경로입니다. `/preview/classic`은 화이트보드와 프로젝트별
   설명, `/preview/diorama`는 3D 작업실, `/preview/emosave-editor`는 조작 가능한
   설명용 편집기입니다.

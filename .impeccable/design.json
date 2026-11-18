@@ -293,11 +293,11 @@
     },
     {
       "name": "AI 활용 단계",
-      "kind": "card",
-      "refersTo": "stage-card",
+      "kind": "button",
+      "refersTo": "stage-node",
       "description": "AI 활용 단계",
-      "html": "<article class=\"ds-stage-card\">요청</article>",
-      "css": ".ds-stage-card{color:var(--color-ink,#f2eeff);background:var(--color-dark-2,#141122);border:1px solid var(--color-hairline,#463952);border-radius:22px;padding:clamp(20px, 3vw, 40px)}"
+      "html": "<button class=\"ds-stage-node\">가림 찾기</button>",
+      "css": ".ds-stage-node{min-height:44px;color:var(--color-ink,#f2eeff);background:var(--color-dark-2,#141122);border:1px solid var(--color-hairline,#463952);border-radius:8px;padding:3px clamp(7px, 1.25vw, 17px)}"
     },
     {
       "name": "담당 업무 보기",
