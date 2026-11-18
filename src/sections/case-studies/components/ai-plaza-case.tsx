@@ -12,8 +12,9 @@ export function AiPlazaCase() {
       as={TAG.SECTION}
       id='plaza-case'
       aria-labelledby='plaza-case-title'
-      className='mt-12 border-t border-hairline pt-7 tab:mt-16 tab:pt-9'
+      className='border-t border-hairline pt-6'
     >
+      <Text className='mb-1 text-sm text-subtle'>{plazaCase.category}</Text>
       <Heading
         level={HEADING.H2}
         id='plaza-case-title'
@@ -21,12 +22,14 @@ export function AiPlazaCase() {
       >
         {plazaCase.title}
       </Heading>
-      <Box className='mt-5 grid items-start gap-6 lap:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lap:gap-10'>
-        <Box className='max-w-[48em] space-y-3 text-body leading-relaxed text-subtle'>
-          <Text>{plazaCase.finding}</Text>
-          <Text>{plazaCase.response}</Text>
-        </Box>
-        <Box className='grid gap-5 tab:grid-cols-2'>
+      <Text className='mt-2 max-w-[64ch] text-body leading-relaxed text-subtle'>
+        {plazaCase.summary}
+      </Text>
+      <Box as={TAG.DETAILS} className='mt-3'>
+        <Text as={TAG.SUMMARY} className='min-h-11 cursor-pointer py-2 text-sm'>
+          {plazaCase.evidence}
+        </Text>
+        <Box className='mt-2 grid gap-5 tab:grid-cols-2'>
           {Object.values(PLAZA_EXAMPLE).map((state) => (
             <Box key={state} as={TAG.FIGURE} className='m-0'>
               <AiPlazaExample state={state} />

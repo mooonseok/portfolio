@@ -1,0 +1,98 @@
+.chart {
+  display: block;
+  width: 100%;
+  height: 388px;
+  text-rendering: optimizeLegibility;
+}
+
+.chart [data-lane] {
+  --track-color: var(--hairline);
+  --icon-color: var(--subtle);
+}
+
+.chart [data-selected='true'] {
+  --track-color: var(--circuit-design);
+  --icon-color: var(--track-color);
+}
+
+.chart [data-lane='feature'][data-selected='true'] {
+  --track-color: var(--circuit-development);
+}
+
+.divider {
+  fill: none;
+  stroke: var(--dark-line);
+  stroke-dasharray: 3 4;
+}
+
+.route,
+.feedback {
+  fill: none;
+  stroke-width: 1.3px;
+}
+
+.route {
+  stroke: var(--track-color);
+}
+
+.feedback {
+  stroke: var(--circuit-return);
+}
+
+.rim,
+.origin,
+.icon {
+  fill: var(--circuit-ground, var(--paper));
+}
+
+.rim {
+  stroke: var(--hairline);
+}
+
+.chart [data-active='true'] .rim {
+  stroke: var(--track-color);
+  stroke-width: 2px;
+}
+
+.chart [data-returning='true'] .rim {
+  stroke: var(--circuit-return);
+}
+
+.icon {
+  stroke: var(--icon-color);
+}
+
+.origin {
+  stroke-width: 1.8px;
+}
+
+.originName,
+.stepName,
+.laneName {
+  paint-order: stroke;
+  stroke: var(--circuit-ground, var(--paper));
+  stroke-linejoin: round;
+  stroke-width: 6px;
+}
+
+.originName {
+  fill: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.laneName {
+  fill: var(--icon-color);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stepName {
+  fill: var(--subtle);
+  font-size: 14px;
+}
+
+.chart [data-selected='true'] .stepName {
+  fill: var(--ink);
+  font-weight: 600;
+}

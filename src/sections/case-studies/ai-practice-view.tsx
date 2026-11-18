@@ -1,3 +1,4 @@
+import { Box } from '@/components/atoms/box';
 import { AiCheckLoop } from './components/ai-check-flow';
 import { AiPlazaCase } from './components/ai-plaza-case';
 import { AiRuleRowsView } from './components/ai-rule-rows-view';
@@ -20,16 +21,23 @@ export function AiPracticeView({
     <CaseStudyTemplateView
       header={{ title: c.title, summary: c.summary }}
       titleTone={TONE.INK}
-      showSummary
+      showSummary={false}
       meta={[]}
       groups={groups}
       next={c.next}
       nav={{ back: false, current: NAV_ID.AI }}
-      hero={
-        <>
+      intro={
+        <Box
+          id='overview'
+          className='mx-auto w-[92%] max-w-[780px] pt-7 tab:pt-12'
+        >
           <AiCheckLoop />
+        </Box>
+      }
+      hero={
+        <Box className='mx-auto max-w-[780px]'>
           <AiPlazaCase />
-        </>
+        </Box>
       }
     >
       <CaseSectionView

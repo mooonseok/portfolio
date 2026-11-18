@@ -16,6 +16,7 @@ import { TAG } from '@/constants/tag';
 const PROJECT_NAV: CaseNav = { back: true, current: NAV_ID.WORK };
 
 export function CaseStudyTemplateView({
+  intro,
   hero,
   children,
   groups,
@@ -35,7 +36,7 @@ export function CaseStudyTemplateView({
         </Box>
         <Box as={TAG.MAIN} id='main-content' tabIndex={-1} className='relative'>
           <Box className={cx('pb-0', header.darkHeader && 'surface-dark')}>
-            <CaseHeaderView {...header} />
+            {intro ?? <CaseHeaderView {...header} />}
             <Box className='mx-auto mt-8 w-[92%] max-w-[1220px] pb-10 tab:mt-12'>
               {hero}
               <CaseDetailsView {...header} />
