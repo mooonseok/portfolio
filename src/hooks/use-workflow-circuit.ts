@@ -2,13 +2,10 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import { MEDIA } from '@/constants/breakpoint';
-
-const forwardMs = 830;
-const returnMs = 1650;
-const arrivalMs = 740;
+import { workflowFrame, workflowTravelMs } from '@/lib/workflow-timing';
 
 function initialPlayback(route: number[], reduced: boolean) {
-  return { route, reduced, index: 0, playing: !reduced, finished: false };
+  return { route, reduced, index: 0, playing: !reduced };
 }
 
 function createTrack() {
@@ -17,6 +14,7 @@ function createTrack() {
   let observer: MutationObserver | undefined;
   let length = 0;
   let progress = 0;
+  let opacity = 1;
 
   function position() {
     if (!path || !dot || !length) return;
@@ -25,6 +23,9 @@ function createTrack() {
   }
 
   return {
+    get length() {
+      return path ? length : 0;
+    },
     pathRef(node: SVGPathElement | null) {
       observer?.disconnect();
       path = node;
@@ -39,11 +40,18 @@ function createTrack() {
     },
     dotRef(node: SVGGElement | null) {
       dot = node;
+      dot?.setAttribute('opacity', String(opacity));
       position();
     },
-    draw(fraction: number) {
-      progress = fraction;
-      position();
+    draw(fraction: number, alpha: number) {
+      if (progress !== fraction) {
+        progress = fraction;
+        position();
+      }
+      if (opacity !== alpha) {
+        opacity = alpha;
+        dot?.setAttribute('opacity', String(alpha));
+      }
     },
   };
 }
@@ -57,11 +65,11 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
     playback = initialPlayback(route, reduced);
     setSnapshot(playback);
   }
-  const { index, playing, finished } = playback;
+  const { index, playing } = playback;
   const lastIndex = route.length - 1;
-  const travelMs = route[index] < route[index - 1] ? returnMs : forwardMs;
   const elapsed = useRef(0);
-  const progress = useRef(0);
+  const previous = useRef<number | null>(null);
+  const travelMs = useRef(0);
   const [tracks] = useState(() => [
     createTrack(),
     createTrack(),
@@ -70,60 +78,76 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
 
   useLayoutEffect(() => {
     elapsed.current = 0;
-    progress.current = reduced ? 1 : 0;
-    tracks.forEach((track) => track.draw(progress.current));
-  }, [tracks, index, reduced, route]);
+    previous.current = null;
+  }, [route, reduced]);
 
   useLayoutEffect(() => {
-    if (!playing || reduced || window.matchMedia(MEDIA.REDUCED_MOTION).matches)
+    travelMs.current = workflowTravelMs(
+      Math.max(...tracks.map((track) => track.length))
+    );
+  }, [tracks, index, route]);
+
+  useLayoutEffect(() => {
+    function paint() {
+      const { progress, opacity, remaining } = workflowFrame(
+        elapsed.current,
+        travelMs.current,
+        index === 0,
+        index === lastIndex
+      );
+      for (const track of tracks) {
+        track.draw(reduced ? 1 : progress, reduced ? 1 : opacity);
+      }
+      return remaining;
+    }
+    paint();
+    if (
+      !playing ||
+      reduced ||
+      window.matchMedia(MEDIA.REDUCED_MOTION).matches
+    ) {
+      previous.current = null;
       return;
+    }
     let frame = 0;
-    let previous: number | null = null;
     function tick(now: number) {
-      if (previous !== null) elapsed.current += now - previous;
-      previous = now;
-      const fraction = Math.min(1, elapsed.current / travelMs);
-      if (progress.current !== fraction) {
-        progress.current = fraction;
-        tracks.forEach((track) => track.draw(fraction));
-      }
-      if (elapsed.current < travelMs + arrivalMs) {
+      if (previous.current !== null) elapsed.current += now - previous.current;
+      previous.current = now;
+      const remaining = paint();
+      if (remaining === null) {
         frame = requestAnimationFrame(tick);
-      } else {
-        setSnapshot((current) => {
-          if (
-            current.route !== route ||
-            current.index !== index ||
-            !current.playing
-          )
-            return current;
-          if (index === lastIndex)
-            return { ...current, playing: false, finished: true };
-          return { ...current, index: index + 1 };
-        });
+        return;
       }
+      elapsed.current = remaining;
+      setSnapshot((current) => {
+        if (
+          current.route !== route ||
+          current.index !== index ||
+          !current.playing
+        )
+          return current;
+        return { ...current, index: (index + 1) % route.length };
+      });
     }
     function visibility() {
       cancelAnimationFrame(frame);
-      previous = null;
+      previous.current = null;
       if (!document.hidden) frame = requestAnimationFrame(tick);
     }
-    visibility();
+    if (!document.hidden) frame = requestAnimationFrame(tick);
     document.addEventListener('visibilitychange', visibility);
     return () => {
       cancelAnimationFrame(frame);
       document.removeEventListener('visibilitychange', visibility);
     };
-  }, [tracks, index, lastIndex, playing, reduced, route, travelMs]);
+  }, [tracks, index, lastIndex, playing, reduced, route]);
 
   function toggle() {
     setSnapshot((current) => {
-      if (current.finished) return initialPlayback(route, reduced);
       if (!reduced) return { ...current, playing: !current.playing };
-      const next = Math.min(lastIndex, current.index + 1);
-      return { ...current, index: next, finished: next === lastIndex };
+      return { ...current, index: (current.index + 1) % route.length };
     });
   }
 
-  return { index, playing, finished, toggle, tracks };
+  return { index, playing, toggle, tracks };
 }

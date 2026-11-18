@@ -92,10 +92,6 @@
   border-radius: 5px;
   color: var(--ink);
 }
-.play[data-finished='true']::before {
-  content: '↻' / '';
-  font-size: 17px;
-}
 .details {
   grid-area: details;
   color: var(--ink);

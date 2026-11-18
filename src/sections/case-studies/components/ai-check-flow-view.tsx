@@ -29,7 +29,7 @@ interface Props extends Omit<WorkflowCircuitProps, 'lane' | 'lanes'> {
   statusOwner?: string;
   note: string;
   playLabel: string;
-  finished: boolean;
+  playing: boolean;
   onRequest: (request: WorkflowRequest) => void;
   onResult: (result: number) => void;
   onPlay: () => void;
@@ -44,7 +44,7 @@ export function AiCheckFlowView({
   statusTitle,
   statusOwner,
   playLabel,
-  finished,
+  playing,
   onRequest,
   onResult,
   onPlay,
@@ -109,7 +109,7 @@ export function AiCheckFlowView({
         <Box
           className={consoleStyles.note}
           role='status'
-          aria-live='polite'
+          aria-live={playing ? 'off' : 'polite'}
           aria-atomic='true'
         >
           <Box className={consoleStyles.byline}>
@@ -122,11 +122,7 @@ export function AiCheckFlowView({
           </Box>
           <Text className={consoleStyles.description}>{note}</Text>
         </Box>
-        <Button
-          className={consoleStyles.play}
-          onClick={onPlay}
-          data-finished={finished}
-        >
+        <Button className={consoleStyles.play} onClick={onPlay}>
           {playLabel}
         </Button>
       </Box>

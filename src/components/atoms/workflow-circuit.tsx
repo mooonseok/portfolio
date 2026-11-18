@@ -1,5 +1,6 @@
 import type { RefCallback } from 'react';
 import type { WorkflowOwner, WorkflowRequest } from '@/dto/ai-workflow.dto';
+import { circuitRim } from './circuit-rim';
 import { DevelopmentCircuit } from './development-circuit';
 import { WorkflowCircuitIcon } from './workflow-circuit-icons';
 import styles from './workflow-circuit.module.css';
@@ -58,10 +59,7 @@ function DesignCircuit({
   const iconX = -halfWidth + 7 + 10 * density + 16 * iconScale;
   const labelX = iconX + 16 * iconScale + 6 + 7 * density;
   const labelSize = (width < 275 ? 12 : 14) + 3 * density;
-  const currentColor =
-    lane === lanes[0].id
-      ? 'var(--circuit-design)'
-      : 'var(--circuit-development)';
+  const currentColor = 'var(--circuit-design)';
   return (
     <svg
       className={styles.chart}
@@ -91,20 +89,24 @@ function DesignCircuit({
         const bend = Math.min(gutter / 2, 9);
         const edge = side + sign * gutter;
         const stages = item.stages.slice(1);
+        const rim = (stage: number) =>
+          circuitRim(x, rowY(stage), halfWidth, halfHeight, sign, 6);
         const reviewY = rowY(source ?? stages.length - 1);
         const targetY = target === undefined ? undefined : rowY(target);
         return (
           <g key={item.id} data-lane={item.id} data-selected={selected}>
             {stages.map((stage, j) => {
-              const y = rowY(j + 1);
+              const next = rim(j + 1);
+              const previous = rim(j);
               const route =
                 j === 0
-                  ? `M${center} 40C${center} 65 ${x} 42 ${x} ${y - halfHeight}`
-                  : `M${x} ${rowY(j) + halfHeight}V${y - halfHeight}`;
+                  ? `M${center} 40C${center} 65 ${x} 42 ${x} ${next.entry}`
+                  : previous.dock + previous.depart + `V${next.entry}`;
               return (
                 <path
                   key={stage.label}
-                  d={route}
+                  data-current={selected && !returning && active === j + 1}
+                  d={route + next.arrive}
                   className={styles.route}
                   ref={
                     selected && !returning && active === j + 1
@@ -119,6 +121,7 @@ function DesignCircuit({
                 <path
                   ref={returning ? pathRef : undefined}
                   data-return
+                  data-current={returning}
                   strokeDasharray='3 4'
                   d={`M${side} ${reviewY}H${edge - sign * bend}Q${edge} ${reviewY} ${edge} ${reviewY - bend}V${targetY + bend}Q${edge} ${targetY} ${edge - sign * bend} ${targetY}H${side}`}
                 />

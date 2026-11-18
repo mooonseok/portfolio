@@ -8,7 +8,6 @@ export const circuitCopy = {
   controls: '재생할 요청',
   result: '검토 결과',
   pass: '바로 통과',
-  replay: '다시 보기',
   next: '다음 단계',
   pause: '일시정지',
   resume: '계속 재생',
