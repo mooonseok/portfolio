@@ -131,11 +131,14 @@ AI 활용 `/ai#work`는 개발 요청이 들어오면 무엇을 바꿀지 판단
 검토합니다. 두 요청은 12.2초와 18.5초 간격으로 교대하고 ‘다음 요청’으로 즉시
 전환할 수 있습니다. 요청·담당·오류 문구는 `content/request-routing.ts`, 구간별
 시간은 `lib/request-routing.ts`에서 관리합니다. 움직임 줄이기 설정에서는 요청이
-자동으로 바뀌지 않습니다. ‘디자인 요청’에서는 시안 제작, 검토 결과별 복귀 경로와
-단계 설명을 볼 수 있습니다. 바로 아래 `#plaza-case`에는 광장 이름표 겹침 5건을
-발견한 조건, 패널 위치 수정, 같은 44가지 조건에서 0건 확인, 수정 종료를 순서대로
-표시합니다. 전후 그림은 그 아래에서 펼칩니다. 본문은 이 두 섹션으로 구성합니다.
-기존 `/ai#engineering` 링크는 광장 수정 사례로 이어집니다.
+자동으로 바뀌지 않습니다. ‘디자인 요청’의 두 결제 화면 예시는
+`content/design-routing.ts`에서 관리합니다. 쿠폰 요청에서는 최종 금액의 강조와
+배치를 함께 고치고, 할인액이 계속 먼저 보이면 정보 위계만 수정해 다시
+검토합니다. 우편번호 요청은 안내 문구만 바꿉니다. 바로 아래 `#plaza-case`에는
+광장 이름표 겹침 5건을 발견한 조건, 패널 위치 수정, 같은 44가지 조건에서 0건
+확인, 수정 종료를 순서대로 표시합니다. 전후 그림은 그 아래에서 펼칩니다. 본문은
+이 두 섹션으로 구성합니다. 기존 `/ai#engineering` 링크는 광장 수정 사례로
+이어집니다.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently

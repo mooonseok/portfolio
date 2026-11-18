@@ -1,13 +1,16 @@
 import { useLayoutEffect, useRef, useState, type RefObject } from 'react';
-import type { WorkflowOwner } from '@/dto/ai-workflow.dto';
-import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
+import type {
+  RoutingPhase,
+  RoutingRequest,
+  RoutingTarget,
+} from '@/dto/request-routing.dto';
 
 type Paint = (phase: RoutingPhase, fraction: number) => void;
 
 function routePacket(
   phase: RoutingPhase,
   fraction: number,
-  owner: WorkflowOwner,
+  owner: RoutingTarget,
   request: RoutingRequest,
   first: boolean,
   reduced: boolean
@@ -29,7 +32,9 @@ function routePacket(
       return assigned ? [`out-${owner}`, fraction] : undefined;
     case 'issue':
     case 'done':
-      return first ? [`out-${owner}`, 1] : undefined;
+      return owner === (request.issue?.owner ?? Object.keys(request.jobs)[0])
+        ? [`out-${owner}`, 1]
+        : undefined;
     case 'back':
     case 'fix':
     case 'retry':
@@ -81,7 +86,7 @@ export function useRequestRoutingBoard(
     function paint(phase: RoutingPhase, fraction: number) {
       last.current = { request, phase, fraction };
       dots.forEach((dot, index) => {
-        const owner = dot.dataset.packet as WorkflowOwner;
+        const owner = dot.dataset.packet as RoutingTarget;
         const location = routePacket(
           phase,
           fraction,

@@ -1,9 +1,14 @@
 import type { RefObject } from 'react';
-import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
+import type {
+  RoutingLane,
+  RoutingPhase,
+  RoutingRequest,
+} from '@/dto/request-routing.dto';
 import { RequestRoutingNode } from './request-routing-node';
 import styles from './request-routing-board.module.css';
 
 interface Props {
+  lane: RoutingLane;
   request: RoutingRequest;
   phase: RoutingPhase;
   reduced: boolean;
@@ -11,23 +16,33 @@ interface Props {
   boardRef: RefObject<SVGSVGElement | null>;
 }
 
-const workers = [
-  { id: 'screen', name: '화면' },
-  { id: 'data', name: '데이터' },
-  { id: 'motion', name: '모션' },
-] as const;
+const targets = {
+  development: [
+    { id: 'screen', name: '화면' },
+    { id: 'data', name: '데이터' },
+    { id: 'motion', name: '모션' },
+  ],
+  design: [
+    { id: 'hierarchy', name: '정보 위계' },
+    { id: 'layout', name: '화면 배치' },
+    { id: 'copy', name: '안내 문구' },
+  ],
+} as const;
 
 function rightRim(x: number, y: number, width: number, height: number) {
   return `M${x} ${y}h${width / 2 - 7}q7 0 7 7v${height - 14}q0 7 -7 7H${x}`;
 }
 
 export function RequestRoutingBoard({
+  lane,
   request,
   phase,
   reduced,
   width,
   boardRef,
 }: Props) {
+  const design = lane === 'design';
+  const workers = targets[lane];
   const center = width / 2;
   const gap = Math.min((width - 16) / 3, 170);
   const tile = Math.min(gap - 6, 130);
@@ -40,6 +55,8 @@ export function RequestRoutingBoard({
   const repairing = !reduced && ['back', 'fix', 'retry'].includes(phase);
   const reviewIssue = !reduced && (phase === 'issue' || repairing);
   const done = phase === 'done' && !reduced;
+  const pendingLabel = design ? '판단 전' : '배정 전';
+  const skippedLabel = design ? '유지' : '이번 요청 제외';
   const branches = workers.map(({ id, name }, index) => {
     const x = center + (index - 1) * gap;
     const job = request.jobs[id];
@@ -69,20 +86,19 @@ export function RequestRoutingBoard({
       data-phase={phase}
     >
       <title id='routing-board-title'>
-        요청에서 담당을 정하고 검토하는 과정
+        {design
+          ? '요청을 읽고 바꿀 디자인을 정하는 과정'
+          : '요청에서 담당을 정하고 검토하는 과정'}
       </title>
       <desc id='routing-board-summary'>
         {request.decision}{' '}
         {branches
           .filter(({ job }) => job)
-          .map(({ name, job }) => name + ' 담당은 ' + job)
+          .map(
+            ({ name, job }) => name + (design ? ' 단계에서 ' : ' 담당은 ') + job
+          )
           .join(', ')}
-        .
-        {request.issue &&
-          ' 검토에서 ' +
-            request.issue.label +
-            ' 문제가 나오면 ' +
-            request.issue.back}
+        .{request.issue && ' ' + request.issue.back}
       </desc>
       <g className={styles.wires}>
         <path data-edge='entry' d={`M${center} 1V32`} />
@@ -123,8 +139,8 @@ export function RequestRoutingBoard({
             fix && request.issue
               ? request.issue.fix
               : judged
-                ? (job ?? '이번 요청 제외')
-                : '배정 전'
+                ? (job ?? skippedLabel)
+                : pendingLabel
           }
           active={active}
           repair={fix}
@@ -134,7 +150,7 @@ export function RequestRoutingBoard({
         x={center}
         y={295}
         width={Math.min(width - 22, 174)}
-        title='검토'
+        title={design ? '시안 검토' : '검토'}
         detail={
           done
             ? '확인 완료'

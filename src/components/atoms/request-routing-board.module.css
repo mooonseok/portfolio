@@ -11,7 +11,7 @@
   stroke-linecap: round;
 }
 .wires [data-active='true'] {
-  stroke: var(--circuit-development);
+  stroke: var(--routing-accent);
   stroke-width: 1.65;
 }
 .wires [data-repair='true'] {
@@ -29,7 +29,7 @@
   fill: color-mix(in srgb, currentColor 7%, var(--circuit-ground));
 }
 .node[data-state='active'] {
-  color: var(--circuit-development);
+  color: var(--routing-accent);
 }
 .node[data-state='repair'] {
   color: var(--circuit-return);
@@ -50,7 +50,7 @@
   fill: currentColor;
 }
 .dots {
-  fill: var(--circuit-development);
+  fill: var(--routing-accent);
   pointer-events: none;
 }
 .dots[data-repair='true'] {

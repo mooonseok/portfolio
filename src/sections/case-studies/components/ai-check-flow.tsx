@@ -7,12 +7,12 @@ import { Heading } from '@/components/atoms/heading';
 import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
 import { HEADING, TAG } from '@/constants/tag';
 import { circuitCopy } from '@/content/ai-workflow';
-import { AiDesignFlow } from './ai-design-flow';
+import type { RoutingLane } from '@/dto/request-routing.dto';
 import { AiRequestRouting } from './ai-request-routing';
 import styles from './ai-check-flow.module.css';
 
 export function AiCheckLoop() {
-  const [design, setDesign] = useState(false);
+  const [lane, setLane] = useState<RoutingLane>('development');
   return (
     <Box
       as={TAG.SECTION}
@@ -31,21 +31,21 @@ export function AiCheckLoop() {
         >
           <Button
             className={styles.tab}
-            aria-pressed={!design}
-            onClick={() => setDesign(false)}
+            aria-pressed={lane === 'development'}
+            onClick={() => setLane('development')}
           >
             개발 요청
           </Button>
           <Button
             className={styles.tab}
-            aria-pressed={design}
-            onClick={() => setDesign(true)}
+            aria-pressed={lane === 'design'}
+            onClick={() => setLane('design')}
           >
             디자인 요청
           </Button>
         </Box>
       </Box>
-      {design ? <AiDesignFlow /> : <AiRequestRouting />}
+      <AiRequestRouting key={lane} lane={lane} />
     </Box>
   );
 }

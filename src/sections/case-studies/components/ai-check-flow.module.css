@@ -42,37 +42,9 @@
 .tab:last-child[aria-pressed='true'] {
   border-color: var(--circuit-design);
 }
-.designFlow {
-  display: grid;
-  gap: 22px;
-  grid-template-areas: 'decisions' 'diagram' 'console' 'details';
-}
-.introduction {
-  max-width: 30em;
-  margin-bottom: 18px;
-  color: var(--subtle);
-  font-size: 16px;
-  line-height: 1.65;
-}
-.diagram {
-  grid-area: diagram;
-  min-width: 0;
-  padding: 14px clamp(6px, 1.4vw, 20px);
-  background: var(--circuit-ground);
-  border: 1px solid var(--dark-line);
-  border-radius: 10px;
-}
 .flow :is(button, summary):focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
-}
-@media (min-width: 860px) {
-  .designFlow {
-    grid-template-columns: var(--ai-columns);
-    grid-template-rows: auto 1fr auto;
-    grid-template-areas: 'decisions diagram' 'console diagram' 'details details';
-    column-gap: var(--ai-gap);
-  }
 }
 @media (scripting: none) {
   .tabs {

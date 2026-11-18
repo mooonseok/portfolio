@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { designRoutingRequests } from '../../src/content/design-routing.ts';
 import {
   routingCaption,
   routingRequests,
@@ -9,6 +10,10 @@ import { routingFrame } from '../../src/lib/request-routing.ts';
 const [button, panel] = routingRequests;
 
 test('요청에서 바꿀 내용에 따라 한 담당 또는 세 담당에게 작업을 보낸다', () => {
+  assert.equal(
+    button.quote,
+    '“폰에서 배송지를 고치면 저장하려고 맨 위까지 다시 올라가야 해. 마지막 입력칸 바로 아래에서 저장하게 해줘.”'
+  );
   assert.deepEqual(button.jobs, { screen: '버튼 배치' });
   assert.deepEqual(panel.jobs, {
     screen: '패널 배치',
@@ -18,7 +23,7 @@ test('요청에서 바꿀 내용에 따라 한 담당 또는 세 담당에게 �
 });
 
 test('점이 판단 지점에 도착해 머무른 뒤 담당 쪽으로 출발한다', () => {
-  for (const request of routingRequests) {
+  for (const request of [...routingRequests, ...designRoutingRequests]) {
     assert.deepEqual(routingFrame(request, 450), {
       phase: 'request',
       fraction: 0,
@@ -50,6 +55,35 @@ test('점이 판단 지점에 도착해 머무른 뒤 담당 쪽으로 출발한
     assert.equal(routingFrame(request, 7000).phase, 'work');
     assert.equal(routingFrame(request, 8450).phase, 'join');
   }
+});
+
+test('결제 금액은 위계와 배치를 고친 뒤 위계만 다시 보고 우편번호는 안내 문구만 검토한다', () => {
+  const [checkout, postal] = designRoutingRequests;
+  assert.deepEqual(checkout.jobs, {
+    hierarchy: '금액 강조',
+    layout: '버튼 위 배치',
+  });
+  assert.equal(checkout.issue.owner, 'hierarchy');
+  assert.deepEqual(routingFrame(checkout, 11800), {
+    phase: 'back',
+    fraction: 0,
+  });
+  assert.match(
+    routingCaption(checkout, 'fix', false),
+    /배치는 그대로 두고 할인액의 굵기를/
+  );
+  assert.match(routingCaption(checkout, 'retry', false), /같은 쿠폰/);
+  assert.deepEqual(postal.jobs, { copy: '입력 예시 작성' });
+  assert.equal(postal.issue, undefined);
+  assert.equal(routingFrame(postal, 10000).phase, 'done');
+});
+
+test('디자인 예시를 정지한 상태에서도 변경 이유와 구체적인 수정 내용을 읽는다', () => {
+  const [checkout, postal] = designRoutingRequests;
+  const summary = routingCaption(checkout, 'work', true);
+  assert.ok(summary.includes(checkout.decision));
+  assert.ok(summary.includes(checkout.issue.repair));
+  assert.match(routingCaption(postal, 'work', true), /우편번호 다섯 자리/);
 });
 
 test('문제가 없는 요청은 검토에서 끝나고, 데이터 오류는 데이터 담당에게만 돌아간다', () => {

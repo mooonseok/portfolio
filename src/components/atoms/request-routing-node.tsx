@@ -1,4 +1,4 @@
-import type { WorkflowOwner } from '@/dto/ai-workflow.dto';
+import type { RoutingTarget } from '@/dto/request-routing.dto';
 import styles from './request-routing-board.module.css';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   detail: string;
   active: boolean;
   repair?: boolean;
-  worker?: WorkflowOwner;
+  worker?: RoutingTarget;
 }
 
 export function RequestRoutingNode({
