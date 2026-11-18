@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@/components/atoms/button';
 import { Box } from '@/components/atoms/box';
 import { RequestRoutingBoard } from '@/components/atoms/request-routing-board';
@@ -51,27 +51,21 @@ function RequestTranscript({ request }: { request: RoutingRequest }) {
   );
 }
 
-type Outcome = 'pass' | 'repair' | 'plan';
+const outcomes = ['pass', 'repair', 'plan'] as const;
 
-function RoutingPlayer({ request }: { request: RoutingRequest }) {
-  const { phase, reduced, paintRef, viewportRef } = useRequestRouting(request);
-  const board = useRequestRoutingBoard(request, reduced, paintRef);
-  return (
-    <Box ref={viewportRef}>
-      <RequestRoutingBoard
-        {...board}
-        request={request}
-        phase={phase}
-        reduced={reduced}
-      />
-    </Box>
+function RoutingPlayer({
+  base,
+  parallel,
+}: {
+  base: RoutingRequest;
+  parallel: boolean;
+}) {
+  const [round, setRound] = useState(0);
+  const outcome = outcomes[round];
+  const nextRound = useCallback(
+    () => setRound((index) => (index + 1) % outcomes.length),
+    []
   );
-}
-
-export function AiRequestRouting({ lane }: { lane: RoutingLane }) {
-  const base = lane === 'design' ? designFlow : developmentFlow;
-  const [parallel, setParallel] = useState(true);
-  const [outcome, setOutcome] = useState<Outcome>('repair');
   const request = useMemo(
     (): RoutingRequest => ({
       ...base,
@@ -88,11 +82,32 @@ export function AiRequestRouting({ lane }: { lane: RoutingLane }) {
     }),
     [base, parallel, outcome]
   );
+  const { phase, reduced, paintRef, viewportRef } = useRequestRouting(
+    request,
+    nextRound
+  );
+  const board = useRequestRoutingBoard(request, reduced, paintRef);
+  return (
+    <Box ref={viewportRef}>
+      <RequestRoutingBoard
+        {...board}
+        request={request}
+        workIssue={base.issue}
+        phase={phase}
+        reduced={reduced}
+      />
+    </Box>
+  );
+}
+
+export function AiRequestRouting({ lane }: { lane: RoutingLane }) {
+  const base = lane === 'design' ? designFlow : developmentFlow;
+  const [parallel, setParallel] = useState(true);
   return (
     <Box className={styles.panel} data-lane={lane}>
       <Box className={styles.player}>
-        <Box className={styles.controls}>
-          {base.jobs.support && (
+        {base.jobs.support && (
+          <Box className={styles.controls}>
             <Button
               className={styles.switch}
               role='switch'
@@ -101,30 +116,9 @@ export function AiRequestRouting({ lane }: { lane: RoutingLane }) {
             >
               독립 작업 있음
             </Button>
-          )}
-          <Box className={styles.options} role='group' aria-label='검토 결과'>
-            <Box as={TAG.SPAN} className={styles.caption}>
-              검토 결과
-            </Box>
-            {(['pass', 'repair', 'plan'] as const).map((value) => (
-              <Button
-                key={value}
-                className={styles.option}
-                aria-pressed={outcome === value}
-                onClick={() => setOutcome(value)}
-              >
-                {value === 'pass'
-                  ? '통과'
-                  : value === 'repair'
-                    ? '담당 보완'
-                    : lane === 'design'
-                      ? '방향 변경'
-                      : '합의 변경'}
-              </Button>
-            ))}
           </Box>
-        </Box>
-        <RoutingPlayer key={String(parallel) + outcome} request={request} />
+        )}
+        <RoutingPlayer key={String(parallel)} base={base} parallel={parallel} />
       </Box>
       <Box className={styles.transcript}>
         {[developmentFlow, designFlow].map((item) => (

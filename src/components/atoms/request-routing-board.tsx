@@ -6,6 +6,7 @@ import styles from './request-routing-board.module.css';
 
 interface Props {
   request: RoutingRequest;
+  workIssue: RoutingRequest['issue'];
   phase: RoutingPhase;
   reduced: boolean;
   boardRef: RefObject<SVGSVGElement | null>;
@@ -13,6 +14,7 @@ interface Props {
 
 export function RequestRoutingBoard({
   request,
+  workIssue,
   phase,
   reduced,
   boardRef,
@@ -23,7 +25,7 @@ export function RequestRoutingBoard({
   }));
   const active = reduced ? undefined : phase;
   const issue = request.issue;
-  const issueOwner = issue && request.jobs[issue.owner];
+  const issueOwner = workIssue && request.jobs[workIssue.owner];
   const fixing = active === 'fix';
   const plan = issue?.scope === 'plan';
   return (
@@ -137,16 +139,18 @@ export function RequestRoutingBoard({
             heading={request.decisionTest}
             correction={active === 'issue'}
           >
-            {issue && issueOwner && (
-              <span className={styles.returnNote}>
-                {issue.finding} →{' '}
-                {plan
-                  ? request.lane === 'design'
-                    ? '방향 선택'
-                    : '규칙 합의'
-                  : issueOwner.label}
+            {workIssue && issueOwner && (
+              <span
+                className={styles.returnNote}
+                data-current={!!issue && !plan && !reduced}
+              >
+                {workIssue.finding} → {issueOwner.label}
               </span>
             )}
+            <span className={styles.returnNote} data-current={plan && !reduced}>
+              {request.planIssue} →{' '}
+              {request.lane === 'design' ? '방향 선택' : '규칙 합의'}
+            </span>
           </RequestRoutingNode>
         </RequestRoutingRow>
         <RequestRoutingRow

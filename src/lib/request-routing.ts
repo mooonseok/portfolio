@@ -107,7 +107,7 @@ export function advanceRoutingFrame(
   track: RoutingTrack,
   current: RoutingPosition,
   elapsedMs: number
-): RoutingPosition {
+) {
   let index =
     current.stepIndex ??
     track.steps.findIndex((step) => step.phase === current.phase);

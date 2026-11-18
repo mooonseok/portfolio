@@ -110,10 +110,13 @@
   margin-top: 2px;
 }
 .returnNote {
-  margin-top: 2px;
-  color: var(--circuit-return);
+  display: block;
+  color: var(--subtle);
   font-size: 12px;
   line-height: 1.45;
+}
+.returnNote[data-current='true'] {
+  color: var(--circuit-return);
 }
 .workers {
   display: grid;

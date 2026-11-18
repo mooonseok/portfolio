@@ -11,7 +11,10 @@ import type {
 import { advanceRoutingFrame, routingTrack } from '@/lib/request-routing';
 import { useMediaQuery } from './use-media-query';
 
-export function useRequestRouting(request: RoutingRequest) {
+export function useRequestRouting(
+  request: RoutingRequest,
+  onCycle: () => void
+) {
   const [phase, setPhase] = useState<RoutingPhase>('judge');
   const reduced = useMediaQuery(MEDIA.REDUCED_MOTION);
   const paintRef = useRef<RoutingPainter | null>(null);
@@ -28,7 +31,7 @@ export function useRequestRouting(request: RoutingRequest) {
 
     let lengths: RoutingPainter['lengths'] | undefined;
     let track: ReturnType<typeof routingTrack>;
-    let current = { phase: 'judge' as RoutingPhase, fraction: 0 };
+    let current = { stepIndex: 0, phase: 'judge' as RoutingPhase, fraction: 0 };
     let last: number | null = null;
     let inView = false;
     let frame = 0;
@@ -44,6 +47,10 @@ export function useRequestRouting(request: RoutingRequest) {
       if (painter && track) {
         const elapsed = last === null ? 0 : now - last;
         const next = advanceRoutingFrame(track, current, elapsed);
+        if (next.stepIndex < current.stepIndex || elapsed >= track.duration) {
+          flushSync(onCycle);
+          return;
+        }
         if (current.phase !== next.phase) flushSync(() => setPhase(next.phase));
         current = next;
         painter.paint(current.phase, current.fraction);
@@ -69,7 +76,7 @@ export function useRequestRouting(request: RoutingRequest) {
       document.removeEventListener('visibilitychange', refresh);
       cancelAnimationFrame(frame);
     };
-  }, [request, reduced]);
+  }, [request, reduced, onCycle]);
 
   return {
     phase: reduced ? ('done' as const) : phase,

@@ -76,19 +76,12 @@ test('ai: the two request types lead directly to the overview', () => {
     '개발 요청',
     '디자인 요청',
   ]);
-  assert.deepEqual(buttonNames(group('검토 결과')), [
-    '통과',
-    '담당 보완',
-    '합의 변경',
-  ]);
+  assert.doesNotMatch(main, /aria-label="검토 결과"/);
   assert.match(main, /<button[^>]*role="switch"[^>]*>독립 작업 있음<\/button>/);
   assert.deepEqual(buttonNames(main), [
     '개발 요청',
     '디자인 요청',
     '독립 작업 있음',
-    '통과',
-    '담당 보완',
-    '합의 변경',
   ]);
   for (const node of [
     'judge',
