@@ -2,6 +2,7 @@ import { circuitRim } from './circuit-rim';
 
 export function developmentPaths(
   width: number,
+  workerCount: number,
   ownerIndex: number,
   source?: number
 ) {
@@ -13,10 +14,11 @@ export function developmentPaths(
   const radius = compact ? 16 : 19;
   const half = compact ? 56 : 69;
   const workerHeight = compact ? 34 : 37;
-  const spread = Math.min(194, (width - 20) / 3);
-  const workerWidth = Math.min(spread - 12, 138);
+  const spread = Math.min(194, (width - 20) / workerCount);
+  const workerWidth = workerCount === 1 ? half * 2 : Math.min(spread - 12, 138);
   const side = ownerIndex === 0 ? -1 : 1;
-  const xFor = (index: number) => center + (index - 1) * spread;
+  const middleIndex = (workerCount - 1) / 2;
+  const xFor = (index: number) => center + (index - middleIndex) * spread;
   const stageRim = (i: number) =>
     circuitRim(center, rows[i], half, radius, side, 5);
   const workerRim = (i: number) =>
@@ -31,12 +33,13 @@ export function developmentPaths(
   const fork = stageRim(2);
   const join = stageRim(4);
   const rail =
-    center + side * Math.min(width / 2 - 6, spread + workerWidth / 2 + 14);
+    center +
+    side * Math.min(width / 2 - 6, spread * middleIndex + workerWidth / 2 + 14);
   const targetSide = xFor(ownerIndex) + (side * workerWidth) / 2;
   const reviewY = rows[source ?? 5];
   const fromReview = `M${center + side * half} ${reviewY}H${rail - side * 4}q${side * 4} 0 ${side * 4} -4`;
   const feedback =
-    ownerIndex === 1
+    workerCount > 1 && ownerIndex === middleIndex
       ? `${fromReview}V${rows[3] + workerHeight + 16}q0 -4 -4 -4H${targetSide + 10}q-4 0 -4 -4V${rows[3] + 4}q0 -4 -4 -4H${targetSide}`
       : `${fromReview}V${rows[3] + 3}q0 -3 ${-side * 3} -3H${targetSide}`;
   function forward(i: number) {

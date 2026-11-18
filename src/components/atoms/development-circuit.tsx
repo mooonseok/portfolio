@@ -23,6 +23,7 @@ export function DevelopmentCircuit({
   extraTracks,
 }: Props) {
   const workers = request.workers ?? [];
+  const parallel = workers.length > 1;
   const tracks = [{ pathRef, dotRef }, ...extraTracks];
   const branchStage = active === 3 || active === 4;
   const packets = branchStage
@@ -32,7 +33,7 @@ export function DevelopmentCircuit({
     .map((stage, i) => ({ ...stage, i }))
     .filter(({ i }) => i > 0 && i !== 3);
   const ownerIndex = workers.findIndex((worker) => worker.id === owner);
-  const paths = developmentPaths(width, ownerIndex, source);
+  const paths = developmentPaths(width, workers.length, ownerIndex, source);
   const { center, compact, rows, radius, half, workerWidth, workerHeight } =
     paths;
   const showReturn = ownerIndex >= 0 && (active === source || repair);
@@ -49,13 +50,17 @@ export function DevelopmentCircuit({
       data-active-stage={active}
       data-repair={repair}
     >
-      <title id='development-title'>개발 요청의 분담과 합류</title>
+      <title id='development-title'>
+        {parallel ? '개발 요청의 분담과 합류' : '화면 담당의 작업과 검토'}
+      </title>
       <desc id='development-description'>
         {workers
           .map((worker) => worker.label + ' 담당은 ' + worker.task)
           .join(', ')}
-        . 세 결과를 모아 검사하고, 문제가 나오면 해당 담당만 수정해 다시
-        합류합니다.
+        {'. '}
+        {parallel
+          ? '각자의 결과를 모아 검사하고, 문제가 나오면 해당 담당만 수정해 다시 합류합니다.'
+          : '화면 담당이 작업을 마치면 검사합니다. 문제가 나오면 화면 담당이 고친 뒤 같은 조건에서 다시 검사합니다.'}
       </desc>
       {plainStages.map(({ i, label }) => {
         if (i === 4) return null;
@@ -79,14 +84,14 @@ export function DevelopmentCircuit({
         return (
           <g key={worker.id} className={styles.track}>
             <path
-              data-edge='split'
+              data-edge={parallel ? 'split' : 'forward'}
               data-owner={worker.id}
               data-current={splitting}
               ref={splitting ? ref : undefined}
               d={arm.split}
             />
             <path
-              data-edge='join'
+              data-edge={parallel ? 'join' : 'forward'}
               data-owner={worker.id}
               data-current={joining}
               ref={joining ? ref : undefined}
@@ -130,7 +135,11 @@ export function DevelopmentCircuit({
             className={styles.icon}
             transform={`translate(${-half + (compact ? 18 : 24)} 0) scale(${compact ? 0.65 : 0.78})`}
           >
-            <WorkflowCircuitIcon design={false} index={i - 1} />
+            {!parallel && (i === 2 || i === 4) ? (
+              <path d='M-12 0h23m-6-6 6 6-6 6' fill='none' />
+            ) : (
+              <WorkflowCircuitIcon design={false} index={i - 1} />
+            )}
           </g>
           <text x={compact ? 11 : 14} dy='.35em'>
             {label}

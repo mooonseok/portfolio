@@ -2,7 +2,12 @@
 
 import { useMemo, useState } from 'react';
 import { MEDIA } from '@/constants/breakpoint';
-import { circuitCopy, workflows } from '@/content/ai-workflow';
+import {
+  circuitCopy,
+  developmentExamples,
+  workflows,
+} from '@/content/ai-workflow';
+import type { WorkflowRequest } from '@/dto/ai-workflow.dto';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useWorkflowCircuit } from '@/hooks/use-workflow-circuit';
 import { workflowRoute } from '@/lib/ai-workflow';
@@ -10,19 +15,15 @@ import { AiCheckFlowView } from './ai-check-flow-view';
 
 export function AiCheckLoop() {
   const reduced = useMediaQuery(MEDIA.REDUCED_MOTION);
-  const [selection, setSelection] = useState({
-    request: workflows[0],
-    result: 0,
-  });
-  const { request, result } = selection;
+  const [lane, setLane] = useState(workflows[0].id);
+  const [development, setDevelopment] = useState(developmentExamples[0]);
+  const [result, setResult] = useState(0);
+  const lanes = [workflows[0], development];
+  const request = lane === development.id ? development : workflows[0];
   const issue = request.issues[result];
   const route = useMemo(
-    () =>
-      workflowRoute(
-        selection.request,
-        selection.request.issues[selection.result]
-      ).slice(1),
-    [selection]
+    () => workflowRoute(request, issue).slice(1),
+    [request, issue]
   );
   const { index, tracks, onNext } = useWorkflowCircuit(route, reduced);
   const active = route[index];
@@ -33,25 +34,31 @@ export function AiCheckLoop() {
   const note =
     returning && issue
       ? issue.label + ' 발견 · ' + issue.reason
-      : repair && worker && issue && active === issue.target + 1
+      : repair &&
+          worker &&
+          issue &&
+          active === issue.target + 1 &&
+          (request.workers?.length ?? 0) > 1
         ? `${worker.label} 담당의 수정본을 합칩니다. 다른 두 담당의 작업은 완료된 상태로 이어집니다.`
         : issue && active === issue.source && index > route.indexOf(active)
           ? circuitCopy.review
           : request.stages[active].body;
+  function selectRequest(next: WorkflowRequest) {
+    if (next === request) return;
+    const sameIssue = next.issues.findIndex((item) => item.id === issue?.id);
+    const fallback = issue && next.id !== lane ? 0 : next.issues.length;
+    setResult(sameIssue >= 0 ? sameIssue : fallback);
+    if (next.id === development.id) setDevelopment(next);
+    setLane(next.id);
+  }
   return (
     <AiCheckFlowView
-      lanes={workflows}
+      lanes={lanes}
+      examples={developmentExamples}
       request={request}
       result={result}
-      onRequest={(next) =>
-        setSelection({
-          request: next,
-          result: issue
-            ? Math.min(result, next.issues.length - 1)
-            : next.issues.length,
-        })
-      }
-      onResult={(next) => setSelection({ request, result: next })}
+      onRequest={selectRequest}
+      onResult={setResult}
       onNext={onNext}
       {...{
         copy: circuitCopy,

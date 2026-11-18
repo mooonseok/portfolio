@@ -13,6 +13,7 @@ import consoleStyles from './ai-review-console.module.css';
 
 interface Props extends Omit<WorkflowCircuitProps, 'lane' | 'lanes'> {
   lanes: WorkflowRequest[];
+  examples: WorkflowRequest[];
   request: WorkflowRequest;
   copy: {
     title: string;
@@ -36,6 +37,7 @@ interface Props extends Omit<WorkflowCircuitProps, 'lane' | 'lanes'> {
 
 export function AiCheckFlowView({
   lanes,
+  examples,
   request,
   copy,
   result,
@@ -78,6 +80,32 @@ export function AiCheckFlowView({
         </Box>
       </Box>
       <Box className={consoleStyles.decisions}>
+        {request.exampleLabel && (
+          <Box className={consoleStyles.examples}>
+            <Text
+              as={TAG.SPAN}
+              id='workflow-example-label'
+              className={consoleStyles.label}
+            >
+              요청 예시
+            </Text>
+            <Box
+              role='group'
+              aria-labelledby='workflow-example-label'
+              className={consoleStyles.outcomes}
+            >
+              {examples.map((example) => (
+                <Button
+                  key={example.exampleLabel}
+                  aria-pressed={example === request}
+                  onClick={() => onRequest(example)}
+                >
+                  {example.exampleLabel}
+                </Button>
+              ))}
+            </Box>
+          </Box>
+        )}
         <Text
           as={TAG.SPAN}
           id='review-outcome-label'
