@@ -4,7 +4,7 @@ import { NAV_ID } from '@/constants/navigation';
 import { TONE } from '@/constants/tone';
 import type { AiPracticeViewProps } from '@/dto/ai-practice.dto';
 import { AiCheckLoop } from './components/ai-check-flow';
-import { AiPlazaCase } from './components/ai-plaza-case';
+import { AiWorkCases } from './components/ai-work-cases';
 import styles from './ai-practice.module.css';
 
 export function AiPracticeView({ content }: AiPracticeViewProps) {
@@ -22,7 +22,7 @@ export function AiPracticeView({ content }: AiPracticeViewProps) {
             <AiCheckLoop />
           </Box>
         }
-        hero={<AiPlazaCase />}
+        hero={<AiWorkCases />}
       />
     </Box>
   );

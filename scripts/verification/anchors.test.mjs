@@ -39,7 +39,7 @@ for (const project of getProjects()) {
   });
 }
 
-test('ai: only the workflow and plaza case appear in the main landmark', () => {
+test('ai: only the workflow and actual cases appear in the main landmark', () => {
   const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
   assert.equal([...html.matchAll(/<main\b/g)].length, 1);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
@@ -64,22 +64,25 @@ test('ai: only the workflow and plaza case appear in the main landmark', () => {
       assert.ok(ids.includes(id), `missing accessible target: ${id}`);
 });
 
-test('ai: the request workflow precedes the illustrated plaza case', () => {
+test('ai: the workflow precedes the selectable real cases', () => {
   const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
-  const workflow = html.indexOf('id="work"');
-  const example = html.indexOf('id="plaza-case"');
-  assert.ok(workflow >= 0 && example > workflow);
-  assert.ok(!html.slice(workflow, example).includes('블로그 자동화'));
-  const visibleCase = html.slice(example, html.indexOf('<details', example));
-  const steps = [...visibleCase.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)];
-  assert.equal(steps.length, 4);
-  for (const [index, label] of ['발견', '수정', '재검사', '종료'].entries())
-    assert.ok(steps[index][1].includes(label));
-  assert.match(steps[0][1], /겹침 5건/);
-  assert.match(steps[2][1], /겹침 0건/);
-  for (const state of ['overlap', 'fixed']) {
-    assert.ok(html.indexOf(`data-state="${state}"`) > example);
-  }
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)[1];
+  const workflow = main.indexOf('id="work"');
+  const gallery = main.indexOf('id="plaza-case"');
+  assert.ok(workflow >= 0 && gallery > workflow);
+  assert.ok(!main.slice(workflow, gallery).includes('블로그 자동화'));
+  const cases = main.slice(gallery);
+  const plaza = cases.indexOf('data-case="plaza"');
+  const blog = cases.indexOf('data-case="blog"');
+  assert.ok(plaza >= 0 && blog > plaza);
+  const comparison = cases.slice(plaza, blog);
+  for (const label of ['수정 전', '수정 후', '44가지 조건', '5건', '0건'])
+    assert.ok(comparison.includes(label), label);
+  for (const piece of ['label', 'panel'])
+    assert.ok(comparison.includes(`data-piece="${piece}"`), piece);
+  const automation = cases.slice(blog);
+  for (const label of ['독자', '교정', '초안', '발행'])
+    assert.ok(automation.includes(label), label);
 });
 
 for (const page of ['work/emosave', 'preview/emosave-editor']) {

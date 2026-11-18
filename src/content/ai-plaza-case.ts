@@ -1,35 +1,22 @@
+import { PLAZA_EXAMPLE } from '@/constants/ai-practice';
+
 export const plazaCase = {
-  category: '실제 사례',
-  title: '패널에 가려진 광장 이름표',
-  steps: [
-    {
-      label: '발견',
-      result: '겹침 5건',
-      detail:
-        '화면 너비 11개와 광장 단말 4개를 조합한 44가지 조건에서 검사했습니다.',
-    },
-    {
-      label: '수정',
-      result: '패널 자리 분리',
-      detail:
-        '홈 담당자가 이름표를 가리던 ‘최근 작업’ 패널의 자리를 따로 확보했습니다.',
-    },
-    {
-      label: '재검사',
-      result: '겹침 0건',
-      detail: '수정 전과 같은 44가지 조건으로 다시 확인했습니다.',
-    },
-    {
-      label: '종료',
-      result: '수정 마무리',
-      detail: '모든 조건에서 이름표가 온전히 보였습니다.',
-    },
-  ],
-  evidence: '수정 전후 보기',
-  before: '수정 전 · 44가지 조합 중 5가지에서 겹침',
-  after: '수정 후 · 11개 너비 × 4개 단말에서 겹침 0건',
+  place: '데스크톱 광장 확대',
   label: '블로그 자동화',
+  project: '우리 앨범',
+  description: '그룹 사진 앨범 앱',
   panel: '최근 작업',
-  overlap: '상세 패널에 이름표 오른쪽이 가려진 단말',
-  fixed: '패널을 옆으로 옮겨 이름표 전체가 보이는 단말',
+  update: '관리자 대시보드 디자인 통일과 반응형 개선',
+  conditions: '11개 화면 너비 × 4개 단말 · 같은 44가지 조건',
+  result: '겹침 5건 → 0건',
+  [PLAZA_EXAMPLE.OVERLAP]: {
+    label: '수정 전',
+    caption:
+      '‘우리 앨범’을 열자 최근 작업 패널이 옆 단말의 이름표 끝을 가렸습니다.',
+  },
+  [PLAZA_EXAMPLE.FIXED]: {
+    label: '수정 후',
+    caption:
+      '패널을 광장 오른쪽 칸으로 옮기자 ‘블로그 자동화’가 끝까지 보입니다.',
+  },
 };
