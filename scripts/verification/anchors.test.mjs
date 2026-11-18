@@ -59,6 +59,17 @@ test('ai: contents links point to rendered sections and ids stay unique', () => 
       assert.ok(ids.includes(id), `missing accessible target: ${id}`);
 });
 
+test('ai: the request workflow precedes the illustrated plaza case', () => {
+  const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
+  const workflow = html.indexOf('id="work"');
+  const example = html.indexOf('id="plaza-case"');
+  assert.ok(workflow >= 0 && example > workflow);
+  assert.ok(!html.slice(workflow, example).includes('블로그 자동화'));
+  for (const state of ['overlap', 'fixed']) {
+    assert.ok(html.indexOf(`data-state="${state}"`) > example);
+  }
+});
+
 for (const page of ['work/emosave', 'preview/emosave-editor']) {
   test(`${page}: embedded editor preserves landmarks and accessible descriptions`, () => {
     const html = readFileSync(

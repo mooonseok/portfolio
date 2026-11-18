@@ -1,17 +1,11 @@
 import { Box } from '@/components/atoms/box';
 import { Text } from '@/components/atoms/text';
+import type { PlazaExampleState } from '@/constants/ai-practice';
 import { TAG } from '@/constants/tag';
-import { plazaExampleCopy as copy } from '@/content/ai-practice-checks';
+import { plazaCase as copy } from '@/content/ai-plaza-case';
 import styles from './ai-plaza-example.module.css';
 
-export function AiPlazaExample({ stageId }: { stageId: string }) {
-  const state =
-    stageId === 'check'
-      ? 'overlap'
-      : stageId === 'repair' || stageId === 'verify'
-        ? 'fixed'
-        : 'idle';
-
+export function AiPlazaExample({ state }: { state: PlazaExampleState }) {
   return (
     <Box
       className={styles.scene}

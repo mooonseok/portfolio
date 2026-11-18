@@ -1,40 +1,58 @@
 .graph {
   position: relative;
   isolation: isolate;
-  height: clamp(320px, 34vw, 408px);
+  min-width: 0;
+  min-height: clamp(292px, 31vw, 390px);
   background-color: var(--paper);
   background-image: radial-gradient(var(--dark-line) 0.8px, transparent 1px);
   background-size: 15px 15px;
 }
 .graph::before,
-.trail {
+.branch,
+.feedback {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  mask: url('./ai-check-routes.svg') center / 100% 100% no-repeat;
+  background: var(--graphite);
+  mask-position: center;
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 .graph::before {
-  background: var(--graphite);
+  mask-image: url('./ai-check-routes.svg');
 }
-.trail {
+.branch {
+  mask-image: url('./ai-check-map-down.svg');
+}
+.graph[data-type='feature'] .branch {
+  mask-image: url('./ai-check-map-fork.svg');
+}
+.graph[data-return='0'] .feedback {
+  mask-image: url('./ai-check-map-return-0.svg');
+}
+.graph[data-return='1'] .feedback {
+  mask-image: url('./ai-check-map-return-1.svg');
+}
+.graph[data-return='2'] .feedback {
+  mask-image: url('./ai-check-map-return-2.svg');
+}
+.feedback {
   background: var(--signal);
-  clip-path: var(--region, inset(100%));
 }
-.graph[data-stage='2'] {
-  --region: inset(8% 21% 86% 21%);
+.fork {
+  position: absolute;
+  inset: 32% 8% auto 58%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--subtle);
 }
-.graph[data-stage='3'] {
-  --region: polygon(20% 16%, 79% 16%, 79% 29%, 27% 29%, 27% 50%, 20% 50%);
-}
-.graph[data-stage='4'] {
-  --region: inset(38% 20% 38% 21%);
-}
-.graph[data-stage='5'] {
-  --region: inset(52% 21% 21% 70%);
-}
-.graph[data-stage='6'] {
-  --region: inset(81% 20% 0 20%);
+.fork span {
+  background: var(--paper);
+  padding: 0 4px;
 }
 .stations {
   list-style: none;
@@ -45,27 +63,26 @@
   position: absolute;
   transform: translate(-50%, -50%);
   width: max-content;
-  max-width: 40%;
+  max-width: 42%;
 }
 .station:nth-child(1),
-.station:nth-child(3),
-.station:nth-child(6) {
-  left: 23.75%;
-}
-.station:nth-child(2),
 .station:nth-child(4),
 .station:nth-child(5) {
-  left: 76.25%;
+  left: 25%;
+}
+.station:nth-child(2),
+.station:nth-child(3) {
+  left: 75%;
 }
 .station:nth-child(-n + 2) {
-  top: 10.5556%;
+  top: 15%;
 }
 .station:nth-child(3),
 .station:nth-child(4) {
   top: 50%;
 }
-.station:nth-child(n + 5) {
-  top: 80%;
+.station:nth-child(5) {
+  top: 85%;
 }
 .node {
   display: inline-flex;
@@ -94,52 +111,27 @@
   color: var(--subtle);
   font: 12px var(--font-mono);
 }
-.home,
-.inside,
-.return {
+.key {
   position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  padding: 0 5px;
+  right: 5%;
+  bottom: 7%;
+  display: grid;
+  gap: 3px;
   color: var(--subtle);
-  background: var(--paper);
   font-size: 12px;
-  line-height: 1.5;
 }
-.home {
-  top: 40%;
+.solid,
+.dashed {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.inside {
-  top: 60%;
+.solid::before,
+.dashed::before {
+  content: '';
+  width: 17px;
+  border-top: 1.5px solid var(--graphite);
 }
-.return {
-  top: 94.4444%;
-  color: var(--signal);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .trail {
-    animation: trace-stage 180ms var(--ease);
-  }
-  @keyframes trace-stage {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  .graph[data-stage] .node[aria-pressed='true'] {
-    animation: select-stage 180ms var(--ease-out);
-  }
-  @keyframes select-stage {
-    from {
-      transform: translateY(2px);
-      opacity: 0.85;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+.dashed::before {
+  border-top: 1.5px dashed var(--signal);
 }

@@ -296,7 +296,7 @@
       "kind": "button",
       "refersTo": "stage-node",
       "description": "AI 활용 단계",
-      "html": "<button class=\"ds-stage-node\">가림 찾기</button>",
+      "html": "<button class=\"ds-stage-node\">독립 검토</button>",
       "css": ".ds-stage-node{min-height:44px;color:var(--color-ink,#f2eeff);background:var(--color-dark-2,#141122);border:1px solid var(--color-hairline,#463952);border-radius:8px;padding:3px clamp(7px, 1.25vw, 17px)}"
     },
     {

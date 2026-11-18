@@ -1,4 +1,5 @@
 import { AiCheckLoop } from './components/ai-check-flow';
+import { AiPlazaCase } from './components/ai-plaza-case';
 import { AiRuleRowsView } from './components/ai-rule-rows-view';
 import { CaseSectionView } from './components/case-section-view';
 import { ParagraphsView } from './components/paragraphs-view';
@@ -24,7 +25,12 @@ export function AiPracticeView({
       groups={groups}
       next={c.next}
       nav={{ back: false, current: NAV_ID.AI }}
-      hero={<AiCheckLoop flow={c.checks} />}
+      hero={
+        <>
+          <AiCheckLoop />
+          <AiPlazaCase />
+        </>
+      }
     >
       <CaseSectionView
         depth={CASE_DEPTH.L2}

@@ -1,41 +1,60 @@
-import { AiPlazaExample } from './ai-plaza-example';
+import { WorkflowMapView } from './ai-check-map-view';
+import { WorkflowTextView } from './ai-check-flow-static-view';
 import { Anchor } from '@/components/atoms/anchor';
 import { Box } from '@/components/atoms/box';
 import { Button } from '@/components/atoms/button';
 import { Heading } from '@/components/atoms/heading';
-import { List, ListItem } from '@/components/atoms/list';
 import { Text } from '@/components/atoms/text';
 import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
-import { HEADING, LIST_TAG, TAG } from '@/constants/tag';
-import type { AiCheckFlow, AiCheckStage } from '@/dto/ai-practice.dto';
+import { HEADING, TAG } from '@/constants/tag';
+import type { WorkflowIssue, WorkflowRequest } from '@/dto/ai-workflow.dto';
 import styles from './ai-check-flow.module.css';
-import graph from './ai-check-map.module.css';
 
 interface Props {
-  flow: AiCheckFlow;
+  requests: WorkflowRequest[];
+  request: WorkflowRequest;
+  issue?: WorkflowIssue;
   active: number;
-  enhanced: boolean;
+  revisiting: boolean;
+  returning: boolean;
+  travel: boolean;
   playing: boolean;
   reduced: boolean;
-  onSelect: (index: number) => void;
+  enhanced: boolean;
+  finished: boolean;
+  onRequest: (request: WorkflowRequest) => void;
+  onSelect: (node: number) => void;
+  onIssue: (issue?: WorkflowIssue) => void;
   onPlay: () => void;
-  onReplay: () => void;
+  onNext: () => void;
 }
 
-const twoDigits = (value: number) => String(value).padStart(2, '0');
-const panelId = (id: string) => 'ai-stage-' + id;
-
 export function AiCheckFlowView({
-  flow,
+  requests,
+  request,
+  issue,
   active,
-  enhanced,
+  revisiting,
+  returning,
+  travel,
   playing,
   reduced,
+  enhanced,
+  finished,
+  onRequest,
+  onIssue,
   onSelect,
   onPlay,
-  onReplay,
+  onNext,
 }: Props) {
-  const finished = active === flow.stages.length - 1;
+  const stage = request.stages[active];
+  const playLabel = finished
+    ? '다시 보기'
+    : playing
+      ? '일시정지'
+      : active === 0 && !revisiting
+        ? '재생'
+        : '이어 보기';
   return (
     <Box
       as={TAG.SECTION}
@@ -49,138 +68,106 @@ export function AiCheckFlowView({
           id={AI_LOOP_TITLE_ID}
           className='text-[clamp(23px,3vw,38px)] leading-tight font-medium tracking-tight'
         >
-          {flow.title}
+          요청별 작업 흐름
         </Heading>
-        {enhanced && !reduced && (
-          <Box className={styles.controls}>
-            <Button
-              onClick={finished ? onReplay : onPlay}
-              className={styles.control}
-            >
-              <Text as={TAG.SPAN} aria-hidden>
-                {finished ? '↺' : playing ? 'Ⅱ' : '▷'}
-              </Text>
-              {finished
-                ? '다시 보기'
-                : playing
-                  ? '일시정지'
-                  : active === 0
-                    ? '재생'
-                    : '이어 보기'}
-            </Button>
-            {active > 0 && !finished && (
-              <Button onClick={onReplay} className={styles.control}>
-                <Text as={TAG.SPAN} aria-hidden>
-                  ↺
-                </Text>
-                다시 보기
+        <Box className={styles.tabs} role='group' aria-label='요청 종류'>
+          {requests.map((item) =>
+            enhanced ? (
+              <Button
+                className={styles.tab}
+                key={item.id}
+                data-request={item.id}
+                aria-pressed={item === request}
+                onClick={() => onRequest(item)}
+              >
+                {item.label}
               </Button>
-            )}
-          </Box>
-        )}
-      </Box>
-      <Box className={styles.spread}>
-        <Box className={graph.graph} data-stage={active + 1}>
-          <Box key={active} className={graph.trail} aria-hidden />
-          <List
-            as={LIST_TAG.OL}
-            aria-label='진행 순서'
-            className={graph.stations}
-          >
-            {flow.stages.map((stage, index) => {
-              const label = (
-                <>
-                  <Text as={TAG.SPAN} className={graph.serial}>
-                    {twoDigits(index + 1)}
-                  </Text>
-                  {stage.label}
-                </>
-              );
-              return (
-                <ListItem key={stage.id} className={graph.station}>
-                  {enhanced ? (
-                    <Button
-                      className={graph.node}
-                      aria-pressed={active === index}
-                      aria-controls='ai-current-stage'
-                      onClick={() => onSelect(index)}
-                    >
-                      {label}
-                    </Button>
-                  ) : (
-                    <Anchor
-                      className={graph.node}
-                      href={'#' + panelId(stage.id)}
-                    >
-                      {label}
-                    </Anchor>
-                  )}
-                </ListItem>
-              );
-            })}
-          </List>
-          <Text className={graph.home}>홈</Text>
-          <Text className={graph.inside}>내부 화면</Text>
-          <Text className={graph.return}>{flow.loopLabel}</Text>
-        </Box>
-        <Box className={styles.notes} data-interactive={enhanced}>
-          {enhanced ? (
-            <StageDetail
-              stage={flow.stages[active]}
-              index={active}
-              count={flow.stages.length}
-              interactive
-            />
-          ) : (
-            flow.stages.map((stage, index) => (
-              <StageDetail
-                key={stage.id}
-                stage={stage}
-                index={index}
-                count={flow.stages.length}
-              />
-            ))
+            ) : (
+              <Anchor
+                className={styles.tab}
+                key={item.id}
+                href={'#workflow-' + item.id}
+              >
+                {item.label}
+              </Anchor>
+            )
           )}
         </Box>
       </Box>
-    </Box>
-  );
-}
-
-function StageDetail({
-  stage,
-  index,
-  count,
-  interactive,
-}: {
-  stage: AiCheckStage;
-  index: number;
-  count: number;
-  interactive?: boolean;
-}) {
-  return (
-    <Box
-      as={TAG.ARTICLE}
-      id={interactive ? 'ai-current-stage' : panelId(stage.id)}
-      className={styles.note}
-    >
-      <Text className={styles.count}>
-        {twoDigits(index + 1)} / {twoDigits(count)}
-      </Text>
-      <Heading
-        level={HEADING.H3}
-        className='mt-3 text-2xl leading-tight font-medium'
-      >
-        {stage.label}
-      </Heading>
-      <Text className='mt-4 text-base leading-relaxed'>{stage.body}</Text>
-      {interactive && <AiPlazaExample stageId={stage.id} />}
-      {stage.evidence.length > 0 && (
-        <List className={styles.evidence}>
-          {stage.evidence.map((item) => (
-            <ListItem key={item}>{item}</ListItem>
-          ))}
-        </List>
+      <Box className={styles.spread}>
+        <WorkflowMapView
+          {...{ request, active, issue, returning, travel, enhanced, onSelect }}
+        />
+        <Box as={TAG.ARTICLE} id='ai-current-stage' className={styles.note}>
+          <Text className={styles.count}>
+            {String(active + 1).padStart(2, '0')} / 05 ·{' '}
+            {revisiting ? (active === 3 ? '재검토' : '수정') : request.label}
+          </Text>
+          <Heading
+            level={HEADING.H3}
+            className='mt-3 text-2xl leading-tight font-medium'
+          >
+            {stage.label}
+          </Heading>
+          <Text className='mt-2 text-sm text-signal'>{stage.owner}</Text>
+          <Text className='mt-4 leading-relaxed'>
+            {returning && issue ? issue.reason : stage.body}
+          </Text>
+          {enhanced && (
+            <Box className={styles.controls}>
+              {!reduced && (
+                <Button className={styles.control} onClick={onPlay}>
+                  {playLabel}
+                </Button>
+              )}
+              <Button
+                aria-label='다음 단계'
+                className={styles.control}
+                onClick={onNext}
+                disabled={finished}
+              >
+                다음 단계 →
+              </Button>
+            </Box>
+          )}
+        </Box>
+      </Box>
+      {enhanced ? (
+        <Box className={styles.review} role='group' aria-label='검토 결과 선택'>
+          <Text className='font-medium'>검토 결과 선택</Text>
+          <Box className={styles.options}>
+            <Button
+              className={styles.outcome}
+              data-outcome='pass'
+              aria-pressed={!issue}
+              onClick={() => onIssue()}
+            >
+              통과
+            </Button>
+            {request.issues.map((choice) => (
+              <Button
+                className={styles.outcome}
+                key={choice.id}
+                data-outcome={choice.id}
+                data-target={choice.target}
+                aria-pressed={issue === choice}
+                onClick={() => onIssue(choice)}
+              >
+                {choice.label}
+              </Button>
+            ))}
+          </Box>
+          <Text className={styles.verdict}>
+            {issue
+              ? request.stages[3].label +
+                ' → ' +
+                request.stages[issue.target].label +
+                ' → 재검토'
+              : request.stages[3].label + ' → ' + request.stages[4].label}
+          </Text>
+        </Box>
+      ) : (
+        <WorkflowTextView requests={requests} />
       )}
     </Box>
   );

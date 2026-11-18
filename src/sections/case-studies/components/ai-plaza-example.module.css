@@ -3,7 +3,7 @@
   isolation: isolate;
   overflow: hidden;
   align-self: center;
-  width: min(100%, 360px);
+  width: 100%;
   aspect-ratio: 2.7;
   color: var(--color-ink);
   background: var(--color-night-deep);
@@ -25,7 +25,6 @@
   justify-items: center;
   grid-template-rows: minmax(0, 1fr) auto;
   transform: translateX(-50%);
-  transition: transform 360ms ease-out;
 }
 .model {
   width: 100%;
@@ -48,11 +47,6 @@
   border: 1px solid var(--color-signal);
   border-radius: 5px;
   font-size: 12px;
-  opacity: 0;
-  transform: translateX(10%);
-  transition:
-    opacity 180ms ease,
-    transform 360ms ease-out;
 }
 .line {
   width: 80%;
@@ -63,20 +57,9 @@
 .line:last-child {
   width: 52%;
 }
-.scene[data-state='overlap'] .panel,
-.scene[data-state='fixed'] .panel {
-  opacity: 1;
-  transform: none;
-}
 .scene[data-state='fixed'] .panel {
   transform: translateX(14%);
 }
 .scene[data-state='fixed'] .station {
   transform: translateX(-101%);
-}
-@media (prefers-reduced-motion: reduce) {
-  .station,
-  .panel {
-    transition: none;
-  }
 }

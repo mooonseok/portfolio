@@ -9,19 +9,6 @@ export interface AiRule {
   example: string;
 }
 
-export interface AiCheckStage {
-  id: string;
-  label: string;
-  body: string;
-  evidence: string[];
-}
-
-export interface AiCheckFlow {
-  title: string;
-  loopLabel: string;
-  stages: AiCheckStage[];
-}
-
 export interface AiPracticeHome {
   title: string;
   items: string[];
@@ -36,7 +23,6 @@ export interface AiPractice {
   rulesLabel: string;
   rules: AiRule[];
   rulesNote: string[];
-  checks: AiCheckFlow;
   engineeringTitle: string;
   techNotes: TechNote[];
   collaborationTitle: string;

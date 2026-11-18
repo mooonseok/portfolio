@@ -1,14 +1,13 @@
 import type { AiPractice } from '@/dto/ai-practice.dto';
 import { GROUP_ID, GROUP_LABEL } from '@/constants/case';
 import { ROUTE } from '@/constants/navigation';
-import { aiCheckFlow } from '@/content/ai-practice-checks';
 
 export const aiPractice: AiPractice = {
   title: 'AI 활용 방식',
   description:
-    '포트폴리오 광장을 만든 과정을 따라가며 AI에 작업을 나누어 맡기고, 화면에서 발견한 문제를 수정하고 다시 확인한 사례를 살펴봅니다.',
+    '디자인·기능 개발·오류 수정 요청에 따라 AI와 작업을 나누는 방법, 검토 결과를 담당자에게 돌려보내고 다시 확인하는 과정을 소개합니다.',
   summary:
-    '저는 무엇을 만들고 어떻게 확인할지 정합니다. AI에게는 구현과 검토를 나눠 맡깁니다. 이 포트폴리오의 광장을 만들 때도 그렇게 작업했습니다.',
+    '시안의 방향과 기능의 완료 기준은 제가 정합니다. AI에게는 만드는 일과 검토하는 일을 나눠 맡깁니다. 검토에서 문제가 나오면 어떤 조건에서 생겼는지 확인하고 담당자에게 돌려보냅니다.',
   meta: [
     { key: 'TOOLS', value: 'Claude Code, Codex, Claude Design' },
     {
@@ -44,8 +43,6 @@ export const aiPractice: AiPractice = {
   rulesNote: [
     '개인 Claude Code 환경에는 명령 실행 전에 자동으로 확인하는 스크립트(훅)를 등록했습니다. 현재 브랜치가 지정한 공용 브랜치이면 커밋 명령을 멈추고 작업 브랜치를 만들도록 안내합니다.',
   ],
-
-  checks: aiCheckFlow,
 
   engineeringTitle: '반복 확인을 검사로 옮긴 사례',
   techNotes: [
