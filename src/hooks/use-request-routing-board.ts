@@ -1,17 +1,19 @@
 import { useLayoutEffect, useRef, type RefObject } from 'react';
-import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
+import type {
+  RoutingPainter,
+  RoutingPhase,
+  RoutingRequest,
+} from '@/dto/request-routing.dto';
 import { routingPacket } from '@/lib/request-routing';
 import {
   routingTrackPaths,
   type RoutingAnchor,
 } from '@/lib/request-routing-geometry';
 
-type Paint = (phase: RoutingPhase, fraction: number) => void;
-
 export function useRequestRoutingBoard(
   request: RoutingRequest,
   reduced: boolean,
-  paintRef: RefObject<Paint | null>
+  paintRef: RefObject<RoutingPainter | null>
 ) {
   const boardRef = useRef<SVGSVGElement>(null);
   useLayoutEffect(() => {
@@ -30,9 +32,9 @@ export function useRequestRoutingBoard(
         (path) => [path.dataset.edge, path] as const
       )
     );
-    const lengths = new Map<string, number>();
+    let lengths = new Map<string, number>();
     let lastPhase: RoutingPhase =
-      board.dataset.phase === 'done' ? 'done' : 'request';
+      board.dataset.phase === 'done' ? 'done' : 'judge';
     let lastFraction = lastPhase === 'done' ? 1 : 0;
 
     function paint(phase: RoutingPhase, fraction: number) {
@@ -62,23 +64,16 @@ export function useRequestRoutingBoard(
       });
     }
 
-    function setPath(id: string, d: string) {
-      const path = paths.get(id);
-      if (!path) return;
-      path.setAttribute('d', d);
-      lengths.set(id, path.getTotalLength());
-    }
-
     function measure() {
       const origin = svg!.getBoundingClientRect();
       const anchors = new Map<string, RoutingAnchor>();
       for (const node of nodes) {
         const box = node.getBoundingClientRect();
         anchors.set(node.dataset.node!, {
-          x: box.left - origin.left + 10,
-          rowTop: node.closest('li')!.getBoundingClientRect().top - origin.top,
-          top: box.top - origin.top,
-          bottom: box.bottom - origin.top,
+          x: box.left + box.width / 2 - origin.left,
+          halfWidth: (box.width - 1) / 2,
+          top: box.top - origin.top + 0.5,
+          bottom: box.bottom - origin.top - 0.5,
         });
       }
       const geometry = routingTrackPaths(
@@ -87,7 +82,14 @@ export function useRequestRoutingBoard(
         origin.width,
         origin.height
       );
-      for (const [id, path] of geometry) setPath(id, path);
+      lengths = new Map();
+      for (const [id, d] of geometry) {
+        const path = paths.get(id);
+        if (!path) continue;
+        path.setAttribute('d', d);
+        lengths.set(id, path.getTotalLength());
+      }
+      paintRef.current = { lengths, paint };
       paint(lastPhase, lastFraction);
     }
 
@@ -95,7 +97,6 @@ export function useRequestRoutingBoard(
     const observer = new ResizeObserver(measure);
     observer.observe(board);
     nodes.forEach((node) => observer.observe(node));
-    paintRef.current = paint;
     return () => {
       paintRef.current = null;
       observer.disconnect();

@@ -2,20 +2,18 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import { MEDIA } from '@/constants/breakpoint';
-import type { RoutingPhase, RoutingRequest } from '@/dto/request-routing.dto';
-import {
-  advanceRoutingTime,
-  routingFrame,
-  routingTimeline,
-} from '@/lib/request-routing';
+import type {
+  RoutingPainter,
+  RoutingPhase,
+  RoutingRequest,
+} from '@/dto/request-routing.dto';
+import { advanceRoutingFrame, routingTrack } from '@/lib/request-routing';
 import { useMediaQuery } from './use-media-query';
 
-type PaintFrame = (phase: RoutingPhase, fraction: number) => void;
-
 export function useRequestRouting(request: RoutingRequest) {
-  const [phase, setPhase] = useState<RoutingPhase>('request');
+  const [phase, setPhase] = useState<RoutingPhase>('judge');
   const reduced = useMediaQuery(MEDIA.REDUCED_MOTION);
-  const paintRef = useRef<PaintFrame | null>(null);
+  const paintRef = useRef<RoutingPainter | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -23,28 +21,33 @@ export function useRequestRouting(request: RoutingRequest) {
     if (!target) return;
     if (reduced || window.matchMedia(MEDIA.REDUCED_MOTION).matches) {
       setPhase('done');
-      paintRef.current?.('done', 1);
+      paintRef.current?.paint('done', 1);
       return;
     }
 
-    const timeline = routingTimeline(request);
-    let elapsed = 0;
+    let lengths: RoutingPainter['lengths'] | undefined;
+    let track: ReturnType<typeof routingTrack>;
+    let current = { phase: 'judge' as RoutingPhase, fraction: 0 };
     let last: number | null = null;
-    let currentPhase: RoutingPhase = 'request';
     let inView = false;
     let frame = 0;
-    setPhase('request');
-    paintRef.current?.('request', 0);
+    setPhase('judge');
+    paintRef.current?.paint('judge', 0);
 
     function tick(now: number) {
-      if (last !== null) elapsed = advanceRoutingTime(elapsed, now - last);
-      last = now;
-      const current = routingFrame(timeline, elapsed);
-      if (currentPhase !== current.phase) {
-        currentPhase = current.phase;
-        setPhase(current.phase);
+      const painter = paintRef.current;
+      if (painter && painter.lengths !== lengths) {
+        lengths = painter.lengths;
+        track = routingTrack(request, lengths);
       }
-      paintRef.current?.(current.phase, current.fraction);
+      if (painter && track) {
+        const elapsed = last === null ? 0 : now - last;
+        const next = advanceRoutingFrame(track, current, elapsed);
+        if (current.phase !== next.phase) setPhase(next.phase);
+        current = next;
+        painter.paint(current.phase, current.fraction);
+      }
+      last = now;
       frame = requestAnimationFrame(tick);
     }
 

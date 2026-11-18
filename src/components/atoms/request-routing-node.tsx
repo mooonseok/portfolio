@@ -35,20 +35,14 @@ export function RequestRoutingRow({
 interface NodeProps {
   id: string;
   heading: string;
-  standby?: string;
-  children?: ReactNode;
-  status?: string;
-  showStatus?: boolean;
+  children: ReactNode;
   correction?: boolean;
 }
 
 export function RequestRoutingNode({
   id,
   heading,
-  standby,
   children,
-  status,
-  showStatus,
   correction,
 }: NodeProps) {
   return (
@@ -57,19 +51,8 @@ export function RequestRoutingNode({
       className={styles.node}
       data-correction={correction || undefined}
     >
-      {standby && <span className={styles.standby}>{standby}</span>}
-      <div
-        className={styles.nodeContent}
-        aria-hidden={standby ? true : undefined}
-      >
-        <strong className={styles.nodeTitle}>{heading}</strong>
-        {children && <div className={styles.detail}>{children}</div>}
-        {status && (
-          <span className={styles.taskState} aria-hidden={!showStatus}>
-            {status}
-          </span>
-        )}
-      </div>
+      <strong className={styles.nodeTitle}>{heading}</strong>
+      <div className={styles.detail}>{children}</div>
     </div>
   );
 }

@@ -5,7 +5,6 @@ export interface RoutingRequest {
   id: string;
   label: string;
   lane: RoutingLane;
-  quote: string;
   reason: string;
   decision: string;
   jobs: Partial<Record<RoutingTarget, string>>;
@@ -14,17 +13,12 @@ export interface RoutingRequest {
   review: string;
   issue?: {
     owner: RoutingTarget;
-    label: string;
-    fix: string;
     back: string;
-    retry: string;
   };
   finish: string;
 }
 
 export type RoutingPhase =
-  | 'request'
-  | 'entry'
   | 'judge'
   | 'route'
   | 'work'
@@ -38,3 +32,8 @@ export type RoutingPhase =
   | 'exit'
   | 'done'
   | 'restart';
+
+export interface RoutingPainter {
+  lengths: ReadonlyMap<string, number>;
+  paint(phase: RoutingPhase, fraction: number): void;
+}

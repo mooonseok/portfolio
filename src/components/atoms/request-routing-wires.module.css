@@ -7,14 +7,14 @@
   pointer-events: none;
   overflow: visible;
   fill: none;
-  stroke: var(--hairline);
+  stroke: color-mix(in srgb, var(--routing-accent) 35%, var(--hairline));
   stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.wires[data-drawn='false'] [data-branch] {
-  visibility: hidden;
-}
-.wires [data-branch] {
-  stroke: color-mix(in srgb, var(--routing-accent) 55%, var(--hairline));
+.cycle {
+  stroke: var(--hairline);
+  stroke-dasharray: 2 5;
 }
 .wires [data-repair='true'] [data-edge^='join-'] {
   stroke: var(--circuit-return);
@@ -29,13 +29,4 @@
 }
 .dots[data-repair='true'] {
   fill: var(--circuit-return);
-}
-
-.rail {
-  stroke: var(--hairline);
-  stroke-opacity: 0.45;
-}
-.cycle {
-  stroke-opacity: 0.55;
-  stroke-dasharray: 2 4;
 }

@@ -3,22 +3,14 @@ import { test } from 'node:test';
 import { designFlow } from '../../src/content/design-routing.ts';
 import { developmentFlow } from '../../src/content/request-routing.ts';
 import {
-  advanceRoutingTime,
-  routingFrame,
+  advanceRoutingFrame,
+  ROUTING_PIXELS_PER_SECOND,
   routingPacket,
-  routingTimeline,
+  routingTrack,
 } from '../../src/lib/request-routing.ts';
 
 const workflows = [developmentFlow, designFlow];
-const assigned = [
-  'request',
-  'entry',
-  'judge',
-  'route',
-  'work',
-  'join',
-  'review',
-];
+const assigned = ['judge', 'route', 'work', 'join', 'review'];
 const correction = ['issue', 'back', 'fix', 'retry', 'recheck'];
 
 test('개발과 디자인 유형별 한 흐름에 작업과 검토 근거 및 실제 끝점이 있다', () => {
@@ -28,11 +20,9 @@ test('개발과 디자인 유형별 한 흐름에 작업과 검토 근거 및 �
   );
   for (const request of workflows) {
     assert.ok(Object.keys(request.jobs).length > 0);
-    assert.ok(
-      request.quote && request.decision && request.proof && request.finish
-    );
+    assert.ok(request.decision && request.proof && request.finish);
     assert.ok(request.jobs[request.issue.owner]);
-    assert.ok(request.issue.fix && request.issue.retry);
+    assert.ok(request.issue.back);
   }
 });
 
@@ -49,11 +39,31 @@ function* routes() {
   }
 }
 
-test('직접 통과와 수정 경로 모두 결과를 거쳐 다음 회차의 정확한 위치로 이어진다', () => {
+function measuredEdges(request) {
+  const edges = new Map([
+    ['judge', 27],
+    ['review', 90],
+    ['result', 36],
+    ['exit', 18],
+    ['restart', 315],
+  ]);
+  for (const id of Object.keys(request.jobs)) {
+    edges.set(`in-${id}`, 99);
+    edges.set(`work-${id}`, 63);
+    edges.set(`join-${id}`, 117);
+    edges.set(`fix-${id}`, 72);
+  }
+  return edges;
+}
+
+const beginning = { phase: 'judge', fraction: 0 };
+const travelTime = (distance) => (distance * 1000) / ROUTING_PIXELS_PER_SECOND;
+
+test('직접 통과와 수정 경로가 판단부터 시작해 여러 바퀴 뒤에도 같은 위치로 이어진다', () => {
   for (const request of routes()) {
-    const timeline = routingTimeline(request);
+    const track = routingTrack(request, measuredEdges(request));
     assert.deepEqual(
-      timeline.steps.map(([phase]) => phase),
+      track.steps.map(({ phase }) => phase),
       [
         ...assigned,
         ...(request.issue ? correction : []),
@@ -62,72 +72,49 @@ test('직접 통과와 수정 경로 모두 결과를 거쳐 다음 회차의 �
         'restart',
       ]
     );
-    for (const cycle of [0, 1, 2, 1000]) {
-      let elapsed = cycle * timeline.duration;
-      for (const [phase, duration] of timeline.steps) {
-        assert.deepEqual(routingFrame(timeline, elapsed), {
+    for (const cycles of [0, 1, 2, 1000]) {
+      let time = cycles * travelTime(track.length);
+      for (const { phase, length } of track.steps) {
+        assert.deepEqual(advanceRoutingFrame(track, beginning, time), {
           phase,
           fraction: 0,
         });
-        assert.deepEqual(routingFrame(timeline, elapsed + duration / 2), {
-          phase,
-          fraction: 0.5,
-        });
-        assert.equal(
-          routingFrame(timeline, elapsed + duration - 1).phase,
-          phase
+        assert.deepEqual(
+          advanceRoutingFrame(track, beginning, time + travelTime(length / 2)),
+          { phase, fraction: 0.5 }
         );
-        elapsed += duration;
-      }
-      assert.deepEqual(routingFrame(timeline, elapsed + 70), {
-        phase: 'request',
-        fraction: 70 / timeline.steps[0][1],
-      });
-    }
-  }
-});
-
-test('카드를 읽는 시간과 짧은 연결 이동 및 회차 간 이동 시간을 분리한다', () => {
-  const moving = new Set(['entry', 'route', 'join', 'back', 'retry', 'exit']);
-  for (const request of routes()) {
-    for (const [phase, duration] of routingTimeline(request).steps) {
-      if (moving.has(phase)) {
-        assert.ok(duration >= 250 && duration <= 500, phase);
-      } else if (phase === 'restart') {
-        assert.ok(duration >= 900 && duration <= 1500);
-      } else {
-        assert.ok(duration >= (phase === 'request' ? 3000 : 2400), phase);
+        time += travelTime(length);
       }
     }
   }
 });
 
-test('모든 단계에서 점이 이동하고 수정 구간은 검토에서 지목한 담당에게만 보인다', () => {
+test('카드·대칭 분기·담당 복귀·재검토·순환선에서 모든 점의 초당 이동 거리가 같다', () => {
   for (const request of routes()) {
     const ids = Object.keys(request.jobs);
-    for (const [phase] of routingTimeline(request).steps) {
+    const edges = measuredEdges(request);
+    const track = routingTrack(request, edges);
+    for (const { phase } of track.steps) {
+      const state = { phase, fraction: 0.1 };
+      const next = advanceRoutingFrame(track, state, 100);
+      assert.equal(next.phase, phase);
       const expected = ['route', 'work', 'join'].includes(phase)
         ? ids
         : correction.includes(phase)
           ? [request.issue.owner]
           : [ids[0]];
-      for (const id of ids) {
-        const point = (fraction) =>
-          routingPacket(
-            phase,
-            fraction,
-            id,
-            id === ids[0],
-            request.issue?.owner
-          );
+      for (const [index, id] of ids.entries()) {
+        const packet = (fraction) =>
+          routingPacket(phase, fraction, id, index === 0, request.issue?.owner);
         if (!expected.includes(id)) {
-          assert.equal(point(0.5), undefined, phase);
+          assert.equal(packet(next.fraction), undefined);
           continue;
         }
-        const [edge, start] = point(0.1);
-        const [finishEdge, finish] = point(0.9);
-        assert.equal(edge, finishEdge);
-        assert.notEqual(start, finish, phase);
+        const [edge, start] = packet(state.fraction);
+        const [endEdge, end] = packet(next.fraction);
+        assert.equal(edge, endEdge);
+        const speed = (edges.get(edge) * Math.abs(end - start)) / 0.1;
+        assert.ok(Math.abs(speed - ROUTING_PIXELS_PER_SECOND) < 1e-8, phase);
       }
     }
   }
@@ -135,13 +122,11 @@ test('모든 단계에서 점이 이동하고 수정 구간은 검토에서 지�
 
 function junction([edge, position]) {
   const ends = {
-    request: ['cycle-origin', 'entry-origin'],
-    entry: ['entry-origin', 'judge-top'],
     judge: ['judge-top', 'judge-bottom'],
     review: ['review-top', 'review-bottom'],
     exit: ['review-bottom', 'result-top'],
     result: ['result-top', 'result-bottom'],
-    restart: ['result-bottom', 'cycle-origin'],
+    restart: ['result-bottom', 'judge-top'],
   };
   const [kind, id] = edge.split('-');
   if (id) {
@@ -160,7 +145,7 @@ function junction([edge, position]) {
 test('단일 경로·분기·합류·수정·재시작의 전환에서 점의 끝점과 다음 시작점이 일치한다', () => {
   for (const request of routes()) {
     const ids = Object.keys(request.jobs);
-    const { steps } = routingTimeline(request);
+    const { steps } = routingTrack(request, measuredEdges(request));
     const ports = (phase, fraction) =>
       new Set(
         ids.flatMap((id, index) => {
@@ -174,8 +159,8 @@ test('단일 경로·분기·합류·수정·재시작의 전환에서 점의 �
           return packet ? [junction(packet)] : [];
         })
       );
-    for (const [index, [phase]] of steps.entries()) {
-      const [next] = steps[(index + 1) % steps.length];
+    for (const [index, { phase }] of steps.entries()) {
+      const next = steps[(index + 1) % steps.length].phase;
       const end = ports(phase, 1);
       assert.ok(end.size > 0 && !end.has(undefined), phase);
       assert.deepEqual(end, ports(next, 0), phase + ' → ' + next);
@@ -183,7 +168,24 @@ test('단일 경로·분기·합류·수정·재시작의 전환에서 점의 �
   }
 });
 
-test('프레임 지연으로 한 번에 여러 단계를 건너뛰지 않는다', () => {
-  assert.equal(advanceRoutingTime(1000, 16), 1016);
-  assert.equal(advanceRoutingTime(1000, 250), 1080);
+test('경로를 다시 측정하면 현재 단계와 진행률에서 새 길이에 맞춰 계속 이동한다', () => {
+  const edges = measuredEdges(developmentFlow);
+  const first = routingTrack(developmentFlow, edges);
+  const mid = advanceRoutingFrame(
+    first,
+    { phase: 'restart', fraction: 0 },
+    travelTime(157.5)
+  );
+  assert.deepEqual(mid, { phase: 'restart', fraction: 0.5 });
+  edges.set('restart', 630);
+  const resized = routingTrack(developmentFlow, edges);
+  assert.deepEqual(advanceRoutingFrame(resized, mid, 0), mid);
+  assert.equal(advanceRoutingFrame(resized, mid, travelTime(63)).fraction, 0.6);
+});
+
+test('측정 전이나 길이가 없는 경로에서는 시계를 시작하지 않는다', () => {
+  const edges = measuredEdges(developmentFlow);
+  assert.equal(routingTrack(developmentFlow, new Map()), undefined);
+  for (const edge of edges.keys()) edges.set(edge, 0);
+  assert.equal(routingTrack(developmentFlow, edges), undefined);
 });

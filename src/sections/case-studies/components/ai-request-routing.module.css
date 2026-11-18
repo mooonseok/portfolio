@@ -13,29 +13,6 @@
 .panel[data-lane='design'] {
   --routing-accent: var(--circuit-design);
 }
-.header {
-  padding: clamp(19px, 4%, 28px) var(--panel-inset) 16px;
-}
-.stage {
-  min-height: 21px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--subtle);
-  font-size: 13px;
-  font-weight: 580;
-}
-.reading {
-  color: var(--routing-accent);
-}
-.quote {
-  margin: 6px 0 0;
-  max-width: 29em;
-  font-size: clamp(19px, 3vw, 25px);
-  font-weight: 580;
-  line-height: 1.42;
-  letter-spacing: -0.04em;
-}
 .transcript {
   display: none;
 }
