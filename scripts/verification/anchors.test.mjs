@@ -39,27 +39,25 @@ for (const project of getProjects()) {
   });
 }
 
-test('ai: contents links point to rendered sections and ids stay unique', () => {
+test('ai: only the workflow and plaza case appear in the main landmark', () => {
   const html = readFileSync(resolve(root, '.next/server/app/ai.html'), 'utf8');
   assert.equal([...html.matchAll(/<main\b/g)].length, 1);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
   assert.equal(ids.length, new Set(ids).size, 'duplicate rendered ids');
-  const hrefs = [
-    ...html.matchAll(
-      /href="#(overview|work|plaza-case|guidelines|engineering|collaboration)"/g
-    ),
-  ].map((m) => m[1]);
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)[1];
+  const sections = [...main.matchAll(/<section\b[^>]*\bid="([^"]+)"/g)];
   assert.deepEqual(
-    [...new Set(hrefs)],
-    ['work', 'plaza-case', 'guidelines', 'collaboration']
+    sections.map((match) => match[1]),
+    ['work', 'plaza-case']
   );
+  assert.doesNotMatch(main, /aria-label="Contents"|#guidelines|#collaboration/);
   assert.ok(ids.includes('overview'), 'preserve existing overview links');
   assert.ok(
     ids.includes('engineering'),
     'preserve links to the verification example'
   );
-  for (const id of new Set(hrefs))
+  for (const [, id] of html.matchAll(/href="#([^"]+)"/g))
     assert.ok(ids.includes(id), `missing target: ${id}`);
   for (const match of html.matchAll(/aria-(?:labelledby|controls)="([^"]+)"/g))
     for (const id of match[1].split(/\s+/))

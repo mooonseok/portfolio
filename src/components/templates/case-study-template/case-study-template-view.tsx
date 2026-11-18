@@ -42,7 +42,7 @@ export function CaseStudyTemplateView({
               <CaseDetailsView {...header} />
             </Box>
           </Box>
-          <CaseContents groups={groups} />
+          {groups?.length ? <CaseContents groups={groups} /> : null}
           {children}
         </Box>
         <CaseNextView next={next} />

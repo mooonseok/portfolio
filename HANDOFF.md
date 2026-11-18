@@ -132,9 +132,8 @@ AI 활용 `/ai#work`는 디자인 요청의 시안 제작·검토와 개발 요�
 합류하면 다시 검사합니다. 각 요청의 상세 목록을 펼치면 담당과 작업, 재검토
 조건을 읽을 수 있습니다. 경로별 단계와 검토 조건은 `content/ai-workflow.ts`에서
 관리합니다. 바로 아래 `#plaza-case`에는 광장 이름표를 고친 실제 사례의 재현
-조건, 수정 전후 그림과 재검사 결과를 둡니다. 목차는 작업 흐름, 광장 수정 사례,
-작업 지침, 디자인 협업으로 연결됩니다. 기존 `/ai#engineering` 링크는 광장 수정
-사례로 이어집니다.
+조건, 수정 전후 그림과 재검사 결과를 둡니다. 본문은 이 두 섹션으로 구성합니다.
+기존 `/ai#engineering` 링크는 광장 수정 사례로 이어집니다.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently

@@ -56,8 +56,8 @@ export interface CaseHeaderViewProps {
 export interface CaseStudyTemplateViewProps extends CaseHeaderViewProps {
   intro?: ReactNode;
   hero: ReactNode;
-  children: ReactNode;
-  groups: ContentsGroup[];
+  children?: ReactNode;
+  groups?: ContentsGroup[];
   next: CaseNextLink;
   nav?: CaseNav;
 }
