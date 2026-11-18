@@ -14,16 +14,6 @@
   --icon-color: var(--track-color);
 }
 
-.chart [data-lane='feature'][data-selected='true'] {
-  --track-color: var(--circuit-development);
-}
-
-.divider {
-  fill: none;
-  stroke: var(--dark-line);
-  stroke-dasharray: 3 4;
-}
-
 .route,
 .feedback {
   fill: none;
@@ -78,8 +68,7 @@
   stroke-width: 1.8px;
 }
 
-.originName,
-.laneName {
+.originName {
   paint-order: stroke;
   stroke: var(--circuit-ground, var(--paper));
   stroke-linejoin: round;
@@ -89,12 +78,6 @@
 .originName {
   fill: var(--ink);
   font-size: 15px;
-  font-weight: 600;
-}
-
-.laneName {
-  fill: var(--icon-color);
-  font-size: 12px;
   font-weight: 600;
 }
 

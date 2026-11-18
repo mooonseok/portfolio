@@ -3,109 +3,75 @@
   --circuit-development: #9adecc;
   --circuit-return: #ffae8d;
   --circuit-ground: #12101b;
-  --track: var(--circuit-design);
   display: grid;
-  grid-template-areas: 'heading' 'decisions' 'diagram' 'console' 'details';
-  gap: 22px;
+  gap: clamp(18px, 3vw, 30px);
   color: var(--ink);
 }
-.flow[data-request='feature'] {
-  --track: var(--circuit-development);
-}
 .heading {
-  grid-area: heading;
+  width: min(100%, 736px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px 22px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .heading h1 {
-  font-size: clamp(32px, 3.9vw, 52px);
+  font-size: clamp(27px, 3vw, 38px);
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.05em;
-}
-.introduction {
-  max-width: 30em;
-  margin: 13px 0 21px;
-  font-size: clamp(15px, 1.3vw, 18px);
-  line-height: 1.68;
-  color: var(--subtle);
+  line-height: 1.15;
+  letter-spacing: -0.045em;
 }
 .tabs {
   display: inline-flex;
-  padding: 3px;
   gap: 3px;
-  border: 1px solid var(--hairline);
-  border-radius: 7px;
 }
 .tab {
-  font: inherit;
-  font-size: 14px;
   min-height: 44px;
-  line-height: 1.3;
+  padding: 0 9px;
+  font-size: 14px;
+  color: var(--subtle);
+  border-bottom: 2px solid transparent;
   cursor: pointer;
 }
-.tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 13px;
-  border-radius: 4px;
-  color: var(--subtle);
-}
-.tab::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  border: 1px solid currentColor;
-}
 .tab[aria-pressed='true'] {
-  background: var(--track);
-  color: var(--dark);
-  font-weight: 650;
+  border-color: var(--circuit-development);
+  color: var(--ink);
+  font-weight: 600;
 }
-.tab[aria-pressed='true']::before {
-  background: currentColor;
+.tab:last-child[aria-pressed='true'] {
+  border-color: var(--circuit-design);
+}
+.designFlow {
+  display: grid;
+  gap: 22px;
+  grid-template-areas: 'decisions' 'diagram' 'console' 'details';
+}
+.introduction {
+  max-width: 30em;
+  margin-bottom: 18px;
+  color: var(--subtle);
+  font-size: 16px;
+  line-height: 1.65;
 }
 .diagram {
   grid-area: diagram;
   min-width: 0;
-  display: grid;
-  align-items: center;
   padding: 14px clamp(6px, 1.4vw, 20px);
   background: var(--circuit-ground);
   border: 1px solid var(--dark-line);
   border-radius: 10px;
 }
 .flow :is(button, summary):focus-visible {
-  outline: 2px solid var(--track);
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
 @media (min-width: 860px) {
-  .flow {
+  .designFlow {
     grid-template-columns: var(--ai-columns);
-    grid-template-rows: auto auto 1fr auto;
-    grid-template-areas: 'heading diagram' 'decisions diagram' 'console diagram' 'details details';
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 'decisions diagram' 'console diagram' 'details details';
     column-gap: var(--ai-gap);
-    row-gap: 22px;
-  }
-  .heading {
-    padding-top: 18px;
-  }
-  .introduction {
-    margin: 18px 0 24px;
-  }
-  .diagram {
-    padding-block: 23px;
-  }
-}
-@media (max-width: 480px) {
-  .flow {
-    gap: 16px;
-  }
-  .introduction {
-    margin: 9px 0 14px;
-  }
-  .diagram {
-    padding-block: 8px;
   }
 }
 @media (scripting: none) {

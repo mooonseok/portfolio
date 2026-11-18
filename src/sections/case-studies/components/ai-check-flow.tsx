@@ -1,80 +1,51 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { MEDIA } from '@/constants/breakpoint';
-import {
-  circuitCopy,
-  developmentExamples,
-  workflows,
-} from '@/content/ai-workflow';
-import type { WorkflowRequest } from '@/dto/ai-workflow.dto';
-import { useMediaQuery } from '@/hooks/use-media-query';
-import { useWorkflowCircuit } from '@/hooks/use-workflow-circuit';
-import { workflowRoute } from '@/lib/ai-workflow';
-import { AiCheckFlowView } from './ai-check-flow-view';
+import { useState } from 'react';
+import { Box } from '@/components/atoms/box';
+import { Button } from '@/components/atoms/button';
+import { Heading } from '@/components/atoms/heading';
+import { AI_LOOP_TITLE_ID } from '@/constants/ai-practice';
+import { HEADING, TAG } from '@/constants/tag';
+import { circuitCopy } from '@/content/ai-workflow';
+import { AiDesignFlow } from './ai-design-flow';
+import { AiRequestRouting } from './ai-request-routing';
+import styles from './ai-check-flow.module.css';
 
 export function AiCheckLoop() {
-  const reduced = useMediaQuery(MEDIA.REDUCED_MOTION);
-  const [lane, setLane] = useState(workflows[0].id);
-  const [development, setDevelopment] = useState(developmentExamples[0]);
-  const [result, setResult] = useState(0);
-  const lanes = [workflows[0], development];
-  const request = lane === development.id ? development : workflows[0];
-  const issue = request.issues[result];
-  const route = useMemo(
-    () => workflowRoute(request, issue).slice(1),
-    [request, issue]
-  );
-  const { index, tracks, onNext } = useWorkflowCircuit(route, reduced);
-  const active = route[index];
-  const returning = active < route[index - 1];
-  const repair = Boolean(issue && index > route.indexOf(issue.source));
-  const worker = request.workers?.find((item) => item.id === issue?.owner);
-  const fixing = returning && worker;
-  const note =
-    returning && issue
-      ? issue.label + ' 발견 · ' + issue.reason
-      : repair &&
-          worker &&
-          issue &&
-          active === issue.target + 1 &&
-          (request.workers?.length ?? 0) > 1
-        ? `${worker.label} 담당의 수정본을 합칩니다. 다른 두 담당의 작업은 완료된 상태로 이어집니다.`
-        : issue && active === issue.source && index > route.indexOf(active)
-          ? circuitCopy.review
-          : request.stages[active].body;
-  function selectRequest(next: WorkflowRequest) {
-    if (next === request) return;
-    const sameIssue = next.issues.findIndex((item) => item.id === issue?.id);
-    const fallback = issue && next.id !== lane ? 0 : next.issues.length;
-    setResult(sameIssue >= 0 ? sameIssue : fallback);
-    if (next.id === development.id) setDevelopment(next);
-    setLane(next.id);
-  }
+  const [design, setDesign] = useState(false);
   return (
-    <AiCheckFlowView
-      lanes={lanes}
-      examples={developmentExamples}
-      request={request}
-      result={result}
-      onRequest={selectRequest}
-      onResult={setResult}
-      onNext={onNext}
-      {...{
-        copy: circuitCopy,
-        note,
-        active,
-        returning,
-        statusTitle: fixing ? issue?.label : undefined,
-        statusOwner: fixing ? `${worker.label} 담당 수정 중` : undefined,
-        owner: issue?.owner,
-        repair,
-        source: issue?.source,
-        target: issue?.target,
-        pathRef: tracks[0].pathRef,
-        dotRef: tracks[0].dotRef,
-        extraTracks: tracks.slice(1),
-      }}
-    />
+    <Box
+      as={TAG.SECTION}
+      id='work'
+      aria-labelledby={AI_LOOP_TITLE_ID}
+      className={styles.flow}
+    >
+      <Box className={styles.heading}>
+        <Heading id={AI_LOOP_TITLE_ID} level={HEADING.H1}>
+          {circuitCopy.title}
+        </Heading>
+        <Box
+          className={styles.tabs}
+          role='group'
+          aria-label={circuitCopy.controls}
+        >
+          <Button
+            className={styles.tab}
+            aria-pressed={!design}
+            onClick={() => setDesign(false)}
+          >
+            개발 요청
+          </Button>
+          <Button
+            className={styles.tab}
+            aria-pressed={design}
+            onClick={() => setDesign(true)}
+          >
+            디자인 요청
+          </Button>
+        </Box>
+      </Box>
+      {design ? <AiDesignFlow /> : <AiRequestRouting />}
+    </Box>
   );
 }

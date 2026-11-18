@@ -70,11 +70,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
   const elapsed = useRef(0);
   const previous = useRef<number | null>(null);
   const travelMs = useRef(0);
-  const [tracks] = useState(() => [
-    createTrack(),
-    createTrack(),
-    createTrack(),
-  ]);
+  const [track] = useState(createTrack);
 
   useLayoutEffect(() => {
     elapsed.current = 0;
@@ -82,10 +78,8 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
   }, [route, reduced]);
 
   useLayoutEffect(() => {
-    travelMs.current = workflowTravelMs(
-      Math.max(...tracks.map((track) => track.length))
-    );
-  }, [tracks, index, route]);
+    travelMs.current = workflowTravelMs(track.length);
+  }, [track, index, route]);
 
   useLayoutEffect(() => {
     function paint() {
@@ -95,9 +89,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
         index === 0,
         index === lastIndex
       );
-      for (const track of tracks) {
-        track.draw(reduced ? 1 : progress, reduced ? 1 : opacity);
-      }
+      track.draw(reduced ? 1 : progress, reduced ? 1 : opacity);
       return remaining;
     }
     paint();
@@ -136,7 +128,7 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
       cancelAnimationFrame(frame);
       document.removeEventListener('visibilitychange', visibility);
     };
-  }, [tracks, index, lastIndex, reduced, route]);
+  }, [track, index, lastIndex, reduced, route]);
 
   function nextStage() {
     setSnapshot((current) => ({
@@ -145,5 +137,5 @@ export function useWorkflowCircuit(route: number[], reduced: boolean) {
     }));
   }
 
-  return { index, tracks, onNext: reduced ? nextStage : undefined };
+  return { index, track, onNext: reduced ? nextStage : undefined };
 }

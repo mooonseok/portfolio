@@ -34,47 +34,10 @@ const designIcons = [
   />,
 ];
 
-const developmentIcons = [
-  <>
-    <rect x='-10' y='-10' width='20' height='22' rx='2' />
-    <rect x='-5' y='-13' width='10' height='5' rx='1' />
-    <path d='m-6 0 2 2 3-4m3 3h5m-13 6h13' fill='none' />
-  </>,
-  <>
-    <rect x='-16' y='-5' width='9' height='10' rx='2' />
-    <path d='M-7 0h7m0-7V7m0-14h7M0 7h7' />
-    <rect x='7' y='-11' width='9' height='8' rx='1' />
-    <rect x='7' y='3' width='9' height='8' rx='1' />
-  </>,
-  <>
-    <rect x='-15' y='-10' width='30' height='20' rx='2' />
-    <path d='m-6-3-4 4 4 4m12-8 4 4-4 4M2-4-2 6' fill='none' />
-  </>,
-  <g key='join' fill='none'>
-    <path d='M-12-10v4L0 1l12-7v-4M0-10v20' />
-    <circle cy='2' r='2.4' />
-  </g>,
-  <>
-    <rect x='-15' y='-10' width='30' height='20' rx='2' />
-    <path d='m-11-4 2 2 3-4M-3-4h13m-21 8 2 2 3-4M-3 4h10' fill='none' />
-  </>,
-  independentReview,
-  <path
-    key='delivery'
-    d='m-13-4 13-7 13 7v12l-13 6-13-6zM-13-4l13 6 13-6M0 2v12m-7-21 13 6'
-  />,
-];
-
-export function WorkflowCircuitIcon({
-  design,
-  index,
-}: {
-  design: boolean;
-  index: number;
-}) {
+export function WorkflowCircuitIcon({ index }: { index: number }) {
   return (
     <g strokeWidth='1.4' strokeLinecap='round' strokeLinejoin='round'>
-      {(design ? designIcons : developmentIcons)[index]}
+      {designIcons[index]}
     </g>
   );
 }
