@@ -16,6 +16,7 @@ interface Props {
   request: WorkflowRequest;
   copy: {
     title: string;
+    introduction: string;
     controls: string;
     request: string;
     result: string;
@@ -27,6 +28,7 @@ interface Props {
   target?: number;
   note: string;
   playLabel: string;
+  playing: boolean;
   pathRef: RefCallback<SVGPathElement>;
   dotRef: RefCallback<SVGGElement>;
   onRequest: (request: WorkflowRequest) => void;
@@ -41,6 +43,7 @@ export function AiCheckFlowView({
   result,
   note,
   playLabel,
+  playing,
   onRequest,
   onResult,
   onPlay,
@@ -56,11 +59,13 @@ export function AiCheckFlowView({
       id='work'
       aria-labelledby={AI_LOOP_TITLE_ID}
       className={styles.flow}
+      data-request={request.id}
     >
       <Box className={styles.heading}>
         <Heading id={AI_LOOP_TITLE_ID} level={HEADING.H1}>
           {copy.title}
         </Heading>
+        <Text className={styles.introduction}>{copy.introduction}</Text>
         <Box className={styles.tabs} role='group' aria-label={copy.controls}>
           {lanes.map((item) => (
             <Button
@@ -74,21 +79,38 @@ export function AiCheckFlowView({
           ))}
         </Box>
       </Box>
-      <AiCircuitCanvas lanes={lanes} lane={request.id} {...map} />
-      <Box className={styles.controls}>
-        <SelectField
-          label={copy.result}
-          choices={choices}
-          value={result}
-          onChange={(event) => onResult(Number(event.currentTarget.value))}
-        />
-        <Button className={styles.control} onClick={onPlay}>
-          {playLabel}
-        </Button>
+      <Box className={styles.diagram}>
+        <AiCircuitCanvas lanes={lanes} lane={request.id} {...map} />
       </Box>
-      <Text className={styles.note} role='status' aria-live='polite'>
-        {note}
-      </Text>
+      <Box className={styles.console}>
+        <Box className={styles.controls}>
+          <SelectField
+            label={copy.result}
+            choices={choices}
+            value={result}
+            onChange={(event) => onResult(Number(event.currentTarget.value))}
+          />
+          <Button
+            className={styles.control}
+            data-playing={playing}
+            onClick={onPlay}
+          >
+            {playLabel}
+          </Button>
+        </Box>
+        <Box
+          className={styles.note}
+          data-returning={map.returning}
+          role='status'
+          aria-live='polite'
+          aria-atomic='true'
+        >
+          <Text as={TAG.SPAN} className={styles.stage}>
+            {request.stages[map.active].label}
+          </Text>
+          <Text>{note}</Text>
+        </Box>
+      </Box>
       <noscript>
         <WorkflowTextView requests={lanes} />
       </noscript>

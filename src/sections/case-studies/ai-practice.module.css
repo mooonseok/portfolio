@@ -1,0 +1,110 @@
+.page {
+  --ai-width: 1080px;
+  --ai-columns: minmax(260px, 0.9fr) minmax(0, 1.65fr);
+  --ai-gap: clamp(36px, 5vw, 78px);
+  --ai-gutter: clamp(16px, 4vw, 60px);
+}
+.intro,
+.reading,
+.page main > nav {
+  width: min(calc(100% - var(--ai-gutter) * 2), var(--ai-width));
+  margin-inline: auto;
+}
+.intro {
+  padding-top: clamp(30px, 5.5vw, 84px);
+}
+.case,
+.chapter {
+  display: grid;
+  gap: 14px;
+}
+.case {
+  width: min(100%, calc(100vw - var(--ai-gutter) * 2), var(--ai-width));
+  margin-inline: auto;
+  border-top: 1px solid var(--hairline);
+  padding-top: clamp(24px, 3.5vw, 44px);
+}
+.caseLabel {
+  margin-bottom: 6px;
+  color: var(--subtle);
+  font-size: 13px;
+  font-weight: 500;
+}
+.subheading {
+  max-width: 22em;
+  font-size: clamp(21px, 2.15vw, 29px);
+  font-weight: 600;
+  line-height: 1.32;
+  letter-spacing: -0.035em;
+}
+.caseCopy {
+  max-width: 44em;
+  color: var(--subtle);
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.75;
+}
+.disclosure {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 550;
+}
+.disclosure::-webkit-details-marker {
+  display: none;
+}
+.disclosure::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border: solid currentColor;
+  border-width: 0 1px 1px 0;
+  transform: rotate(45deg) translateY(-2px);
+}
+.case details[open] > .disclosure::after {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+.page main > nav {
+  padding-inline: 0;
+  margin-top: 0;
+}
+.reading {
+  padding-block: clamp(28px, 4vw, 52px) 12px;
+}
+.chapter {
+  padding-block: clamp(24px, 3.6vw, 48px);
+  border-top: 1px solid var(--hairline);
+}
+.chapter > * {
+  min-width: 0;
+}
+@media (min-width: 744px) {
+  .page main > nav > div {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+  .page main > nav ol {
+    gap: 6px 23px;
+  }
+  .case,
+  .chapter {
+    grid-template-columns: minmax(170px, 0.78fr) minmax(0, 1.65fr);
+    column-gap: clamp(24px, 5vw, 70px);
+  }
+}
+
+@media (min-width: 860px) {
+  .case,
+  .chapter {
+    grid-template-columns: var(--ai-columns);
+    column-gap: var(--ai-gap);
+  }
+}
+@media (max-width: 480px) {
+  .intro {
+    padding-top: 22px;
+  }
+}

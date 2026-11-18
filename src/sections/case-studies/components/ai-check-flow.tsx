@@ -56,6 +56,7 @@ export function AiCheckLoop() {
         returning,
         target: issue?.target,
         playLabel,
+        playing,
         pathRef,
         dotRef,
       }}

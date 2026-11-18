@@ -12,9 +12,6 @@ export interface WorkflowCircuitProps {
   dotRef: RefCallback<SVGGElement>;
 }
 
-const levels = [119, 194, 269, 344];
-const radius = 21;
-
 export function WorkflowCircuit({
   lanes,
   lane,
@@ -26,6 +23,24 @@ export function WorkflowCircuit({
   width,
 }: WorkflowCircuitProps & { width: number }) {
   const center = width / 2;
+  const density = Math.max(0, Math.min(1, (width - 275) / 325));
+  const compact = Math.max(0, Math.min(1, (440 - width) / 80));
+  const firstRow = 119 - 4 * compact;
+  const rowGap = 75 - 14 * compact;
+  const levels = [
+    firstRow,
+    firstRow + rowGap,
+    firstRow + 2 * rowGap,
+    firstRow + 3 * rowGap,
+  ];
+  const height = levels[3] + 44 - 2 * compact;
+  const nodeWidth = Math.min(182, width * 0.415);
+  const halfWidth = nodeWidth / 2;
+  const halfHeight = 22 + 4 * density;
+  const iconScale = 0.76 + density * 0.46;
+  const iconX = -halfWidth + 7 + 10 * density + 16 * iconScale;
+  const labelX = iconX + 16 * iconScale + 6 + 7 * density;
+  const labelSize = (width < 275 ? 12 : 14) + 3 * density;
   const currentColor =
     lane === lanes[0].id
       ? 'var(--circuit-design)'
@@ -33,7 +48,8 @@ export function WorkflowCircuit({
   return (
     <svg
       className={styles.chart}
-      viewBox={`0 0 ${width} 388`}
+      viewBox={`0 0 ${width} ${height}`}
+      height={height}
       role='img'
       aria-labelledby='circuit-title circuit-description'
       textAnchor='middle'
@@ -44,12 +60,19 @@ export function WorkflowCircuit({
         요청은 선택한 작업의 검토를 거칩니다. 문제가 발견되면 원인이 있는 단계로
         돌아가 수정하고 다시 검토합니다.
       </desc>
-      <path d={`M${center} 89V369`} className={styles.divider} />
+      <path
+        d={`M${center} ${firstRow - 30}V${levels[3] + 25}`}
+        className={styles.divider}
+      />
       {lanes.map((item, i) => {
         const selected = item.id === lane;
         const sign = i === 0 ? -1 : 1;
         const x = center + sign * width * 0.235;
-        const edge = x + sign * Math.min(width * 0.164, 112);
+        const side = x + sign * halfWidth;
+        const outerSpace = Math.min(side, width - side) - 9;
+        const gutter = Math.min(34, outerSpace);
+        const bend = Math.min(gutter / 2, 9);
+        const edge = side + sign * gutter;
         const reviewY = levels[2];
         const targetY = target === undefined ? undefined : levels[target - 1];
         return (
@@ -57,8 +80,8 @@ export function WorkflowCircuit({
             {levels.map((y, j) => {
               const route =
                 j === 0
-                  ? `M${center} 40C${center} 80 ${x} 46 ${x} ${y - radius}`
-                  : `M${x} ${levels[j - 1] + radius}V${y - radius}`;
+                  ? `M${center} 40C${center} 70 ${x} 45 ${x} ${y - halfHeight}`
+                  : `M${x} ${levels[j - 1] + halfHeight}V${y - halfHeight}`;
               return (
                 <path
                   key={y}
@@ -78,14 +101,19 @@ export function WorkflowCircuit({
                   ref={returning ? pathRef : undefined}
                   data-return
                   strokeDasharray='3 4'
-                  d={`M${x + sign * radius} ${reviewY}H${edge - sign * 10}Q${edge} ${reviewY} ${edge} ${reviewY - 10}V${targetY + 10}Q${edge} ${targetY} ${edge - sign * 10} ${targetY}H${x + sign * radius}`}
+                  d={`M${side} ${reviewY}H${edge - sign * bend}Q${edge} ${reviewY} ${edge} ${reviewY - bend}V${targetY + bend}Q${edge} ${targetY} ${edge - sign * bend} ${targetY}H${side}`}
                 />
                 <path
                   d={`M${edge - 3} ${(reviewY + targetY) / 2 + 3}l3-5 3 5`}
                 />
               </g>
             )}
-            <text className={styles.laneName} x={x} y='80'>
+            <text
+              className={styles.laneName}
+              textAnchor={i === 0 ? 'start' : 'end'}
+              x={side - sign * 4}
+              y={firstRow - 39}
+            >
               {item.label}
             </text>
             {item.stages.slice(1).map((stage, j) => (
@@ -96,11 +124,28 @@ export function WorkflowCircuit({
                 data-returning={selected && returning && active === j + 1}
                 transform={`translate(${x} ${levels[j]})`}
               >
-                <circle className={styles.rim} r={radius} />
-                <g className={styles.icon}>
+                <rect
+                  data-rim
+                  className={styles.rim}
+                  x={-halfWidth}
+                  y={-halfHeight}
+                  width={nodeWidth}
+                  height={halfHeight * 2}
+                  rx='6'
+                />
+                <g
+                  className={styles.icon}
+                  transform={`translate(${iconX} 0) scale(${iconScale})`}
+                >
                   <WorkflowCircuitIcon design={i === 0} index={j} />
                 </g>
-                <text className={styles.stepName} y='36'>
+                <text
+                  className={styles.stepName}
+                  textAnchor='start'
+                  x={labelX}
+                  y={labelSize * 0.34}
+                  fontSize={labelSize}
+                >
                   {stage.label}
                 </text>
               </g>

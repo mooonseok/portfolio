@@ -130,7 +130,8 @@ AI 활용 `/ai#work`는 디자인과 개발 경로를 나란히 보여줍니다.
 돌아가 수정하고 다시 확인합니다. 경로별 단계와 검토 조건은
 `content/ai-workflow.ts`에서 관리합니다. 바로 아래 `#plaza-case`에는 광장
 이름표를 고친 실제 사례의 재현 조건, 수정 전후 그림과 재검사 결과를 둡니다.
-이어서 작업 지침과 검사 도구, 디자인 협업 사례를 읽을 수 있습니다.
+목차는 작업 흐름, 광장 수정 사례, 작업 지침, 검사 사례, 디자인 협업으로
+연결됩니다.
 
 The Emosave case study at `/work/emosave#interaction` replaces its static
 editing diagram with an explanatory 2D dome editor, also available independently

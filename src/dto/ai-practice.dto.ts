@@ -1,6 +1,6 @@
 import type { CaseMetaRow, CaseNextLink } from '@/dto/case-template.dto';
 import type { TechNote } from '@/dto/field.dto';
-import type { ContentsGroup, GroupTag } from '@/dto/navigation.dto';
+import type { ContentsGroup } from '@/dto/navigation.dto';
 import type { ProjectLink } from '@/dto/project.dto';
 
 export interface AiRule {
@@ -31,16 +31,9 @@ export interface AiPractice {
   home: AiPracticeHome;
 }
 
-export interface AiPracticeTags {
-  work?: GroupTag;
-  engineering?: GroupTag;
-  collaboration?: GroupTag;
-}
-
 export interface AiPracticeViewProps {
   content: AiPractice;
   groups: ContentsGroup[];
-  tags: AiPracticeTags;
 }
 
 export interface AiPracticeSummaryViewProps {

@@ -2,6 +2,8 @@ import type { WorkflowRequest } from '@/dto/ai-workflow.dto';
 
 export const circuitCopy = {
   title: 'AI와 일하는 방식',
+  introduction:
+    '방향과 완료 기준은 제가 정합니다. AI에는 만드는 일과 검토하는 일을 나눠 맡깁니다.',
   request: '요청',
   controls: '재생할 요청',
   result: '검토 결과',

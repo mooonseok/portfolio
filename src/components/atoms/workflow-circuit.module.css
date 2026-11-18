@@ -1,7 +1,6 @@
 .chart {
   display: block;
   width: 100%;
-  height: 388px;
   text-rendering: optimizeLegibility;
 }
 
@@ -39,7 +38,6 @@
   stroke: var(--circuit-return);
 }
 
-.rim,
 .origin,
 .icon {
   fill: var(--circuit-ground, var(--paper));
@@ -47,11 +45,25 @@
 
 .rim {
   stroke: var(--hairline);
+  fill: var(--circuit-ground, var(--paper));
+}
+
+.chart [data-selected='true'] .rim {
+  fill: color-mix(
+    in srgb,
+    var(--track-color) 4%,
+    var(--circuit-ground, var(--paper))
+  );
 }
 
 .chart [data-active='true'] .rim {
   stroke: var(--track-color);
   stroke-width: 2px;
+  fill: color-mix(
+    in srgb,
+    var(--track-color) 10%,
+    var(--circuit-ground, var(--paper))
+  );
 }
 
 .chart [data-returning='true'] .rim {
@@ -67,7 +79,6 @@
 }
 
 .originName,
-.stepName,
 .laneName {
   paint-order: stroke;
   stroke: var(--circuit-ground, var(--paper));
@@ -89,7 +100,7 @@
 
 .stepName {
   fill: var(--subtle);
-  font-size: 14px;
+  letter-spacing: -0.035em;
 }
 
 .chart [data-selected='true'] .stepName {

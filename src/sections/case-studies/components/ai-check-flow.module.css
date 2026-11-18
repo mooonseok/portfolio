@@ -2,99 +2,197 @@
   --circuit-design: #c7a6ff;
   --circuit-development: #9adecc;
   --circuit-return: #ffae8d;
-  --circuit-ground: var(--paper);
-  scroll-margin-top: 24px;
-  background: var(--circuit-ground);
+  --circuit-ground: #12101b;
+  --track: var(--circuit-design);
+  display: grid;
+  grid-template-areas: 'heading' 'diagram' 'console';
+  gap: 22px;
   color: var(--ink);
 }
-.heading,
-.controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px 16px;
+.flow[data-request='feature'] {
+  --track: var(--circuit-development);
 }
 .heading {
-  margin-bottom: 16px;
+  grid-area: heading;
 }
 .heading h1 {
-  font-size: clamp(24px, 3vw, 34px);
-  line-height: 1.16;
+  font-size: clamp(32px, 3.9vw, 52px);
   font-weight: 600;
-  letter-spacing: -0.045em;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
+}
+.introduction {
+  max-width: 30em;
+  margin: 13px 0 21px;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.68;
+  color: var(--subtle);
 }
 .tabs {
   display: inline-flex;
-  gap: 2px;
   padding: 3px;
+  gap: 3px;
   border: 1px solid var(--hairline);
   border-radius: 7px;
-  background: var(--dark-2);
 }
 .tab,
 .control,
 .controls select {
-  min-height: 44px;
   font: inherit;
   font-size: 14px;
+  min-height: 44px;
   line-height: 1.3;
-  border-radius: 4px;
+  cursor: pointer;
 }
 .tab {
-  padding: 4px 12px;
-  color: var(--subtle);
-}
-.tab[aria-pressed='true'] {
-  background: var(--ink);
-  color: var(--dark);
-  font-weight: 600;
-}
-.controls {
-  border-top: 1px solid var(--hairline);
-  padding-top: 12px;
-}
-.controls label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  padding: 0 13px;
+  border-radius: 4px;
   color: var(--subtle);
 }
-.control,
-.controls select {
-  padding: 4px 10px;
+.tab::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+}
+.tab[aria-pressed='true'] {
+  background: var(--track);
+  color: var(--dark);
+  font-weight: 650;
+}
+.tab[aria-pressed='true']::before {
+  background: currentColor;
+}
+.diagram {
+  grid-area: diagram;
+  min-width: 0;
+  display: grid;
+  align-items: center;
+  padding: 14px clamp(6px, 1.4vw, 20px);
+  background: var(--circuit-ground);
+  border: 1px solid var(--dark-line);
+  border-radius: 10px;
+}
+.console {
+  grid-area: console;
+  min-width: 0;
+}
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.controls label {
+  display: grid;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--subtle);
+}
+.controls select,
+.control {
+  border-radius: 5px;
   border: 1px solid var(--hairline);
   background: var(--dark-2);
   color: var(--ink);
-  color-scheme: dark;
+}
+.controls select {
+  min-width: 135px;
+  padding: 0 12px;
 }
 .control {
-  min-width: 76px;
+  padding: 0 12px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  min-width: 99px;
 }
-.flow :is(button, select):focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 2px;
+.control::before {
+  content: '';
+  border-style: solid;
+  border-width: 5px 0 5px 8px;
+  border-color: transparent transparent transparent currentColor;
+}
+.control[data-playing='true']::before {
+  width: 8px;
+  height: 10px;
+  border: 0;
+  border-inline: 2px solid currentColor;
+}
+.flow :is(select, button):focus-visible {
+  outline: 2px solid var(--track);
+  outline-offset: 3px;
 }
 .note {
-  margin-top: 8px;
-  min-height: 3em;
+  margin-top: 18px;
+  border-inline-start: 2px solid var(--track);
+  padding-left: 12px;
+  min-height: 3.6em;
   font-size: 15px;
+  line-height: 1.58;
+  color: var(--subtle);
+}
+.note[data-returning='true'] {
+  border-color: var(--circuit-return);
+}
+.stage {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: var(--ink);
 }
 .static {
+  grid-column: 1/-1;
   display: grid;
   gap: 12px;
 }
-@media (max-width: 480px) {
+@media (min-width: 860px) {
+  .flow {
+    grid-template-columns: var(--ai-columns);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'heading diagram' 'console diagram';
+    column-gap: var(--ai-gap);
+    row-gap: 30px;
+  }
   .heading {
-    align-items: flex-start;
-    flex-direction: column;
+    padding-top: 18px;
+  }
+  .introduction {
+    margin: 18px 0 24px;
+  }
+  .console {
+    border-top: 1px solid var(--hairline);
+    padding-top: 19px;
+  }
+  .note {
+    min-height: 5em;
+  }
+  .diagram {
+    padding-block: 23px;
+  }
+}
+@media (max-width: 480px) {
+  .flow {
+    gap: 16px;
+  }
+  .introduction {
+    margin: 9px 0 14px;
+  }
+  .diagram {
+    padding-block: 8px;
+  }
+  .note {
+    margin-top: 12px;
   }
 }
 @media (scripting: none) {
   .tabs,
-  .controls,
-  .note {
+  .console {
     display: none;
   }
 }

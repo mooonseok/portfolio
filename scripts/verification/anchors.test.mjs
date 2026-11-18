@@ -46,12 +46,15 @@ test('ai: contents links point to rendered sections and ids stay unique', () => 
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
   assert.equal(ids.length, new Set(ids).size, 'duplicate rendered ids');
   const hrefs = [
-    ...html.matchAll(/href="#(overview|work|engineering|collaboration)"/g),
+    ...html.matchAll(
+      /href="#(overview|work|plaza-case|guidelines|engineering|collaboration)"/g
+    ),
   ].map((m) => m[1]);
   assert.deepEqual(
     [...new Set(hrefs)],
-    ['overview', 'work', 'engineering', 'collaboration']
+    ['work', 'plaza-case', 'guidelines', 'engineering', 'collaboration']
   );
+  assert.ok(ids.includes('overview'), 'preserve existing overview links');
   for (const id of new Set(hrefs))
     assert.ok(ids.includes(id), `missing target: ${id}`);
   for (const match of html.matchAll(/aria-(?:labelledby|controls)="([^"]+)"/g))
